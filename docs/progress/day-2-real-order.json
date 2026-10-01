@@ -1,0 +1,23 @@
+{
+  "id": "2d7dbacf-56ad-4b91-ba9d-40555f322ca2",
+  "customer_name": "Day 2 Acceptance",
+  "address": "Day 2 acceptance test point, Dushanbe",
+  "latitude": 38.575,
+  "longitude": 68.78,
+  "subtotal": "18.00",
+  "delivery_price": "20.00",
+  "total": "38.00",
+  "distance_meters": 2887,
+  "delivery_duration_seconds": 273,
+  "status": "pending",
+  "created_at": "2026-10-01T16:59:28.806317Z",
+  "items": [
+    {
+      "product_id": 1,
+      "product_name": "Яблоки красные, 1 кг",
+      "quantity": "1.000",
+      "unit_price": "18.00",
+      "total_price": "18.00"
+    }
+  ]
+}

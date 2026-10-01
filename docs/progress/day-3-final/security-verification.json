@@ -1,0 +1,27 @@
+{
+  "asset_files": 52,
+  "network_files": 3,
+  "report_files": 12,
+  "matches": {
+    "OPENROUTESERVICE_API_KEY": {
+      "assets": 0,
+      "network": 0,
+      "reports": 0
+    },
+    "POSTGRES_PASSWORD": {
+      "assets": 0,
+      "network": 0,
+      "reports": 4
+    }
+  },
+  "documented_demo_password": "Matches the intentionally public local example; absent from all browser assets and payloads.",
+  "captured_api_requests": 40,
+  "browser_authorization_headers": 0,
+  "direct_provider_browser_requests": 0,
+  "cors": {
+    "http://localhost:3000": "http://localhost:3000",
+    "https://untrusted.example": null
+  },
+  "public_secret_variable_occurrences": 0,
+  "status": "PASS"
+}

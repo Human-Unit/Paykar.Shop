@@ -1,6 +1,6 @@
 # Paykar demo shop
 
-A three-day technical assignment recreating the public supermarket shopping experience with our own application and demo catalog. This is not Paykar's official website or production dataset. Day 2 adds **Cart → Checkout → Delivery map/quote → Atomic guest order → Persisted confirmation**. Real routing requires a working openrouteservice Directions API key and verified store coordinates; see the current verification status in [the Day 2 report](docs/progress/day-2-checkout-routing.md).
+A completed three-day technical assignment recreating the public supermarket shopping experience with our own application and demo catalog. This is not Paykar's official website or production dataset. **Browse/search → Cart → Checkout → Real delivery route → Atomic guest order → Persisted confirmation** works on desktop and mobile. Day 3 adds search suggestions, direct card quantities, category breadcrumbs/related products, discount merchandising and practical accessibility/recovery improvements. Final verification and screenshots are in [the submission report](docs/progress/day-3-submission.md).
 
 ## Architecture
 
@@ -31,7 +31,7 @@ Invoke-RestMethod http://localhost:8080/api/v1/health/db
 
 Open **http://localhost:3000**. Interactive API documentation: **http://localhost:8080/docs**.
 
-The migration, seed, backend and frontend checks have been run in this workspace; full-stack/browser outcomes are recorded in [the Day 1 report](docs/progress/day-1-commerce-core.md). First startup needs network access to fetch images/packages. Container startup precedes the seed; the initial catalog is empty until seeded. Running the seed again does not duplicate records or reset existing stock/catalog edits.
+The final migration, seed, backend/frontend checks, real ORS orders and fresh-volume startup were verified; see [Day 3 evidence](docs/progress/day-3-submission.md). First startup needs network access to fetch images/packages. Container startup precedes the seed; the initial catalog is empty until seeded. Running the seed again does not duplicate records or reset existing stock/catalog edits.
 
 | Service | Host port | Container port |
 | --- | --- | --- |
@@ -143,7 +143,7 @@ Browser acceptance: homepage → catalog → category → search → sorting →
 
 The seed contains **7 categories** (6 main categories plus a nested fruit category) and **40 active products**, with 2 intentionally out of stock. Names, prices, descriptions and stock are demo content. Six original category illustrations and an original fallback SVG are shared across products. They are authored within this project, contain no proprietary reference images and require no external image service. See [seed notes](db/seed/README.md).
 
-Guest checkout, routing and order APIs are implemented. No authentication, payment gateway, favorites, comparison, admin, Redis, Kafka or microservices. The broader handoff is [the three-day plan](docs/THREE_DAY_PLAN.md); the latest flat-fee specification overrides its original pricing suggestion. Day 3 is reserved for the planned regression/submission work and has not been started.
+Guest checkout, routing, order APIs and Day 3 polish are implemented. No authentication, payment gateway, favorites, comparison, admin, Redis, Kafka or microservices. The broader handoff is [the three-day plan](docs/THREE_DAY_PLAN.md); its assessment is historical, and the subsequent flat-fee specification overrides its original pricing suggestion. **Day 3 is complete; feature scope is frozen.**
 
 ## Checkout and routing
 
@@ -155,6 +155,50 @@ ORS receives `[longitude, latitude]`; Leaflet receives `[latitude, longitude]`. 
 
 Routing sends server-side requests to `https://api.heigit.org/openrouteservice/v2/directions/driving-car/geojson`, using [the ORS GeoJSON response format](https://giscience.github.io/openrouteservice/api-reference/endpoints/directions/requests-and-return-types); the map uses [Leaflet](https://leafletjs.com/reference.html) and attributed OpenStreetMap tiles. Automatic geocoding is outside Day 2 P0. Without verified store coordinates the map uses a Dushanbe camera fallback and shows no invented store marker.
 
-The Day 2 report distinguishes real ORS checks from automated mocked-provider tests. `tests/browser_fixture.py` is an isolated browser-test app using a dedicated test database and mock transport; production never enables it or substitutes a fake provider route.
+The reports distinguish real ORS checks from mocked-provider tests. `tests/browser_fixture.py` is an isolated browser-test app using a dedicated test database and mock transport; it is explicitly excluded from the production API image. Production always uses the real provider.
+
+## Reviewer demo (2–4 minutes)
+
+1. Open `http://localhost:3000`. Inspect categories and the **Сейчас выгоднее** section; prices and illustrations are clearly labeled demo data.
+2. Type **Яблоки** in the header. Suggestions show image/name/unit/price after a 300 ms pause. Arrow keys + Enter select a suggestion; Enter without a selection opens all results. Escape closes the list, and the clear button resets search.
+3. Open **Яблоки красные, 1 кг**. Follow the category breadcrumbs or inspect the related products. Add one unit; the button becomes minus/quantity/plus. Increasing is capped by known stock.
+4. Open the cart. Increase/decrease quantity, then reload to demonstrate persistence. Keep one unit and select **К оформлению**.
+5. Enter a demo name, a phone such as `+992900000000`, a full delivery address and an optional comment saying this is a technical test.
+6. Select a road-adjacent map point, then correct the coordinate fields to latitude **38.5750**, longitude **68.7800**. Press **Рассчитать доставку**. With the verified store at **38.562512, 68.791511**, the acceptance route returned **2,887 m / 273 s / 20.00 TJS**, displayed as **2.9 km / 5 min / 20 TJS**. Provider results may change. A store marker, destination marker and green route should all be visible.
+7. Changing the point/address invalidates the quote; recalculation is explicit. Restore the test point and calculate again if you demonstrate this.
+8. Press **Оформить заказ**. The server checks current route/prices/stock, persists the order and item snapshots, then the browser clears the cart. Reload the confirmation to demonstrate that it comes from PostgreSQL.
+
+For this route, first configure the ignored root `.env` with a valid `OPENROUTESERVICE_API_KEY` and the verified store coordinates, then run `docker compose up -d api`. The default fee is `20.00`; the service-area cap is `20000` driving meters. The ETA is driving time, excluding picking/packing. Test orders remain labeled technical acceptance records; this demo dispatches no deliveries and takes no payments.
+
+## Fresh-volume startup rehearsal
+
+From the repository root, with Docker Desktop running and root `.env` configured:
+
+```powershell
+# Choose an unused project name. Existing volumes are deliberately rejected.
+powershell -NoProfile -ExecutionPolicy Bypass -File docs/rehearse-start.ps1 -ProjectName paykar_submission_review1
+```
+
+This starts the same three services on **web 3002 / API 8082 / PostgreSQL 5434** using a separate named volume and database. It validates Compose, builds images, waits for health, runs Alembic current/check, seeds twice, checks both health endpoints and asserts 40 products. Run the reviewer flow at `http://localhost:3002`; the browser API URL and CORS origin are built/configured for these ports. It needs these alternate ports free. The script restores process environment overrides and never resets any database. The recorded final rehearsal used project `paykar_submission_final` and successfully created a real routed order. Its containers were stopped after verification; its volume remains preserved.
+
+To stop only your rehearsal services while preserving their data:
+
+```powershell
+docker compose -p paykar_submission_review1 stop
+```
+
+For a subsequent fresh rehearsal use a different `paykar_submission_...` name. The normal project remains at `http://localhost:3000`. Existing acceptance receipts and stock remain intact after repeat seeding; do not delete volumes to remove test orders.
+
+## Submission limitations
+
+- 40 demo products, 7 categories and shared original SVG illustrations; no production dataset or official offers.
+- Manual map selection/coordinates; no address geocoding. Routes/tiles depend on ORS/OSM access and provider quota. Store coordinates and the fee are configuration, not official delivery policy.
+- Guest UUID receipts are readable by anyone holding the link. No account management, payment, fulfilment/admin workflow, SMS or server-side order listing.
+- Cart persists locally. Quantities are whole packages, limited to 48 distinct products and 99 units per item, with current stock rechecked by the server.
+- Immediate duplicate clicks are guarded in the browser. There is no server idempotency key for retries after an ambiguous network disconnect.
+- Responsive Chromium viewport checks cover 390, 768, 1024 and 1440 px. Physical-device, Safari/Firefox and formal accessibility certification were not performed. Client-rendered product/category/order not-found states are useful UI states; only the unknown Next.js page and API endpoints carry HTTP 404.
+- Upstream ESLint 9 and Starlette/AnyIO deprecation notices remain. Checks pass without suppressions; npm ci reported zero vulnerabilities. The local database password in `.env.example` is intentionally a public demo default; private ORS credentials remain server-only.
+
+The daily reports and [final screenshots](docs/progress/day-3-final) provide the handoff evidence.
 #   P a y k a r . S h o p  
  
