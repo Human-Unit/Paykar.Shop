@@ -1,0 +1,19 @@
+{
+  "scope": "Actual TSX handlers executed with controlled hook, focus and timer doubles; no browser DOM, CSS layout, pointer movement or network timing was verified.",
+  "checks": [
+    "hover open and 150ms delayed close",
+    "crossing into panel cancels close",
+    "focus opens, ArrowDown focuses first link",
+    "Escape closes and restores focus without reopening",
+    "internal focus retained, outside blur closes",
+    "outside click restores focused trigger",
+    "navigation link closes panel",
+    "mobile resize closes and restores focus",
+    "mobile catalog remains a direct link with no category resource",
+    "actual nested categories and deeper unordered hierarchy",
+    "shared disclosure exclusion and route-change close",
+    "late close does not dismiss another disclosure",
+    "burger catalog link exists"
+  ],
+  "passed": true
+}

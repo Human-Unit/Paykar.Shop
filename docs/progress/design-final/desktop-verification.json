@@ -1,0 +1,7 @@
+{
+  "orderId": "ccbac5f7-f214-4fb7-9cd1-b8dd7ab232a2",
+  "cart": "0",
+  "reload": true,
+  "confirmation": "✓\nСпасибо! Заказ получен\n\nСохраните ссылку на эту страницу, чтобы открыть заказ снова.\n\nЗаказ\nccbac5f7-f214-4fb7-9cd1-b8dd7ab232a2\nСтатус\nПолучен\nСоздан\n01.10.2026, 23:49:45\nПолучатель\nVisual Redesign Desktop Acceptance\nАдрес\nVisual Redesign technical acceptance, corrected address, Dushanbe\nВаши покупки\nЯблоки красные, 1 кг\n1 × 18,00 с.\n18,00 с.\nРасстояние\n2,9 км\nВремя в пути\n5 мин\n\nТовары\n18,00 с.\n\nДоставка\n20,00 с.\n\nИтого\n38,00 с.\n\nПродолжить покупки",
+  "originalFlow": "Completed order and confirmation reload; network export failed after those steps. Recovery used reads and one quote; no duplicate order."
+}

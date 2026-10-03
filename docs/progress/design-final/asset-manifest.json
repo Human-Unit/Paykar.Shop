@@ -1,0 +1,118 @@
+{
+  "assets": [
+    {
+      "file": "apples.webp",
+      "bytes": 41884,
+      "dimensions": [
+        600,
+        600
+      ]
+    },
+    {
+      "file": "bakery.webp",
+      "bytes": 53060,
+      "dimensions": [
+        600,
+        600
+      ]
+    },
+    {
+      "file": "bananas.webp",
+      "bytes": 16150,
+      "dimensions": [
+        600,
+        600
+      ]
+    },
+    {
+      "file": "carrots.webp",
+      "bytes": 25668,
+      "dimensions": [
+        600,
+        600
+      ]
+    },
+    {
+      "file": "cucumbers.webp",
+      "bytes": 37340,
+      "dimensions": [
+        600,
+        600
+      ]
+    },
+    {
+      "file": "dairy.webp",
+      "bytes": 7786,
+      "dimensions": [
+        600,
+        600
+      ]
+    },
+    {
+      "file": "drinks.webp",
+      "bytes": 23040,
+      "dimensions": [
+        600,
+        600
+      ]
+    },
+    {
+      "file": "hero.webp",
+      "bytes": 105540,
+      "dimensions": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "file": "household.webp",
+      "bytes": 14276,
+      "dimensions": [
+        600,
+        600
+      ]
+    },
+    {
+      "file": "lemons.webp",
+      "bytes": 29768,
+      "dimensions": [
+        600,
+        600
+      ]
+    },
+    {
+      "file": "oranges.webp",
+      "bytes": 39158,
+      "dimensions": [
+        600,
+        600
+      ]
+    },
+    {
+      "file": "potatoes.webp",
+      "bytes": 19430,
+      "dimensions": [
+        600,
+        600
+      ]
+    },
+    {
+      "file": "produce.webp",
+      "bytes": 32972,
+      "dimensions": [
+        600,
+        600
+      ]
+    },
+    {
+      "file": "sweets.webp",
+      "bytes": 41222,
+      "dimensions": [
+        600,
+        600
+      ]
+    }
+  ],
+  "total_bytes": 487294,
+  "generation": "OpenAI imagegen built-in, text-to-image; WebP encoding at quality 82, method 6; originals retained outside repository."
+}

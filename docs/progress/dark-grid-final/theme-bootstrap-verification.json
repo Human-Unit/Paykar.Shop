@@ -1,0 +1,14 @@
+{
+  "production_bootstrap_cases": [
+    "default dark",
+    "saved light",
+    "saved dark",
+    "system dark",
+    "system light",
+    "invalid theme",
+    "corrupt storage",
+    "blocked storage"
+  ],
+  "passed": 8,
+  "scope": "Actual production bootstrap evaluated in isolated JavaScript contexts; interactive browser controls and reload persistence still pending."
+}

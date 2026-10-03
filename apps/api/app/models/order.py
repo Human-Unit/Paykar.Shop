@@ -22,6 +22,8 @@ class Order(Base):
         CheckConstraint(
             "status IN ('pending', 'confirmed', 'delivering', 'completed', 'cancelled')"
         ),
+        CheckConstraint("payment_method IN ('cash', 'card')"),
+        CheckConstraint("payment_status IN ('due_on_delivery', 'paid')"),
     )
     id: Mapped[UUID] = mapped_column(Uuid, primary_key=True, default=uuid4)
     customer_name: Mapped[str] = mapped_column(Text)
@@ -36,4 +38,8 @@ class Order(Base):
     delivery_duration_seconds: Mapped[int | None] = mapped_column(Integer)
     status: Mapped[str] = mapped_column(Text, server_default="pending")
     comment: Mapped[str | None] = mapped_column(Text)
+    payment_method: Mapped[str] = mapped_column(Text, server_default="cash")
+    payment_status: Mapped[str] = mapped_column(Text, server_default="due_on_delivery")
+    idempotency_key: Mapped[UUID | None] = mapped_column(Uuid, unique=True)
+    request_fingerprint: Mapped[str | None] = mapped_column(Text)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())

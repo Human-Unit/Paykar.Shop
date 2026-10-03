@@ -1,19 +1,28 @@
 "use client";
-
+import { usePresentation } from "@/context/presentation";
 import Link from "next/link";
-import { Minus, Plus, Trash2 } from "lucide-react";
+import {
+  Minus,
+  Plus,
+  Trash2,
+  ShoppingBasket,
+  Route,
+  CheckCircle2,
+} from "lucide-react";
 import { useCart } from "@/context/cart";
-import { cents, money } from "@/lib/format";
+import { cents } from "@/lib/format";
 import { ProductImage } from "./product-card";
 import { Empty, Failure, Loading } from "./states";
-
+import { Breadcrumbs } from "./breadcrumbs";
+import { PageIntro } from "./page-patterns";
 export function CartPage() {
+  const { t, money } = usePresentation();
   const cart = useCart();
   if (!cart.items.length)
     return (
       <Empty
-        title="Ваша корзина пока пуста"
-        text="Самое время выбрать что-нибудь вкусное."
+        title={t("Ваша корзина пока пуста")}
+        text={t("Самое время выбрать что-нибудь вкусное.")}
       />
     );
   if (cart.loading) return <Loading />;
@@ -31,28 +40,37 @@ export function CartPage() {
     );
   });
   return (
-    <>
-      <p className="breadcrumb">
-        <Link href="/">Главная</Link> / Корзина
-      </p>
-      <div className="page-title">
-        <h1>Ваша корзина</h1>
-        <p>Товаров: {cart.count}</p>
-      </div>
+    <div className="polish-page cart-page">
+      <Breadcrumbs
+        items={[{ label: "Главная", href: "/" }, { label: "Корзина" }]}
+      />
+      <PageIntro
+        eyebrow="Проверьте корзину"
+        title="Ваша корзина"
+        description="Количество и состав покупки можно изменить до оформления."
+        icon={ShoppingBasket}
+      />
       <div className="cart-layout">
-        <section aria-label="Товары в корзине">
+        <section aria-label={t("Товары в корзине")}>
+          <div className="cart-list-heading">
+            <strong>{t("Товары в корзине")}</strong>
+            <span>
+              {t("Товаров: ")}
+              {cart.count}
+            </span>
+          </div>
           <div className="cart-items">
             {cart.items.map((item) => {
               const p = cart.products.find((p) => p.id === item.product_id);
               if (!p)
                 return (
                   <div className="cart-item" key={item.product_id}>
-                    <p>Товар больше не доступен</p>
+                    <p>{t("Товар больше не доступен")}</p>
                     <button
                       className="text-link"
                       onClick={() => cart.remove(item.product_id)}
                     >
-                      Удалить
+                      {t("Удалить")}
                     </button>
                   </div>
                 );
@@ -63,19 +81,21 @@ export function CartPage() {
                     <ProductImage product={p} />
                   </Link>
                   <div className="cart-item-name">
-                    <Link href={`/product/${p.slug}`}>{p.name}</Link>
+                    <Link href={`/product/${p.slug}`}>{t(p.name)}</Link>
                     <p>
-                      {money(cents(p.price))} / {p.unit}
+                      {money(cents(p.price))} / {t(p.unit)}
                     </p>
                     {item.quantity > stock && (
                       <p className="stock-warning">
-                        Доступно только {stock}. Измените количество.
+                        {t("Доступно только ")}
+                        {stock}
+                        {t(". Измените количество.")}
                       </p>
                     )}
                   </div>
                   <div className="quantity-control">
                     <button
-                      aria-label={`Уменьшить: ${p.name}`}
+                      aria-label={t("Уменьшить: ") + t(p.name)}
                       disabled={item.quantity <= 1}
                       onClick={() =>
                         cart.quantity(p.id, item.quantity - 1, stock)
@@ -85,7 +105,7 @@ export function CartPage() {
                     </button>
                     <span data-testid="quantity">{item.quantity}</span>
                     <button
-                      aria-label={`Увеличить: ${p.name}`}
+                      aria-label={t("Увеличить: ") + t(p.name)}
                       disabled={item.quantity >= stock || item.quantity >= 99}
                       onClick={() =>
                         cart.quantity(p.id, item.quantity + 1, stock)
@@ -97,7 +117,7 @@ export function CartPage() {
                   <strong>{money(cents(p.price) * item.quantity)}</strong>
                   <button
                     className="remove-button"
-                    aria-label={`Удалить: ${p.name}`}
+                    aria-label={t("Удалить: ") + t(p.name)}
                     onClick={() => cart.remove(p.id)}
                   >
                     <Trash2 size={18} />
@@ -107,39 +127,49 @@ export function CartPage() {
             })}
           </div>
           <button className="text-link mt-5" onClick={cart.clear}>
-            Очистить корзину
+            {t("Очистить корзину")}
           </button>
         </section>
         <aside className="cart-summary">
-          <h2>Ваши покупки</h2>
+          <span className="eyebrow">
+            <CheckCircle2 size={16} aria-hidden="true" />
+            {t("Следующий шаг")}
+          </span>
+          <h2>{t("Ваши покупки")}</h2>
           <div>
-            <span>Товары ({cart.count})</span>
+            <span>
+              {t("Товары (")}
+              {cart.count})
+            </span>
             <strong>{money(subtotal)}</strong>
           </div>
           <div className="summary-total">
-            <span>Подытог</span>
+            <span>{t("Подытог")}</span>
             <strong data-testid="subtotal">{money(subtotal)}</strong>
           </div>
-          <p>Стоимость доставки будет рассчитана при оформлении.</p>
+          <p className="summary-note">
+            <Route size={20} aria-hidden="true" />
+            {t("Стоимость доставки будет рассчитана при оформлении.")}
+          </p>
           {invalidStock ? (
             <>
               <p className="stock-warning" role="status">
-                Измените количество или удалите недоступные товары.
+                {t("Измените количество или удалите недоступные товары.")}
               </p>
               <button className="button" disabled>
-                К оформлению →
+                {t("К оформлению →")}
               </button>
             </>
           ) : (
             <Link href="/checkout" className="button">
-              К оформлению →
+              {t("К оформлению →")}
             </Link>
           )}
           <Link href="/catalog" className="text-link">
-            Продолжить покупки
+            {t("Продолжить покупки")}
           </Link>
         </aside>
       </div>
-    </>
+    </div>
   );
 }

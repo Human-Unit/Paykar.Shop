@@ -1,0 +1,12 @@
+{
+  "deployed_asset_files": 31,
+  "key_matches_assets": 0,
+  "key_matches_source": 0,
+  "key_matches_docs": 0,
+  "database_password_matches_assets": 0,
+  "provider_url_matches_assets": 0,
+  "browser_network_capture": "PENDING - no connected browser",
+  "payment_schema_no_card_columns": true,
+  "sandbox_provider_no_network_client": true,
+  "status": "PASS for deployed assets, source and docs; browser network capture pending"
+}

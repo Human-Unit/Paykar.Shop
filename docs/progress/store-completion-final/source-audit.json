@@ -1,0 +1,8 @@
+{
+  "translation_entries": 440,
+  "ui_strings_audited": 356,
+  "missing": [],
+  "source_only": true,
+  "checkout_clear_after_order_only": true,
+  "synthetic_form_fields_not_in_checkout_requests": true
+}

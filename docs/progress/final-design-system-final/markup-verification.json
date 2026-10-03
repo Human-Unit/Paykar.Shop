@@ -1,0 +1,76 @@
+{
+  "scope": "Production HTTP/SSR markup only; no JavaScript interaction or visual acceptance",
+  "pages": [
+    {
+      "path": "/",
+      "http_status": 200,
+      "theme_choices": 2,
+      "language_choices": 3,
+      "closed_modal_drawer": true,
+      "information_disclosures": 8,
+      "shopping_banner_in_ssr": true,
+      "catalog_browser_render_pending": false
+    },
+    {
+      "path": "/catalog",
+      "http_status": 200,
+      "theme_choices": 2,
+      "language_choices": 3,
+      "closed_modal_drawer": true,
+      "information_disclosures": 8,
+      "shopping_banner_in_ssr": false,
+      "catalog_browser_render_pending": true
+    },
+    {
+      "path": "/catalog/produce",
+      "http_status": 200,
+      "theme_choices": 2,
+      "language_choices": 3,
+      "closed_modal_drawer": true,
+      "information_disclosures": 8,
+      "shopping_banner_in_ssr": true,
+      "catalog_browser_render_pending": true
+    },
+    {
+      "path": "/product/apples-red",
+      "http_status": 200,
+      "theme_choices": 2,
+      "language_choices": 3,
+      "closed_modal_drawer": true,
+      "information_disclosures": 8,
+      "shopping_banner_in_ssr": false,
+      "catalog_browser_render_pending": false
+    },
+    {
+      "path": "/cart",
+      "http_status": 200,
+      "theme_choices": 2,
+      "language_choices": 3,
+      "closed_modal_drawer": true,
+      "information_disclosures": 8,
+      "shopping_banner_in_ssr": false,
+      "catalog_browser_render_pending": false
+    },
+    {
+      "path": "/checkout",
+      "http_status": 200,
+      "theme_choices": 2,
+      "language_choices": 3,
+      "closed_modal_drawer": true,
+      "information_disclosures": 8,
+      "shopping_banner_in_ssr": false,
+      "catalog_browser_render_pending": false
+    },
+    {
+      "path": "/order/9bbf8a9c-1c24-4f37-97f1-47c08f8317c2",
+      "http_status": 200,
+      "theme_choices": 2,
+      "language_choices": 3,
+      "closed_modal_drawer": true,
+      "information_disclosures": 8,
+      "shopping_banner_in_ssr": false,
+      "catalog_browser_render_pending": false
+    }
+  ],
+  "supplied_png_sha256": "4592b3b70540beb0597b0cfa2e991a9435d475170237342d305f26c9e3e23341"
+}

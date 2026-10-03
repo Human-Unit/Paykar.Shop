@@ -1,0 +1,31 @@
+{
+  "verifiedAt": "2026-10-02T11:00:15.015Z",
+  "imageStatus": 200,
+  "sourceBytes": 133477,
+  "servedBytes": 133477,
+  "sha256": "4592b3b70540beb0597b0cfa2e991a9435d475170237342d305f26c9e3e23341",
+  "originalBytesPreserved": true,
+  "routes": [
+    {
+      "path": "/",
+      "status": 200,
+      "brandImages": 2
+    },
+    {
+      "path": "/catalog",
+      "status": 200,
+      "brandImages": 2
+    },
+    {
+      "path": "/cart",
+      "status": 200,
+      "brandImages": 2
+    },
+    {
+      "path": "/checkout",
+      "status": 200,
+      "brandImages": 2
+    }
+  ],
+  "browserAcceptance": "Not run; existing connection unavailable"
+}

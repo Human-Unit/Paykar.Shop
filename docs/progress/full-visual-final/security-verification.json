@@ -1,0 +1,10 @@
+{
+  "deployed_asset_files": 27,
+  "key_matches_deployed_assets": 0,
+  "key_matches_docs": 0,
+  "key_matches_web_source": 0,
+  "private_postgres_password_matches_assets": 0,
+  "provider_urls_in_deployed_browser_assets": 0,
+  "browser_network_capture": "BLOCKED - browser disconnected; only deployed assets and API/HTML payloads checked in this rollout",
+  "status": "PASS for deployed assets, source and documentation; browser network capture pending"
+}

@@ -1,13 +1,17 @@
 "use client";
-
+import { usePresentation } from "@/context/presentation";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { Category, ProductPage, useResource } from "@/lib/api";
 import { ProductCard } from "./product-card";
 import { Breadcrumbs } from "./breadcrumbs";
 import { Empty, Failure, Loading } from "./states";
-
+import { ShoppingBanner } from "./shopping-banner";
+import { CategoryLabel } from "./category-label";
+import { SlidersHorizontal, ShoppingBasket } from "lucide-react";
 export function Catalog({ slug }: { slug?: string }) {
+  const { t } = usePresentation();
   const params = useSearchParams();
   const q = params.get("q") || "";
   const sort = ["name", "price_asc", "price_desc"].includes(
@@ -37,71 +41,83 @@ export function Catalog({ slug }: { slug?: string }) {
     copy.set("page", String(value));
     return `${path}?${copy}`;
   }
-  if (category.error?.status === 404)
-    return (
-      <Empty
-        title="Категория не найдена"
-        text="Выберите другой раздел каталога."
-      />
-    );
+  if (category.error?.status === 404) notFound();
   return (
-    <>
+    <div className="polish-page catalog-page">
       <Breadcrumbs
         items={[
-          { label: "Главная", href: "/" },
-          { label: "Каталог", href: slug ? "/catalog" : undefined },
-          ...(slug ? [{ label: category.data?.name || "…" }] : []),
+          { label: t("Главная"), href: "/" },
+          {
+            label: t("Каталог"),
+            href: slug ? "/catalog" : undefined,
+          },
+          ...(slug ? [{ label: t(category.data?.name) || "…" }] : []),
         ]}
       />
-      <div className="page-title">
-        <h1>{category.data?.name || "Каталог товаров"}</h1>
-        <p>
-          {q ? `Поиск: «${q}»` : "Выбирайте любимые продукты и товары для дома"}
-        </p>
+      <div className="catalog-heading">
+        <div className="page-title">
+          <span className="eyebrow">
+            <ShoppingBasket size={16} aria-hidden="true" />
+            {t("Свежий выбор на каждый день")}
+          </span>
+          <h1>{t(category.data?.name) || t("Каталог товаров")}</h1>
+          <p>
+            {q
+              ? t("Поиск: «") + q + "»"
+              : t("Выбирайте любимые продукты и товары для дома")}
+          </p>
+        </div>
+        <ShoppingBanner />
       </div>
       {category.error && (
         <Failure error={category.error} retry={category.retry} />
       )}
       <div className="catalog-layout">
         <aside className="catalog-sidebar">
-          <h2>Категории</h2>
+          <h2>{t("Категории")}</h2>
+          {categories.loading && <Loading label="Загружаем категории…" />}
           {categories.error && (
             <Failure error={categories.error} retry={categories.retry} />
           )}
-          <Link className={!slug ? "active" : ""} href="/catalog">
-            Все товары
+          <Link
+            className={!slug ? "active" : ""}
+            aria-current={!slug ? "page" : undefined}
+            href="/catalog"
+          >
+            <CategoryLabel name="Все товары" />
           </Link>
           {categories.data?.map((c) => (
             <Link
               key={c.id}
               className={`${slug === c.slug ? "active" : ""} ${c.parent_id ? "child" : ""}`}
               href={`/catalog/${c.slug}`}
+              aria-current={slug === c.slug ? "page" : undefined}
             >
-              {c.name}
+              <CategoryLabel slug={c.slug} name={c.name} />
             </Link>
           ))}
         </aside>
-        <section aria-label="Товары">
+        <section aria-label={t("Товары")}>
           <form
             action={path}
             className="catalog-controls"
             key={`${q}:${sort}:${inStock}`}
           >
             <label className="filter-search">
-              Поиск
+              {t("Поиск")}
               <input
                 name="q"
                 defaultValue={q}
                 maxLength={200}
-                placeholder="Название или артикул"
+                placeholder={t("Название или артикул")}
               />
             </label>
             <label>
-              Сортировка
+              {t("Сортировка")}
               <select name="sort" defaultValue={sort}>
-                <option value="name">По названию</option>
-                <option value="price_asc">Сначала дешевле</option>
-                <option value="price_desc">Сначала дороже</option>
+                <option value="name">{t("По названию")}</option>
+                <option value="price_asc">{t("Сначала дешевле")}</option>
+                <option value="price_desc">{t("Сначала дороже")}</option>
               </select>
             </label>
             <label className="stock-filter">
@@ -111,10 +127,11 @@ export function Catalog({ slug }: { slug?: string }) {
                 value="true"
                 defaultChecked={inStock}
               />{" "}
-              В наличии
+              {t("В наличии")}
             </label>
             <button className="button" type="submit">
-              Применить
+              <SlidersHorizontal size={18} aria-hidden="true" />
+              {t("Применить")}
             </button>
           </form>
           {products.loading && <Loading kind="grid" />}
@@ -123,13 +140,17 @@ export function Catalog({ slug }: { slug?: string }) {
           )}
           {products.data && (
             <>
-              <p className="result-count">
-                Найдено товаров: {products.data.total}
-              </p>
+              <div className="catalog-results-line">
+                <p className="result-count">
+                  {t("Найдено товаров: ")}
+                  <strong>{products.data.total}</strong>
+                </p>
+                <span>{t(inStock ? "В наличии" : "Все товары")}</span>
+              </div>
               {!products.data.items.length ? (
                 <Empty
-                  title="Ничего не найдено"
-                  text="Попробуйте другое название или измените фильтры."
+                  title={t("Ничего не найдено")}
+                  text={t("Попробуйте другое название или измените фильтры.")}
                 />
               ) : (
                 <div className="product-grid catalog-grid">
@@ -138,20 +159,23 @@ export function Catalog({ slug }: { slug?: string }) {
                   ))}
                 </div>
               )}
-              <nav className="pagination" aria-label="Страницы каталога">
-                {page > 1 && <Link href={pageHref(page - 1)}>← Назад</Link>}
+              <nav className="pagination" aria-label={t("Страницы каталога")}>
+                {page > 1 && (
+                  <Link href={pageHref(page - 1)}>{t("← Назад")}</Link>
+                )}
                 <span>
-                  Страница {page} из{" "}
-                  {Math.max(1, Math.ceil(products.data.total / 12))}
+                  {t("Страница ")}
+                  {page}
+                  {t(" из")} {Math.max(1, Math.ceil(products.data.total / 12))}
                 </span>
                 {page * 12 < products.data.total && (
-                  <Link href={pageHref(page + 1)}>Далее →</Link>
+                  <Link href={pageHref(page + 1)}>{t("Далее →")}</Link>
                 )}
               </nav>
             </>
           )}
         </section>
       </div>
-    </>
+    </div>
   );
 }

@@ -1,21 +1,31 @@
 import type { Metadata } from "next";
 import { CartProvider } from "@/context/cart";
 import { Shell } from "@/components/shell";
+import { PresentationProvider } from "@/context/presentation";
 import "./globals.css";
+import "./paykar-theme.css";
+import "./site-polish.css";
 
 export const metadata: Metadata = {
-  title: "Paykar · учебный магазин",
-  description: "Демонстрационный супермаркет: каталог, поиск и корзина.",
+  title: "Пайкар",
+  description: "Продукты на каждый день: каталог, поиск, корзина и доставка.",
 };
+// Resolve saved chrome before the first paint; invalid/blocked storage uses the dark default.
+const restoreTheme = `try{const p=JSON.parse(localStorage.getItem("paykar-presentation-v1")||"{}");document.documentElement.dataset.theme=p.theme==="light"?"light":p.theme==="system"?(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):"dark";}catch{}`;
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ru">
+    <html lang="ru" data-theme="dark" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: restoreTheme }} />
+      </head>
       <body>
-        <CartProvider>
-          <Shell>{children}</Shell>
-        </CartProvider>
+        <PresentationProvider>
+          <CartProvider>
+            <Shell>{children}</Shell>
+          </CartProvider>
+        </PresentationProvider>
       </body>
     </html>
   );

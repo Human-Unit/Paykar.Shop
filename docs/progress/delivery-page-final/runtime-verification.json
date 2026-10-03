@@ -1,0 +1,64 @@
+{
+  "checked_at": "2026-10-02T18:09:28.704633+00:00",
+  "health": {
+    "status": "ok",
+    "service": "paykar-api"
+  },
+  "database_health": {
+    "status": "ok",
+    "database": "connected"
+  },
+  "real_ors": {
+    "provider_endpoint": "https://api.heigit.org/openrouteservice/v2/directions/driving-car/geojson",
+    "geometry": "LineString",
+    "route_points": 51,
+    "distance_meters": 2887,
+    "duration_seconds": 273,
+    "delivery_price": "20.00",
+    "latitude": 38.575,
+    "longitude": 68.78,
+    "store_latitude": 38.562512,
+    "store_longitude": 68.791511,
+    "mocked": false,
+    "initiated_by": "Separate regression script POST to backend, not the delivery page"
+  },
+  "delivery_http": {
+    "status": 200,
+    "sections": [
+      "delivery-hero",
+      "delivery-benefits",
+      "delivery-process",
+      "delivery-cta",
+      "delivery-faq"
+    ],
+    "steps": 6,
+    "faq_disclosures": 5,
+    "checkout_link": true,
+    "shared_footer": true,
+    "old_generic_cards_absent": true,
+    "executed_browser_javascript": false
+  },
+  "web_http_routes": {
+    "/delivery": 200,
+    "/": 200,
+    "/catalog": 200,
+    "/catalog/produce": 200,
+    "/product/apples-red": 200,
+    "/cart": 200,
+    "/checkout": 200,
+    "/how-to-buy": 200,
+    "/payment": 200,
+    "/contacts": 200
+  },
+  "public_asset_scan": {
+    "js_css_files": 14,
+    "credential_matches_assets_and_responses": 0,
+    "provider_domain_matches_assets": 0
+  },
+  "protected_source_hashes": {
+    "files": 55,
+    "changed": [],
+    "scope": "Backend, database, checkout, cart, delivery map, API client, shared shell/footer"
+  },
+  "browser_review": "UNAVAILABLE: Browser discovery returned No browser is available and an empty browser list. Visual acceptance pending. HTTP/asset checks do not verify rendering, keyboard interaction or browser network activity."
+}

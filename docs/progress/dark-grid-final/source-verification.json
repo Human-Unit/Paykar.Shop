@@ -1,0 +1,22 @@
+{
+  "changed_application_files": [
+    "apps/web/src/app/globals.css",
+    "apps/web/src/app/paykar-theme.css",
+    "apps/web/src/components/preferences.tsx",
+    "apps/web/src/components/shell.tsx"
+  ],
+  "checked_file_count": 76,
+  "business_and_preference_modules_unchanged": [
+    "apps/web/src/context/cart.tsx",
+    "apps/web/src/context/presentation.tsx",
+    "apps/web/src/components/checkout.tsx",
+    "apps/web/src/components/delivery-map.tsx",
+    "apps/web/src/components/search-box.tsx",
+    "apps/web/src/lib/api.ts",
+    "apps/web/src/app/layout.tsx",
+    "apps/web/src/components/brand.tsx"
+  ],
+  "backend_and_database_files_unchanged": true,
+  "supplied_png_unchanged": true,
+  "browser_acceptance": "Pending; source checks do not verify rendered layout or interactions"
+}

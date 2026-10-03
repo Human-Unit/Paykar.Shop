@@ -1,0 +1,40 @@
+{
+  "checked_at": "2026-10-02T10:32:37.141674+00:00",
+  "health": {
+    "status": "ok",
+    "service": "paykar-api"
+  },
+  "database_health": {
+    "status": "ok",
+    "database": "connected"
+  },
+  "real_ors": {
+    "provider_endpoint": "https://api.heigit.org/openrouteservice/v2/directions/driving-car/geojson",
+    "geometry": "LineString",
+    "route_points": 51,
+    "distance_meters": 2887,
+    "duration_seconds": 273,
+    "delivery_price": "20.00",
+    "latitude": 38.575,
+    "longitude": 68.78,
+    "mocked": false
+  },
+  "existing_order_repeat_get": {
+    "id": "9bbf8a9c-1c24-4f37-97f1-47c08f8317c2",
+    "total": "38.00",
+    "items": 1,
+    "identical": true,
+    "new_order_created": false
+  },
+  "web_http_routes": {
+    "/": 200,
+    "/catalog": 200,
+    "/catalog/produce": 200,
+    "/product/apples-red": 200,
+    "/cart": 200,
+    "/checkout": 200,
+    "/order/9bbf8a9c-1c24-4f37-97f1-47c08f8317c2": 200
+  },
+  "credential_matches_http_payloads": 0,
+  "browser_regression": "BLOCKED: browser runtime has no connected browsers; HTTP checks do not execute JavaScript."
+}

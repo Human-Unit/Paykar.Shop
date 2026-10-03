@@ -1,0 +1,41 @@
+{
+  "checked_baseline_files": 102,
+  "changed_existing_source_files": [
+    "apps/web/src/app/paykar-theme.css",
+    "apps/web/src/components/cart-page.tsx",
+    "apps/web/src/components/catalog.tsx",
+    "apps/web/src/components/home.tsx",
+    "apps/web/src/components/preferences.tsx",
+    "apps/web/src/components/shell.tsx",
+    "apps/web/src/components/states.tsx",
+    "apps/web/src/lib/translations.json"
+  ],
+  "new_components": [
+    "site-navigation",
+    "shopping-banner",
+    "category-label"
+  ],
+  "protected_files_unchanged": [
+    "apps/web/src/context/cart.tsx",
+    "apps/web/src/context/presentation.tsx",
+    "apps/web/src/components/checkout.tsx",
+    "apps/web/src/components/delivery-map.tsx",
+    "apps/web/src/components/search-box.tsx",
+    "apps/web/src/components/product-card.tsx",
+    "apps/web/src/components/order-confirmation.tsx",
+    "apps/web/src/lib/api.ts",
+    "apps/web/src/app/layout.tsx",
+    ".env",
+    "docker-compose.yml",
+    "apps/web/package.json",
+    "apps/web/package-lock.json"
+  ],
+  "existing_page_data_preparation_unchanged": true,
+  "translations": 306,
+  "missing_new_information_translations": [],
+  "backend_and_database_unchanged": true,
+  "public_assets_unchanged": true,
+  "environment_unchanged": true,
+  "dependencies_unchanged": true,
+  "browser_acceptance": "Pending; source audits are not interactive browser verification"
+}

@@ -135,6 +135,8 @@ export type Order = Point & {
   total: string;
   distance_meters: number;
   delivery_duration_seconds: number;
+  payment_method: "cash" | "card";
+  payment_status: "paid" | "due_on_delivery";
   status: string;
   created_at: string;
 };
@@ -167,3 +169,14 @@ export function useResource<T>(path: string | null) {
     retry: () => setAttempt((value) => value + 1),
   };
 }
+
+export type Payment = {
+  id: string;
+  order_id: string | null;
+  status: "pending" | "succeeded" | "failed" | "cancelled";
+  amount: string;
+  currency: string;
+  failure_reason: string | null;
+  expires_at: string;
+};
+export type PaymentConfirmation = { payment: Payment; order: Order | null };

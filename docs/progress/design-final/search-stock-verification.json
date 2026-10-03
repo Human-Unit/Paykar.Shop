@@ -1,0 +1,21 @@
+{
+  "keyboard": [
+    {
+      "width": 1440,
+      "selected": "suggestion-1",
+      "selectedEnter": true,
+      "cleared": true
+    },
+    {
+      "width": 390,
+      "selected": "suggestion-1",
+      "selectedEnter": true,
+      "cleared": true
+    }
+  ],
+  "stock": {
+    "limited": true,
+    "max": "9",
+    "cartAfterCleanup": "0"
+  }
+}

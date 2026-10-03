@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 import httpx
 from asyncpg import PostgresError
 from fastapi import FastAPI, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import SQLAlchemyError
@@ -32,6 +33,23 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     app = FastAPI(title="Paykar demo API", version="0.1.0", lifespan=lifespan)
     app.state.settings = settings
+
+    @app.exception_handler(RequestValidationError)
+    async def invalid_request(request: Request, exc: RequestValidationError):
+        # Never reflect submitted card-like fields or other request bodies in validation responses.
+        return JSONResponse(
+            status_code=422,
+            content={
+                "detail": {
+                    "code": "invalid_input",
+                    "message": "Проверьте введённые данные.",
+                    "fields": [
+                        ".".join(str(part) for part in item["loc"]) for item in exc.errors()
+                    ],
+                }
+            },
+        )
+
     app.add_middleware(
         CORSMiddleware,
         allow_origins=[settings.web_origin],

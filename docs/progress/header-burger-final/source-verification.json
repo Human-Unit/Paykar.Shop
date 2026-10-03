@@ -1,0 +1,18 @@
+{
+  "changed_application_files": [
+    "apps/web/src/app/paykar-theme.css",
+    "apps/web/src/components/preferences.tsx",
+    "apps/web/src/components/site-navigation.tsx"
+  ],
+  "baseline_files_checked": 105,
+  "desktop_navigation_functions_unchanged": [
+    "MainNavigation",
+    "InfoNavMenu",
+    "InformationContent"
+  ],
+  "nine_information_entries_and_text_unchanged": true,
+  "translation_entries": 306,
+  "missing_header_drawer_translations": [],
+  "protected_backend_database_business_providers_and_png_unchanged": true,
+  "browser_interactions": "Pending; source equivalence is not browser acceptance"
+}

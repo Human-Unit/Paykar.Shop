@@ -1,6 +1,6 @@
 "use client";
-
 import dynamic from "next/dynamic";
+import { usePresentation } from "@/context/presentation";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -10,27 +10,63 @@ import {
   ApiError,
   DeliveryConfig,
   Order,
+  Payment,
+  PaymentConfirmation,
   Point,
   Quote,
   useResource,
 } from "@/lib/api";
-import { cents, distance, duration, money } from "@/lib/format";
+import { cents } from "@/lib/format";
 import { Empty } from "./states";
-
+import { SandboxCard, validSandbox, type SandboxFields } from "./sandbox-card";
+import {
+  UserRound,
+  MapPin,
+  CreditCard,
+  Wallet,
+  Route,
+  Clock3,
+  ShoppingBasket,
+} from "lucide-react";
+import { Breadcrumbs } from "./breadcrumbs";
+import { PageIntro } from "./page-patterns";
 const Map = dynamic(() => import("./delivery-map"), {
   ssr: false,
-  loading: () => (
-    <div className="delivery-map message" role="status">
-      Загружаем карту…
-    </div>
-  ),
+  loading: MapLoading,
 });
-type Review = { key: string; subtotal: number; total: number; fee: number };
-
+function MapLoading() {
+  const { t } = usePresentation();
+  return (
+    <div className="delivery-map message map-loading" role="status">
+      <MapPin size={32} aria-hidden="true" />
+      <span>{t("Загружаем карту…")}</span>
+    </div>
+  );
+}
+type Review = {
+  key: string;
+  subtotal: number;
+  total: number;
+  fee: number;
+};
 export function Checkout() {
+  const { t, money, distance, duration } = usePresentation();
   const cart = useCart();
   const router = useRouter();
   const config = useResource<DeliveryConfig>("/delivery/config");
+  const [method, setMethod] = useState<"cash" | "card">("cash");
+  const [card, setCard] = useState<SandboxFields>({
+    number: "",
+    expiry: "",
+    cvv: "",
+    holder: "",
+  });
+  // Ephemeral idempotency state contains checkout details, never card-form fields.
+  const attempt = useRef<{
+    fingerprint: string;
+    key: string;
+    payment?: Payment;
+  } | null>(null);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
@@ -38,7 +74,10 @@ export function Checkout() {
   const [lat, setLat] = useState("");
   const [lon, setLon] = useState("");
   const [locationRevision, setLocationRevision] = useState(0);
-  const [quoted, setQuoted] = useState<{ key: string; value: Quote }>();
+  const [quoted, setQuoted] = useState<{
+    key: string;
+    value: Quote;
+  }>();
   const [review, setReview] = useState<Review>();
   const [quoting, setQuoting] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -131,14 +170,17 @@ export function Checkout() {
       !point ||
       invalidStock ||
       !validCustomer ||
-      cart.loading
+      cart.loading ||
+      !!cart.error ||
+      quoting ||
+      (method === "card" && !validSandbox(card))
     )
       return;
     busy.current = true;
     setSubmitting(true);
     setError("");
     try {
-      const order = await api<Order>("/orders", undefined, {
+      const checkout = {
         customer_name: name.trim(),
         phone: phone.trim(),
         address: address.trim(),
@@ -146,7 +188,46 @@ export function Checkout() {
         ...point,
         items: cart.items,
         expected_total: (total / 100).toFixed(2),
-      });
+        payment_method: method,
+      };
+      const fingerprint = JSON.stringify(checkout);
+      if (!attempt.current || attempt.current.fingerprint !== fingerprint)
+        attempt.current = { fingerprint, key: crypto.randomUUID() };
+      const current = attempt.current;
+      const request = { ...checkout, idempotency_key: current.key };
+      let order: Order;
+      if (method === "card" && validSandbox(card)) {
+        // Only a synthetic scenario is sent; number/expiry/CVV/holder never leave this component.
+        if (!current.payment)
+          current.payment = await api<Payment>(
+            "/payments/sandbox/session",
+            undefined,
+            request,
+          );
+        const result = await api<PaymentConfirmation>(
+          "/payments/sandbox/confirm",
+          undefined,
+          { payment_id: current.payment.id, scenario: card.number },
+        );
+        current.payment = result.payment;
+        if (!result.order) {
+          const messages: Record<string, string> = {
+            declined:
+              "Тестовая оплата отклонена. Выберите другой сценарий и повторите попытку.",
+            insufficient_funds:
+              "Недостаточно средств в тестовом сценарии. Выберите другой сценарий.",
+            processing_error:
+              "Не удалось обработать тестовую оплату. Повторите попытку.",
+            session_expired: "Срок тестовой оплаты истёк. Повторите попытку.",
+          };
+          if (result.payment.status === "cancelled") attempt.current = null;
+          throw new Error(
+            messages[result.payment.failure_reason || "processing_error"] ||
+              messages.processing_error,
+          );
+        }
+        order = result.order;
+      } else order = await api<Order>("/orders", undefined, request);
       cart.clear();
       router.push(`/order/${order.id}`);
     } catch (error) {
@@ -156,6 +237,7 @@ export function Checkout() {
           : "Не удалось оформить заказ. Корзина сохранена.",
       );
       if (error instanceof ApiError && error.status === 409) {
+        attempt.current = null;
         const detail = error.detail;
         if (
           detail?.code === "total_changed" &&
@@ -193,19 +275,25 @@ export function Checkout() {
   if (!cart.items.length)
     return (
       <Empty
-        title="Корзина пуста"
-        text="Добавьте товары, чтобы оформить доставку."
+        title={t("Корзина пуста")}
+        text={t("Добавьте товары, чтобы оформить доставку.")}
       />
     );
   return (
-    <>
-      <p className="breadcrumb">
-        <Link href="/cart">Корзина</Link> / Оформление
-      </p>
-      <div className="page-title">
-        <h1>Оформление заказа</h1>
-        <p>Без регистрации · с доставкой до вашей двери</p>
-      </div>
+    <div className="polish-page checkout-page">
+      <Breadcrumbs
+        items={[
+          { label: "Главная", href: "/" },
+          { label: "Корзина", href: "/cart" },
+          { label: "Оформление заказа" },
+        ]}
+      />
+      <PageIntro
+        eyebrow="Всё заранее"
+        title="Оформление заказа"
+        description="Без регистрации · с доставкой до вашей двери"
+        icon={ShoppingBasket}
+      />
       <form
         onSubmit={submit}
         className="checkout-layout"
@@ -214,10 +302,14 @@ export function Checkout() {
       >
         <div className="checkout-sections">
           <section className="checkout-panel">
-            <h2>1. Контактные данные</h2>
+            <h2 className="checkout-step-heading">
+              <span className="flow-number">01</span>
+              <UserRound size={22} aria-hidden="true" />
+              <span>{t("Контактные данные")}</span>
+            </h2>
             <div className="field-grid">
               <label>
-                Ваше имя
+                {t("Ваше имя")}
                 <input
                   name="customer_name"
                   autoComplete="name"
@@ -230,9 +322,9 @@ export function Checkout() {
                 />
               </label>
               <label>
-                Телефон
+                {t("Телефон")}
                 <input
-                  aria-label="Телефон"
+                  aria-label={t("Телефон")}
                   aria-describedby="phone-hint"
                   name="phone"
                   type="tel"
@@ -245,18 +337,20 @@ export function Checkout() {
                   onChange={(e) => setPhone(e.target.value)}
                   disabled={submitting}
                 />
-                <small id="phone-hint">От 7 до 15 цифр, с кодом страны.</small>
+                <small id="phone-hint">
+                  {t("От 7 до 15 цифр, с кодом страны.")}
+                </small>
               </label>
             </div>
             <label>
-              Адрес доставки
+              {t("Адрес доставки")}
               <input
                 name="address"
                 autoComplete="street-address"
                 required
                 minLength={5}
                 maxLength={300}
-                placeholder="Улица, дом, квартира"
+                placeholder={t("Улица, дом, квартира")}
                 value={address}
                 onChange={(e) => {
                   setAddress(e.target.value);
@@ -266,13 +360,13 @@ export function Checkout() {
               />
             </label>
             <label>
-              Комментарий (необязательно)
+              {t("Комментарий (необязательно)")}
               <textarea
-                aria-label="Комментарий (необязательно)"
+                aria-label={t("Комментарий (необязательно)")}
                 name="comment"
                 rows={3}
                 maxLength={1000}
-                placeholder="Подъезд, этаж, ориентир…"
+                placeholder={t("Подъезд, этаж, ориентир…")}
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 disabled={submitting}
@@ -280,10 +374,15 @@ export function Checkout() {
             </label>
           </section>
           <section className="checkout-panel">
-            <h2>2. Куда доставить?</h2>
+            <h2 className="checkout-step-heading">
+              <span className="flow-number">02</span>
+              <MapPin size={22} aria-hidden="true" />
+              <span>{t("Доставка")}</span>
+            </h2>
             <p>
-              Нажмите на карту, чтобы указать точку у дороги. Её можно изменить
-              или ввести координаты вручную.
+              {t(
+                "Нажмите на карту, чтобы указать точку у дороги. Её можно изменить или ввести координаты вручную.",
+              )}
             </p>
             <Map
               config={config.data}
@@ -293,12 +392,12 @@ export function Checkout() {
               disabled={submitting}
             />
             <div className="map-legend">
-              <span>М — магазин</span>
-              <span>● — ваша точка</span>
+              <span>{t("М — магазин")}</span>
+              <span>{t("● — ваша точка")}</span>
             </div>
             <div className="field-grid">
               <label>
-                Широта
+                {t("Широта")}
                 <input
                   name="latitude"
                   type="number"
@@ -315,7 +414,7 @@ export function Checkout() {
                 />
               </label>
               <label>
-                Долгота
+                {t("Долгота")}
                 <input
                   name="longitude"
                   type="number"
@@ -334,42 +433,52 @@ export function Checkout() {
             </div>
             <div className="delivery-status" aria-live="polite">
               {!point ? (
-                <p>Выберите точку доставки.</p>
+                <p>{t("Выберите точку доставки.")}</p>
               ) : quote ? (
                 <div className="route-metrics">
                   <span>
-                    Расстояние<strong>{distance(quote.distance_meters)}</strong>
+                    <Route size={20} aria-hidden="true" />
+                    <small>{t("Расстояние")}</small>
+                    <strong>{distance(quote.distance_meters)}</strong>
                   </span>
                   <span>
-                    Время в пути
+                    <Clock3 size={20} aria-hidden="true" />
+                    <small>{t("Время в пути")}</small>
                     <strong>{duration(quote.duration_seconds)}</strong>
                   </span>
                   <span>
-                    Доставка
+                    <Wallet size={20} aria-hidden="true" />
+                    <small>{t("Доставка")}</small>
                     <strong>{money(cents(quote.delivery_price))}</strong>
                   </span>
                 </div>
               ) : (
                 <p>
                   {quoted
-                    ? "Точка, адрес или корзина изменились. Рассчитайте доставку заново."
-                    : "Точка выбрана. Рассчитайте доставку для проверки маршрута."}
+                    ? t(
+                        "Точка, адрес или корзина изменились. Рассчитайте доставку заново.",
+                      )
+                    : t(
+                        "Точка выбрана. Рассчитайте доставку для проверки маршрута.",
+                      )}
                 </p>
               )}
               {config.data && !config.data.available && (
                 <p className="stock-warning">
-                  Доставка пока недоступна. Ваши товары остаются в корзине.
+                  {t(
+                    "Доставка пока недоступна. Ваши товары остаются в корзине.",
+                  )}
                 </p>
               )}
               {config.error && (
                 <p role="alert">
-                  {config.error.message}{" "}
+                  {t(config.error.message)}{" "}
                   <button
                     type="button"
                     className="text-link"
                     onClick={config.retry}
                   >
-                    Повторить
+                    {t("Повторить")}
                   </button>
                 </p>
               )}
@@ -382,22 +491,66 @@ export function Checkout() {
               }
               onClick={calculate}
             >
-              {quoting ? "Рассчитываем маршрут…" : "Рассчитать доставку"}
+              {quoting ? t("Рассчитываем маршрут…") : t("Рассчитать доставку")}
             </button>
             <p className="field-hint">
-              Время в пути — оценка маршрута без сборки заказа. Стоимость
-              доставки фиксированная.
+              {t(
+                "Время в пути — оценка маршрута без сборки заказа. Стоимость доставки фиксированная.",
+              )}
             </p>
+          </section>
+          <section className="checkout-panel payment-panel">
+            <h2 className="checkout-step-heading">
+              <span className="flow-number">03</span>
+              <CreditCard size={22} aria-hidden="true" />
+              <span>{t("Способ оплаты")}</span>
+            </h2>
+            <fieldset className="payment-methods" disabled={submitting}>
+              <legend className="sr-only">{t("Способ оплаты")}</legend>
+              <label>
+                <Wallet size={22} aria-hidden="true" />
+                <input
+                  type="radio"
+                  name="payment_method"
+                  value="cash"
+                  checked={method === "cash"}
+                  onChange={() => setMethod("cash")}
+                />
+                {t("Наличными при получении")}
+              </label>
+              <label>
+                <CreditCard size={22} aria-hidden="true" />
+                <input
+                  type="radio"
+                  name="payment_method"
+                  value="card"
+                  checked={method === "card"}
+                  onChange={() => setMethod("card")}
+                />
+                {t("Банковской картой")}
+              </label>
+            </fieldset>
+            {method === "card" && (
+              <SandboxCard
+                value={card}
+                onChange={setCard}
+                disabled={submitting}
+                error={!!error}
+              />
+            )}
           </section>
         </div>
         <aside className="cart-summary checkout-summary">
-          <h2>Ваш заказ</h2>
+          <h2 className="checkout-step-heading">
+            <span className="flow-number">04</span>
+            <span>{t("Ваш заказ")}</span>
+          </h2>
           {cart.items.map((item) => {
             const product = cart.products.find((p) => p.id === item.product_id);
             return (
               <div className="checkout-item" key={item.product_id}>
                 <span>
-                  {product?.name || "Товар недоступен"}
+                  {t(product?.name) || t("Товар недоступен")}
                   <small>
                     {item.quantity} ×{" "}
                     {product ? money(cents(product.price)) : "—"}
@@ -409,49 +562,69 @@ export function Checkout() {
               </div>
             );
           })}
-          {cart.loading && <p role="status">Проверяем товары…</p>}
+          {cart.loading && <p role="status">{t("Проверяем товары…")}</p>}
           {cart.error && (
             <p role="alert">
-              {cart.error.message}{" "}
+              {t(cart.error.message)}{" "}
               <button type="button" className="text-link" onClick={cart.retry}>
-                Повторить
+                {t("Повторить")}
               </button>
             </p>
           )}
           {!cart.loading && invalidStock && (
             <p className="stock-warning">
-              Проверьте наличие и количество товаров в{" "}
-              <Link href="/cart">корзине</Link>.
+              {t("Проверьте наличие и количество товаров в")}{" "}
+              <Link href="/cart">{t("корзине")}</Link>.
             </p>
           )}
           <div>
-            <span>Товары</span>
+            <span>{t("Товары")}</span>
             <strong>{money(subtotal)}</strong>
           </div>
           <div>
-            <span>Доставка</span>
-            <strong>{quote ? money(fee) : "После расчёта"}</strong>
+            <span>{t("Доставка")}</span>
+            <strong>{quote ? money(fee) : t("После расчёта")}</strong>
+          </div>
+          <div className="summary-payment-method">
+            <span>{t("Способ оплаты")}</span>
+            <strong>
+              {t(method === "card" ? "Тестовая оплата" : "Наличными")}
+            </strong>
           </div>
           <div className="summary-total">
-            <span>Итого{!quote ? " без доставки" : ""}</span>
+            <span>
+              {t("Итого")}
+              {!quote ? t(" без доставки") : ""}
+            </span>
             <strong data-testid="checkout-total">
               {money(quote ? total : subtotal)}
             </strong>
           </div>
+          <p className="sr-only" role="status" aria-live="polite">
+            {submitting
+              ? t(
+                  method === "card"
+                    ? "Обрабатываем тестовую оплату…"
+                    : "Оформляем заказ…",
+                )
+              : ""}
+          </p>
           {error && (
             <p className="checkout-error" id="checkout-error" role="alert">
-              {error} Корзина и введённые данные сохранены.
+              {t(error)}
+              {t(" Корзина и введённые данные сохранены.")}
             </p>
           )}
           {!validCustomer && (
             <p className="field-hint">
-              Укажите имя (от 2 символов), телефон (7–15 цифр) и полный адрес
-              (от 5 символов).
+              {t(
+                "Укажите имя (от 2 символов), телефон (7–15 цифр) и полный адрес (от 5 символов).",
+              )}
             </p>
           )}
           {!quote && (
             <p className="field-hint">
-              Для оформления нужен актуальный расчёт доставки.
+              {t("Для оформления нужен актуальный расчёт доставки.")}
             </p>
           )}
           <button
@@ -460,6 +633,7 @@ export function Checkout() {
             disabled={
               !quote ||
               !validCustomer ||
+              (method === "card" && !validSandbox(card)) ||
               invalidStock ||
               cart.loading ||
               !!cart.error ||
@@ -467,17 +641,28 @@ export function Checkout() {
               quoting
             }
           >
-            {submitting ? "Оформляем заказ…" : "Оформить заказ"}
+            {submitting
+              ? t(
+                  method === "card"
+                    ? "Обрабатываем тестовую оплату…"
+                    : "Оформляем заказ…",
+                )
+              : t(
+                  method === "card"
+                    ? "Оплатить и оформить заказ"
+                    : "Оформить заказ",
+                )}
           </button>
           <p className="field-hint">
-            При оформлении проверим цены, остатки и маршрут ещё раз. Оплата не
-            требуется в учебном проекте.
+            {t(
+              "Перед подтверждением проверим цены, наличие и итоговую стоимость заказа.",
+            )}
           </p>
           <Link href="/cart" className="text-link">
-            Изменить корзину
+            {t("Изменить корзину")}
           </Link>
         </aside>
       </form>
-    </>
+    </div>
   );
 }

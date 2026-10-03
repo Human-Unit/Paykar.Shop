@@ -1,6 +1,7 @@
 import re
 from datetime import datetime
 from decimal import Decimal
+from typing import Literal
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field, field_serializer, field_validator
@@ -15,6 +16,8 @@ class CartItem(BaseModel):
 
 
 class OrderCreate(DeliveryPoint):
+    payment_method: Literal["cash", "card"] = "cash"
+    idempotency_key: UUID | None = None
     customer_name: str = Field(min_length=2, max_length=100)
     phone: str = Field(min_length=7, max_length=30)
     comment: str | None = Field(default=None, max_length=1000)
@@ -64,6 +67,8 @@ class OrderOut(BaseModel):
     status: str
     created_at: datetime
     items: list[OrderItemOut]
+    payment_method: str
+    payment_status: str
 
     @field_serializer("subtotal", "delivery_price", "total")
     def money(self, value: Decimal) -> str:

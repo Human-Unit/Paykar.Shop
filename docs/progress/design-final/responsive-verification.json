@@ -1,0 +1,231 @@
+{
+  "rows": [
+    {
+      "width": 1440,
+      "path": "/",
+      "client": 1425,
+      "scroll": 1425,
+      "overflow": false,
+      "smallButtons": [],
+      "failedImages": []
+    },
+    {
+      "width": 1440,
+      "path": "/catalog",
+      "client": 1425,
+      "scroll": 1425,
+      "overflow": false,
+      "smallButtons": [],
+      "failedImages": []
+    },
+    {
+      "width": 1440,
+      "path": "/product/apples-red",
+      "client": 1425,
+      "scroll": 1425,
+      "overflow": false,
+      "smallButtons": [],
+      "failedImages": []
+    },
+    {
+      "width": 1440,
+      "path": "/cart",
+      "client": 1425,
+      "scroll": 1425,
+      "overflow": false,
+      "smallButtons": [],
+      "failedImages": []
+    },
+    {
+      "width": 1440,
+      "path": "/checkout",
+      "client": 1425,
+      "scroll": 1425,
+      "overflow": false,
+      "smallButtons": [],
+      "failedImages": []
+    },
+    {
+      "width": 1440,
+      "path": "/order/ccbac5f7-f214-4fb7-9cd1-b8dd7ab232a2",
+      "client": 1425,
+      "scroll": 1425,
+      "overflow": false,
+      "smallButtons": [],
+      "failedImages": []
+    },
+    {
+      "width": 1024,
+      "path": "/",
+      "client": 1009,
+      "scroll": 1009,
+      "overflow": false,
+      "smallButtons": [],
+      "failedImages": []
+    },
+    {
+      "width": 1024,
+      "path": "/catalog",
+      "client": 1009,
+      "scroll": 1009,
+      "overflow": false,
+      "smallButtons": [],
+      "failedImages": []
+    },
+    {
+      "width": 1024,
+      "path": "/product/apples-red",
+      "client": 1009,
+      "scroll": 1009,
+      "overflow": false,
+      "smallButtons": [],
+      "failedImages": []
+    },
+    {
+      "width": 1024,
+      "path": "/cart",
+      "client": 1009,
+      "scroll": 1009,
+      "overflow": false,
+      "smallButtons": [],
+      "failedImages": []
+    },
+    {
+      "width": 1024,
+      "path": "/checkout",
+      "client": 1009,
+      "scroll": 1009,
+      "overflow": false,
+      "smallButtons": [],
+      "failedImages": []
+    },
+    {
+      "width": 1024,
+      "path": "/order/ccbac5f7-f214-4fb7-9cd1-b8dd7ab232a2",
+      "client": 1009,
+      "scroll": 1009,
+      "overflow": false,
+      "smallButtons": [],
+      "failedImages": []
+    },
+    {
+      "width": 768,
+      "path": "/",
+      "client": 753,
+      "scroll": 753,
+      "overflow": false,
+      "smallButtons": [],
+      "failedImages": []
+    },
+    {
+      "width": 768,
+      "path": "/catalog",
+      "client": 753,
+      "scroll": 753,
+      "overflow": false,
+      "smallButtons": [],
+      "failedImages": []
+    },
+    {
+      "width": 768,
+      "path": "/product/apples-red",
+      "client": 753,
+      "scroll": 753,
+      "overflow": false,
+      "smallButtons": [],
+      "failedImages": []
+    },
+    {
+      "width": 768,
+      "path": "/cart",
+      "client": 753,
+      "scroll": 753,
+      "overflow": false,
+      "smallButtons": [],
+      "failedImages": []
+    },
+    {
+      "width": 768,
+      "path": "/checkout",
+      "client": 753,
+      "scroll": 753,
+      "overflow": false,
+      "smallButtons": [],
+      "failedImages": []
+    },
+    {
+      "width": 768,
+      "path": "/order/ccbac5f7-f214-4fb7-9cd1-b8dd7ab232a2",
+      "client": 753,
+      "scroll": 753,
+      "overflow": false,
+      "smallButtons": [],
+      "failedImages": []
+    },
+    {
+      "width": 390,
+      "path": "/",
+      "client": 375,
+      "scroll": 375,
+      "overflow": false,
+      "smallButtons": [],
+      "failedImages": []
+    },
+    {
+      "width": 390,
+      "path": "/catalog",
+      "client": 375,
+      "scroll": 375,
+      "overflow": false,
+      "smallButtons": [],
+      "failedImages": []
+    },
+    {
+      "width": 390,
+      "path": "/product/apples-red",
+      "client": 375,
+      "scroll": 375,
+      "overflow": false,
+      "smallButtons": [],
+      "failedImages": []
+    },
+    {
+      "width": 390,
+      "path": "/cart",
+      "client": 375,
+      "scroll": 375,
+      "overflow": false,
+      "smallButtons": [],
+      "failedImages": []
+    },
+    {
+      "width": 390,
+      "path": "/checkout",
+      "client": 375,
+      "scroll": 375,
+      "overflow": false,
+      "smallButtons": [],
+      "failedImages": []
+    },
+    {
+      "width": 390,
+      "path": "/order/ccbac5f7-f214-4fb7-9cd1-b8dd7ab232a2",
+      "client": 375,
+      "scroll": 375,
+      "overflow": false,
+      "smallButtons": [],
+      "failedImages": []
+    }
+  ],
+  "filters": {
+    "sort": "price_desc",
+    "inStock": true,
+    "count": "Найдено товаров: 38"
+  },
+  "pagination": "← Назад\nСтраница 2 из 4\nДалее →",
+  "nested": "Фрукты",
+  "fallback": "/images/products/fallback.svg",
+  "skipFocused": true,
+  "cart": "0",
+  "errors": []
+}

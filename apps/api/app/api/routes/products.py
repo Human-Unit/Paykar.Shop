@@ -17,6 +17,7 @@ async def products(
     category: str | None = None,
     sort: Literal["name", "price_asc", "price_desc"] = "name",
     in_stock: bool = False,
+    on_sale: bool = False,
     page: Annotated[int, Query(ge=1)] = 1,
     page_size: Annotated[int, Query(ge=1, le=48)] = 24,
     ids: Annotated[str | None, Query(max_length=2000)] = None,
@@ -33,6 +34,8 @@ async def products(
         filters.append(Product.category_id.in_(select(tree.c.id)))
     if in_stock:
         filters.append(Product.stock_quantity >= 1)
+    if on_sale:
+        filters.append(Product.old_price > Product.price)
     if ids is not None:
         try:
             product_ids = [int(value) for value in ids.split(",") if value]

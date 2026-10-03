@@ -1,9 +1,4 @@
-import { Empty } from "@/components/states";
+import { NotFoundView } from "@/components/not-found-view";
 export default function NotFound() {
-  return (
-    <Empty
-      title="Страница не найдена"
-      text="Вернитесь к покупкам в каталоге."
-    />
-  );
+  return <NotFoundView />;
 }

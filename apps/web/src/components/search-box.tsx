@@ -1,14 +1,14 @@
 "use client";
-
+import { usePresentation } from "@/context/presentation";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Search, X } from "lucide-react";
 import { ProductPage, useResource } from "@/lib/api";
-import { cents, money } from "@/lib/format";
+import { cents } from "@/lib/format";
 import { ProductImage } from "./product-card";
-
 export function SearchBox() {
+  const { t, money } = usePresentation();
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [term, setTerm] = useState("");
@@ -43,7 +43,7 @@ export function SearchBox() {
       }}
     >
       <label htmlFor="site-search" className="sr-only">
-        Поиск товаров
+        {t("Поиск товаров")}
       </label>
       <input
         id="site-search"
@@ -58,7 +58,7 @@ export function SearchBox() {
             : undefined
         }
         autoComplete="off"
-        placeholder="Найти молоко, хлеб, фрукты…"
+        placeholder={t("Найти молоко, хлеб, фрукты…")}
         maxLength={200}
         value={query}
         onChange={(event) => {
@@ -90,7 +90,7 @@ export function SearchBox() {
       {query && (
         <button
           type="button"
-          aria-label="Очистить поиск"
+          aria-label={t("Очистить поиск")}
           onClick={() => {
             setQuery("");
             setActive(-1);
@@ -100,7 +100,7 @@ export function SearchBox() {
           <X size={18} />
         </button>
       )}
-      <button type="submit" aria-label="Искать">
+      <button type="submit" aria-label={t("Искать")}>
         <Search size={21} />
       </button>
       {visible && (
@@ -108,16 +108,16 @@ export function SearchBox() {
           <div
             id="search-suggestions"
             role="listbox"
-            aria-label="Подсказки поиска"
+            aria-label={t("Подсказки поиска")}
           >
             {(!settled || resource.loading) && (
               <p className="search-status" role="status">
-                Ищем товары…
+                {t("Ищем товары…")}
               </p>
             )}
             {resource.error && (
               <p className="search-status" role="status">
-                Подсказки недоступны. Нажмите Enter, чтобы открыть поиск.
+                {t("Подсказки недоступны. Нажмите Enter, чтобы открыть поиск.")}
               </p>
             )}
             {settled &&
@@ -125,7 +125,7 @@ export function SearchBox() {
               !resource.error &&
               items.length === 0 && (
                 <p className="search-status" role="status">
-                  Ничего не найдено. Попробуйте другое название.
+                  {t("Ничего не найдено. Попробуйте другое название.")}
                 </p>
               )}
             {items.map((product, index) => (
@@ -140,11 +140,11 @@ export function SearchBox() {
               >
                 <ProductImage product={product} />
                 <span>
-                  {product.name}
+                  {t(product.name)}
                   <small>
-                    {product.unit}
+                    {t(product.unit)}
                     {Number(product.stock_quantity) < 1
-                      ? " · Нет в наличии"
+                      ? t(" · Нет в наличии")
                       : ""}
                   </small>
                 </span>
@@ -157,7 +157,7 @@ export function SearchBox() {
             href={`/catalog?q=${encodeURIComponent(query.trim())}`}
             onClick={() => setOpen(false)}
           >
-            Все результаты →
+            {t("Все результаты →")}
           </Link>
         </div>
       )}

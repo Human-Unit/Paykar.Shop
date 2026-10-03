@@ -1,0 +1,10 @@
+{
+  "scope": "Checkout component handler execution with controlled React hooks and API doubles; not DOM/browser verification",
+  "payment_failures_preserve_cart_customer_destination_quote": true,
+  "retry_uses_same_payment_session": true,
+  "payment_method_switch_does_not_route": true,
+  "rerender_after_language_theme_change_retains_form_destination_quote_without_extra_routing": true,
+  "double_submit_guard": true,
+  "clear_only_after_order": true,
+  "card_form_values_not_sent": true
+}

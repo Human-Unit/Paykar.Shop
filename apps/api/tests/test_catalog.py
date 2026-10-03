@@ -4,6 +4,7 @@ from decimal import Decimal
 import pytest
 import pytest_asyncio
 from httpx import ASGITransport, AsyncClient
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.pool import NullPool
 
@@ -102,3 +103,18 @@ async def test_pagination_and_ids(client):
     ] == 1
     for params in ({"page": 0}, {"page_size": 49}, {"sort": "bad"}, {"ids": "bad"}):
         assert (await client.get("/api/v1/products", params=params)).status_code == 422
+
+
+async def test_promotions_filter_and_pagination(client):
+    assert (await client.get("/api/v1/products?on_sale=true")).json()["total"] == 0
+    session = await anext(client._transport.app.dependency_overrides[get_session]())
+    apple = await session.scalar(select(Product).where(Product.slug == "test-apple"))
+    apple.old_price = Decimal("12.00")
+    hidden = await session.scalar(select(Product).where(Product.slug == "test-hidden"))
+    hidden.old_price = Decimal("20.00")
+    await session.flush()
+    result = (await client.get("/api/v1/products?on_sale=true&page_size=1")).json()
+    assert result["total"] == 1 and result["items"][0]["slug"] == "test-apple"
+    assert (await client.get("/api/v1/products?on_sale=true&page_size=1&page=2")).json()[
+        "items"
+    ] == []

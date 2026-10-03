@@ -1,23 +1,28 @@
 "use client";
-
+import { usePresentation } from "@/context/presentation";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight, Leaf, ShoppingBasket, PackageCheck } from "lucide-react";
+import {
+  ArrowUpRight,
+  Leaf,
+  ShoppingBasket,
+  PackageCheck,
+  Route,
+  ShoppingBag,
+  CheckCircle2,
+  MapPin,
+} from "lucide-react";
 import { cents } from "@/lib/format";
 import { Category, ProductPage, useResource } from "@/lib/api";
 import { ProductCard } from "./product-card";
-import { Failure, Loading } from "./states";
-
-export const categoryImages: Record<string, string> = {
-  produce: "apple",
-  fruit: "apple",
-  dairy: "milk",
-  bakery: "bread",
-  drinks: "bottle",
-  sweets: "chocolate",
-  household: "cleaner",
-};
+import { Empty, Failure, Loading } from "./states";
+import { ShoppingBanner } from "./shopping-banner";
+import { categoryImages } from "@/lib/category-presentation";
+import { articles, storePages } from "@/lib/store-content";
+import { SectionHeader, StepFlow, CTASection } from "./page-patterns";
+import { ArticleCard } from "./article-card";
 export function Home() {
+  const { t } = usePresentation();
   const categories = useResource<Category[]>("/categories");
   const products = useResource<ProductPage>(
     "/products?page_size=48&in_stock=true",
@@ -31,66 +36,59 @@ export function Home() {
       .filter((p) => !discounts.some((d) => d.id === p.id))
       .slice(0, 8) ?? [];
   return (
-    <>
-      <section className="hero">
-        <div className="hero-copy">
-          <span className="eyebrow">ВАШ ЕЖЕДНЕВНЫЙ ВЫБОР</span>
-          <h1>
-            Всё нужное.
-            <br />В одной корзине.
-          </h1>
-          <p>
-            От свежих фруктов до любимого хлеба —
-            <br className="hidden sm:block" /> собирайте покупки в своём темпе.
-          </p>
-          <Link href="/catalog" className="button">
-            За покупками <ArrowUpRight size={20} />
+    <div className="polish-page home-page">
+      <div className="promo-grid">
+        <ShoppingBanner hero />
+        <div className="promo-side">
+          <Link href="/delivery" className="promo-card promo-route">
+            <Route size={30} aria-hidden="true" />
+            <span className="eyebrow">{t("ДОСТАВКА")}</span>
+            <h2>
+              {t("Весь маршрут.")}
+              <br />
+              {t("До заказа.")}
+            </h2>
+            <p>{t("Расстояние, время и стоимость на одной карте.")}</p>
+            <span className="promo-action">
+              {t("Как работает доставка")}{" "}
+              <ArrowUpRight size={18} aria-hidden="true" />
+            </span>
           </Link>
-          <small>Учебный каталог · условные изображения</small>
+          <Link href="/catalog" className="promo-card promo-shopping">
+            <ShoppingBag size={30} aria-hidden="true" />
+            <span className="eyebrow">{t("ПРОСТО ПОКУПКИ")}</span>
+            <h2>
+              {t("Без регистрации.")}
+              <br />
+              {t("В вашем темпе.")}
+            </h2>
+            <span className="promo-action">
+              {t("Собрать корзину ")}
+              <ArrowUpRight size={18} />
+            </span>
+          </Link>
         </div>
-        <div className="hero-art" aria-hidden="true">
-          <span className="hero-circle" />
-          <Image
-            src="/images/products/apple.svg"
-            width={260}
-            height={260}
-            alt=""
-            className="hero-apple"
-          />
-          <Image
-            src="/images/products/milk.svg"
-            width={260}
-            height={260}
-            alt=""
-            className="hero-milk"
-          />
-          <Image
-            src="/images/products/bread.svg"
-            width={260}
-            height={260}
-            alt=""
-            className="hero-bread"
-          />
-        </div>
-      </section>
+      </div>
       <div className="benefits">
         <span>
-          <Leaf size={20} /> Продукты на каждый день
+          <Leaf size={20} />
+          {t(" Продукты на каждый день")}
         </span>
         <span>
-          <ShoppingBasket size={20} /> Покупки без регистрации
+          <ShoppingBasket size={20} />
+          {t(" Покупки без регистрации")}
         </span>
         <span>
-          <PackageCheck size={20} /> Маршрут и цена до заказа
+          <PackageCheck size={20} />
+          {t(" Маршрут и цена до заказа")}
         </span>
       </div>
       <section>
-        <div className="section-heading">
-          <h2>Что будем покупать?</h2>
-          <Link href="/catalog">
-            Весь каталог <ArrowUpRight size={17} />
-          </Link>
-        </div>
+        <SectionHeader
+          eyebrow="Свежий выбор на каждый день"
+          title="Категории товаров"
+          action={{ href: "/catalog", label: "Весь каталог" }}
+        />
         {categories.loading && <Loading />}
         {categories.error && (
           <Failure error={categories.error} retry={categories.retry} />
@@ -105,43 +103,53 @@ export function Home() {
                 className="category-tile"
               >
                 <Image
-                  src={`/images/products/${categoryImages[c.slug] || "fallback"}.svg`}
-                  width={100}
-                  height={100}
+                  src={
+                    categoryImages[c.slug]
+                      ? `/images/paykar/${categoryImages[c.slug]}.webp`
+                      : "/images/products/fallback.svg"
+                  }
+                  width={180}
+                  height={180}
+                  unoptimized
                   alt=""
                 />
-                <span>{c.name}</span>
+                <span>{t(c.name)}</span>
                 <ArrowUpRight size={16} />
               </Link>
             ))}
         </div>
+        {categories.data?.length === 0 && (
+          <Empty
+            title={t("Категории скоро появятся")}
+            text={t(
+              "Загляните в каталог, чтобы выбрать продукты на каждый день.",
+            )}
+          />
+        )}
       </section>
       {discounts.length > 0 && (
-        <section className="discount-section">
-          <div className="section-heading">
-            <div>
-              <span className="eyebrow">МЕНЬШЕ ЦЕНА — ТОТ ЖЕ ВЫБОР</span>
-              <h2>Сейчас выгоднее</h2>
-            </div>
-            <Link href="/catalog?sort=price_asc">В каталог →</Link>
-          </div>
+        <section id="promotions" className="discount-section">
+          <SectionHeader
+            eyebrow="МЕНЬШЕ ЦЕНА — ТОТ ЖЕ ВЫБОР"
+            title="Акции"
+            action={{ href: "/promotions", label: "Все акции" }}
+          />
           <div className="product-grid">
             {discounts.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}
           </div>
           <p className="section-note">
-            Сравнение с прежними ценами из демонстрационного каталога.
+            {t("Скидки относительно прежних цен.")}
           </p>
         </section>
       )}
       <section>
-        <div className="section-heading">
-          <h2>Для вашей корзины</h2>
-          <Link href="/catalog">
-            Все товары <ArrowUpRight size={17} />
-          </Link>
-        </div>
+        <SectionHeader
+          eyebrow="Продукты на каждый день"
+          title="Повседневные покупки"
+          action={{ href: "/catalog", label: "Все товары" }}
+        />
         {products.loading && <Loading kind="grid" />}
         {products.error && (
           <Failure error={products.error} retry={products.retry} />
@@ -152,9 +160,50 @@ export function Home() {
           ))}
         </div>
         {products.data?.total === 0 && (
-          <p className="message">Товары скоро появятся.</p>
+          <Empty
+            title={t("Товары скоро появятся.")}
+            text={t(
+              "Загляните в каталог, чтобы выбрать продукты на каждый день.",
+            )}
+          />
         )}
       </section>
-    </>
+      <section className="home-shopping-flow">
+        <SectionHeader
+          eyebrow="ПРОСТО ПОКУПКИ"
+          title="Покупки в вашем темпе"
+          text="Без регистрации. Всё заранее."
+          action={{ href: "/how-to-buy", label: "Как купить" }}
+        />
+        <StepFlow
+          steps={[
+            { ...storePages[0].sections[0], icon: ShoppingBasket },
+            { ...storePages[0].sections[3], icon: MapPin },
+            { ...storePages[0].sections[5], icon: CheckCircle2 },
+          ]}
+        />
+      </section>
+      <CTASection
+        eyebrow="Сначала маршрут. Потом заказ."
+        title="Доставка с Пайкар"
+        text="Выберите адрес и узнайте маршрут, время в пути и стоимость до подтверждения заказа."
+        href="/delivery"
+        label="Как работает доставка"
+        icon={Route}
+      />
+      <section>
+        <SectionHeader
+          eyebrow="Полезно знать"
+          title="Блог"
+          text="Практические заметки о покупках, продуктах и доставке."
+          action={{ href: "/blog", label: "Все статьи" }}
+        />
+        <div className="editorial-grid">
+          {articles.slice(0, 3).map((article) => (
+            <ArticleCard key={article.slug} article={article} />
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }

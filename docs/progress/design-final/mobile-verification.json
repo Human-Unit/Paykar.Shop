@@ -1,0 +1,311 @@
+{
+  "keyboardActive": "suggestion-1",
+  "cartReload": {
+    "quantity": "1",
+    "subtotal": "18,00 с.",
+    "count": "1"
+  },
+  "invalidDisabled": true,
+  "clickedPoint": {
+    "lat": "38.561192",
+    "lon": "68.791594"
+  },
+  "noAutoQuote": true,
+  "providerFixtureStatus": 503,
+  "providerFailureRetains": {
+    "cart": "1",
+    "name": "Visual Redesign Mobile Acceptance"
+  },
+  "firstQuote": {
+    "distance": 2887,
+    "duration": 273
+  },
+  "quote": {
+    "address": "Visual Redesign technical acceptance, corrected address, Dushanbe",
+    "latitude": 38.575,
+    "longitude": 68.78,
+    "distance_meters": 2887,
+    "duration_seconds": 273,
+    "delivery_price": "20.00",
+    "route": {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "LineString",
+            "coordinates": [
+              [
+                68.791513,
+                38.562653
+              ],
+              [
+                68.791949,
+                38.562649
+              ],
+              [
+                68.791947,
+                38.562831
+              ],
+              [
+                68.792144,
+                38.562831
+              ],
+              [
+                68.792146,
+                38.562923
+              ],
+              [
+                68.791512,
+                38.562924
+              ],
+              [
+                68.790858,
+                38.562933
+              ],
+              [
+                68.790217,
+                38.562943
+              ],
+              [
+                68.789447,
+                38.562957
+              ],
+              [
+                68.788996,
+                38.562963
+              ],
+              [
+                68.788855,
+                38.562964
+              ],
+              [
+                68.788698,
+                38.562966
+              ],
+              [
+                68.788287,
+                38.562972
+              ],
+              [
+                68.787369,
+                38.562997
+              ],
+              [
+                68.787153,
+                38.56304
+              ],
+              [
+                68.786796,
+                38.563138
+              ],
+              [
+                68.78681,
+                38.56326
+              ],
+              [
+                68.786844,
+                38.563328
+              ],
+              [
+                68.787348,
+                38.563671
+              ],
+              [
+                68.787606,
+                38.563843
+              ],
+              [
+                68.787694,
+                38.563901
+              ],
+              [
+                68.788438,
+                38.564403
+              ],
+              [
+                68.788599,
+                38.564512
+              ],
+              [
+                68.78956,
+                38.565152
+              ],
+              [
+                68.790177,
+                38.565562
+              ],
+              [
+                68.790305,
+                38.565647
+              ],
+              [
+                68.790484,
+                38.565766
+              ],
+              [
+                68.790835,
+                38.565995
+              ],
+              [
+                68.790919,
+                38.56605
+              ],
+              [
+                68.791493,
+                38.566425
+              ],
+              [
+                68.791614,
+                38.566505
+              ],
+              [
+                68.792346,
+                38.566986
+              ],
+              [
+                68.792422,
+                38.567036
+              ],
+              [
+                68.793219,
+                38.567563
+              ],
+              [
+                68.793624,
+                38.567188
+              ],
+              [
+                68.793865,
+                38.567345
+              ],
+              [
+                68.79306,
+                38.56809
+              ],
+              [
+                68.791104,
+                38.569899
+              ],
+              [
+                68.789482,
+                38.571419
+              ],
+              [
+                68.788798,
+                38.57204
+              ],
+              [
+                68.788384,
+                38.572425
+              ],
+              [
+                68.787009,
+                38.573687
+              ],
+              [
+                68.7869,
+                38.57381
+              ],
+              [
+                68.786752,
+                38.574027
+              ],
+              [
+                68.786717,
+                38.57409
+              ],
+              [
+                68.786593,
+                38.574351
+              ],
+              [
+                68.786561,
+                38.574479
+              ],
+              [
+                68.786441,
+                38.574476
+              ],
+              [
+                68.786241,
+                38.574474
+              ],
+              [
+                68.782171,
+                38.574472
+              ],
+              [
+                68.781012,
+                38.574461
+              ]
+            ]
+          },
+          "properties": {}
+        }
+      ]
+    }
+  },
+  "staleDisabled": true,
+  "staleMessage": "Точка, адрес или корзина изменились. Рассчитайте доставку заново.",
+  "noAutoRequote": true,
+  "routeRetained": true,
+  "map": {
+    "paths": 1,
+    "markers": [
+      {
+        "name": "Магазин",
+        "visible": true
+      },
+      {
+        "name": "Ваш адрес",
+        "visible": true
+      }
+    ],
+    "width": 315.3333435058594,
+    "height": 300
+  },
+  "metrics": "Расстояние\n2,9 км\nВремя в пути\n5 мин\nДоставка\n20,00 с.",
+  "invalidStatus": 422,
+  "failedRetains": {
+    "cart": "1",
+    "name": "Visual Redesign Mobile Acceptance",
+    "phone": "+992900000000",
+    "address": "Visual Redesign technical acceptance, corrected address, Dushanbe"
+  },
+  "cartBeforeSuccessResponse": {
+    "status": 201,
+    "count": "1",
+    "stored": "[{\"product_id\":1,\"quantity\":1}]"
+  },
+  "duplicateRequests": 1,
+  "order": {
+    "id": "9bbf8a9c-1c24-4f37-97f1-47c08f8317c2",
+    "customer_name": "Visual Redesign Mobile Acceptance",
+    "address": "Visual Redesign technical acceptance, corrected address, Dushanbe",
+    "latitude": 38.575,
+    "longitude": 68.78,
+    "subtotal": "18.00",
+    "delivery_price": "20.00",
+    "total": "38.00",
+    "distance_meters": 2887,
+    "delivery_duration_seconds": 273,
+    "status": "pending",
+    "created_at": "2026-10-01T18:53:17.606862Z",
+    "items": [
+      {
+        "product_id": 1,
+        "product_name": "Яблоки красные, 1 кг",
+        "quantity": "1.000",
+        "unit_price": "18.00",
+        "total_price": "18.00"
+      }
+    ]
+  },
+  "cleared": "0",
+  "confirmationReload": true,
+  "quoteCalls": 3,
+  "orderCalls": 2,
+  "errors": [],
+  "networkRecords": 46
+}

@@ -1,20 +1,30 @@
+"use client";
+import { usePresentation } from "@/context/presentation";
 import Link from "next/link";
-import { ShoppingBasket } from "lucide-react";
-
+import {
+  ShoppingBasket,
+  CircleAlert,
+  Package,
+  type LucideIcon,
+} from "lucide-react";
 export function Loading({
   kind = "message",
+  label = "Загружаем товары…",
 }: {
   kind?: "message" | "grid" | "product";
+  label?: string;
 }) {
+  const { t } = usePresentation();
   return (
     <div
       role="status"
       aria-busy="true"
       className={kind === "message" ? "message" : `skeleton-${kind}`}
     >
-      <span className={kind === "message" ? "" : "sr-only"}>
-        Загружаем товары…
-      </span>
+      {kind === "message" && (
+        <Package className="loading-icon" size={28} aria-hidden="true" />
+      )}
+      <span className={kind === "message" ? "" : "sr-only"}>{t(label)}</span>
       {kind !== "message" && (
         <div
           className={kind === "grid" ? "product-grid" : "product-detail"}
@@ -33,26 +43,44 @@ export function Loading({
   );
 }
 export function Failure({ error, retry }: { error: Error; retry: () => void }) {
+  const { t } = usePresentation();
   return (
-    <div className="message" role="alert">
-      <p>{error.message}</p>
+    <div className="message failure-state" role="alert">
+      <span className="state-icon">
+        <CircleAlert size={32} aria-hidden="true" />
+      </span>
+      <h2>{t("Не удалось загрузить")}</h2>
+      <p>{t(error.message)}</p>
       <button type="button" onClick={retry} className="button mt-4">
-        Повторить
+        {t("Повторить")}
       </button>
       <Link href="/catalog" className="text-link state-link">
-        Вернуться в каталог →
+        {t("Вернуться в каталог →")}
       </Link>
     </div>
   );
 }
-export function Empty({ title, text }: { title: string; text: string }) {
+export function Empty({
+  title,
+  text,
+  icon: Icon = ShoppingBasket,
+  compact = false,
+}: {
+  title: string;
+  text: string;
+  icon?: LucideIcon;
+  compact?: boolean;
+}) {
+  const { t } = usePresentation();
   return (
-    <div className="empty-state">
-      <ShoppingBasket size={44} strokeWidth={1.4} />
-      <h2>{title}</h2>
-      <p>{text}</p>
+    <div className={`empty-state${compact ? " is-compact" : ""}`}>
+      <span className="state-icon">
+        <Icon size={44} strokeWidth={1.4} aria-hidden="true" />
+      </span>
+      <h2>{t(title)}</h2>
+      <p>{t(text)}</p>
       <Link className="button" href="/catalog">
-        Открыть каталог
+        {t("Открыть каталог")}
       </Link>
     </div>
   );

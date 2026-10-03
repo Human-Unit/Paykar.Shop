@@ -1,97 +1,91 @@
 "use client";
-
+import { usePresentation } from "@/context/presentation";
 import Link from "next/link";
-import { Grid2X2, MapPin, ShoppingBasket, ArrowRight } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { useEffect } from "react";
+import { storePages, articles } from "@/lib/store-content";
+import { MapPin, ShoppingBasket } from "lucide-react";
 import { SearchBox } from "./search-box";
 import { useCart } from "@/context/cart";
-
+import { Preferences } from "./preferences";
+import { Brand } from "./brand";
+import { BurgerMenu, MainNavigation } from "./site-navigation";
+import { Footer } from "./footer";
 export function Shell({ children }: { children: React.ReactNode }) {
+  const { t } = usePresentation();
   const cart = useCart();
+  const path = usePathname();
+  useEffect(() => {
+    const page = storePages.find((entry) => path === `/${entry.slug}`);
+    const article = articles.find((entry) => path === `/blog/${entry.slug}`);
+    const title =
+      article?.title ||
+      page?.title ||
+      (path.startsWith("/catalog")
+        ? "Каталог"
+        : path.startsWith("/checkout")
+          ? "Оформление заказа"
+          : path.startsWith("/cart")
+            ? "Корзина"
+            : path.startsWith("/order/")
+              ? "Ваш заказ"
+              : "Пайкар");
+    document.title =
+      title === "Пайкар" ? t(title) : `${t(title)} · ${t("Пайкар")}`;
+    const description =
+      article?.excerpt ||
+      page?.description ||
+      (path.startsWith("/catalog")
+        ? "Выберите продукты по категории, цене и наличию."
+        : "Продукты на каждый день: каталог, поиск, корзина и доставка.");
+    document
+      .querySelector('meta[name="description"]')
+      ?.setAttribute("content", t(description));
+  }, [path, t]);
   return (
     <>
       <a className="skip-link" href="#main">
-        Перейти к содержимому
+        {t("Перейти к содержимому")}
       </a>
       <div className="info-strip">
-        <div className="container flex items-center justify-between gap-4 py-2.5 text-xs">
+        <div className="container topbar-inner">
           <span className="flex items-center gap-2">
-            <MapPin size={14} /> Душанбе
+            <MapPin size={14} />
+            {t(" Душанбе")}
           </span>
-          <span>Учебный магазин · демонстрационные товары и цены</span>
+          <div className="utility-actions">
+            <Preferences />
+            <BurgerMenu />
+          </div>
         </div>
       </div>
-      <header className="bg-white border-b border-stone-200">
+      <header className="site-header">
         <div className="container header-main">
-          <Link href="/" className="brand" aria-label="Paykar, главная">
-            paykar<span>shop</span>
-            <small>продукты на каждый день</small>
-          </Link>
-          <Link href="/catalog" className="button catalog-button">
-            <Grid2X2 size={19} /> Каталог
-          </Link>
+          <Brand />
           <SearchBox />
           <Link
             href="/cart"
             className="cart-link"
-            aria-label={`Корзина, ${cart.count} товаров`}
+            aria-label={t("Корзина, ") + cart.count + t(" товаров")}
           >
-            <ShoppingBasket size={25} />
-            <span className="cart-label">Корзина</span>
+            <ShoppingBasket size={22} />
+            <span className="cart-label">{t("Корзина")}</span>
             <span className="cart-count" data-testid="cart-count">
               {cart.count}
             </span>
           </Link>
         </div>
-        <nav className="container nav-row" aria-label="Основная навигация">
-          <Link href="/catalog/produce">Фрукты и овощи</Link>
-          <Link href="/catalog/dairy">Молочные продукты</Link>
-          <Link href="/catalog/bakery">Хлеб и выпечка</Link>
-          <Link href="/catalog/drinks">Напитки</Link>
-          <Link href="/catalog/sweets">Сладости</Link>
-          <Link href="/catalog/household">Для дома</Link>
-        </nav>
+        <MainNavigation />
       </header>
       {cart.notice && (
         <div className="container pt-4" role="status">
-          <p className="message">{cart.notice}</p>
+          <p className="message">{t(cart.notice)}</p>
         </div>
       )}
       <main id="main" className="container main-content">
         {children}
       </main>
-      <footer className="footer">
-        <div className="container footer-grid">
-          <div>
-            <Link href="/" className="brand">
-              paykar<span>shop</span>
-            </Link>
-            <p>Знакомый магазин. Удобный выбор.</p>
-            <p className="text-xs mt-4">
-              Независимое учебное воспроизведение.
-              <br />
-              Не официальный сайт Paykar.
-            </p>
-          </div>
-          <div>
-            <h2>Покупателям</h2>
-            <Link href="/catalog">
-              Каталог товаров <ArrowRight size={14} />
-            </Link>
-            <Link href="/cart">Ваша корзина</Link>
-          </div>
-          <div>
-            <h2>О проекте</h2>
-            <p>
-              Демонстрационный ассортимент.
-              <br />
-              Доставка с выбором точки на карте.
-            </p>
-          </div>
-        </div>
-        <div className="container footer-bottom">
-          Учебный проект · цены указаны в сомони (TJS)
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }

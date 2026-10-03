@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { DeliveryConfig, Point, Quote } from "@/lib/api";
+import { usePresentation } from "@/context/presentation";
 
 export default function DeliveryMap({
   config,
@@ -18,9 +19,11 @@ export default function DeliveryMap({
   onSelect: (point: Point) => void;
   disabled: boolean;
 }) {
+  const { t, language } = usePresentation();
   const element = useRef<HTMLDivElement>(null);
   const map = useRef<L.Map | null>(null);
   const routeBounds = useRef<L.LatLngBounds | null>(null);
+  const markers = useRef<{ layer: L.Marker; store: boolean }[]>([]);
   const latest = useRef({ onSelect, disabled });
   useEffect(() => {
     latest.current = { onSelect, disabled };
@@ -64,7 +67,7 @@ export default function DeliveryMap({
     routeBounds.current = null;
     const layers = L.layerGroup().addTo(instance);
     function marker(lat: number, lon: number, store: boolean) {
-      L.marker([lat, lon], {
+      const layer = L.marker([lat, lon], {
         title: store ? "Магазин" : "Ваш адрес",
         keyboard: true,
         icon: L.divIcon({
@@ -74,6 +77,7 @@ export default function DeliveryMap({
           iconAnchor: [15, 15],
         }),
       }).addTo(layers);
+      markers.current.push({ layer, store });
     }
     if (config?.store_lat != null && config.store_lon != null) {
       marker(config.store_lat, config.store_lon, true);
@@ -87,7 +91,12 @@ export default function DeliveryMap({
           lat,
           lon,
         ]),
-        { color: "#087e29", weight: 5 },
+        {
+          color: getComputedStyle(document.documentElement)
+            .getPropertyValue("--paykar-green")
+            .trim(),
+          weight: 5,
+        },
       ).addTo(layers);
       const bounds = line.getBounds();
       // Provider endpoints may snap to roads; include the actual selected markers too.
@@ -103,14 +112,37 @@ export default function DeliveryMap({
     } else if (point) instance.panTo([point.latitude, point.longitude]);
     return () => {
       layers.remove();
+      markers.current = [];
     };
   }, [config, point, quote]);
+  useEffect(() => {
+    // Translate existing markers without rebuilding the route or moving the camera.
+    for (const { layer, store } of markers.current) {
+      const node = layer.getElement();
+      if (node) {
+        node.title = t(store ? "Магазин" : "Ваш адрес");
+        node.setAttribute("aria-label", node.title);
+        node.textContent = store ? (language === "en" ? "S" : "М") : "●";
+      }
+    }
+    const zoomIn = element.current?.querySelector(".leaflet-control-zoom-in");
+    const zoomOut = element.current?.querySelector(".leaflet-control-zoom-out");
+    for (const [control, label] of [
+      [zoomIn, t("Приблизить")],
+      [zoomOut, t("Отдалить")],
+    ] as const) {
+      control?.setAttribute("title", label);
+      control?.setAttribute("aria-label", label);
+    }
+  }, [t, language, config, point, quote]);
   return (
     <div
       ref={element}
       className="delivery-map"
       role="region"
-      aria-label="Карта доставки. Выберите точку нажатием или введите координаты ниже."
+      aria-label={t(
+        "Карта доставки. Выберите точку нажатием или введите координаты ниже.",
+      )}
     />
   );
 }

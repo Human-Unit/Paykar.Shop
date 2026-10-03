@@ -1,0 +1,133 @@
+{
+  "scope": "Full-site polish verification. Browser visual/interactive acceptance remains pending.",
+  "frontend": [
+    {
+      "command": "npm run lint",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run typecheck",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0,
+      "generated_pages": 21
+    },
+    {
+      "command": "npm run format:check",
+      "exit_code": 0
+    }
+  ],
+  "backend": [
+    {
+      "command": "docker compose exec -T api python -m compileall app",
+      "exit_code": 0
+    },
+    {
+      "command": "docker compose exec -T api ruff check .",
+      "exit_code": 0
+    },
+    {
+      "command": "docker compose exec -T api ruff format --check .",
+      "exit_code": 0,
+      "formatted_files": 41
+    },
+    {
+      "command": "docker compose exec -T -e TEST_DATABASE_URL=postgresql+asyncpg://paykar:paykar_dev@postgres:5432/paykar_test api pytest -q",
+      "exit_code": 0,
+      "passed": 77,
+      "skipped": 0,
+      "warnings": 1,
+      "provider": "Mocked in integration fixtures; separate real ORS smoke below"
+    },
+    {
+      "command": "docker compose exec -T api alembic current",
+      "exit_code": 0,
+      "head": "0002_sandbox_payments"
+    },
+    {
+      "command": "docker compose exec -T api alembic check",
+      "exit_code": 0,
+      "result": "No new upgrade operations detected"
+    }
+  ],
+  "docker": [
+    {
+      "command": "docker compose config --quiet",
+      "exit_code": 0
+    },
+    {
+      "command": "docker compose up --build -d --wait",
+      "exit_code": 0
+    },
+    {
+      "command": "docker compose ps",
+      "exit_code": 0,
+      "healthy_services": [
+        "postgres",
+        "api",
+        "web"
+      ]
+    }
+  ],
+  "additional": [
+    {
+      "command": "node .cache/polish-source-audit.cjs",
+      "exit_code": 0,
+      "evidence": "source-audit.json"
+    },
+    {
+      "command": "node .cache/polish-checkout-harness.cjs",
+      "exit_code": 0,
+      "evidence": "checkout-handler-verification.json",
+      "scope": "Controlled handler execution, not browser"
+    },
+    {
+      "command": "python .cache/polish-runtime.py",
+      "exit_code": 0,
+      "evidence": "runtime-verification.json",
+      "scope": "Real API/ORS/sandbox and PostgreSQL smoke; original literal 404 HTML assertions did not pass and were recorded separately"
+    },
+    {
+      "command": "python .cache/polish-security.py",
+      "exit_code": 0,
+      "evidence": "security-verification.json"
+    },
+    {
+      "command": "python .cache/polish-http-final.py",
+      "exit_code": 0,
+      "evidence": "runtime-verification.json",
+      "scope": "HTTP status/component reference and generated markup; no visual PASS"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "resolved_failures": [
+    "Initial temporary inline helper creation failed from Windows shell quoting; replaced with file-based helper",
+    "First localization audit found missing new TJ/EN pairs; final audit has none"
+  ],
+  "unresolved_acceptance": [
+    {
+      "check": "Live 404 responses contain the literal branded heading",
+      "result": "NOT PASSED",
+      "detail": "HTTP 404 and custom component references exist; generated _not-found.html contains branded markup. Browser hydration rendering remains pending."
+    },
+    {
+      "check": "Browser connection",
+      "result": "UNAVAILABLE",
+      "detail": "No browser is available; discovery returned []"
+    },
+    {
+      "check": "Visual/interactive acceptance and screenshots",
+      "result": "PENDING",
+      "detail": "No automated browser PASS or new manual acceptance claimed."
+    }
+  ],
+  "status": "FULL-SITE POLISH — IMPLEMENTED",
+  "visual_interactive_acceptance": "PENDING",
+  "committed": false,
+  "pushed": false
+}

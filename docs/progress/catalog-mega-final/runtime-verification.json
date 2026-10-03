@@ -1,0 +1,256 @@
+{
+  "checked_at": "2026-10-02T18:43:38.057Z",
+  "health": {
+    "status": "ok",
+    "service": "paykar-api"
+  },
+  "database_health": {
+    "status": "ok",
+    "database": "connected"
+  },
+  "catalog_source": {
+    "endpoint": "/api/v1/categories",
+    "categories": 7,
+    "top_level_groups": 6,
+    "real_nested_links": 1,
+    "static_category_ids_added": 0
+  },
+  "product_family_links": [
+    {
+      "label": "Морковь",
+      "href": "/catalog/produce?q=%D0%9C%D0%BE%D1%80%D0%BA%D0%BE%D0%B2%D1%8C",
+      "matching_products": 1
+    },
+    {
+      "label": "Картофель",
+      "href": "/catalog/produce?q=%D0%9A%D0%B0%D1%80%D1%82%D0%BE%D1%84%D0%B5%D0%BB%D1%8C",
+      "matching_products": 1
+    },
+    {
+      "label": "Огурцы",
+      "href": "/catalog/produce?q=%D0%9E%D0%B3%D1%83%D1%80%D1%86%D1%8B",
+      "matching_products": 1
+    },
+    {
+      "label": "Молоко",
+      "href": "/catalog/dairy?q=%D0%9C%D0%BE%D0%BB%D0%BE%D0%BA%D0%BE",
+      "matching_products": 1
+    },
+    {
+      "label": "Кефир",
+      "href": "/catalog/dairy?q=%D0%9A%D0%B5%D1%84%D0%B8%D1%80",
+      "matching_products": 1
+    },
+    {
+      "label": "Йогурты",
+      "href": "/catalog/dairy?q=%D0%99%D0%BE%D0%B3%D1%83%D1%80%D1%82",
+      "matching_products": 1
+    },
+    {
+      "label": "Сметана",
+      "href": "/catalog/dairy?q=%D0%A1%D0%BC%D0%B5%D1%82%D0%B0%D0%BD%D0%B0",
+      "matching_products": 1
+    },
+    {
+      "label": "Творог",
+      "href": "/catalog/dairy?q=%D0%A2%D0%B2%D0%BE%D1%80%D0%BE%D0%B3",
+      "matching_products": 1
+    },
+    {
+      "label": "Сливочное масло",
+      "href": "/catalog/dairy?q=%D0%9C%D0%B0%D1%81%D0%BB%D0%BE",
+      "matching_products": 1
+    },
+    {
+      "label": "Сыры",
+      "href": "/catalog/dairy?q=%D0%A1%D1%8B%D1%80",
+      "matching_products": 1
+    },
+    {
+      "label": "Хлеб",
+      "href": "/catalog/bakery?q=%D0%A5%D0%BB%D0%B5%D0%B1",
+      "matching_products": 2
+    },
+    {
+      "label": "Лепёшки",
+      "href": "/catalog/bakery?q=%D0%9B%D0%B5%D0%BF%D1%91%D1%88%D0%BA%D0%B0",
+      "matching_products": 1
+    },
+    {
+      "label": "Багеты",
+      "href": "/catalog/bakery?q=%D0%91%D0%B0%D0%B3%D0%B5%D1%82",
+      "matching_products": 1
+    },
+    {
+      "label": "Круассаны",
+      "href": "/catalog/bakery?q=%D0%9A%D1%80%D1%83%D0%B0%D1%81%D1%81%D0%B0%D0%BD",
+      "matching_products": 1
+    },
+    {
+      "label": "Булочки",
+      "href": "/catalog/bakery?q=%D0%91%D1%83%D0%BB%D0%BE%D1%87%D0%BA%D0%B0",
+      "matching_products": 1
+    },
+    {
+      "label": "Лаваш",
+      "href": "/catalog/bakery?q=%D0%9B%D0%B0%D0%B2%D0%B0%D1%88",
+      "matching_products": 1
+    },
+    {
+      "label": "Вода",
+      "href": "/catalog/drinks?q=%D0%92%D0%BE%D0%B4%D0%B0",
+      "matching_products": 2
+    },
+    {
+      "label": "Соки",
+      "href": "/catalog/drinks?q=%D0%A1%D0%BE%D0%BA",
+      "matching_products": 2
+    },
+    {
+      "label": "Чай",
+      "href": "/catalog/drinks?q=%D0%A7%D0%B0%D0%B9",
+      "matching_products": 2
+    },
+    {
+      "label": "Кофе",
+      "href": "/catalog/drinks?q=%D0%9A%D0%BE%D1%84%D0%B5",
+      "matching_products": 1
+    },
+    {
+      "label": "Шоколад",
+      "href": "/catalog/sweets?q=%D0%A8%D0%BE%D0%BA%D0%BE%D0%BB%D0%B0%D0%B4",
+      "matching_products": 2
+    },
+    {
+      "label": "Печенье",
+      "href": "/catalog/sweets?q=%D0%9F%D0%B5%D1%87%D0%B5%D0%BD%D1%8C%D0%B5",
+      "matching_products": 1
+    },
+    {
+      "label": "Вафли",
+      "href": "/catalog/sweets?q=%D0%92%D0%B0%D1%84%D0%BB%D0%B8",
+      "matching_products": 1
+    },
+    {
+      "label": "Мармелад",
+      "href": "/catalog/sweets?q=%D0%9C%D0%B0%D1%80%D0%BC%D0%B5%D0%BB%D0%B0%D0%B4",
+      "matching_products": 1
+    },
+    {
+      "label": "Мёд",
+      "href": "/catalog/sweets?q=%D0%9C%D1%91%D0%B4",
+      "matching_products": 1
+    },
+    {
+      "label": "Средство для посуды",
+      "href": "/catalog/household?q=%D0%A1%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B2%D0%BE+%D0%B4%D0%BB%D1%8F+%D0%BF%D0%BE%D1%81%D1%83%D0%B4%D1%8B",
+      "matching_products": 1
+    },
+    {
+      "label": "Мыло",
+      "href": "/catalog/household?q=%D0%9C%D1%8B%D0%BB%D0%BE",
+      "matching_products": 1
+    },
+    {
+      "label": "Бумажные товары",
+      "href": "/catalog/household?q=%D0%B1%D1%83%D0%BC%D0%B0%D0%B6%D0%BD%D1%8B%D0%B5",
+      "matching_products": 2
+    },
+    {
+      "label": "Губки",
+      "href": "/catalog/household?q=%D0%93%D1%83%D0%B1%D0%BA%D0%B8",
+      "matching_products": 1
+    },
+    {
+      "label": "Пакеты для мусора",
+      "href": "/catalog/household?q=%D0%9F%D0%B0%D0%BA%D0%B5%D1%82%D1%8B+%D0%B4%D0%BB%D1%8F+%D0%BC%D1%83%D1%81%D0%BE%D1%80%D0%B0",
+      "matching_products": 1
+    }
+  ],
+  "category_http_routes": [
+    {
+      "href": "/catalog/produce",
+      "status": 200
+    },
+    {
+      "href": "/catalog/dairy",
+      "status": 200
+    },
+    {
+      "href": "/catalog/bakery",
+      "status": 200
+    },
+    {
+      "href": "/catalog/drinks",
+      "status": 200
+    },
+    {
+      "href": "/catalog/sweets",
+      "status": 200
+    },
+    {
+      "href": "/catalog/household",
+      "status": 200
+    },
+    {
+      "href": "/catalog/fruit",
+      "status": 200
+    }
+  ],
+  "shared_shell_http_routes": [
+    {
+      "href": "/catalog",
+      "status": 200
+    },
+    {
+      "href": "/catalog/dairy?q=%D0%9C%D0%BE%D0%BB%D0%BE%D0%BA%D0%BE",
+      "status": 200
+    },
+    {
+      "href": "/cart",
+      "status": 200
+    },
+    {
+      "href": "/checkout",
+      "status": 200
+    },
+    {
+      "href": "/delivery",
+      "status": 200
+    },
+    {
+      "href": "/how-to-buy",
+      "status": 200
+    },
+    {
+      "href": "/payment",
+      "status": 200
+    },
+    {
+      "href": "/contacts",
+      "status": 200
+    }
+  ],
+  "catalog_markup": {
+    "proper_catalog_link": true,
+    "closed_panel_inert_and_aria_hidden": true,
+    "drawer_present": true,
+    "production_css_present": true,
+    "executed_browser_javascript": false
+  },
+  "existing_search_api": {
+    "matching_apples_product": true
+  },
+  "reused_local_category_images": 6,
+  "public_asset_scan": {
+    "js_css_files": 13,
+    "ors_key_matches_assets_and_http_responses": 0,
+    "provider_domain_matches_assets": 0
+  },
+  "preserved_source": {
+    "checked_files": 65,
+    "changed": [],
+    "existing_translation_pairs_preserved": 486
+  },
+  "browser_acceptance": "PENDING: No browser is available; discovery returned []. HTTP, source and handler-double checks do not verify rendered layout, real pointer transitions, browser focus, persistence or network activity."
+}
