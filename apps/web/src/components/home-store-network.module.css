@@ -300,6 +300,35 @@
     0 0 0 12px color-mix(in srgb, var(--paykar-green) 10%, transparent);
 }
 
+.map :global(.leaflet-control-zoom),
+.map :global(.leaflet-bar) {
+  border-color: var(--line);
+}
+
+.map :global(.leaflet-control-zoom a) {
+  min-width: 44px;
+  min-height: 44px;
+  border-color: var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  line-height: 44px;
+}
+
+.map :global(.leaflet-control-zoom a:hover),
+.map :global(.leaflet-control-zoom a:focus-visible) {
+  background: var(--hover-surface);
+  color: var(--brand-ink);
+}
+
+.map :global(.leaflet-control-attribution) {
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  color: var(--muted);
+}
+
+.map :global(.leaflet-control-attribution a) {
+  color: var(--brand-ink);
+}
+
 .map :global(.leaflet-popup-content-wrapper),
 .map :global(.leaflet-popup-tip) {
   background: var(--surface);
