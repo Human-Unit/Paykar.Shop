@@ -21,6 +21,7 @@ import { categoryImages } from "@/lib/category-presentation";
 import { articles, storePages } from "@/lib/store-content";
 import { SectionHeader, StepFlow, CTASection } from "./page-patterns";
 import { ArticleCard } from "./article-card";
+import { HomeStoreNetwork } from "./home-store-network";
 export function Home() {
   const { t } = usePresentation();
   const categories = useResource<Category[]>("/categories");
@@ -191,6 +192,7 @@ export function Home() {
         label="Как работает доставка"
         icon={Route}
       />
+      <HomeStoreNetwork />
       <section>
         <SectionHeader
           eyebrow="Полезно знать"
