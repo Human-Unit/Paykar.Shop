@@ -5,6 +5,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { usePresentation } from "@/context/presentation";
 import type { StoreLocation } from "@/lib/store-locations";
+import styles from "./home-store-network.module.css";
 
 export default function StoreNetworkMap({
   stores,
@@ -74,7 +75,7 @@ export default function StoreNetworkMap({
   return (
     <div
       ref={element}
-      className="store-network-map"
+      className={styles.map}
       role="region"
       aria-label={t("Расположение магазина")}
     />
