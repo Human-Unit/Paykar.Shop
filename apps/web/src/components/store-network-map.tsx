@@ -45,8 +45,8 @@ export default function StoreNetworkMap({
       const icon = L.divIcon({
         className: "paykar-network-marker",
         html: `<span>${store.id}</span>`,
-        iconSize: [38, 38],
-        iconAnchor: [19, 19],
+        iconSize: [44, 44],
+        iconAnchor: [22, 22],
       });
 
       const popup = document.createElement("div");
