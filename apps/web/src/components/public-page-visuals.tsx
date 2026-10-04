@@ -2,14 +2,37 @@
 
 import Image from "next/image";
 import {
+  CreditCard,
   MapPin,
   MessageCircle,
   Package,
   RotateCcw,
   Store,
   Tags,
+  Wallet,
 } from "lucide-react";
 import { usePresentation } from "@/context/presentation";
+
+export function PaymentIllustration() {
+  const { t } = usePresentation();
+  return (
+    <div className="payment-illustration" aria-hidden="true">
+      <div className="payment-demo-card">
+        <div className="payment-card-heading">
+          <CreditCard size={28} />
+          <span className="test-badge">{t("Тестовая оплата")}</span>
+        </div>
+        <span className="card-chip" />
+        <strong>{t("Банковской картой")}</strong>
+        <small>{t("Не вводите данные настоящей банковской карты.")}</small>
+      </div>
+      <div className="payment-cash-note">
+        <Wallet size={22} />
+        <span>{t("Наличными при получении")}</span>
+      </div>
+    </div>
+  );
+}
 
 export function ReturnsIllustration() {
   const { t } = usePresentation();
@@ -36,7 +59,6 @@ export function ReturnsIllustration() {
 }
 
 export function OffersIllustration() {
-  const { t } = usePresentation();
   return (
     <div className="offers-illustration" aria-hidden="true">
       <Image
@@ -49,10 +71,6 @@ export function OffersIllustration() {
       <span className="offer-symbol">
         <Tags size={48} strokeWidth={1.4} />
       </span>
-      <div className="offer-caption">
-        <strong>{t("Акции")}</strong>
-        <span>{t("Скидки относительно прежних цен.")}</span>
-      </div>
     </div>
   );
 }

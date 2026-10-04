@@ -45,9 +45,7 @@ export function Home() {
             <Route size={30} aria-hidden="true" />
             <span className="eyebrow">{t("ДОСТАВКА")}</span>
             <h2>
-              {t("Весь маршрут.")}
-              <br />
-              {t("До заказа.")}
+              {t("Весь маршрут.")} {t("До заказа.")}
             </h2>
             <p>{t("Расстояние, время и стоимость на одной карте.")}</p>
             <span className="promo-action">
@@ -59,9 +57,7 @@ export function Home() {
             <ShoppingBag size={30} aria-hidden="true" />
             <span className="eyebrow">{t("ПРОСТО ПОКУПКИ")}</span>
             <h2>
-              {t("Без регистрации.")}
-              <br />
-              {t("В вашем темпе.")}
+              {t("Без регистрации.")} {t("В вашем темпе.")}
             </h2>
             <span className="promo-action">
               {t("Собрать корзину ")}

@@ -41,7 +41,7 @@ import { ArticleCard, articlePresentation } from "./article-card";
 import {
   ReturnsIllustration,
   OffersIllustration,
-  LocationIllustration,
+  PaymentIllustration,
 } from "./public-page-visuals";
 const StoreMap = dynamic(() => import("./store-map"), {
   ssr: false,
@@ -242,19 +242,7 @@ export function PublicPage({ page }: { page: StorePage }) {
           : [];
   const visual =
     page.slug === "payment" ? (
-      <div className="payment-illustration" aria-hidden="true">
-        <div className="payment-demo-card">
-          <CreditCard size={28} />
-          <span className="test-badge">{t("Тестовая оплата")}</span>
-          <span className="card-chip" />
-          <strong>{t("Банковской картой")}</strong>
-          <small>{t("Не вводите данные настоящей банковской карты.")}</small>
-        </div>
-        <div className="payment-cash-note">
-          <Wallet size={22} />
-          {t("Наличными при получении")}
-        </div>
-      </div>
+      <PaymentIllustration />
     ) : page.slug === "about" ? (
       <div className="brand-story-visual">
         <Image
@@ -289,13 +277,24 @@ export function PublicPage({ page }: { page: StorePage }) {
       <ReturnsIllustration />
     ) : page.slug === "promotions" ? (
       <OffersIllustration />
-    ) : ["contacts", "stores"].includes(page.slug) ? (
-      <LocationIllustration />
+    ) : page.slug === "brands" ? (
+      <div className="assortment-visual" aria-hidden="true">
+        {["produce", "dairy", "bakery"].map((image) => (
+          <Image
+            key={image}
+            src={`/images/paykar/${image}.webp`}
+            width={240}
+            height={240}
+            alt=""
+            unoptimized
+          />
+        ))}
+      </div>
     ) : undefined;
   const introAction = ["contacts", "stores"].includes(page.slug)
-    ? { href: "#store-location", label: "Адрес и карта" }
+    ? undefined
     : page.slug === "returns"
-      ? { href: "/contacts", label: "Контакты" }
+      ? undefined
       : page.slug === "payment"
         ? { href: "/checkout", label: "Перейти к оформлению" }
         : page.slug === "promotions"
@@ -319,6 +318,13 @@ export function PublicPage({ page }: { page: StorePage }) {
         title={page.title}
         description={page.description}
         icon={Icon}
+        variant={
+          ["promotions", "blog", "brands", "contacts", "stores"].includes(
+            page.slug,
+          )
+            ? "compact"
+            : "rich"
+        }
         visual={visual}
         action={introAction}
       />
@@ -428,25 +434,10 @@ export function PublicPage({ page }: { page: StorePage }) {
         </div>
       )}
       {page.slug === "brands" && (
-        <div className="brands-assortment">
-          <div className="assortment-visual" aria-hidden="true">
-            {["produce", "dairy", "bakery"].map((image) => (
-              <Image
-                key={image}
-                src={`/images/paykar/${image}.webp`}
-                width={240}
-                height={240}
-                alt=""
-                unoptimized
-              />
-            ))}
-          </div>
-          <Empty
-            icon={Tags}
-            title={t("Информация о производителях")}
-            text={t(page.sections[0].text)}
-          />
-        </div>
+        <section className="brands-information">
+          <SectionHeader title="Информация о производителях" />
+          <p>{t(page.sections[0].text)}</p>
+        </section>
       )}
       {page.slug === "promotions" && (
         <section id="promotions-products" aria-label={t("Акции")}>
@@ -481,7 +472,8 @@ export function PublicPage({ page }: { page: StorePage }) {
           </Link>
         </div>
       )}
-      {["how-to-buy", "payment", "returns", "about"].includes(page.slug) && (
+      {!!questions.length && <FAQSection questions={questions} />}
+      {["how-to-buy", "returns", "about"].includes(page.slug) && (
         <CTASection
           eyebrow={
             page.slug === "returns" ? "Поможем разобраться" : "ПРОСТО ПОКУПКИ"
@@ -501,7 +493,6 @@ export function PublicPage({ page }: { page: StorePage }) {
           icon={page.slug === "returns" ? MessageCircle : ShoppingBasket}
         />
       )}
-      {!!questions.length && <FAQSection questions={questions} />}
     </div>
   );
 }

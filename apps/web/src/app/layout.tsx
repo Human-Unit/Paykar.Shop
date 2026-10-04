@@ -11,14 +11,21 @@ export const metadata: Metadata = {
   description: "Продукты на каждый день: каталог, поиск, корзина и доставка.",
 };
 // Resolve saved chrome before the first paint; invalid/blocked storage uses the dark default.
-const restoreTheme = `try{const p=JSON.parse(localStorage.getItem("paykar-presentation-v1")||"{}");document.documentElement.dataset.theme=p.theme==="light"?"light":p.theme==="system"?(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):"dark";}catch{}`;
+const restorePresentation = `try{const p=JSON.parse(localStorage.getItem("paykar-presentation-v1")||"{}");document.documentElement.dataset.theme=p.theme==="light"?"light":p.theme==="system"?(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):"dark";document.documentElement.lang=p.language==="tj"?"tg":p.language==="en"?"en":"ru";}catch{document.documentElement.dataset.theme="dark";document.documentElement.lang="ru";}`;
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ru" data-theme="dark" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: restoreTheme }} />
+        <link
+          rel="preload"
+          href="/fonts/NotoSans-Latin-Cyrillic.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <script dangerouslySetInnerHTML={{ __html: restorePresentation }} />
       </head>
       <body>
         <PresentationProvider>

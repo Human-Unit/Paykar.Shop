@@ -20,7 +20,7 @@ export function ShoppingBanner({ hero = false }: { hero?: boolean }) {
         className="banner-photo"
       />
       <div className="banner-copy">
-        <Brand />
+        {!hero && <Brand />}
         {hero ? (
           <>
             <span className="eyebrow">{t("ВАШ ЕЖЕДНЕВНЫЙ ВЫБОР")}</span>

@@ -30,10 +30,12 @@ function InfoNavMenu({
   open,
   onOpen,
   onClose,
+  current,
 }: InformationEntry & {
   open: boolean;
   onOpen: () => void;
   onClose: () => void;
+  current: boolean;
 }) {
   const { t } = usePresentation();
   const root = useRef<HTMLDivElement>(null);
@@ -74,6 +76,7 @@ function InfoNavMenu({
         className="info-nav-trigger"
         aria-expanded={open}
         aria-controls={panelId}
+        aria-current={current ? "page" : undefined}
         onFocus={onOpen}
         onClick={onClose}
       >
@@ -121,6 +124,7 @@ export function MainNavigation() {
               <InfoNavMenu
                 key={item.id}
                 {...item}
+                current={path === item.href || path.startsWith(`${item.href}/`)}
                 open={activeMenu?.id === item.id && activeMenu.path === path}
                 onOpen={() => setActiveMenu({ id: item.id, path })}
                 onClose={() =>
@@ -130,7 +134,12 @@ export function MainNavigation() {
                 }
               />
             ) : (
-              <Link key={item.id} className="info-nav-link" href={item.href}>
+              <Link
+                key={item.id}
+                className="info-nav-link"
+                href={item.href}
+                aria-current={path === item.href ? "page" : undefined}
+              >
                 {t(item.label)}
               </Link>
             ),

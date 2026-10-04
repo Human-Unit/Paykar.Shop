@@ -12,6 +12,7 @@ export function PageIntro({
   icon: Icon,
   visual,
   action,
+  variant = visual ? "rich" : "text",
 }: {
   eyebrow: string;
   title: string;
@@ -19,10 +20,13 @@ export function PageIntro({
   icon: LucideIcon;
   visual?: ReactNode;
   action?: { href: string; label: string };
+  variant?: "text" | "compact" | "rich";
 }) {
   const { t } = usePresentation();
   return (
-    <header className={`page-intro${visual ? " has-visual" : ""}`}>
+    <header
+      className={`page-intro page-intro-${variant}${visual ? " has-visual" : ""}`}
+    >
       <div className="page-intro-copy">
         <span className="eyebrow">
           <Icon size={18} aria-hidden="true" /> {t(eyebrow)}
@@ -35,7 +39,7 @@ export function PageIntro({
           </Link>
         )}
       </div>
-      {visual}
+      {visual && <div className="page-intro-visual">{visual}</div>}
     </header>
   );
 }

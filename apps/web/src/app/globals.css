@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Noto Sans";
+  src: url("/fonts/NotoSans-Latin-Cyrillic.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
 /* Day 3: compact shared shopping controls and accessible search. */
 
 .checkout-layout {
@@ -264,7 +272,7 @@
 
 @theme inline {
   --color-brand: var(--paykar-green);
-  --font-sans: Arial, Helvetica, sans-serif;
+  --font-sans: "Noto Sans", Arial, Helvetica, sans-serif;
 }
 :root {
   --green: var(--brand-ink);
@@ -278,14 +286,18 @@ body {
   margin: 0;
   background: var(--elevated-surface);
   color: var(--ink);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Noto Sans", Arial, Helvetica, sans-serif;
+}
+body .leaflet-container {
+  font-family: "Noto Sans", Arial, Helvetica, sans-serif;
 }
 a {
   text-decoration: none;
 }
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
 }
 button,
