@@ -24,8 +24,7 @@ export function HomeStoreNetwork() {
     <section className={styles.section}>
       <SectionHeader
         eyebrow="Магазины"
-        title="Магазины"
-        text="Найдите магазин и откройте его расположение на карте."
+        title="Найдите магазин и откройте его расположение на карте."
         action={{ href: "/stores", label: "Магазины" }}
       />
 
