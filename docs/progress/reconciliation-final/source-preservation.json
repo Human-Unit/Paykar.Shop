@@ -1,0 +1,28 @@
+{
+  "scope": "Preservation/AST/source audit, not browser acceptance",
+  "status": "PASS",
+  "local_restored_files": 19,
+  "local_files_identical_ignoring_line_endings_and_screenshot_checklist_terminal_blank_line": true,
+  "remote_readme_and_progress_unchanged": [
+    "README.md",
+    "docs/progress/home-store-network-map.md"
+  ],
+  "remote_format_only_files": [
+    "apps/web/src/components/home.tsx",
+    "apps/web/src/components/home-store-network.tsx",
+    "apps/web/src/lib/store-locations.ts"
+  ],
+  "remote_map_behavior_preserved": true,
+  "intentional_map_changes": [
+    "Captured marker Map reference for effect cleanup lint",
+    "Scoped 44px popup close target, focus ring and content clearance"
+  ],
+  "changed_protected_business_files": [],
+  "one_canonical_dataset_and_network_component": true,
+  "one_home_section_between_delivery_cta_and_blog": true,
+  "no_network_ors_quote_cart_or_order_dependency": true,
+  "translation_entries": 575,
+  "missing_ui_translations": [],
+  "proper_store_names_and_addresses_excluded_from_translation_key_audit": true,
+  "conflict_markers": []
+}

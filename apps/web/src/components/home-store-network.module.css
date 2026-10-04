@@ -214,8 +214,7 @@
   background: var(--paykar-green);
   font-size: 12px;
   font-weight: 800;
-  box-shadow: 0 0 0 4px
-    color-mix(in srgb, var(--paykar-green) 9%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--paykar-green) 9%, transparent);
 }
 
 .storeCopy {
@@ -341,8 +340,21 @@
   box-shadow: 0 12px 32px rgb(0 0 0 / 24%);
 }
 
-.map :global(.leaflet-popup-close-button) {
+.map :global(.leaflet-popup .leaflet-popup-close-button) {
+  width: 44px;
+  height: 44px;
+  font-size: 24px;
+  line-height: 44px;
   color: var(--muted) !important;
+}
+
+.map :global(.leaflet-popup .leaflet-popup-close-button:focus-visible) {
+  outline: 2px solid var(--paykar-green);
+  outline-offset: -3px;
+}
+
+.map :global(.leaflet-popup-content) {
+  padding-right: 20px;
 }
 
 .map :global(.paykar-network-popup) {

@@ -1,0 +1,22 @@
+﻿[
+    {
+        "command":  "npm run lint",
+        "exit_code":  0,
+        "output":  "\n\u003e paykar-web@0.1.0 lint\n\u003e eslint . --max-warnings=0\n"
+    },
+    {
+        "command":  "npm run typecheck",
+        "exit_code":  0,
+        "output":  "\n\u003e paykar-web@0.1.0 typecheck\n\u003e next typegen \u0026\u0026 tsc --noEmit\n\nGenerating route types...\n✓ Types generated successfully"
+    },
+    {
+        "command":  "npm run build",
+        "exit_code":  0,
+        "output":  "\n\u003e paykar-web@0.1.0 build\n\u003e next build\n\n▲ Next.js 16.3.8 (Turbopack)\n✓ Running next.config.ts took 35ms\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 1811ms\n  Running TypeScript ...\n  Finished TypeScript in 4.1s ...\n  Collecting page data using 13 workers ...\n  Generating static pages using 13 workers (0/21) ...\n  Generating static pages using 13 workers (5/21) \n  Generating static pages using 13 workers (10/21) \n  Generating static pages using 13 workers (15/21) \n✓ Generating static pages using 13 workers (21/21) in 1668ms\n  Finalizing page optimization ...\n\nRoute (app)\n┌ ○ /\n├ ○ /_not-found\n├   /[slug]\n│ ├ ● /how-to-buy\n│ ├ ● /payment\n│ ├ ● /delivery\n│ └ ● [+7 more paths]\n├   /blog/[slug]\n│ ├ ● /blog/weekly-shopping\n│ ├ ● /blog/fruit-and-vegetables\n│ ├ ● /blog/delivery-guide\n│ └ ● /blog/checkout-checklist\n├ ○ /cart\n├ ○ /catalog\n├ ƒ /catalog/[slug]\n├ ○ /checkout\n├ ○ /icon.svg\n├ ƒ /order/[id]\n└ ƒ /product/[slug]\n\n\n○  (Static)   prerendered as static content\n●  (SSG)      prerendered as static HTML (uses generateStaticParams)\nƒ  (Dynamic)  server-rendered on demand\n"
+    },
+    {
+        "command":  "npm run format:check",
+        "exit_code":  0,
+        "output":  "\n\u003e paykar-web@0.1.0 format:check\n\u003e prettier --check .\n\nChecking formatting...\nAll matched files use Prettier code style!"
+    }
+]

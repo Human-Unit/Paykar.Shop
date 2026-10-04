@@ -38,6 +38,11 @@ import {
   FAQSection,
 } from "./page-patterns";
 import { ArticleCard, articlePresentation } from "./article-card";
+import {
+  ReturnsIllustration,
+  OffersIllustration,
+  LocationIllustration,
+} from "./public-page-visuals";
 const StoreMap = dynamic(() => import("./store-map"), {
   ssr: false,
   loading: () => (
@@ -126,14 +131,23 @@ function BlogCards() {
 function StoreLocation() {
   const { t } = usePresentation();
   const config = useResource<DeliveryConfig>("/delivery/config");
-  if (config.loading) return <Loading />;
+  if (config.loading)
+    return (
+      <div id="store-location">
+        <Loading kind="location" label="Загружаем карту…" />
+      </div>
+    );
   if (config.error)
-    return <Failure error={config.error} retry={config.retry} />;
+    return (
+      <div id="store-location">
+        <Failure error={config.error} retry={config.retry} />
+      </div>
+    );
   const store = config.data;
   if (!store) return null;
   const located = store.store_lat !== null && store.store_lon !== null;
   return (
-    <section className="store-location">
+    <section className="store-location" id="store-location">
       <div className="information-panel">
         <div className="location-card-top">
           <span className="icon-tile">
@@ -271,7 +285,24 @@ export function PublicPage({ page }: { page: StorePage }) {
           </div>
         ))}
       </div>
+    ) : page.slug === "returns" ? (
+      <ReturnsIllustration />
+    ) : page.slug === "promotions" ? (
+      <OffersIllustration />
+    ) : ["contacts", "stores"].includes(page.slug) ? (
+      <LocationIllustration />
     ) : undefined;
+  const introAction = ["contacts", "stores"].includes(page.slug)
+    ? { href: "#store-location", label: "Адрес и карта" }
+    : page.slug === "returns"
+      ? { href: "/contacts", label: "Контакты" }
+      : page.slug === "payment"
+        ? { href: "/checkout", label: "Перейти к оформлению" }
+        : page.slug === "promotions"
+          ? { href: "#promotions-products", label: "Выбрать продукты" }
+          : ["how-to-buy", "about", "brands"].includes(page.slug)
+            ? { href: "/catalog", label: "Перейти в каталог" }
+            : undefined;
   return (
     <div className={`polish-page public-page page-${page.slug}`}>
       <Breadcrumbs
@@ -289,6 +320,7 @@ export function PublicPage({ page }: { page: StorePage }) {
         description={page.description}
         icon={Icon}
         visual={visual}
+        action={introAction}
       />
       {page.slug === "how-to-buy" && (
         <section>
@@ -313,7 +345,7 @@ export function PublicPage({ page }: { page: StorePage }) {
           <StepFlow
             steps={page.sections.map((section, index) => ({
               ...section,
-              icon: [Package, Store, MessageCircle, PackageCheck][index],
+              icon: [Package, BookOpen, MessageCircle, PackageCheck][index],
             }))}
           />
         </section>
@@ -416,7 +448,11 @@ export function PublicPage({ page }: { page: StorePage }) {
           />
         </div>
       )}
-      {page.slug === "promotions" && <Promotions />}
+      {page.slug === "promotions" && (
+        <section id="promotions-products" aria-label={t("Акции")}>
+          <Promotions />
+        </section>
+      )}
       {page.slug === "blog" && <BlogCards />}
       {["contacts", "stores"].includes(page.slug) && <StoreLocation />}
       {["contacts", "stores"].includes(page.slug) && (

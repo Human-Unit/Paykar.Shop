@@ -1,0 +1,59 @@
+{
+  "checked_at": "2026-10-04T12:42:36.781Z",
+  "scope": "Executed checks against rebuilt Docker services",
+  "checks": [
+    {
+      "command": "docker compose exec -T api python -m compileall app",
+      "exit_code": 0,
+      "output": "Listing 'app'...\nListing 'app/api'...\nCompiling 'app/api/router.py'...\nListing 'app/api/routes'...\nCompiling 'app/api/routes/delivery.py'...\nCompiling 'app/api/routes/health.py'...\nCompiling 'app/api/routes/orders.py'...\nCompiling 'app/api/routes/payments.py'...\nCompiling 'app/api/routes/products.py'...\nListing 'app/core'...\nCompiling 'app/core/config.py'...\nCompiling 'app/main.py'...\nListing 'app/models'...\nCompiling 'app/models/__init__.py'...\nCompiling 'app/models/order.py'...\nCompiling 'app/models/payment.py'...\nListing 'app/payments'...\nCompiling 'app/payments/__init__.py'...\nCompiling 'app/payments/provider.py'...\nCompiling 'app/payments/schemas.py'...\nCompiling 'app/payments/service.py'...\nListing 'app/schemas'...\nCompiling 'app/schemas/delivery.py'...\nCompiling 'app/schemas/order.py'...\nListing 'app/services'...\nCompiling 'app/services/delivery_service.py'...\nCompiling 'app/services/order_service.py'...\n"
+    },
+    {
+      "command": "docker compose exec -T api ruff check .",
+      "exit_code": 0,
+      "output": "All checks passed!\n"
+    },
+    {
+      "command": "docker compose exec -T api ruff format --check .",
+      "exit_code": 0,
+      "output": "41 files already formatted\n"
+    },
+    {
+      "command": "docker compose exec -T -e TEST_DATABASE_URL=postgresql+asyncpg://paykar:paykar_dev@postgres:5432/paykar_test api pytest -q",
+      "exit_code": 0,
+      "output": "........................................................................ [ 93%]\n.....                                                                    [100%]\n=============================== warnings summary ===============================\n../usr/local/lib/python3.12/site-packages/starlette/testclient.py:45\n  /usr/local/lib/python3.12/site-packages/starlette/testclient.py:45: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n77 passed, 1 warning in 5.76s\n"
+    },
+    {
+      "command": "docker compose exec -T api alembic current",
+      "exit_code": 0,
+      "output": "0002_sandbox_payments (head)\n"
+    },
+    {
+      "command": "docker compose exec -T api alembic check",
+      "exit_code": 0,
+      "output": "No new upgrade operations detected.\n"
+    },
+    {
+      "command": "docker compose config --quiet",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "command": "docker compose ps",
+      "exit_code": 0,
+      "output": "NAME                               IMAGE                       COMMAND                  SERVICE    CREATED          STATUS                    PORTS\ntest_task_paykar_shop-api-1        test_task_paykar_shop-api   \"sh -c 'alembic upgr…\"   api        10 minutes ago   Up 9 minutes (healthy)    127.0.0.1:8080->8080/tcp\ntest_task_paykar_shop-postgres-1   postgres:17-alpine          \"docker-entrypoint.s…\"   postgres   2 days ago       Up 14 minutes (healthy)   127.0.0.1:5433->5432/tcp\ntest_task_paykar_shop-web-1        test_task_paykar_shop-web   \"docker-entrypoint.s…\"   web        9 minutes ago    Up 9 minutes (healthy)    127.0.0.1:3000->3000/tcp\n"
+    }
+  ],
+  "docker_build": {
+    "command": "docker compose up --build -d --wait",
+    "exit_code": 0,
+    "services": [
+      "postgres: healthy",
+      "api: healthy",
+      "web: healthy"
+    ]
+  },
+  "browser": {
+    "automated": "PENDING - No browser is available; browsers.list returned []",
+    "manual": "PENDING - no manual acceptance supplied for reconciled tree"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "scope": "All listed static files in the rebuilt web container were fetched via HTTP; source/docs additionally scanned. Not browser network capture.",
+  "deployed_assets_fetched": 34,
+  "ors_key_matches_assets": 0,
+  "ors_key_matches_frontend_source": 0,
+  "ors_key_matches_docs": 0,
+  "database_password_matches_assets": 0,
+  "provider_url_matches_assets": 0,
+  "public_ors_configuration": false,
+  "browser_network_capture": "PENDING: no connected browser",
+  "payment_schema_has_no_card_fields": true,
+  "sandbox_provider_has_no_external_payment_client": true,
+  "status": "PASS for bounded asset/source/schema scans; browser trace pending"
+}

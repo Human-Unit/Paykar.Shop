@@ -28,7 +28,11 @@ export function HomeStoreNetwork() {
     if (selectedStoreId === null) return;
     const container = list.current;
     const button = storeButtons.current[selectedStoreId];
-    if (!container || !button || container.scrollHeight <= container.clientHeight) {
+    if (
+      !container ||
+      !button ||
+      container.scrollHeight <= container.clientHeight
+    ) {
       return;
     }
 

@@ -34,6 +34,7 @@ export default function StoreNetworkMap({
       zoomControl: true,
     });
     mapRef.current = map;
+    const mapMarkers = markersRef.current;
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
@@ -66,7 +67,7 @@ export default function StoreNetworkMap({
         .bindPopup(popup);
 
       marker.on("click", () => onSelectStoreRef.current(store.id));
-      markersRef.current.set(store.id, marker);
+      mapMarkers.set(store.id, marker);
       return marker;
     });
 
@@ -85,7 +86,7 @@ export default function StoreNetworkMap({
 
     return () => {
       resize.disconnect();
-      markersRef.current.clear();
+      mapMarkers.clear();
       mapRef.current = null;
       map.remove();
     };

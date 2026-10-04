@@ -11,12 +11,14 @@ export function PageIntro({
   description,
   icon: Icon,
   visual,
+  action,
 }: {
   eyebrow: string;
   title: string;
   description: string;
   icon: LucideIcon;
   visual?: ReactNode;
+  action?: { href: string; label: string };
 }) {
   const { t } = usePresentation();
   return (
@@ -27,6 +29,11 @@ export function PageIntro({
         </span>
         <h1>{t(title)}</h1>
         <p>{t(description)}</p>
+        {action && (
+          <Link className="button page-intro-action" href={action.href}>
+            {t(action.label)} <ArrowRight size={20} aria-hidden="true" />
+          </Link>
+        )}
       </div>
       {visual}
     </header>

@@ -1,0 +1,9 @@
+{
+  "scope": "Source audit, not rendered browser verification",
+  "translation_entries": 575,
+  "ui_strings": 467,
+  "missing_translations": [],
+  "protected_files": 64,
+  "changed_protected_files": [],
+  "checkout_state_and_handlers_unchanged": true
+}

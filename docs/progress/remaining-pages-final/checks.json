@@ -1,0 +1,107 @@
+{
+  "scope": "Commands actually executed on 2026-10-03 in the moved checkout; browser acceptance remains pending",
+  "compileall": {
+    "command": "docker compose exec -T api python -m compileall app",
+    "exit_code": 0
+  },
+  "ruff": {
+    "command": "docker compose exec -T api ruff check .",
+    "exit_code": 0
+  },
+  "ruff_format": {
+    "command": "docker compose exec -T api ruff format --check .",
+    "exit_code": 0,
+    "formatted_files": 41
+  },
+  "pytest": {
+    "command": "docker compose exec -T -e TEST_DATABASE_URL=postgresql+asyncpg://paykar:paykar_dev@postgres:5432/paykar_test api pytest -q",
+    "exit_code": 0,
+    "passed": 77,
+    "skipped": 0,
+    "warnings": [
+      "Existing Starlette/AnyIO BlockingPortal alias deprecation"
+    ]
+  },
+  "alembic_current": {
+    "command": "docker compose exec -T api alembic current",
+    "exit_code": 0,
+    "head": "0002_sandbox_payments"
+  },
+  "alembic_check": {
+    "command": "docker compose exec -T api alembic check",
+    "exit_code": 0,
+    "result": "No new upgrade operations detected"
+  },
+  "compose_config": {
+    "command": "docker compose config --quiet",
+    "exit_code": 0
+  },
+  "browser": {
+    "status": "UNAVAILABLE",
+    "reason": "Browser skill required js tool and tool discovery are not exposed in this session"
+  },
+  "manual_acceptance": "PENDING",
+  "frontend": [
+    {
+      "command": "npm run lint",
+      "exit_code": 0,
+      "output": "\n> paykar-web@0.1.0 lint\n> eslint . --max-warnings=0\n"
+    },
+    {
+      "command": "npm run typecheck",
+      "exit_code": 0,
+      "output": "\n> paykar-web@0.1.0 typecheck\n> next typegen && tsc --noEmit\n\nGenerating route types...\n\u2713 Types generated successfully"
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0,
+      "output": "\n> paykar-web@0.1.0 build\n> next build\n\n\u25b2 Next.js 16.3.8 (Turbopack)\n\u2713 Running next.config.ts took 35ms\n\n  Creating an optimized production build ...\n\u2713 Compiled successfully in 1811ms\n  Running TypeScript ...\n  Finished TypeScript in 4.1s ...\n  Collecting page data using 13 workers ...\n  Generating static pages using 13 workers (0/21) ...\n  Generating static pages using 13 workers (5/21) \n  Generating static pages using 13 workers (10/21) \n  Generating static pages using 13 workers (15/21) \n\u2713 Generating static pages using 13 workers (21/21) in 1668ms\n  Finalizing page optimization ...\n\nRoute (app)\n\u250c \u25cb /\n\u251c \u25cb /_not-found\n\u251c   /[slug]\n\u2502 \u251c \u25cf /how-to-buy\n\u2502 \u251c \u25cf /payment\n\u2502 \u251c \u25cf /delivery\n\u2502 \u2514 \u25cf [+7 more paths]\n\u251c   /blog/[slug]\n\u2502 \u251c \u25cf /blog/weekly-shopping\n\u2502 \u251c \u25cf /blog/fruit-and-vegetables\n\u2502 \u251c \u25cf /blog/delivery-guide\n\u2502 \u2514 \u25cf /blog/checkout-checklist\n\u251c \u25cb /cart\n\u251c \u25cb /catalog\n\u251c \u0192 /catalog/[slug]\n\u251c \u25cb /checkout\n\u251c \u25cb /icon.svg\n\u251c \u0192 /order/[id]\n\u2514 \u0192 /product/[slug]\n\n\n\u25cb  (Static)   prerendered as static content\n\u25cf  (SSG)      prerendered as static HTML (uses generateStaticParams)\n\u0192  (Dynamic)  server-rendered on demand\n"
+    },
+    {
+      "command": "npm run format:check",
+      "exit_code": 0,
+      "output": "\n> paykar-web@0.1.0 format:check\n> prettier --check .\n\nChecking formatting...\nAll matched files use Prettier code style!"
+    }
+  ],
+  "compose_up": {
+    "command": "docker compose up --build -d --wait",
+    "exit_code": 0
+  },
+  "services": {
+    "api": {
+      "state": "running",
+      "health": "healthy"
+    },
+    "postgres": {
+      "state": "running",
+      "health": "healthy"
+    },
+    "web": {
+      "state": "running",
+      "health": "healthy"
+    }
+  },
+  "new_ui_http_markup": {
+    "scope": "HTTP markup only, not browser/layout acceptance",
+    "routes": {
+      "/returns": {
+        "initial_markup_contains_expected_visual_or_action": true
+      },
+      "/promotions": {
+        "initial_markup_contains_expected_visual_or_action": true
+      },
+      "/contacts": {
+        "initial_markup_contains_expected_visual_or_action": true
+      },
+      "/stores": {
+        "initial_markup_contains_expected_visual_or_action": true
+      },
+      "/payment": {
+        "initial_markup_contains_expected_visual_or_action": true
+      },
+      "/how-to-buy": {
+        "initial_markup_contains_expected_visual_or_action": true
+      }
+    }
+  }
+}

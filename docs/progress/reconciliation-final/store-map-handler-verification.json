@@ -1,0 +1,17 @@
+{
+  "scope": "Actual components/effects with controlled React, Leaflet and DOM doubles; no rendered browser acceptance",
+  "status": "PASS",
+  "canonical_store_count": 8,
+  "fit_bounds_all_stores": true,
+  "numbered_44px_keyboard_markers": true,
+  "popup_metadata": true,
+  "list_selects_and_pans_marker": true,
+  "marker_selects_list": true,
+  "only_selected_marker_highlighted": true,
+  "internal_list_scroll_only": true,
+  "independent_external_osm_links": true,
+  "reduced_motion_pan_and_scroll": true,
+  "preference_rerenders_retain_selection_and_map": true,
+  "resize_and_cleanup": true,
+  "browser_layout_and_real_leaflet_interaction": "PENDING"
+}

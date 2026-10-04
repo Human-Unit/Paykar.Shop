@@ -1,0 +1,22 @@
+﻿[
+    {
+        "command":  "npm run lint",
+        "exit_code":  0,
+        "output":  "\r\n\u003e paykar-web@0.1.0 lint\r\n\u003e eslint . --max-warnings=0\r\n\r\n"
+    },
+    {
+        "command":  "npm run typecheck",
+        "exit_code":  0,
+        "output":  "\r\n\u003e paykar-web@0.1.0 typecheck\r\n\u003e next typegen \u0026\u0026 tsc --noEmit\r\n\r\nGenerating route types...\r\n✓ Types generated successfully\r\n"
+    },
+    {
+        "command":  "npm run build",
+        "exit_code":  0,
+        "output":  "\r\n\u003e paykar-web@0.1.0 build\r\n\u003e next build\r\n\r\n▲ Next.js 16.3.8 (Turbopack)\r\n✓ Running next.config.ts took 24ms\r\n\r\n  Creating an optimized production build ...\r\n✓ Compiled successfully in 1067ms\r\n  Running TypeScript ...\r\n  Finished TypeScript in 1243ms ...\r\n  Collecting page data using 13 workers ...\r\n  Generating static pages using 13 workers (0/21) ...\r\n  Generating static pages using 13 workers (5/21) \r\n  Generating static pages using 13 workers (10/21) \r\n  Generating static pages using 13 workers (15/21) \r\n✓ Generating static pages using 13 workers (21/21) in 876ms\r\n  Finalizing page optimization ...\r\n\r\nRoute (app)\r\n┌ ○ /\r\n├ ○ /_not-found\r\n├   /[slug]\r\n│ ├ ● /how-to-buy\r\n│ ├ ● /payment\r\n│ ├ ● /delivery\r\n│ └ ● [+7 more paths]\r\n├   /blog/[slug]\r\n│ ├ ● /blog/weekly-shopping\r\n│ ├ ● /blog/fruit-and-vegetables\r\n│ ├ ● /blog/delivery-guide\r\n│ └ ● /blog/checkout-checklist\r\n├ ○ /cart\r\n├ ○ /catalog\r\n├ ƒ /catalog/[slug]\r\n├ ○ /checkout\r\n├ ○ /icon.svg\r\n├ ƒ /order/[id]\r\n└ ƒ /product/[slug]\r\n\r\n\r\n○  (Static)   prerendered as static content\r\n●  (SSG)      prerendered as static HTML (uses generateStaticParams)\r\nƒ  (Dynamic)  server-rendered on demand\r\n\r\n"
+    },
+    {
+        "command":  "npm run format:check",
+        "exit_code":  0,
+        "output":  "\r\n\u003e paykar-web@0.1.0 format:check\r\n\u003e prettier --check .\r\n\r\nChecking formatting...\r\nAll matched files use Prettier code style!\r\n"
+    }
+]

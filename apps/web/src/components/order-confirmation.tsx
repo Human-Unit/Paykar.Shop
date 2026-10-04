@@ -21,7 +21,8 @@ export function OrderConfirmation({ id }: { id: string }) {
     validID ? `/orders/${encodeURIComponent(id)}` : null,
   );
   if (!validID || resource.error?.status === 404) notFound();
-  if (resource.loading) return <Loading label="Загружаем заказ…" />;
+  if (resource.loading)
+    return <Loading kind="confirmation" label="Загружаем заказ…" />;
   if (resource.error)
     return <Failure error={resource.error} retry={resource.retry} />;
   const order = resource.data;

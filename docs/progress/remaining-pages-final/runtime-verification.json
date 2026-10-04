@@ -1,0 +1,151 @@
+{
+  "checked_at": "2026-10-03T16:18:12.443016+00:00",
+  "browser_acceptance": "PENDING - no connected browser",
+  "health": {
+    "status": "ok",
+    "service": "paykar-api"
+  },
+  "database_health": {
+    "status": "ok",
+    "database": "connected"
+  },
+  "real_ors": {
+    "mocked": false,
+    "endpoint": "https://api.heigit.org/openrouteservice/v2/directions/driving-car/geojson",
+    "points": 51,
+    "distance_meters": 2887,
+    "duration_seconds": 273,
+    "delivery_price": "20.00",
+    "latitude": 38.575,
+    "longitude": 68.78
+  },
+  "promotion_filter": {
+    "total": 8,
+    "all_discounted": true
+  },
+  "sandbox_payment": {
+    "payment_id": "4789f9d1-ce87-4eb0-88f1-b1fba986c33f",
+    "order_id": "28677d06-5e85-43cc-bcf5-bb330e7a1446",
+    "amount": "38.00",
+    "method": "card",
+    "status": "paid",
+    "failures": [
+      {
+        "scenario": "DECLINED",
+        "status": "failed",
+        "order": null,
+        "stock_unchanged": true
+      },
+      {
+        "scenario": "INSUFFICIENT",
+        "status": "failed",
+        "order": null,
+        "stock_unchanged": true
+      },
+      {
+        "scenario": "ERROR",
+        "status": "failed",
+        "order": null,
+        "stock_unchanged": true
+      }
+    ],
+    "duplicate_confirmation_same_order": true,
+    "receipt_repeat_get_identical": true
+  },
+  "cash_order": {
+    "id": "844a573d-50a5-45e0-abb7-0d288582dcd0",
+    "status": "due_on_delivery",
+    "idempotent": true
+  },
+  "postgresql_payment_order": {
+    "payment_count": 1,
+    "linked_order_count": 1,
+    "status": "succeeded",
+    "method": "card",
+    "order_payment_status": "paid",
+    "amount": 38.0,
+    "order_total": 38.0,
+    "items": 1
+  },
+  "web_routes": {
+    "/": 200,
+    "/catalog": 200,
+    "/catalog/produce": 200,
+    "/product/apples-red": 200,
+    "/cart": 200,
+    "/checkout": 200,
+    "/order/28677d06-5e85-43cc-bcf5-bb330e7a1446": 200,
+    "/how-to-buy": 200,
+    "/payment": 200,
+    "/delivery": 200,
+    "/returns": 200,
+    "/promotions": 200,
+    "/blog": 200,
+    "/blog/weekly-shopping": 200,
+    "/blog/fruit-and-vegetables": 200,
+    "/blog/delivery-guide": 200,
+    "/blog/checkout-checklist": 200,
+    "/brands": 200,
+    "/about": 200,
+    "/contacts": 200,
+    "/stores": 200
+  },
+  "missing_routes": {
+    "/unknown-store-page": {
+      "status": 404,
+      "custom_component_reference": true,
+      "custom_heading_in_initial_html": false,
+      "custom_404_browser_render": "PENDING"
+    },
+    "/blog/unknown-post": {
+      "status": 404,
+      "custom_component_reference": true,
+      "custom_heading_in_initial_html": false,
+      "custom_404_browser_render": "PENDING"
+    },
+    "/product/nonexistent-product": {
+      "status": 404,
+      "custom_component_reference": true,
+      "custom_heading_in_initial_html": false,
+      "custom_404_browser_render": "PENDING"
+    },
+    "/catalog/nonexistent-category": {
+      "status": 404,
+      "custom_component_reference": true,
+      "custom_heading_in_initial_html": false,
+      "custom_404_browser_render": "PENDING"
+    },
+    "/order/00000000-0000-0000-0000-000000000000": {
+      "status": 404,
+      "custom_component_reference": true,
+      "custom_heading_in_initial_html": false,
+      "custom_404_browser_render": "PENDING"
+    },
+    "/order/not-a-uuid": {
+      "status": 404,
+      "custom_component_reference": true,
+      "custom_heading_in_initial_html": false,
+      "custom_404_browser_render": "PENDING"
+    }
+  },
+  "secret_scan_http": {
+    "response_count": 52,
+    "key_matches": 0,
+    "database_password_matches": 0,
+    "browser_network_capture": "PENDING"
+  },
+  "404_build_artifact": {
+    "custom_markup": true,
+    "shared_footer": true,
+    "initial_live_html_has_heading": false,
+    "note": "All six 404 status/component-reference checks pass. The literal heading assertion did not pass on live HTTP responses, which carry the framework error/RSC payload. Generated 404 markup is branded. Browser rendering remains unverified; no claim of visual PASS."
+  },
+  "delivery_reference": {
+    "five_sections": true,
+    "six_steps": true,
+    "five_faqs": true,
+    "source_and_styles_unchanged": true,
+    "browser_visual_regression": "PENDING"
+  },
+  "final_http_checked_at": "2026-10-03T16:26:33.801795+00:00"
+}

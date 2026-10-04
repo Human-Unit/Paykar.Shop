@@ -1,6 +1,7 @@
 "use client";
 import { usePresentation } from "@/context/presentation";
 import Link from "next/link";
+import { ApiError } from "@/lib/api";
 import {
   ShoppingBasket,
   CircleAlert,
@@ -11,7 +12,7 @@ export function Loading({
   kind = "message",
   label = "Загружаем товары…",
 }: {
-  kind?: "message" | "grid" | "product";
+  kind?: "message" | "grid" | "product" | "cart" | "location" | "confirmation";
   label?: string;
 }) {
   const { t } = usePresentation();
@@ -25,7 +26,7 @@ export function Loading({
         <Package className="loading-icon" size={28} aria-hidden="true" />
       )}
       <span className={kind === "message" ? "" : "sr-only"}>{t(label)}</span>
-      {kind !== "message" && (
+      {["grid", "product"].includes(kind) && (
         <div
           className={kind === "grid" ? "product-grid" : "product-detail"}
           aria-hidden="true"
@@ -39,6 +40,29 @@ export function Loading({
           ))}
         </div>
       )}
+      {["cart", "location", "confirmation"].includes(kind) && (
+        <div
+          className={`page-skeleton page-skeleton-${kind}`}
+          aria-hidden="true"
+        >
+          <div className="skeleton-primary">
+            {Array.from({ length: kind === "cart" ? 3 : 1 }, (_, index) => (
+              <div className="skeleton-card" key={index}>
+                <div className="skeleton-image" />
+                <div className="skeleton-copy">
+                  <div className="skeleton-line" />
+                  <div className="skeleton-line short" />
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="skeleton-card skeleton-summary">
+            <div className="skeleton-line" />
+            <div className="skeleton-line short" />
+            <div className="skeleton-image" />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -50,7 +74,13 @@ export function Failure({ error, retry }: { error: Error; retry: () => void }) {
         <CircleAlert size={32} aria-hidden="true" />
       </span>
       <h2>{t("Не удалось загрузить")}</h2>
-      <p>{t(error.message)}</p>
+      <p>
+        {t(
+          error instanceof ApiError && error.status === 0
+            ? "Не удалось связаться с магазином. Проверьте соединение и повторите попытку."
+            : "Магазин временно недоступен. Повторите попытку.",
+        )}
+      </p>
       <button type="button" onClick={retry} className="button mt-4">
         {t("Повторить")}
       </button>

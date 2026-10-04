@@ -6,11 +6,76 @@ Status: **FULL-SITE POLISH — IMPLEMENTED**
 
 Submission readiness is pending the new browser/manual acceptance. Earlier manual acceptance applies to the earlier frontend and does not verify this pass.
 
+## Latest follow-up — 2026-10-03
+
+Workspace: `D:\Workshop\Paykar\Test_Task_Paykar_Shop`. Baseline: published commit `83ee17e`. The new brief was audited against the existing implementation rather than replacing page compositions that already satisfy it. This follow-up improves the weakest remaining presentation states. No backend, schema, migration, API semantics, commerce handler, cart/presentation context, search handler, header, footer, package or provider change is included.
+
+### Route-by-route source review
+
+The matrix records implementation and responsive CSS decisions. It is **not visual acceptance**: actual framing, typography, line breaks, contrast, focus and overflow at all five widths still require browser/manual review. “Retained” refers to the implementation already in `83ee17e`. All rows use the established `t`/theme-token surfaces; RU/TJ/EN wording and light-theme contrast remain subject to human review.
+
+| Route | Before problem / remaining gap | Changes or retained composition | Focal point and next action | Responsive design | Localization | Accessibility |
+| --- | --- | --- | --- | --- | --- | --- |
+| `/` | A raw catalog alone would not explain shopping; the baseline already addresses this. | Retained grocery hero, benefits, categories, actual promotions/products, journey, delivery highlight and articles. | Hero shopping CTA; supporting catalog/reading links by section. | Hero/sidebar and editorial sections change grids at tablet/mobile; local images fit their stages. | Existing translated section/CTA labels retained. | Single page h1, section headings, decorative image alt and links retained. |
+| `/catalog` | Dense shopping controls must stay aligned rather than become an informational card grid. | Retained compact banner, category sidebar, filter row, counts, ProductCards and pagination. | Products remain primary; filter/sort/paging controls secondary. | Sidebar/filter row adapt below desktop; existing compact mobile product grid retained. | Existing translated filters, empty state and counts retained. | Labels, buttons, breadcrumbs and pagination semantics retained. |
+| `/catalog/[slug]` | Category context needs to remain clear without replacing catalog behavior. | Retained category title/context and nested breadcrumb/filter/grid composition. | Selected category followed by results. | Same catalog breakpoints and page gutters. | Actual category names pass through presentation translation. | Existing breadcrumbs and controls retained. |
+| `/product/[slug]` | Long names can compete with purchase information at narrow widths. | Retained bright image stage, purchase panel, stock/prices, services, actual description/facts and related products; strengthened wrapping. | Product title/price/add action. | Two-column detail becomes stacked; narrower padding and text wrapping. | Actual product/unit/category labels translated; no invented specs. | Original quantity/button labels, section headings and image fallback retained. |
+| `/cart` | Populated loading was a generic message; long item names need wrapping. | Cart-specific item/summary skeleton; retained desktop items/summary, quantity/remove controls, subtotal/delivery note and empty illustration. | Checkout CTA after basket review. | Skeleton and actual layout stack; item controls occupy separate narrow grid positions. | Existing cart/status/recovery copy translated. | Skeleton announces loading once; its decorative blocks are hidden; original handlers/labels retained. |
+| `/checkout` | Business state is particularly sensitive to remounts. Baseline already has the requested task flow. | Retained 01–04 contact/delivery/payment/order sections, integrated map, metric cards, method cards and visible sandbox warning; shared wrapping safeguards only. | Complete details, calculate route, confirm order. | Summary stacks; route values and payment methods adapt at 640/360px. | Original RU/TJ/EN controls retained. | Existing labels, live feedback and focus targets retained; no state-dependent keys added. |
+| `/order/[id]` | Generic loading did not resemble a confirmation; long order/customer values can overflow. | Confirmation-specific skeleton; retained success visual, ID/status, persisted details/items/totals and home/catalog actions; wrapping safeguards. | Confirmation status and saved-link reminder. | Skeleton and receipt panels stack with bounded text. | Existing payment/status/totals/reading labels retained. | Loading status and decorative skeleton semantics; original headings and actions retained. |
+| `/how-to-buy` | The shopping journey CTA was below the steps. | Retained journey illustration, six steps and FAQs; added a catalog action to the hero. | Start shopping, then review six steps. | Hero stacks; step grid becomes two/one columns; CTA fills mobile width. | Existing copy translated. | Genuine Link CTA; ordered steps and native disclosures retained. |
+| `/payment` | Primary next action was below payment information. | Added checkout action; retained cash/sandbox visual, method cards, retry callout, process and FAQs. | Choose method and proceed to checkout. | Synthetic illustration and methods stack; translated CTA wraps. | Added translated checkout action; all sandbox safety copy retained. | Decorative card excluded from assistive reading; real method controls remain in checkout. |
+| `/returns` | Plain introduction lacked a focal visual; step order did not prepare order details before contacting the store. | Added package/receipt/conversation artwork and contact action; static steps now retain item, prepare details, contact and discuss resolution. | Contact store after preparing details. | Illustration scales at 360px; four steps become two/one columns. | Four new translation pairs cover this flow and hero actions. | Decorative artwork hidden; ordered steps/FAQ/links; no legal promise added. |
+| `/promotions` | Plain heading lacked offer presentation. | Added grocery/tag illustration and direct link to actual discounted results; retained real old/current prices, badges, empty state and paging. | Actual offers, with an anchor to the product section. | Hero stacks; illustration and caption wrap; existing product grid retained. | Existing promotion copy translated. | Labeled results section and keyboard-operable anchor/paging; no timer or fabricated discount. |
+| `/blog` | Editorial hierarchy already exists in the baseline. | Retained featured article plus local-image card grid. | Featured reading action, then more articles. | Featured/card grids stack at tablet/mobile. | Article labels/title/excerpt/reading time translated. | Link cards and headings retained; decorative images use empty alt. |
+| `/blog/[slug]` | Wide article text would be hard to read; baseline already uses a reading column. | Retained narrow article, topic/time, local hero, sections and related reading. | Article title/content; related reading afterward. | 820px maximum column; 16px mobile text and smaller hero. | All four articles retain translation entries. | Breadcrumbs and semantic article/section headings retained. |
+| `/brands` | No manufacturer dataset exists; an empty directory would mislead. | Retained honest information state/local assortment visual; added a hero catalog CTA. | Browse real products instead of invented brands. | Assortment/info layout stacks; CTA fills narrow width. | Existing limitation text translated. | Clear heading and real catalog link; no fake manufacturer links. |
+| `/about` | Primary next action was below feature cards. | Added hero catalog CTA; retained grocery visual and implemented capability cards. | Known capabilities followed by shopping action. | Hero/features stack at established breakpoints. | Existing translated capability copy retained. | Semantic headings/icons/links; no fabricated history or statistics. |
+| `/contacts` | Generic heading and generic config-loading message. | Added schematic store-pin visual, address/map anchor, location skeleton; retained configured address and independent real Leaflet map. | Address and map, then catalog/store/delivery links. | Hero/card/map stack; loading skeleton follows this shape. | Existing location labels translated. | Decorative schematic is hidden; anchor target exists during loading/error; OSM link remains labeled. |
+| `/stores` | Same generic introduction/loading gap as contacts. | Added store illustration, map anchor and skeleton; existing store card/map composition preserved. | Known store address/location. | Same map and card breakpoints, 320px map on mobile. | Existing store/address labels translated. | Map remains independent of checkout; no route calculation; recovery action retained. |
+| Custom 404 | Initial live HTML does not include branded heading, although the generated artifact does. | Retained subtle 404, supplied Paykar branding, recovery text and home/catalog actions. No speculative route-validator change. | Clear recovery to home/catalog. | Bounded branding/heading and wrapping mobile actions. | Existing translated recovery strings retained. | One h1 and native links. Hydration/rendered acceptance explicitly pending. |
+
+### Shared states and integration
+
+- `PageIntro` gained an optional primary action; it remains stateless and has no data requests. It does not force an illustrated hero onto catalog/cart/checkout.
+- `public-page-visuals.tsx` contains three page-specific illustrations using existing Lucide icons, CSS and local grocery imagery. They carry no fabricated prices, geographical detail or contact information.
+- Cart, store-location and order-confirmation skeletons mirror their task layouts, use an accessible status label and hide decorative blocks from assistive technology. No animation package was added.
+- `Failure` now presents safe translated offline/unavailable text rather than arbitrary `Error.message`. Retry/recovery callbacks are unchanged. Static-render checks in RU/TJ/EN confirm technical error text is absent and loading labels remain accessible.
+- Product, cart, checkout and confirmation long values have narrow-screen wrapping safeguards. The 1440px container, 32/24/16 gutters, global background, shared header/footer and delivery styles are retained. Review all widths: 1440, 1024, 768, 390 and 320.
+- Search suggestions and keyboard handlers are unchanged; their normal/loading/empty/unavailable feedback and existing dropdown styles were reviewed in source. Actual hover/keyboard/layering remains pending in the manual checklist.
+
+### Follow-up verification
+
+Fresh evidence is in `remaining-pages-final/`; prior evidence below belongs to the initial pass and is not relabeled as current browser acceptance.
+
+Frontend: `npm run lint`, `npm run typecheck`, `npm run build`, `npm run format:check` passed. Backend: compileall, Ruff check, Ruff format check (41 files), pytest (**77 passed, zero skips**, one existing Starlette/AnyIO deprecation warning), Alembic current (`0002_sandbox_payments`, head), and Alembic check (no new operations) passed. Docker configuration validation and Compose rebuild/wait passed; postgres/API/web are healthy. Docker Desktop was initially stopped and was started for this verification.
+
+Source audit: **575 translation entries**, **467 UI strings**, zero missing TJ/EN pairs, all **64 protected files unchanged**, and checkout state/handlers unchanged. The controlled checkout-handler harness passed failure/cart retention, same payment-session retries, single clear/navigation on success, double-submit guarding and RU/TJ/EN plus dark/light rerenders without another routing request. These are controlled handler checks, not real browser/Leaflet checks.
+
+Real provider quote through FastAPI: **51 LineString coordinates, 2,887 m, 273 s, 20.00 TJS**, destination **38.5750, 68.7800**, using the HeiGIT endpoint. Live sandbox failures (`DECLINED`, `INSUFFICIENT`, `ERROR`) created no order and left stock unchanged. `SUCCESS` created one persisted paid order on the same session; duplicate confirmations and two receipt GETs returned that order. PostgreSQL confirmed one linked payment/order/item at 38.00 TJS. Cash creation also remained idempotent. This smoke intentionally created two labeled local acceptance orders and decremented one product unit for each successful order.
+
+New manual-review confirmation URLs:
+
+- Card: `http://localhost:3000/order/28677d06-5e85-43cc-bcf5-bb330e7a1446`
+- Cash: `http://localhost:3000/order/844a573d-50a5-45e0-abb7-0d288582dcd0`
+
+The source/deployed-asset scan found zero configured ORS-key or database-password matches in assets and no provider URL/public ORS config in browser assets. Payment schema/provider and controlled handlers still exclude card-form data from API payloads. These bounded scans do not substitute for browser network/log observation.
+
+Browser automation for this follow-up is **UNAVAILABLE**: the Browser skill was read, but neither its required Node REPL `js` tool nor a discovery tool is exposed in this session. The runtime could not be connected. No alternate browser surface, fabricated screenshot or visual PASS was used. Manual acceptance is **PENDING**; use `remaining-pages-final/screenshots/README.md`. Earlier manual acceptance does not cover these changes. Actual visual layout, preference interaction, Leaflet/network behavior and 404 hydration remain the acceptance blockers.
+
+**FULL-SITE POLISH — IMPLEMENTED**
+
+**VISUAL / INTERACTIVE ACCEPTANCE — PENDING**
+
+No commit or push was made for this follow-up.
+
+## Initial pass — historical implementation and evidence
+
 ## 1. Quality benchmark and scope
 
 The current `/delivery` page is the reference for hierarchy, section rhythm, restrained green accents, theme-aware elevated surfaces, icons, numbered steps, CTA clarity and native disclosures. Its exact layout is not repeated everywhere. The original delivery component and stylesheet are unchanged.
 
-This pass changes frontend presentation and static editorial copy. FastAPI, database models, Alembic migrations, providers, money calculations, catalog query semantics, cart storage, checkout handlers, payment sessions and routing are preserved. No package, remote asset, animation library or new infrastructure was added. No commit or push was made.
+The initial pass changed frontend presentation and static editorial copy. FastAPI, database models, Alembic migrations, providers, money calculations, catalog query semantics, cart storage, checkout handlers, payment sessions and routing were preserved. No package, remote asset, animation library or new infrastructure was added. It was subsequently published at the user's explicit request in `83ee17e`; the follow-up above remains uncommitted.
 
 ## 2. Shared patterns
 

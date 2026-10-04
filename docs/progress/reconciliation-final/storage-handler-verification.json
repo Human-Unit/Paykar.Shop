@@ -1,0 +1,10 @@
+{
+  "scope": "Actual providers with storage/React/DOM doubles; module reload represents fresh provider state, not Chrome reload",
+  "status": "PASS",
+  "cart_add_quantity_clamp_and_clear": true,
+  "cart_survives_module_reload": true,
+  "invalid_cart_storage_recovers": true,
+  "ru_tj_en_dark_light_preferences_survive_module_reload": true,
+  "document_theme_and_language_updates": true,
+  "browser_reload_acceptance": "PENDING"
+}

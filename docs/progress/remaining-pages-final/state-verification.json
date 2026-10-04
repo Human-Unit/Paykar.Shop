@@ -1,0 +1,11 @@
+{
+  "scope": "React static markup with presentation adapter; no browser/layout verification",
+  "languages": [
+    "ru",
+    "tj",
+    "en"
+  ],
+  "raw_technical_errors_hidden": true,
+  "offline_recovery_copy": true,
+  "contextual_skeletons_announced_without_decorative_content": true
+}

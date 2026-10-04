@@ -25,7 +25,7 @@ export function CartPage() {
         text={t("Самое время выбрать что-нибудь вкусное.")}
       />
     );
-  if (cart.loading) return <Loading />;
+  if (cart.loading) return <Loading kind="cart" label="Проверяем товары…" />;
   if (cart.error) return <Failure error={cart.error} retry={cart.retry} />;
   const subtotal = cart.items.reduce((sum, item) => {
     const p = cart.products.find((p) => p.id === item.product_id);
