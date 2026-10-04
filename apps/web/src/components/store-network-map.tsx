@@ -9,11 +9,22 @@ import styles from "./home-store-network.module.css";
 
 export default function StoreNetworkMap({
   stores,
+  selectedStoreId,
+  onSelectStore,
 }: {
   stores: StoreLocation[];
+  selectedStoreId: number | null;
+  onSelectStore: (storeId: number) => void;
 }) {
   const { t } = usePresentation();
   const element = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<L.Map | null>(null);
+  const markersRef = useRef<Map<number, L.Marker>>(new Map());
+  const onSelectStoreRef = useRef(onSelectStore);
+
+  useEffect(() => {
+    onSelectStoreRef.current = onSelectStore;
+  }, [onSelectStore]);
 
   useEffect(() => {
     if (!element.current || stores.length === 0) return;
@@ -22,6 +33,7 @@ export default function StoreNetworkMap({
       scrollWheelZoom: false,
       zoomControl: true,
     });
+    mapRef.current = map;
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
@@ -45,12 +57,17 @@ export default function StoreNetworkMap({
       address.textContent = store.address;
       popup.append(title, address);
 
-      return L.marker([store.latitude, store.longitude], {
+      const marker = L.marker([store.latitude, store.longitude], {
         icon,
         title: `${store.name} — ${store.address}`,
+        keyboard: true,
       })
         .addTo(map)
         .bindPopup(popup);
+
+      marker.on("click", () => onSelectStoreRef.current(store.id));
+      markersRef.current.set(store.id, marker);
+      return marker;
     });
 
     if (markers.length === 1) {
@@ -58,7 +75,7 @@ export default function StoreNetworkMap({
     } else {
       const group = L.featureGroup(markers);
       map.fitBounds(group.getBounds(), {
-        padding: [42, 42],
+        padding: [48, 48],
         maxZoom: 13,
       });
     }
@@ -68,16 +85,41 @@ export default function StoreNetworkMap({
 
     return () => {
       resize.disconnect();
+      markersRef.current.clear();
+      mapRef.current = null;
       map.remove();
     };
   }, [stores]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+
+    for (const [storeId, marker] of markersRef.current.entries()) {
+      marker
+        .getElement()
+        ?.classList.toggle("is-active", storeId === selectedStoreId);
+    }
+
+    if (!map || selectedStoreId === null) return;
+    const marker = markersRef.current.get(selectedStoreId);
+    if (!marker) return;
+
+    marker.openPopup();
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    map.panTo(marker.getLatLng(), {
+      animate: !reduceMotion,
+      duration: reduceMotion ? 0 : 0.35,
+    });
+  }, [selectedStoreId]);
 
   return (
     <div
       ref={element}
       className={styles.map}
       role="region"
-      aria-label={t("Расположение магазина")}
+      aria-label={`${t("Магазины")}: ${stores.length}`}
     />
   );
 }
