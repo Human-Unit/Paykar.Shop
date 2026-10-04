@@ -21,13 +21,31 @@ const StoreNetworkMap = dynamic(() => import("./store-network-map"), {
 export function HomeStoreNetwork() {
   const { t } = usePresentation();
   const [selectedStoreId, setSelectedStoreId] = useState<number | null>(null);
+  const list = useRef<HTMLDivElement>(null);
   const storeButtons = useRef<Record<number, HTMLButtonElement | null>>({});
 
   useEffect(() => {
     if (selectedStoreId === null) return;
-    storeButtons.current[selectedStoreId]?.scrollIntoView({
-      block: "nearest",
-      inline: "nearest",
+    const container = list.current;
+    const button = storeButtons.current[selectedStoreId];
+    if (!container || !button || container.scrollHeight <= container.clientHeight) {
+      return;
+    }
+
+    const containerRect = container.getBoundingClientRect();
+    const buttonRect = button.getBoundingClientRect();
+    const target =
+      container.scrollTop +
+      buttonRect.top -
+      containerRect.top -
+      (container.clientHeight - buttonRect.height) / 2;
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    container.scrollTo({
+      top: Math.max(0, target),
+      behavior: reduceMotion ? "auto" : "smooth",
     });
   }, [selectedStoreId]);
 
@@ -66,7 +84,7 @@ export function HomeStoreNetwork() {
             </div>
           </div>
 
-          <div className={styles.list} role="list">
+          <div ref={list} className={styles.list} role="list">
             {storeLocations.map((store) => {
               const selected = selectedStoreId === store.id;
               const osmUrl = `https://www.openstreetmap.org/?mlat=${store.latitude}&mlon=${store.longitude}#map=16/${store.latitude}/${store.longitude}`;
