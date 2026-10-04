@@ -134,29 +134,35 @@
   min-width: 0;
 }
 
-.storeCopy strong,
-.storeCopy span {
+.storeCopy strong {
   display: block;
   overflow-wrap: anywhere;
-}
-
-.storeCopy strong {
   font-size: 14px;
   line-height: 1.35;
 }
 
-.storeCopy span {
+.storeCopy > span {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
   margin-top: 4px;
   color: var(--muted);
   font-size: 12px;
   line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.storeCopy > span svg {
+  margin-top: 2px;
+  flex: 0 0 auto;
+  color: var(--brand-ink);
 }
 
 .storeLink > svg {
   color: var(--brand-ink);
 }
 
-:global(.paykar-network-marker) {
+.map :global(.paykar-network-marker) {
   display: grid !important;
   place-items: center;
   border: 2px solid color-mix(in srgb, white 88%, var(--paykar-green));
@@ -168,7 +174,7 @@
     0 0 0 6px color-mix(in srgb, var(--paykar-green) 18%, transparent);
 }
 
-:global(.paykar-network-marker span) {
+.map :global(.paykar-network-marker span) {
   display: grid;
   place-items: center;
   width: 100%;
@@ -178,24 +184,24 @@
   line-height: 1;
 }
 
-:global(.leaflet-popup-content-wrapper),
-:global(.leaflet-popup-tip) {
+.map :global(.leaflet-popup-content-wrapper),
+.map :global(.leaflet-popup-tip) {
   background: var(--surface);
   color: var(--ink);
 }
 
-:global(.paykar-network-popup) {
+.map :global(.paykar-network-popup) {
   display: grid;
   gap: 4px;
   min-width: 150px;
 }
 
-:global(.paykar-network-popup strong) {
+.map :global(.paykar-network-popup strong) {
   color: var(--ink);
   font-size: 14px;
 }
 
-:global(.paykar-network-popup span) {
+.map :global(.paykar-network-popup span) {
   color: var(--muted);
   font-size: 12px;
   line-height: 1.45;
