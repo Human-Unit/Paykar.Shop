@@ -32,14 +32,12 @@ export function HomeStoreNetwork() {
   }, [selectedStoreId]);
 
   return (
-    <section className={styles.section} aria-labelledby="home-stores-title">
-      <div id="home-stores-title">
-        <SectionHeader
-          eyebrow="Адрес и карта"
-          title="Магазины"
-          text="Найдите магазин и откройте его расположение на карте."
-        />
-      </div>
+    <section className={styles.section} aria-label={t("Магазины")}>
+      <SectionHeader
+        eyebrow="Адрес и карта"
+        title="Магазины"
+        text="Найдите магазин и откройте его расположение на карте."
+      />
 
       <div className={styles.layout}>
         <div className={styles.mapShell}>
