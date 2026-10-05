@@ -1,3 +1,4 @@
+from decimal import Decimal
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, HTTPException, Query
@@ -18,10 +19,15 @@ async def products(
     sort: Literal["name", "price_asc", "price_desc"] = "name",
     in_stock: bool = False,
     on_sale: bool = False,
+    min_price: Annotated[Decimal | None, Query(ge=0)] = None,
+    max_price: Annotated[Decimal | None, Query(ge=0)] = None,
     page: Annotated[int, Query(ge=1)] = 1,
     page_size: Annotated[int, Query(ge=1, le=48)] = 24,
     ids: Annotated[str | None, Query(max_length=2000)] = None,
 ):
+    if min_price is not None and max_price is not None and min_price > max_price:
+        raise HTTPException(422, "min_price must be less than or equal to max_price")
+
     filters = [Product.is_active.is_(True)]
     if q.strip():
         term = q.strip().replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
@@ -36,6 +42,10 @@ async def products(
         filters.append(Product.stock_quantity >= 1)
     if on_sale:
         filters.append(Product.old_price > Product.price)
+    if min_price is not None:
+        filters.append(Product.price >= min_price)
+    if max_price is not None:
+        filters.append(Product.price <= max_price)
     if ids is not None:
         try:
             product_ids = [int(value) for value in ids.split(",") if value]
