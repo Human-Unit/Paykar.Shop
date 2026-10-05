@@ -1,6 +1,6 @@
-/* Layering: page/map containers 0; shared navigation 1000; panel 30 within
-   navigation. Header search remains 1100. The modal drawer uses the native
-   dialog top layer and therefore sits above all navigation/content layers. */
+/* Body portal backdrop 1000 < header 1100. Search 1100 / navigation 1000
+   keep their existing ordering within the header. Panel 30 stays within nav.
+   Native dialog uses the top layer above all of these. */
 .main-navigation {
   --catalog-menu-layer: 30;
 }
@@ -10,13 +10,55 @@
   align-items: center;
   flex-shrink: 0;
 }
+.catalog-mega-backdrop {
+  position: fixed;
+  z-index: 1000;
+  inset: 0 0 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: rgb(0 0 0 / 60%);
+  cursor: pointer;
+  animation: catalog-backdrop-appear 180ms ease-out;
+}
+@supports (
+  (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+) {
+  .catalog-mega-backdrop {
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+  }
+}
 .catalog-mega-trigger {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  line-height: 1.2;
+}
+.site-header .catalog-button.catalog-mega-trigger {
+  padding-inline: 20px;
+}
+.catalog-mega-trigger > svg:first-child {
+  display: block;
+  flex: 0 0 auto;
+}
+.catalog-mega-trigger > span {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1.2;
+}
+.site-header .catalog-button.catalog-mega-trigger:focus-visible {
+  outline: 2px solid var(--brand-ink);
+  outline-offset: 2px;
+  box-shadow: none;
 }
 .catalog-mega-chevron {
-  position: absolute;
-  right: 2px;
-  transition: transform 180ms ease;
+  display: block;
+  flex: 0 0 auto;
+  transition: transform 180ms ease-out;
 }
 .catalog-mega-trigger[aria-expanded="true"] .catalog-mega-chevron {
   transform: rotate(180deg);
@@ -24,27 +66,40 @@
 .catalog-mega-panel {
   position: absolute;
   z-index: var(--catalog-menu-layer);
-  inset: 100% 0 auto;
+  inset: 100% 12px auto;
   max-height: var(--catalog-panel-max-height, calc(100dvh - 184px));
-  padding: 24px;
+  padding: 0;
   border: 1px solid var(--line);
-  border-top: 2px solid var(--paykar-green);
-  border-radius: 0 0 var(--radius) var(--radius);
-  background: var(--elevated-surface);
+  border-radius: 0 0 16px 16px;
   color: var(--ink);
-  box-shadow: 0 16px 32px rgb(0 0 0 / 20%);
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
-  scrollbar-color: var(--green-line) var(--elevated-surface);
+  scrollbar-color: color-mix(in srgb, var(--paykar-green) 40%, transparent)
+    transparent;
   visibility: hidden;
   opacity: 0;
-  transform: translateY(-6px);
+  transform: translateY(-8px);
   pointer-events: none;
   transition:
-    opacity 180ms ease,
-    transform 180ms ease,
+    opacity 180ms ease-out,
+    transform 180ms ease-out,
     visibility 0s linear 180ms;
+}
+/* Dense menu text always gets a solid surface, independently of glass support
+   and stylesheet loading order. The glass groups in site-polish exclude it. */
+.site-header .catalog-mega-panel {
+  background: var(--elevated-surface);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow:
+    0 24px 70px rgb(0 0 0 / 52%),
+    0 8px 24px rgb(0 0 0 / 28%);
+}
+:root[data-theme="light"] .site-header .catalog-mega-panel {
+  box-shadow:
+    0 24px 70px rgb(0 0 0 / 18%),
+    0 8px 24px rgb(0 0 0 / 10%);
 }
 .catalog-mega-panel.is-open {
   visibility: visible;
@@ -57,11 +112,11 @@
   width: 6px;
 }
 .catalog-mega-panel::-webkit-scrollbar-thumb {
-  border-radius: 8px;
-  background: var(--green-line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--paykar-green) 40%, transparent);
 }
 .catalog-mega-panel::-webkit-scrollbar-track {
-  background: var(--elevated-surface);
+  background: transparent;
 }
 .main-navigation .catalog-mega-panel a {
   white-space: normal;
@@ -73,7 +128,9 @@
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  margin-bottom: 16px;
+  padding: 20px 24px;
+  margin: 0;
+  border-bottom: 1px solid var(--line);
 }
 .catalog-mega-heading h2 {
   margin: 0;
@@ -84,28 +141,61 @@
 .main-navigation .catalog-mega-heading a {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: transparent;
   font-size: 13px;
   color: var(--brand-ink);
+}
+.main-navigation .catalog-mega-heading a:hover {
+  background: var(--green-wash);
+  border-color: var(--green-line);
 }
 .catalog-mega-heading svg {
   flex-shrink: 0;
 }
 .catalog-mega-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  align-items: start;
-  gap: 24px;
+  /* Preserve DOM/Tab order: down each column, then across. No shared rows,
+     fixed height, category measurement or breakpoint-dependent reordering. */
+  display: block;
+  column-count: 4;
+  column-gap: 28px;
+  column-fill: balance;
   margin: 0;
-  padding: 0;
+  padding: 20px 20px 12px;
   list-style: none;
 }
 .catalog-mega-group {
+  display: inline-block;
+  vertical-align: top;
+  width: 100%;
   min-width: 0;
-  padding: 8px;
-  border: 1px solid transparent;
-  border-radius: var(--radius);
+  break-inside: avoid;
+  margin: 0 0 20px;
+  padding: 14px 16px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--hover-surface);
+  transition:
+    background-color 140ms ease-out,
+    border-color 140ms ease-out;
+}
+.catalog-mega-group:hover,
+.catalog-mega-group:focus-within {
+  border-color: color-mix(in srgb, var(--paykar-green) 28%, var(--line));
+  background: color-mix(in srgb, var(--hover-surface) 92%, var(--paykar-green));
+}
+:root[data-theme="light"] .catalog-mega-group {
+  background: var(--surface);
+}
+:root[data-theme="light"] .catalog-mega-group:hover,
+:root[data-theme="light"] .catalog-mega-group:focus-within,
+:root[data-theme="light"] .catalog-mega-group.is-active {
+  background: var(--green-wash);
 }
 .catalog-mega-group.is-active {
   border-color: var(--green-line);
@@ -115,10 +205,11 @@
   margin: 0;
 }
 .main-navigation .catalog-mega-category {
-  display: flex;
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
   align-items: center;
-  gap: 16px;
-  min-height: 64px;
+  gap: 12px;
+  min-height: 52px;
   font-size: 15px;
   font-weight: 700;
   line-height: 1.4;
@@ -126,11 +217,11 @@
 }
 .catalog-mega-category img,
 .catalog-mega-icon {
-  flex: 0 0 64px;
-  width: 64px;
-  height: 64px;
+  width: 52px;
+  height: 52px;
   object-fit: cover;
-  border-radius: var(--radius);
+  border: 1px solid color-mix(in srgb, var(--line) 85%, transparent);
+  border-radius: 12px;
   background: var(--surface);
 }
 .catalog-mega-category span {
@@ -146,36 +237,73 @@
   color: var(--brand-ink);
 }
 .catalog-mega-links {
-  margin: 8px 0 0 80px;
+  display: grid;
+  gap: 6px;
+  margin: 12px 0 0;
   padding: 0;
   list-style: none;
 }
 .main-navigation .catalog-mega-links a {
+  position: relative;
   display: flex;
   align-items: center;
+  gap: 6px;
   min-height: 32px;
   padding-block: 4px;
   font-size: 13px;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.4;
   color: var(--muted);
 }
-.main-navigation .catalog-mega-links a:hover,
-.main-navigation .catalog-mega-links a[aria-current="page"],
+.catalog-mega-links a::before {
+  position: absolute;
+  left: -6px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--brand-ink);
+  content: "";
+  opacity: 0;
+  transition: opacity 150ms ease-out;
+}
+.main-navigation .catalog-mega-links a:hover {
+  color: var(--ink);
+}
+:root[data-theme="light"]
+  .main-navigation
+  .catalog-mega-panel
+  .catalog-mega-links
+  a:hover {
+  color: var(--ink);
+}
+.catalog-mega-links a:hover::before,
+.catalog-mega-links a[aria-current="page"]::before {
+  opacity: 1;
+}
+.site-header .main-navigation .catalog-mega-links a[aria-current="page"],
 .main-navigation .catalog-mega-links .catalog-mega-more {
   color: var(--brand-ink);
+}
+.main-navigation .catalog-mega-links .catalog-mega-more {
+  /* 6px list gap + 4px margin = 10px after the last shortcut. */
+  margin-top: 4px;
 }
 .main-navigation .catalog-mega-links a[aria-current="page"] {
   font-weight: 600;
 }
-.catalog-mega-panel a:focus-visible,
-.catalog-mega-panel button:focus-visible {
+.catalog-mega-links svg {
+  flex-shrink: 0;
+}
+.site-header .catalog-mega-panel a:focus-visible,
+.site-header .catalog-mega-panel button:focus-visible {
   outline: 2px solid var(--brand-ink);
-  outline-offset: 4px;
+  outline-offset: 3px;
   border-radius: 4px;
+  box-shadow: none;
 }
 .catalog-mega-status {
-  margin-block: 16px;
+  margin: 0;
+  padding: 24px;
   color: var(--muted);
   line-height: 1.6;
 }
@@ -185,27 +313,16 @@
 .catalog-mega-status button {
   min-height: 44px;
 }
-@media (max-width: 1100px) {
+@media (min-width: 900px) and (max-width: 1279px) {
   .catalog-mega-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-count: 3;
+    column-gap: 24px;
   }
-  .catalog-mega-panel {
-    padding: 16px;
-  }
+}
+@media (min-width: 769px) and (max-width: 899px) {
   .catalog-mega-grid {
-    gap: 16px;
-  }
-  .catalog-mega-category img,
-  .catalog-mega-icon {
-    flex-basis: 56px;
-    width: 56px;
-    height: 56px;
-  }
-  .main-navigation .catalog-mega-category {
-    gap: 8px;
-  }
-  .catalog-mega-links {
-    margin-left: 64px;
+    column-count: 2;
+    column-gap: 20px;
   }
 }
 @media (any-pointer: coarse) {
@@ -215,8 +332,17 @@
 }
 @media (max-width: 768px) {
   .catalog-mega-panel,
-  .catalog-mega-chevron {
+  .catalog-mega-chevron,
+  .catalog-mega-backdrop {
     display: none;
+  }
+}
+@keyframes catalog-backdrop-appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -224,5 +350,14 @@
   .catalog-mega-chevron {
     transition: none;
     transform: none;
+  }
+  .catalog-mega-backdrop {
+    animation: none;
+  }
+  .catalog-mega-links a::before {
+    transition: none;
+  }
+  .catalog-mega-group {
+    transition: none;
   }
 }

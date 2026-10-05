@@ -3,8 +3,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useId, useRef, useSyncExternalStore } from "react";
-import { ArrowUpRight, ChevronDown, Grid2X2 } from "lucide-react";
+import {
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
+import { createPortal } from "react-dom";
+import { useReducedMotion } from "framer-motion";
+import { ArrowRight, ArrowUpRight, ChevronDown, Grid2X2 } from "lucide-react";
 import { usePresentation } from "@/context/presentation";
 import { useResource, type Category } from "@/lib/api";
 import {
@@ -14,6 +23,7 @@ import {
   categoryImages,
 } from "@/lib/category-presentation";
 import "./catalog-mega-menu.css";
+import { m } from "./motion-primitives";
 
 const desktopQuery = "(min-width: 769px)";
 function desktopSnapshot() {
@@ -29,12 +39,17 @@ function CatalogMegaMenuGroup({
   category,
   subcategories,
   onNavigate,
+  visible,
+  index,
 }: {
   category: Category;
   subcategories: Category[];
   onNavigate: () => void;
+  visible: boolean;
+  index: number;
 }) {
   const { t } = usePresentation();
+  const reduceMotion = useReducedMotion();
   const path = usePathname();
   const href = categoryHref(category.slug);
   const active =
@@ -43,7 +58,21 @@ function CatalogMegaMenuGroup({
   const links = catalogGroupLinks(category, subcategories);
   const image = categoryImages[category.slug];
   return (
-    <li className={`catalog-mega-group${active ? " is-active" : ""}`}>
+    <m.li
+      className={`catalog-mega-group${active ? " is-active" : ""}`}
+      data-reveal
+      initial={false}
+      animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
+      transition={{
+        duration: reduceMotion ? 0 : 0.13,
+        delay: reduceMotion || !visible ? 0 : Math.min(index, 3) * 0.03,
+        ease: "easeOut",
+      }}
+      whileHover={{
+        y: reduceMotion ? 0 : -1,
+        transition: { duration: reduceMotion ? 0 : 0.12, delay: 0 },
+      }}
+    >
       <h3>
         <Link
           href={href}
@@ -55,8 +84,8 @@ function CatalogMegaMenuGroup({
           {image ? (
             <Image
               src={`/images/paykar/${image}.webp`}
-              width={64}
-              height={64}
+              width={52}
+              height={52}
               alt=""
               unoptimized
             />
@@ -69,7 +98,7 @@ function CatalogMegaMenuGroup({
         </Link>
       </h3>
       <ul className="catalog-mega-links">
-        {links.slice(0, 8).map((link) => (
+        {links.slice(0, 5).map((link) => (
           <li key={link.href}>
             <Link
               href={link.href}
@@ -83,7 +112,7 @@ function CatalogMegaMenuGroup({
             </Link>
           </li>
         ))}
-        {links.length > 8 && (
+        {links.length > 5 && (
           <li>
             <Link
               className="catalog-mega-more"
@@ -91,12 +120,12 @@ function CatalogMegaMenuGroup({
               prefetch={false}
               onClick={onNavigate}
             >
-              {t("+ Ещё")}
+              {t("Смотреть все")} <ArrowRight size={14} aria-hidden="true" />
             </Link>
           </li>
         )}
       </ul>
-    </li>
+    </m.li>
   );
 }
 
@@ -120,6 +149,11 @@ export function CatalogMegaMenu({
   const root = useRef<HTMLDivElement>(null);
   const trigger = useRef<HTMLAnchorElement>(null);
   const panel = useRef<HTMLDivElement>(null);
+  const backdrop = useRef<HTMLButtonElement>(null);
+  const [backdropPosition, setBackdropPosition] = useState<{
+    top: number;
+    host: HTMLElement;
+  } | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined,
   );
@@ -148,7 +182,9 @@ export function CatalogMegaMenu({
     if (desktopSnapshot() && !suppressFocus.current) onOpen();
   }
 
-  useEffect(() => {
+  // Measure before paint. Portal to body so the header's glass backdrop does
+  // not become the containing block for a viewport-wide fixed overlay.
+  useLayoutEffect(() => {
     if (!visible) {
       clearTimeout(closeTimer.current);
       if (focusFrame.current !== undefined)
@@ -172,7 +208,11 @@ export function CatalogMegaMenu({
       }
     };
     const outside = (event: PointerEvent) => {
-      if (event.target instanceof Node && !root.current?.contains(event.target))
+      if (
+        event.target instanceof Node &&
+        !root.current?.contains(event.target) &&
+        !backdrop.current?.contains(event.target)
+      )
         dismiss();
     };
     const escape = (event: KeyboardEvent) => {
@@ -196,6 +236,20 @@ export function CatalogMegaMenu({
         "--catalog-panel-max-height",
         `${height}px`,
       );
+      const top = Math.max(0, Math.min(window.innerHeight, bottom));
+      setBackdropPosition((current) =>
+        current?.top === top && current.host === document.body
+          ? current
+          : { top, host: document.body },
+      );
+    };
+    let measureFrame: number | undefined;
+    const onScroll = () => {
+      if (measureFrame !== undefined) return;
+      measureFrame = requestAnimationFrame(() => {
+        measureFrame = undefined;
+        resize();
+      });
     };
     const observer = new ResizeObserver(resize);
     const navigation = root.current?.closest(".main-navigation");
@@ -204,11 +258,14 @@ export function CatalogMegaMenu({
     document.addEventListener("pointerdown", outside);
     document.addEventListener("keydown", escape);
     window.addEventListener("resize", resize);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       observer.disconnect();
       document.removeEventListener("pointerdown", outside);
       document.removeEventListener("keydown", escape);
       window.removeEventListener("resize", resize);
+      window.removeEventListener("scroll", onScroll);
+      if (measureFrame !== undefined) cancelAnimationFrame(measureFrame);
     };
   }, [visible, onClose]);
   useEffect(
@@ -221,108 +278,129 @@ export function CatalogMegaMenu({
   );
 
   return (
-    <div
-      ref={root}
-      className="catalog-menu-root"
-      onPointerEnter={(event) => {
-        if (event.pointerType !== "touch") reveal();
-      }}
-      onPointerLeave={() => {
-        clearTimeout(closeTimer.current);
-        closeTimer.current = setTimeout(() => {
-          if (!root.current?.contains(document.activeElement)) onClose();
-        }, 150);
-      }}
-      onFocusCapture={() => clearTimeout(closeTimer.current)}
-      onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) close();
-      }}
-      onKeyDown={(event) => {
-        if (event.key === "Escape" && visible) {
-          event.preventDefault();
-          event.stopPropagation();
-          close(true);
-        }
-      }}
-    >
-      <Link
-        ref={trigger}
-        href="/catalog"
-        prefetch={false}
-        className="button catalog-button catalog-mega-trigger"
-        aria-expanded={visible}
-        aria-controls={panelId}
-        onFocus={reveal}
-        onClick={() => close()}
+    <>
+      {visible &&
+        backdropPosition &&
+        createPortal(
+          <button
+            ref={backdrop}
+            className="catalog-mega-backdrop"
+            type="button"
+            tabIndex={-1}
+            aria-label={t("Закрыть меню")}
+            style={{ top: backdropPosition.top }}
+            onPointerDown={(event) => event.preventDefault()}
+            onClick={() => close(true)}
+          />,
+          backdropPosition.host,
+        )}
+      <div
+        ref={root}
+        className="catalog-menu-root"
+        onPointerEnter={(event) => {
+          if (event.pointerType !== "touch") reveal();
+        }}
+        onPointerLeave={() => {
+          clearTimeout(closeTimer.current);
+          closeTimer.current = setTimeout(() => {
+            if (!root.current?.contains(document.activeElement)) onClose();
+          }, 150);
+        }}
+        onFocusCapture={() => clearTimeout(closeTimer.current)}
+        onBlur={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) close();
+        }}
         onKeyDown={(event) => {
-          if (event.key !== "ArrowDown" || !desktopSnapshot()) return;
-          event.preventDefault();
-          reveal();
-          focusFrame.current = requestAnimationFrame(() => {
-            if (trigger.current?.getAttribute("aria-expanded") === "true")
-              panel.current?.querySelector<HTMLAnchorElement>("a")?.focus();
-          });
+          if (event.key === "Escape" && visible) {
+            event.preventDefault();
+            event.stopPropagation();
+            close(true);
+          }
         }}
       >
-        <Grid2X2 size={18} aria-hidden="true" />
-        <span>{t("Каталог")}</span>
-        <ChevronDown
-          className="catalog-mega-chevron"
-          size={12}
-          aria-hidden="true"
-        />
-      </Link>
-      <div
-        ref={panel}
-        id={panelId}
-        className={`catalog-mega-panel${visible ? " is-open" : ""}`}
-        inert={!visible}
-        aria-hidden={!visible}
-      >
-        <div className="catalog-mega-heading">
-          <h2>{t("Каталог товаров")}</h2>
-          <Link href="/catalog" prefetch={false} onClick={() => close(true)}>
-            {t("Весь каталог")}
-            <ArrowUpRight size={16} aria-hidden="true" />
-          </Link>
-        </div>
-        {resource.loading && (
-          <p className="catalog-mega-status" role="status">
-            {t("Загружаем категории…")}
-          </p>
-        )}
-        {resource.error && (
-          <div className="catalog-mega-status" role="status">
-            <p>{t("Категории временно недоступны.")}</p>
-            <button
-              className="text-link"
-              type="button"
-              onClick={resource.retry}
-            >
-              {t("Попробовать снова")}
-            </button>
+        <Link
+          ref={trigger}
+          href="/catalog"
+          prefetch={false}
+          className="button catalog-button catalog-mega-trigger"
+          aria-expanded={visible}
+          aria-controls={panelId}
+          onFocus={reveal}
+          onClick={() => close()}
+          onKeyDown={(event) => {
+            if (event.key !== "ArrowDown" || !desktopSnapshot()) return;
+            event.preventDefault();
+            reveal();
+            focusFrame.current = requestAnimationFrame(() => {
+              if (trigger.current?.getAttribute("aria-expanded") === "true")
+                panel.current?.querySelector<HTMLAnchorElement>("a")?.focus();
+            });
+          }}
+        >
+          <Grid2X2 size={18} aria-hidden="true" />
+          <span>{t("Каталог")}</span>
+          <ChevronDown
+            className="catalog-mega-chevron"
+            size={12}
+            aria-hidden="true"
+          />
+        </Link>
+        <div
+          ref={panel}
+          id={panelId}
+          className={`catalog-mega-panel${visible ? " is-open" : ""}`}
+          inert={!visible}
+          aria-hidden={!visible}
+        >
+          <div className="catalog-mega-heading">
+            <h2>{t("Каталог товаров")}</h2>
+            <Link href="/catalog" prefetch={false} onClick={() => close(true)}>
+              {t("Весь каталог")}
+              <ArrowUpRight size={16} aria-hidden="true" />
+            </Link>
           </div>
-        )}
-        {resource.data && (
-          <nav aria-label={t("Категории каталога")}>
-            <ul className="catalog-mega-grid">
-              {catalogGroups(resource.data).map(({ category, children }) => (
-                <CatalogMegaMenuGroup
-                  key={category.id}
-                  category={category}
-                  subcategories={children}
-                  onNavigate={() => close(true)}
-                />
-              ))}
-            </ul>
-            {!resource.data.length && (
-              <p className="catalog-mega-status">
-                {t("Категории скоро появятся.")}
-              </p>
-            )}
-          </nav>
-        )}
+          {resource.loading && (
+            <p className="catalog-mega-status" role="status">
+              {t("Загружаем категории…")}
+            </p>
+          )}
+          {resource.error && (
+            <div className="catalog-mega-status" role="status">
+              <p>{t("Категории временно недоступны.")}</p>
+              <button
+                className="text-link"
+                type="button"
+                onClick={resource.retry}
+              >
+                {t("Попробовать снова")}
+              </button>
+            </div>
+          )}
+          {resource.data && (
+            <nav aria-label={t("Категории каталога")}>
+              <ul className="catalog-mega-grid">
+                {catalogGroups(resource.data).map(
+                  ({ category, children }, index) => (
+                    <CatalogMegaMenuGroup
+                      key={category.id}
+                      category={category}
+                      subcategories={children}
+                      onNavigate={() => close(true)}
+                      visible={visible}
+                      index={index}
+                    />
+                  ),
+                )}
+              </ul>
+              {!resource.data.length && (
+                <p className="catalog-mega-status">
+                  {t("Категории скоро появятся.")}
+                </p>
+              )}
+            </nav>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -1,7 +1,8 @@
 "use client";
 import { usePresentation } from "@/context/presentation";
-import Link from "next/link";
+import { m, MotionLink, useReveal } from "./motion-primitives";
 import Image from "next/image";
+import Link from "next/link";
 import {
   ArrowUpRight,
   Leaf,
@@ -24,6 +25,10 @@ import { ArticleCard } from "./article-card";
 import { HomeStoreNetwork } from "./home-store-network";
 export function Home() {
   const { t } = usePresentation();
+  const firstCard = useReveal({ rise: 10, delay: 0.1, hover: true });
+  const secondCard = useReveal({ rise: 10, delay: 0.17, hover: true });
+  const benefits = useReveal({ rise: 8 });
+  const grid = useReveal({ rise: 8 });
   const categories = useResource<Category[]>("/categories");
   const products = useResource<ProductPage>(
     "/products?page_size=48&in_stock=true",
@@ -41,7 +46,11 @@ export function Home() {
       <div className="promo-grid">
         <ShoppingBanner hero />
         <div className="promo-side">
-          <Link href="/delivery" className="promo-card promo-route">
+          <MotionLink
+            {...firstCard}
+            href="/delivery"
+            className="promo-card promo-route"
+          >
             <Route size={30} aria-hidden="true" />
             <span className="eyebrow">{t("ДОСТАВКА")}</span>
             <h2>
@@ -52,8 +61,12 @@ export function Home() {
               {t("Как работает доставка")}{" "}
               <ArrowUpRight size={18} aria-hidden="true" />
             </span>
-          </Link>
-          <Link href="/catalog" className="promo-card promo-shopping">
+          </MotionLink>
+          <MotionLink
+            {...secondCard}
+            href="/catalog"
+            className="promo-card promo-shopping"
+          >
             <ShoppingBag size={30} aria-hidden="true" />
             <span className="eyebrow">{t("ПРОСТО ПОКУПКИ")}</span>
             <h2>
@@ -63,10 +76,10 @@ export function Home() {
               {t("Собрать корзину ")}
               <ArrowUpRight size={18} />
             </span>
-          </Link>
+          </MotionLink>
         </div>
       </div>
-      <div className="benefits">
+      <m.div {...benefits} className="benefits">
         <span>
           <Leaf size={20} />
           {t(" Продукты на каждый день")}
@@ -79,7 +92,7 @@ export function Home() {
           <PackageCheck size={20} />
           {t(" Маршрут и цена до заказа")}
         </span>
-      </div>
+      </m.div>
       <section>
         <SectionHeader
           eyebrow="Свежий выбор на каждый день"
@@ -90,7 +103,7 @@ export function Home() {
         {categories.error && (
           <Failure error={categories.error} retry={categories.retry} />
         )}
-        <div className="category-grid">
+        <m.div {...grid} className="category-grid">
           {categories.data
             ?.filter((c) => c.parent_id === null)
             .map((c) => (
@@ -114,7 +127,7 @@ export function Home() {
                 <ArrowUpRight size={16} />
               </Link>
             ))}
-        </div>
+        </m.div>
         {categories.data?.length === 0 && (
           <Empty
             title={t("Категории скоро появятся")}
@@ -132,8 +145,8 @@ export function Home() {
             action={{ href: "/promotions", label: "Все акции" }}
           />
           <div className="product-grid">
-            {discounts.map((p) => (
-              <ProductCard key={p.id} product={p} />
+            {discounts.map((p, index) => (
+              <ProductCard key={p.id} product={p} revealIndex={index} />
             ))}
           </div>
           <p className="section-note">
@@ -152,8 +165,8 @@ export function Home() {
           <Failure error={products.error} retry={products.retry} />
         )}
         <div className="product-grid">
-          {everyday.map((p) => (
-            <ProductCard key={p.id} product={p} />
+          {everyday.map((p, index) => (
+            <ProductCard key={p.id} product={p} revealIndex={index} />
           ))}
         </div>
         {products.data?.total === 0 && (
@@ -196,11 +209,11 @@ export function Home() {
           text="Практические заметки о покупках, продуктах и доставке."
           action={{ href: "/blog", label: "Все статьи" }}
         />
-        <div className="editorial-grid">
+        <m.div {...grid} className="editorial-grid">
           {articles.slice(0, 3).map((article) => (
             <ArticleCard key={article.slug} article={article} />
           ))}
-        </div>
+        </m.div>
       </section>
     </div>
   );

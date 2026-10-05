@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowRight, ChevronDown, type LucideIcon } from "lucide-react";
 import { usePresentation } from "@/context/presentation";
+import { m, useReveal } from "./motion-primitives";
 
 export function PageIntro({
   eyebrow,
@@ -23,8 +24,10 @@ export function PageIntro({
   variant?: "text" | "compact" | "rich";
 }) {
   const { t } = usePresentation();
+  const reveal = useReveal({ rise: 0 });
   return (
-    <header
+    <m.header
+      {...reveal}
       className={`page-intro page-intro-${variant}${visual ? " has-visual" : ""}`}
     >
       <div className="page-intro-copy">
@@ -40,7 +43,7 @@ export function PageIntro({
         )}
       </div>
       {visual && <div className="page-intro-visual">{visual}</div>}
-    </header>
+    </m.header>
   );
 }
 
@@ -56,8 +59,9 @@ export function SectionHeader({
   action?: { href: string; label: string };
 }) {
   const { t } = usePresentation();
+  const reveal = useReveal({ rise: 10 });
   return (
-    <div className="polish-section-heading">
+    <m.div {...reveal} className="polish-section-heading">
       <div>
         {eyebrow && <span className="eyebrow">{t(eyebrow)}</span>}
         <h2>{t(title)}</h2>
@@ -68,7 +72,7 @@ export function SectionHeader({
           {t(action.label)} <ArrowRight size={18} aria-hidden="true" />
         </Link>
       )}
-    </div>
+    </m.div>
   );
 }
 
@@ -80,8 +84,9 @@ export type VisualStep = {
 
 export function StepFlow({ steps }: { steps: VisualStep[] }) {
   const { t } = usePresentation();
+  const reveal = useReveal({ rise: 10 });
   return (
-    <ol className={`polish-steps count-${steps.length}`}>
+    <m.ol {...reveal} className={`polish-steps count-${steps.length}`}>
       {steps.map(({ title, text, icon: Icon }, index) => (
         <li key={title}>
           <div className="polish-step-top">
@@ -94,7 +99,7 @@ export function StepFlow({ steps }: { steps: VisualStep[] }) {
           <p>{t(text)}</p>
         </li>
       ))}
-    </ol>
+    </m.ol>
   );
 }
 
@@ -114,8 +119,9 @@ export function CTASection({
   icon: LucideIcon;
 }) {
   const { t } = usePresentation();
+  const reveal = useReveal();
   return (
-    <section className="polish-cta">
+    <m.section {...reveal} className="polish-cta">
       <div>
         <span className="eyebrow">{t(eyebrow)}</span>
         <h2>{t(title)}</h2>
@@ -127,7 +133,7 @@ export function CTASection({
       <div className="polish-cta-art" aria-hidden="true">
         <Icon size={72} strokeWidth={1.3} />
       </div>
-    </section>
+    </m.section>
   );
 }
 

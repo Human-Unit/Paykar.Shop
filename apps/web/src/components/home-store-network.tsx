@@ -7,6 +7,7 @@ import { usePresentation } from "@/context/presentation";
 import { storeLocations } from "@/lib/store-locations";
 import { SectionHeader } from "./page-patterns";
 import styles from "./home-store-network.module.css";
+import { m, useReveal } from "./motion-primitives";
 
 function MapLoading() {
   const { t } = usePresentation();
@@ -20,6 +21,8 @@ const StoreNetworkMap = dynamic(() => import("./store-network-map"), {
 
 export function HomeStoreNetwork() {
   const { t } = usePresentation();
+  const mapReveal = useReveal({ rise: 0 });
+  const directoryReveal = useReveal({ rise: 10, delay: 0.06 });
   const [selectedStoreId, setSelectedStoreId] = useState<number | null>(null);
   const list = useRef<HTMLDivElement>(null);
   const storeButtons = useRef<Record<number, HTMLButtonElement | null>>({});
@@ -62,7 +65,7 @@ export function HomeStoreNetwork() {
       />
 
       <div className={styles.layout}>
-        <div className={styles.mapShell}>
+        <m.div {...mapReveal} className={styles.mapShell}>
           <StoreNetworkMap
             stores={storeLocations}
             selectedStoreId={selectedStoreId}
@@ -75,9 +78,13 @@ export function HomeStoreNetwork() {
               <small>{t("Магазины")}</small>
             </span>
           </div>
-        </div>
+        </m.div>
 
-        <aside className={styles.listPanel} aria-label={t("Магазины")}>
+        <m.aside
+          {...directoryReveal}
+          className={styles.listPanel}
+          aria-label={t("Магазины")}
+        >
           <div className={styles.listHeader}>
             <span className={styles.listHeaderIcon}>
               <Store size={22} aria-hidden="true" />
@@ -134,7 +141,7 @@ export function HomeStoreNetwork() {
               );
             })}
           </div>
-        </aside>
+        </m.aside>
       </div>
     </section>
   );

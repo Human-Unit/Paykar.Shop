@@ -21,6 +21,7 @@ import { useResource, type DeliveryConfig } from "@/lib/api";
 import { cents } from "@/lib/format";
 import { Breadcrumbs } from "./breadcrumbs";
 import "./delivery-page.css";
+import { m, useReveal } from "./motion-primitives";
 
 const benefits = [
   {
@@ -159,13 +160,19 @@ function DeliveryRouteIllustration({ address }: { address?: string }) {
 
 export function DeliveryPage() {
   const { t, money } = usePresentation();
+  const introReveal = useReveal({ rise: 0 });
+  const sectionReveal = useReveal();
   const config = useResource<DeliveryConfig>("/delivery/config");
   return (
     <div className="delivery-page">
       <Breadcrumbs
         items={[{ label: "Главная", href: "/" }, { label: "Доставка" }]}
       />
-      <section className="delivery-hero" aria-labelledby="delivery-title">
+      <m.section
+        {...introReveal}
+        className="delivery-hero"
+        aria-labelledby="delivery-title"
+      >
         <div className="delivery-hero-copy">
           <span className="eyebrow">
             <Truck size={18} aria-hidden="true" />
@@ -192,7 +199,7 @@ export function DeliveryPage() {
           </span>
         </div>
         <DeliveryRouteIllustration address={config.data?.store_address} />
-      </section>
+      </m.section>
 
       <section
         className="delivery-benefits"
@@ -215,12 +222,12 @@ export function DeliveryPage() {
         className="delivery-process"
         aria-labelledby="delivery-process-title"
       >
-        <div className="delivery-section-heading">
+        <m.div {...sectionReveal} className="delivery-section-heading">
           <span className="eyebrow">{t("От корзины до подтверждения")}</span>
           <h2 id="delivery-process-title">{t("Как работает доставка?")}</h2>
           <p>{t("Шесть простых шагов — без лишних вопросов.")}</p>
-        </div>
-        <ol className="delivery-steps">
+        </m.div>
+        <m.ol {...sectionReveal} className="delivery-steps">
           {steps.map(({ icon: Icon, title, text }, index) => (
             <li className="delivery-step" key={title}>
               <div className="delivery-step-top">
@@ -233,10 +240,14 @@ export function DeliveryPage() {
               <p>{t(text)}</p>
             </li>
           ))}
-        </ol>
+        </m.ol>
       </section>
 
-      <section className="delivery-cta" aria-labelledby="delivery-cta-title">
+      <m.section
+        {...sectionReveal}
+        className="delivery-cta"
+        aria-labelledby="delivery-cta-title"
+      >
         <div className="delivery-cta-copy">
           <span className="eyebrow">{t("Сначала маршрут. Потом заказ.")}</span>
           <h2 id="delivery-cta-title">
@@ -259,13 +270,13 @@ export function DeliveryPage() {
           </span>
           <span className="delivery-cta-art-label">{t("Ваша точка")}</span>
         </div>
-      </section>
+      </m.section>
 
       <section className="delivery-faq" aria-labelledby="delivery-faq-title">
-        <div className="delivery-section-heading">
+        <m.div {...sectionReveal} className="delivery-section-heading">
           <span className="eyebrow">{t("Полезно знать")}</span>
           <h2 id="delivery-faq-title">{t("Частые вопросы")}</h2>
-        </div>
+        </m.div>
         <div className="delivery-faq-list">
           {questions.map(({ question, answer, showPrice }) => (
             <details className="delivery-faq-item" key={question}>

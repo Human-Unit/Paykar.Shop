@@ -11,6 +11,7 @@ import { Preferences } from "./preferences";
 import { Brand } from "./brand";
 import { BurgerMenu, MainNavigation } from "./site-navigation";
 import { Footer } from "./footer";
+import { MotionProvider } from "./motion-primitives";
 export function Shell({ children }: { children: React.ReactNode }) {
   const { t } = usePresentation();
   const cart = useCart();
@@ -43,7 +44,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
       ?.setAttribute("content", t(description));
   }, [path, t]);
   return (
-    <>
+    <MotionProvider>
       <a className="skip-link" href="#main">
         {t("Перейти к содержимому")}
       </a>
@@ -86,6 +87,6 @@ export function Shell({ children }: { children: React.ReactNode }) {
         {children}
       </main>
       <Footer />
-    </>
+    </MotionProvider>
   );
 }

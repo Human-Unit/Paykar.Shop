@@ -13,8 +13,12 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { Breadcrumbs } from "./breadcrumbs";
+import { m, useReveal } from "./motion-primitives";
 export function OrderConfirmation({ id }: { id: string }) {
   const { t, money, distance, duration, locale } = usePresentation();
+  const success = useReveal({ rise: 0, scale: 0.94, inView: false });
+  const heading = useReveal({ rise: 12, delay: 0.06, inView: false });
+  const details = useReveal({ rise: 0, delay: 0.12 });
   const validID =
     /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
   const resource = useResource<Order>(
@@ -42,17 +46,17 @@ export function OrderConfirmation({ id }: { id: string }) {
           { label: "Подтверждение заказа" },
         ]}
       />
-      <div className="confirmation-heading">
-        <span className="confirmation-check" aria-hidden="true">
+      <m.div {...heading} className="confirmation-heading">
+        <m.span {...success} className="confirmation-check" aria-hidden="true">
           <CheckCircle2 size={40} strokeWidth={1.6} />
-        </span>
+        </m.span>
         <div className="eyebrow">{t("Подтверждение заказа")}</div>
         <h1>{t("Спасибо! Заказ получен")}</h1>
         <p>
           {t("Сохраните ссылку на эту страницу, чтобы открыть заказ снова.")}
         </p>
-      </div>
-      <div className="confirmation-layout">
+      </m.div>
+      <m.div {...details} className="confirmation-layout">
         <section className="checkout-panel confirmation-info">
           <h2>
             {t("Заказ ")}
@@ -141,7 +145,7 @@ export function OrderConfirmation({ id }: { id: string }) {
             </p>
           </div>
         </section>
-      </div>
+      </m.div>
       <div className="page-actions confirmation-actions">
         <Link href="/catalog" className="button">
           {t("Продолжить покупки")} <ArrowRight size={20} aria-hidden="true" />

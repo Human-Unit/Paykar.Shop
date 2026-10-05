@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { usePresentation } from "@/context/presentation";
+import { m, useReveal } from "./motion-primitives";
 import Link from "next/link";
 import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
@@ -109,10 +110,21 @@ export function AddButton({ product }: { product: Product }) {
     </button>
   );
 }
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({
+  product,
+  revealIndex = 0,
+}: {
+  product: Product;
+  revealIndex?: number;
+}) {
   const { t, money } = usePresentation();
+  const reveal = useReveal({
+    rise: 8,
+    delay: Math.min(revealIndex, 5) * 0.05,
+    hover: true,
+  });
   return (
-    <article className="product-card">
+    <m.article {...reveal} className="product-card">
       <Link
         href={`/product/${product.slug}`}
         className="image-wrap"
@@ -142,6 +154,6 @@ export function ProductCard({ product }: { product: Product }) {
         </div>
         <AddButton product={product} />
       </div>
-    </article>
+    </m.article>
   );
 }

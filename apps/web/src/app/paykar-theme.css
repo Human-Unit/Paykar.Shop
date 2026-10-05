@@ -24,7 +24,8 @@
   --header-panel: var(--surface);
   --header-line: var(--line);
   --control-surface: var(--elevated-surface);
-  --control-border: var(--line);
+  --control-border: #747b75;
+  --radius-control: 6px;
   --error-text: #ffb4a3;
   --error-surface: #2b1715;
   --warning-text: #e8bd77;
@@ -1338,6 +1339,7 @@ body:has(.cart-layout, .checkout-layout, .confirmation) {
   --surface: #ffffff;
   --elevated-surface: #f1f3ef;
   --hover-surface: #e9ede7;
+  --control-border: #798179;
   --line: #e3e6e1;
   --green-wash: color-mix(in srgb, var(--paykar-green), white 93%);
   --green-line: color-mix(in srgb, var(--paykar-green), white 70%);
@@ -2744,7 +2746,7 @@ select {
   font-size: 13px;
 }
 .store-footer a:hover {
-  color: var(--paykar-green);
+  color: var(--brand-ink);
 }
 .store-footer p {
   color: var(--muted);
