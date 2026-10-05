@@ -118,3 +118,49 @@ async def test_promotions_filter_and_pagination(client):
     assert (await client.get("/api/v1/products?on_sale=true&page_size=1&page=2")).json()[
         "items"
     ] == []
+
+
+async def test_price_filters_and_composition(client):
+    result = (await client.get("/api/v1/products", params={"min_price": "15.00"})).json()
+    assert result["total"] == 1
+    assert result["items"][0]["slug"] == "test-banana"
+
+    result = (await client.get("/api/v1/products", params={"max_price": "15.00"})).json()
+    assert result["total"] == 1
+    assert result["items"][0]["slug"] == "test-apple"
+
+    result = (
+        await client.get(
+            "/api/v1/products",
+            params={"min_price": "10.50", "max_price": "10.50"},
+        )
+    ).json()
+    assert result["total"] == 1
+    assert result["items"][0]["slug"] == "test-apple"
+
+    session = await anext(client._transport.app.dependency_overrides[get_session]())
+    apple = await session.scalar(select(Product).where(Product.slug == "test-apple"))
+    apple.old_price = Decimal("12.00")
+    await session.flush()
+
+    result = (
+        await client.get(
+            "/api/v1/products",
+            params={
+                "on_sale": True,
+                "in_stock": True,
+                "min_price": "10.00",
+                "max_price": "11.00",
+            },
+        )
+    ).json()
+    assert result["total"] == 1
+    assert result["items"][0]["slug"] == "test-apple"
+
+    assert (
+        await client.get(
+            "/api/v1/products",
+            params={"min_price": "21.00", "max_price": "20.00"},
+        )
+    ).status_code == 422
+    assert (await client.get("/api/v1/products", params={"min_price": "-1"})).status_code == 422
