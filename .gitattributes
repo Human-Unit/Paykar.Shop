@@ -1,0 +1,21 @@
+# Keep text files consistent across Windows, Linux, CI, and Docker.
+* text=auto eol=lf
+
+# Windows command scripts keep native CRLF line endings.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Explicit binary assets: never normalize line endings.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.pdf binary
+*.zip binary
