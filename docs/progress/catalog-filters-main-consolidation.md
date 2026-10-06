@@ -45,4 +45,45 @@ Actual rendered checks at 320, 390, 768, 1024, 1440, and 1920 remain pending: fi
 
 ## Main verification and final state
 
-To be filled with the actual merge, post-merge checks, live health/API evidence, final ancestry, and clean-worktree result. Overall acceptance remains BLOCKED until browser acceptance can be executed.
+Local `main` was fast-forwarded first to fetched `origin/main` (`0c86e42755501ef92079da9a888e308570caec07`) and then to the completed remote Phase 1 history (`d48c271`). Merge commit `14dbf93` integrates `phase3/general-shopping-redesign`, including safety snapshot `2cff287` and expanded-filter commit `dd4fec0`. Three overlapping catalog files were reconciled: the expanded implementation was preserved and the remote Phase 1 regression test was retained. The remote discovery stylesheet and progress documents were preserved as well.
+
+`git merge-base --is-ancestor` confirmed that fetched main, Phase 0, remote Phase 1, local Phase 2, local Phase 3, and both backup branches are all ancestors of consolidated main. Phase 4 was mixed uncommitted work, not a separate branch; its implementation is preserved by `2cff287`. The standalone line-ending branch was not merged because its `.gitattributes` content already matches fetched main.
+
+### Checks executed from main
+
+| Check                                                                         | Actual result                                                |
+| ----------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| `npm run lint`                                                                | PASS                                                         |
+| `npm run typecheck`                                                           | PASS                                                         |
+| `npm run build`                                                               | PASS; 20 application routes                                  |
+| `npm run format:check`                                                        | PASS after formatting the preserved remote stylesheet        |
+| `npm run test:catalog`                                                        | PASS; 8 tests, 0 skips                                       |
+| `pytest -q` with `TEST_DATABASE_URL` targeting isolated `paykar_filters_test` | PASS; 129 tests, 0 skips; rerun inside the rebuilt API image |
+| `ruff check --no-cache .`                                                     | PASS using Python 3.12 Docker tooling                        |
+| `ruff format --check .`                                                       | PASS; 45 files                                               |
+| `python -m compileall -q app`                                                 | PASS                                                         |
+| `docker compose exec -T api alembic upgrade head`                             | PASS                                                         |
+| `docker compose exec -T api alembic current`                                  | `0003_product_connections (head)`                            |
+| `docker compose config --quiet`                                               | PASS                                                         |
+| `docker compose up --build -d`                                                | PASS; PostgreSQL, API, and web healthy                       |
+| Final web image rebuild after localization/format fixes                       | PASS                                                         |
+| Live API and database health                                                  | `ok`; `connected`                                            |
+| Independent live catalog comparison                                           | PASS; 18 cases against 40 actual products                    |
+| Final HTTP page smoke                                                         | PASS; 9 URLs returned 200                                    |
+| New catalog/header translation-key audit                                      | PASS; no missing RU/TJ/EN keys                               |
+
+The live comparison checks filtered IDs, totals, sorting, pagination, zero results, and invalid-query 422 responses against an independent Decimal/category calculation over current catalog data. It covers nested categories, search, exact prices, stock, sales, 10/20/30 percent discounts, both real units, and composed conditions. Current full-catalog price presets are up to 8.00, 8.01–14.00, 14.01–18.00, and 18.01 upward. Existing black-tea connections still return `oat-cookies`, `honey`, and `wafers`. Machine-readable results are in [catalog-filters-main-evidence.json](catalog-filters-main-evidence.json).
+
+HTTP smoke covered `/`, `/catalog`, a composed catalog URL, `/catalog/produce`, `/product/black-tea`, `/cart`, `/checkout`, `/delivery`, and `/stores`. This proves route delivery, not browser rendering or shopping interactions. Neither a real ORS request nor a new live order/payment transaction was performed for this filter task; backend regressions passed.
+
+The post-merge format check initially failed on the preserved remote discovery stylesheet. Its wrapping was corrected and the check passed. A final dictionary audit also found and added the missing catalog-search placeholder in all three languages. The final evidence commit records these two small fixes and this report.
+
+### Remaining acceptance and repository state
+
+The final approved browser connection retry still returned `No browser is available`. All six target viewport checks and interactive acceptance remain **BLOCKED**, including quick add, history navigation, persisted preferences, console inspection, and no-overflow measurement. No automated or manual browser acceptance is claimed.
+
+Non-failing warnings remain: one upstream Starlette/AnyIO deprecation, a Node module-type warning in the URL tests, and the production dependency install's report of five high-severity advisories. No unrelated dependency upgrade or automatic audit fix was attempted.
+
+All preservation, filtering, and consolidation commits are on local `main`; the final small fixes and evidence are recorded together in the following verification commit. The final response reports its exact HEAD and the subsequent clean-worktree check. Remote main was verified with `git ls-remote` at `0c86e42755501ef92079da9a888e308570caec07`; local main contains that history but is ahead, so remote synchronization is not claimed. No push was performed, as required by root `AGENTS.md`. Backups, remote branches, and the existing stash remain untouched.
+
+**CATALOG FILTERS + MAIN CONSOLIDATION — BLOCKED:** implementation, local integration, and automated/runtime checks pass; mandatory browser acceptance remains unavailable.

@@ -8,7 +8,9 @@
 
 .filterForm {
   display: grid;
-  grid-template-columns: minmax(220px, 1.4fr) minmax(220px, 0.8fr) minmax(180px, 0.7fr) auto;
+  grid-template-columns:
+    minmax(220px, 1.4fr) minmax(220px, 0.8fr) minmax(180px, 0.7fr)
+    auto;
   gap: 14px;
   align-items: end;
   margin-bottom: 16px;

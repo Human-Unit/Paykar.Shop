@@ -36,3 +36,7 @@
 - Re-ran frontend lint, typecheck, production build, formatting, and `git diff --check`; all passed.
 - Docker could not start: the Docker Desktop Linux engine named pipe was missing. Local HTTP checks consequently could not reach the web or API ports.
 - The approved in-app browser setup again reported no browser available; its browser list was empty. Browser acceptance remains blocked pending those local services.
+
+## Main consolidation recheck — 2026-10-06
+
+The earlier uncommitted-work and unavailable-Docker statements describe previous checks. Safety commit `2cff287` now preserves the mixed Phase 2/3/4 work and favicon on local `main`, alongside fetched Phase 0/1 history and expanded catalog filtering. Docker was subsequently restored: the full rebuilt stack is healthy, frontend checks pass, all 129 backend regressions pass, and live catalog/HTTP checks pass. Desktop menu and theme access were restored without replacing the editorial design. Browser acceptance remains **BLOCKED** because the approved Browser is still disconnected, even though the local services are available. No push was performed. See [the consolidation report](../progress/catalog-filters-main-consolidation.md).

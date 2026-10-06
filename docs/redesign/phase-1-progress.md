@@ -192,3 +192,7 @@ Before Phase 1 can be marked complete:
 ## Current decision
 
 The implementation is ready for verification and screenshot review, but **Phase 1 is not yet accepted** until automated checks and rendered browser review are completed.
+
+## Consolidation recheck — 2026-10-06
+
+The original status above is historical. Remote Phase 1 history was preserved in local `main` and integrated with expanded composable filters, real subcategories, price presets, discounts, and units. Catalog strings now use the central RU/TJ/EN dictionary. Frontend lint, formatting, typecheck, build, eight URL tests, and all 129 backend regressions pass from consolidated main. The running Docker stack is healthy; 18 live catalog checks and nine HTTP page checks pass. Rendered viewport and shopping interaction acceptance still cannot run because the approved Browser is disconnected. See [the consolidation report](../progress/catalog-filters-main-consolidation.md) for evidence, commit history, and the remaining acceptance boundary.

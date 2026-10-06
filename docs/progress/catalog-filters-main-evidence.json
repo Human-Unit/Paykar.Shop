@@ -1,0 +1,358 @@
+{
+  "timestamp": "2026-10-06T12:52:24.598222+00:00",
+  "main_checked": "14dbf93",
+  "catalog_count": 40,
+  "facets": {
+    "units": ["упак.", "шт."],
+    "price_presets": [
+      {
+        "min_price": null,
+        "max_price": "8.00"
+      },
+      {
+        "min_price": "8.01",
+        "max_price": "14.00"
+      },
+      {
+        "min_price": "14.01",
+        "max_price": "18.00"
+      },
+      {
+        "min_price": "18.01",
+        "max_price": null
+      }
+    ]
+  },
+  "health": {
+    "/health": {
+      "status": "ok",
+      "service": "paykar-api"
+    },
+    "/health/db": {
+      "status": "ok",
+      "database": "connected"
+    }
+  },
+  "api_cases": [
+    {
+      "params": {
+        "q": "Чай",
+        "category": "drinks",
+        "min_price": "3",
+        "max_price": "20",
+        "in_stock": "true",
+        "on_sale": "true",
+        "min_discount": "20",
+        "unit": "упак."
+      },
+      "total": 0,
+      "slugs": [],
+      "passed": true
+    },
+    {
+      "params": {
+        "category": "produce",
+        "subcategory": "fruit",
+        "min_price": "5",
+        "max_price": "25",
+        "in_stock": "true",
+        "on_sale": "true"
+      },
+      "total": 0,
+      "slugs": [],
+      "passed": true
+    },
+    {
+      "params": {
+        "min_price": "20"
+      },
+      "total": 7,
+      "slugs": [
+        "oranges",
+        "bananas",
+        "coffee",
+        "butter",
+        "honey",
+        "orange-juice",
+        "cheese"
+      ],
+      "passed": true
+    },
+    {
+      "params": {
+        "max_price": "10"
+      },
+      "total": 14,
+      "slugs": [
+        "baguette",
+        "raisin-bun",
+        "wafers",
+        "sparkling-water",
+        "water",
+        "sponges",
+        "yogurt",
+        "potatoes",
+        "lavash",
+        "flatbread",
+        "carrots",
+        "napkins",
+        "wheat-bread",
+        "rye-bread"
+      ],
+      "passed": true
+    },
+    {
+      "params": {
+        "min_price": "10",
+        "max_price": "20"
+      },
+      "total": 21,
+      "slugs": [
+        "wafers",
+        "kefir",
+        "croissant",
+        "lemons",
+        "marmalade",
+        "milk",
+        "liquid-soap",
+        "cucumbers",
+        "trash-bags",
+        "oat-cookies",
+        "paper-towels",
+        "sour-cream",
+        "orange-juice",
+        "apple-juice",
+        "dish-soap",
+        "cottage-cheese",
+        "green-tea",
+        "black-tea",
+        "milk-chocolate",
+        "dark-chocolate",
+        "apples-red"
+      ],
+      "passed": true
+    },
+    {
+      "params": {
+        "in_stock": "true",
+        "on_sale": "true"
+      },
+      "total": 8,
+      "slugs": [
+        "raisin-bun",
+        "yogurt",
+        "carrots",
+        "trash-bags",
+        "orange-juice",
+        "dish-soap",
+        "wheat-bread",
+        "dark-chocolate"
+      ],
+      "passed": true
+    },
+    {
+      "params": {
+        "min_discount": "10"
+      },
+      "total": 8,
+      "slugs": [
+        "raisin-bun",
+        "yogurt",
+        "carrots",
+        "trash-bags",
+        "orange-juice",
+        "dish-soap",
+        "wheat-bread",
+        "dark-chocolate"
+      ],
+      "passed": true
+    },
+    {
+      "params": {
+        "min_discount": "20"
+      },
+      "total": 5,
+      "slugs": ["raisin-bun", "yogurt", "carrots", "trash-bags", "wheat-bread"],
+      "passed": true
+    },
+    {
+      "params": {
+        "min_discount": "30"
+      },
+      "total": 4,
+      "slugs": ["raisin-bun", "yogurt", "carrots", "wheat-bread"],
+      "passed": true
+    },
+    {
+      "params": {
+        "unit": "упак."
+      },
+      "total": 33,
+      "slugs": [
+        "oranges",
+        "bananas",
+        "wafers",
+        "sparkling-water",
+        "water",
+        "sponges",
+        "yogurt",
+        "potatoes",
+        "kefir",
+        "coffee",
+        "lemons",
+        "marmalade",
+        "butter",
+        "milk",
+        "carrots",
+        "liquid-soap",
+        "honey",
+        "cucumbers",
+        "trash-bags",
+        "oat-cookies",
+        "paper-towels",
+        "napkins",
+        "sour-cream",
+        "orange-juice",
+        "apple-juice",
+        "dish-soap",
+        "cheese",
+        "cottage-cheese",
+        "green-tea",
+        "black-tea",
+        "milk-chocolate",
+        "dark-chocolate",
+        "apples-red"
+      ],
+      "passed": true
+    },
+    {
+      "params": {
+        "unit": "шт."
+      },
+      "total": 7,
+      "slugs": [
+        "baguette",
+        "raisin-bun",
+        "croissant",
+        "lavash",
+        "flatbread",
+        "wheat-bread",
+        "rye-bread"
+      ],
+      "passed": true
+    },
+    {
+      "params": {
+        "category": "drinks",
+        "subcategory": "fruit"
+      },
+      "total": 0,
+      "slugs": [],
+      "passed": true
+    },
+    {
+      "params": {
+        "q": "does-not-exist"
+      },
+      "total": 0,
+      "slugs": [],
+      "passed": true
+    },
+    {
+      "params": {
+        "on_sale": "true",
+        "sort": "price_asc",
+        "page_size": 3,
+        "page": 2
+      },
+      "total": 8,
+      "slugs": ["yogurt", "trash-bags", "dark-chocolate"],
+      "passed": true
+    },
+    {
+      "params": {
+        "category": "produce",
+        "min_price": "5",
+        "max_price": "25",
+        "in_stock": "true",
+        "sort": "price_desc"
+      },
+      "total": 7,
+      "slugs": [
+        "oranges",
+        "bananas",
+        "apples-red",
+        "lemons",
+        "cucumbers",
+        "carrots",
+        "potatoes"
+      ],
+      "passed": true
+    },
+    {
+      "params": {
+        "min_price": "20",
+        "max_price": "10"
+      },
+      "status": 422,
+      "passed": true
+    },
+    {
+      "params": {
+        "min_discount": "101"
+      },
+      "status": 422,
+      "passed": true
+    },
+    {
+      "params": {
+        "min_price": "NaN"
+      },
+      "status": 422,
+      "passed": true
+    }
+  ],
+  "curated_tea_connections": ["oat-cookies", "honey", "wafers"],
+  "http_page_smoke": [
+    {
+      "path": "/",
+      "status": 200
+    },
+    {
+      "path": "/catalog",
+      "status": 200
+    },
+    {
+      "path": "/catalog?category=produce&subcategory=fruit&in_stock=true&sort=price_asc",
+      "status": 200
+    },
+    {
+      "path": "/catalog/produce",
+      "status": 200
+    },
+    {
+      "path": "/product/black-tea",
+      "status": 200
+    },
+    {
+      "path": "/cart",
+      "status": 200
+    },
+    {
+      "path": "/checkout",
+      "status": 200
+    },
+    {
+      "path": "/delivery",
+      "status": 200
+    },
+    {
+      "path": "/stores",
+      "status": 200
+    }
+  ],
+  "browser_acceptance": {
+    "status": "BLOCKED",
+    "reason": "Final approved Browser connection retry returned No browser is available. No rendered or interaction verification performed."
+  }
+}
