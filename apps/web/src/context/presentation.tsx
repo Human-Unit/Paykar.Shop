@@ -15,13 +15,15 @@ import {
 } from "@/lib/format";
 
 export type Language = "ru" | "tj" | "en";
-export type Theme = "dark" | "light" | "system";
+export type Theme = "dark" | "light";
 type Preferences = { language: Language; theme: Theme };
 const defaults: Preferences = { language: "ru", theme: "dark" };
 const storageKey = "paykar-presentation-v1";
 const changed = "paykar-presentation-change";
 let fallback = JSON.stringify(defaults);
+let useFallback = false;
 function snapshot() {
+  if (useFallback) return fallback;
   try {
     return localStorage.getItem(storageKey) || fallback;
   } catch {
@@ -47,13 +49,27 @@ function parse(raw: string): Preferences {
           ? candidate.language
           : "ru",
       theme:
-        candidate.theme === "light" || candidate.theme === "system"
-          ? candidate.theme
+        candidate.theme === "light" ||
+        (candidate.theme === "system" &&
+          typeof window !== "undefined" &&
+          !window.matchMedia("(prefers-color-scheme: dark)").matches)
+          ? "light"
           : "dark",
     };
   } catch {
     return defaults;
   }
+}
+function save(next: Preferences) {
+  fallback = JSON.stringify(next);
+  try {
+    localStorage.setItem(storageKey, fallback);
+    useFallback = false;
+  } catch {
+    /* Preferences still work for this tab. */
+    useFallback = true;
+  }
+  window.dispatchEvent(new Event(changed));
 }
 type Presentation = Preferences & {
   setLanguage: (language: Language) => void;
@@ -100,25 +116,22 @@ export function PresentationProvider({
   );
   const locale =
     language === "tj" ? "tg-TJ" : language === "en" ? "en-US" : "ru-RU";
-  function save(next: Preferences) {
-    fallback = JSON.stringify(next);
-    try {
-      localStorage.setItem(storageKey, fallback);
-    } catch {
-      /* Preferences still work for this tab. */
-    }
-    window.dispatchEvent(new Event(changed));
-  }
   useEffect(() => {
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
-    const apply = () => {
-      document.documentElement.dataset.theme =
-        theme === "system" ? (media.matches ? "dark" : "light") : theme;
-    };
-    apply();
-    media.addEventListener("change", apply);
-    return () => media.removeEventListener("change", apply);
-  }, [theme]);
+    document.documentElement.dataset.theme = theme;
+    // Resolve a legacy preference once, retaining its language and storage key.
+    try {
+      const stored: unknown = JSON.parse(raw);
+      if (
+        stored &&
+        typeof stored === "object" &&
+        "theme" in stored &&
+        stored.theme === "system"
+      )
+        save({ language, theme });
+    } catch {
+      /* Invalid storage uses the existing default. */
+    }
+  }, [raw, language, theme]);
   useEffect(() => {
     document.documentElement.lang = language === "tj" ? "tg" : language;
   }, [language, t]);

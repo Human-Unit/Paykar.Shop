@@ -33,6 +33,41 @@ export function catalogParameters(source: URLSearchParams, slug?: string) {
     Number(page) < 2
   )
     result.delete("page");
+  normalizeSale(result);
+  return result;
+}
+
+function normalizeSale(params: URLSearchParams) {
+  const discount = params.get("min_discount");
+  if (
+    discount !== null &&
+    discount !== "" &&
+    Number.isFinite(Number(discount)) &&
+    Number(discount) >= 0 &&
+    Number(discount) <= 100
+  ) {
+    params.set("on_sale", "true");
+    // A zero minimum is the same as the quick sale filter.
+    if (Number(discount) === 0) params.delete("min_discount");
+  }
+}
+
+export function catalogFilterChanges(
+  source: URLSearchParams,
+  changes: Record<string, string | null> = {},
+) {
+  const result = new URLSearchParams(source);
+  for (const [key, value] of Object.entries(changes)) {
+    if (value) result.set(key, value);
+    else result.delete(key);
+  }
+  if (
+    Object.hasOwn(changes, "on_sale") &&
+    changes.on_sale !== "true" &&
+    !Object.hasOwn(changes, "min_discount")
+  )
+    result.delete("min_discount");
+  normalizeSale(result);
   return result;
 }
 
@@ -40,12 +75,8 @@ export function catalogHref(
   source: URLSearchParams,
   changes: Record<string, string | null> = {},
 ) {
-  const result = new URLSearchParams(source);
+  const result = catalogFilterChanges(source, changes);
   if (!Object.hasOwn(changes, "page")) result.delete("page");
-  for (const [key, value] of Object.entries(changes)) {
-    if (value) result.set(key, value);
-    else result.delete(key);
-  }
   if (result.get("sort") === "name") result.delete("sort");
   if (result.get("page") === "1") result.delete("page");
   return result.size ? `/catalog?${result}` : "/catalog";
@@ -84,14 +115,56 @@ export function descendantCategories(categories: Category[], slug: string) {
   );
 }
 
-export function activeFilterCount(params: URLSearchParams) {
+// Search, parent category, sorting and the two quick toggles have their own UI.
+export function advancedFilterCount(params: URLSearchParams) {
   return [
-    params.get("q"),
-    params.get("category"),
     params.get("subcategory"),
     params.get("min_price") || params.get("max_price"),
-    params.get("in_stock"),
-    params.get("on_sale") || params.get("min_discount"),
+    Number(params.get("min_discount")) > 0,
     params.get("unit"),
   ].filter(Boolean).length;
+}
+
+export function catalogPriceError(params: URLSearchParams) {
+  const min = params.get("min_price") || "";
+  const max = params.get("max_price") || "";
+  for (const value of [min, max]) {
+    if (
+      value &&
+      (!/^\d+(?:\.\d{1,2})?$/.test(value) || Number(value) > 9999999999.99)
+    )
+      return "invalid_price";
+  }
+  return min && max && Number(min) > Number(max) ? "reversed_price" : null;
+}
+
+export function categoryFilterChanges(
+  params: URLSearchParams,
+  categories: Category[],
+  slug: string,
+): Record<string, string | null> {
+  const child = params.get("subcategory");
+  const compatible =
+    !slug ||
+    descendantCategories(categories, slug).some((item) => item.slug === child);
+  return {
+    category: slug || null,
+    ...(compatible ? {} : { subcategory: null }),
+  };
+}
+
+export function resetCatalogFilters(params: URLSearchParams) {
+  const result = new URLSearchParams(params);
+  for (const key of [
+    "subcategory",
+    "min_price",
+    "max_price",
+    "in_stock",
+    "on_sale",
+    "min_discount",
+    "unit",
+    "page",
+  ])
+    result.delete(key);
+  return result;
 }

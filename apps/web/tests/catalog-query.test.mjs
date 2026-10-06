@@ -1,11 +1,15 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
-  activeFilterCount,
+  advancedFilterCount,
   catalogApiQuery,
   catalogHref,
   catalogParameters,
+  catalogFilterChanges,
+  catalogPriceError,
+  categoryFilterChanges,
   descendantCategories,
+  resetCatalogFilters,
 } from "../src/lib/catalog-query.ts";
 
 const combined =
@@ -134,10 +138,10 @@ test("URL snapshots round-trip for reload and history without separate applied s
 });
 
 test("filter counts use groups and defaults are sensible", () => {
-  assert.equal(activeFilterCount(new URLSearchParams(combined)), 6);
+  assert.equal(advancedFilterCount(new URLSearchParams(combined)), 3);
   assert.equal(
-    activeFilterCount(new URLSearchParams(`${combined}&subcategory=fruit`)),
-    7,
+    advancedFilterCount(new URLSearchParams(`${combined}&subcategory=fruit`)),
+    4,
   );
   assert.equal(catalogHref(new URLSearchParams()), "/catalog");
   assert.equal(
@@ -149,6 +153,121 @@ test("filter counts use groups and defaults are sensible", () => {
     catalogHref(new URLSearchParams("sort=price_asc"), { sort: "name" }),
     "/catalog",
   );
+});
+
+test("search, primary navigation, sort and quick toggles do not inflate the advanced badge", () => {
+  assert.equal(
+    advancedFilterCount(
+      new URLSearchParams(
+        "q=tea&category=drinks&sort=price_asc&in_stock=true&on_sale=true",
+      ),
+    ),
+    0,
+  );
+  assert.equal(
+    advancedFilterCount(new URLSearchParams("min_price=0&max_price=30")),
+    1,
+  );
+});
+
+test("a minimum discount enables sale, and switching sale off clears its minimum", () => {
+  const initial = new URLSearchParams(
+    "q=tea&category=drinks&unit=pack&min_price=10",
+  );
+  const discounted = catalogFilterChanges(initial, { min_discount: "20" });
+  assert.equal(discounted.get("on_sale"), "true");
+  assert.equal(initial.has("on_sale"), false);
+  assert.equal(
+    catalogParameters(new URLSearchParams("min_discount=30&on_sale=false")).get(
+      "on_sale",
+    ),
+    "true",
+  );
+  const disabled = new URL(
+    catalogHref(discounted, { on_sale: null }),
+    "http://test",
+  ).searchParams;
+  assert.equal(disabled.has("on_sale"), false);
+  assert.equal(disabled.has("min_discount"), false);
+  for (const [key, value] of initial) assert.equal(disabled.get(key), value);
+  // Removing only the minimum retains the independent quick sale toggle.
+  const anySale = catalogFilterChanges(discounted, { min_discount: null });
+  assert.equal(anySale.get("on_sale"), "true");
+  assert.equal(anySale.has("min_discount"), false);
+  const zero = catalogParameters(new URLSearchParams("min_discount=0"));
+  assert.equal(zero.get("on_sale"), "true");
+  assert.equal(zero.has("min_discount"), false);
+});
+
+test("invalid and incomplete prices cannot be used for a preview or apply", () => {
+  for (const value of [
+    "-1",
+    "NaN",
+    "Infinity",
+    "1e3",
+    "abc",
+    "2.001",
+    "10000000000",
+    "3.",
+  ])
+    assert.equal(
+      catalogPriceError(new URLSearchParams({ min_price: value })),
+      "invalid_price",
+      value,
+    );
+  for (const value of ["0", "10", "10.5", "10.50", "9999999999.99"])
+    assert.equal(
+      catalogPriceError(new URLSearchParams({ max_price: value })),
+      null,
+      value,
+    );
+  assert.equal(
+    catalogPriceError(new URLSearchParams("min_price=30&max_price=10")),
+    "reversed_price",
+  );
+  assert.equal(
+    catalogPriceError(new URLSearchParams("min_price=10&max_price=10.00")),
+    null,
+  );
+  assert.equal(catalogPriceError(new URLSearchParams()), null);
+});
+
+test("draft reset keeps the shopper's search, category and sort without mutating applied state", () => {
+  const applied = new URLSearchParams(`${combined}&subcategory=fruit`);
+  const reset = resetCatalogFilters(applied);
+  assert.equal(reset.get("q"), "tea");
+  assert.equal(reset.get("category"), "drinks");
+  assert.equal(reset.get("sort"), "price_asc");
+  assert.equal(reset.size, 3);
+  assert.equal(applied.get("min_discount"), "20");
+  assert.equal(applied.get("page"), "3");
+});
+
+test("category transitions remove only incompatible children and retain compatible descendants", () => {
+  const categories = [
+    { id: 1, slug: "produce", name: "Produce", parent_id: null },
+    { id: 2, slug: "fruit", name: "Fruit", parent_id: 1 },
+    { id: 3, slug: "drinks", name: "Drinks", parent_id: null },
+  ];
+  const applied = new URLSearchParams(`${combined}&subcategory=fruit`);
+  assert.equal(
+    categoryFilterChanges(applied, categories, "produce").subcategory,
+    undefined,
+  );
+  assert.equal(
+    categoryFilterChanges(applied, categories, "drinks").subcategory,
+    null,
+  );
+  const changed = new URL(
+    catalogHref(applied, categoryFilterChanges(applied, categories, "drinks")),
+    "http://test",
+  ).searchParams;
+  assert.equal(changed.has("subcategory"), false);
+  assert.equal(changed.get("min_price"), "10");
+  assert.equal(changed.get("unit"), "pack");
+  assert.equal(changed.get("q"), "tea");
+  assert.equal(changed.get("sort"), "price_asc");
+  assert.equal(changed.has("page"), false);
 });
 
 test("subcategories follow real hierarchy, with bounded traversal", () => {

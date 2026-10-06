@@ -1,0 +1,2639 @@
+{
+  "checkedAt": "2026-10-06",
+  "source": "Connected Playwright Chrome against rebuilt Docker production frontend",
+  "interactive": {
+    "status": "PASS",
+    "viewport": 390,
+    "languages": [
+      "ru",
+      "tg",
+      "en"
+    ],
+    "keyboard": [
+      "Enter",
+      "Space",
+      "ArrowDown",
+      "ArrowUp",
+      "Home",
+      "End",
+      "Tab",
+      "Escape"
+    ],
+    "focus": [
+      "selection return",
+      "Escape return",
+      "Tab forward",
+      "outside click target",
+      "burger return"
+    ],
+    "themes": [
+      {
+        "preference": "system",
+        "effective": "light",
+        "label": "Тема оформления: Системная тема. Переключить на: Светлая тема"
+      },
+      {
+        "preference": "light",
+        "effective": "light",
+        "label": "Тема оформления: Светлая тема. Переключить на: Тёмная тема"
+      },
+      {
+        "preference": "dark",
+        "effective": "dark",
+        "label": "Тема оформления: Тёмная тема. Переключить на: Системная тема"
+      }
+    ],
+    "systemLiveChange": "PASS",
+    "drawer": {
+      "links": 11,
+      "preferences": 0
+    },
+    "cartLink": "PASS",
+    "errors": []
+  },
+  "responsive": {
+    "status": "PASS",
+    "combinations": 36,
+    "rows": [
+      {
+        "language": "ru",
+        "theme": "dark",
+        "viewport": 320,
+        "status": "PASS",
+        "width": 320,
+        "clientWidth": 310,
+        "scrollWidth": 310,
+        "htmlLang": "ru",
+        "rects": {
+          ".header-main .brand": {
+            "x": 16,
+            "y": 59.083335876464844,
+            "width": 92.96875,
+            "height": 25.822917938232422,
+            "right": 108.96875,
+            "bottom": 84.90625381469727
+          },
+          ".header-main .search-box": {
+            "x": 16,
+            "y": 102,
+            "width": 278,
+            "height": 48,
+            "right": 294,
+            "bottom": 150
+          },
+          ".header-actions": {
+            "x": 120.96875,
+            "y": 50,
+            "width": 173.03125,
+            "height": 44,
+            "right": 294,
+            "bottom": 94
+          },
+          ".language-button": {
+            "x": 120.96875,
+            "y": 50,
+            "width": 47.69791793823242,
+            "height": 44,
+            "right": 168.66666793823242,
+            "bottom": 94
+          },
+          ".theme-button": {
+            "x": 172.6666717529297,
+            "y": 50,
+            "width": 44,
+            "height": 44,
+            "right": 216.6666717529297,
+            "bottom": 94
+          },
+          ".header-actions .cart-link": {
+            "x": 220.6666717529297,
+            "y": 50,
+            "width": 73.33333587646484,
+            "height": 44,
+            "right": 294.00000762939453,
+            "bottom": 94
+          },
+          ".header-language-menu": {
+            "x": 24.666667938232422,
+            "y": 102,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 212.66666793823242,
+            "bottom": 247.33334350585938
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "ru"
+      },
+      {
+        "language": "ru",
+        "theme": "dark",
+        "viewport": 390,
+        "status": "PASS",
+        "width": 390,
+        "clientWidth": 380,
+        "scrollWidth": 380,
+        "htmlLang": "ru",
+        "rects": {
+          ".header-main .brand": {
+            "x": 16,
+            "y": 50,
+            "width": 162.96875,
+            "height": 45.270835876464844,
+            "right": 178.96875,
+            "bottom": 95.27083587646484
+          },
+          ".header-main .search-box": {
+            "x": 16,
+            "y": 103.27083587646484,
+            "width": 348,
+            "height": 48,
+            "right": 364,
+            "bottom": 151.27083587646484
+          },
+          ".header-actions": {
+            "x": 190.96875,
+            "y": 50.63541793823242,
+            "width": 173.03125,
+            "height": 44,
+            "right": 364,
+            "bottom": 94.63541793823242
+          },
+          ".language-button": {
+            "x": 190.96875,
+            "y": 50.63541793823242,
+            "width": 47.69791793823242,
+            "height": 44,
+            "right": 238.66666793823242,
+            "bottom": 94.63541793823242
+          },
+          ".theme-button": {
+            "x": 242.6666717529297,
+            "y": 50.63541793823242,
+            "width": 44,
+            "height": 44,
+            "right": 286.6666717529297,
+            "bottom": 94.63541793823242
+          },
+          ".header-actions .cart-link": {
+            "x": 290.66668701171875,
+            "y": 50.63541793823242,
+            "width": 73.33333587646484,
+            "height": 44,
+            "right": 364.0000228881836,
+            "bottom": 94.63541793823242
+          },
+          ".header-language-menu": {
+            "x": 94.66667175292969,
+            "y": 102.63542175292969,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 282.6666717529297,
+            "bottom": 247.96876525878906
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "ru"
+      },
+      {
+        "language": "ru",
+        "theme": "dark",
+        "viewport": 768,
+        "status": "PASS",
+        "width": 768,
+        "clientWidth": 758,
+        "scrollWidth": 758,
+        "htmlLang": "ru",
+        "rects": {
+          ".header-main .brand": {
+            "x": 24,
+            "y": 50,
+            "width": 524.96875,
+            "height": 45.552085876464844,
+            "right": 548.96875,
+            "bottom": 95.55208587646484
+          },
+          ".header-main .search-box": {
+            "x": 24,
+            "y": 103.55208587646484,
+            "width": 710,
+            "height": 48,
+            "right": 734,
+            "bottom": 151.55208587646484
+          },
+          ".header-actions": {
+            "x": 560.96875,
+            "y": 50.770835876464844,
+            "width": 173.03125,
+            "height": 44,
+            "right": 734,
+            "bottom": 94.77083587646484
+          },
+          ".language-button": {
+            "x": 560.96875,
+            "y": 50.770835876464844,
+            "width": 47.69791793823242,
+            "height": 44,
+            "right": 608.6666679382324,
+            "bottom": 94.77083587646484
+          },
+          ".theme-button": {
+            "x": 612.6666870117188,
+            "y": 50.770835876464844,
+            "width": 44,
+            "height": 44,
+            "right": 656.6666870117188,
+            "bottom": 94.77083587646484
+          },
+          ".header-actions .cart-link": {
+            "x": 660.6666870117188,
+            "y": 50.770835876464844,
+            "width": 73.33333587646484,
+            "height": 44,
+            "right": 734.0000228881836,
+            "bottom": 94.77083587646484
+          },
+          ".header-language-menu": {
+            "x": 464.66668701171875,
+            "y": 102.77083587646484,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 652.6666870117188,
+            "bottom": 248.10417938232422
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "ru"
+      },
+      {
+        "language": "ru",
+        "theme": "dark",
+        "viewport": 1024,
+        "status": "PASS",
+        "width": 1024,
+        "clientWidth": 1014,
+        "scrollWidth": 1014,
+        "htmlLang": "ru",
+        "rects": {
+          ".header-main .brand": {
+            "x": 24,
+            "y": 55.552085876464844,
+            "width": 176,
+            "height": 48.88541793823242,
+            "right": 200,
+            "bottom": 104.43750381469727
+          },
+          ".header-main .search-box": {
+            "x": 220,
+            "y": 54,
+            "width": 548.96875,
+            "height": 52,
+            "right": 768.96875,
+            "bottom": 106
+          },
+          ".header-actions": {
+            "x": 788.96875,
+            "y": 54,
+            "width": 201.03125,
+            "height": 52,
+            "right": 990,
+            "bottom": 106
+          },
+          ".language-button": {
+            "x": 788.96875,
+            "y": 58,
+            "width": 53.69791793823242,
+            "height": 44,
+            "right": 842.6666679382324,
+            "bottom": 102
+          },
+          ".theme-button": {
+            "x": 850.6666870117188,
+            "y": 58,
+            "width": 44,
+            "height": 44,
+            "right": 894.6666870117188,
+            "bottom": 102
+          },
+          ".header-actions .cart-link": {
+            "x": 902.6666870117188,
+            "y": 54,
+            "width": 87.33333587646484,
+            "height": 52,
+            "right": 990.0000228881836,
+            "bottom": 106
+          },
+          ".header-language-menu": {
+            "x": 654.6666870117188,
+            "y": 110,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 842.6666870117188,
+            "bottom": 255.33334350585938
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "ru"
+      },
+      {
+        "language": "ru",
+        "theme": "dark",
+        "viewport": 1440,
+        "status": "PASS",
+        "width": 1440,
+        "clientWidth": 1430,
+        "scrollWidth": 1430,
+        "htmlLang": "ru",
+        "rects": {
+          ".header-main .brand": {
+            "x": 55,
+            "y": 54,
+            "width": 196,
+            "height": 54.44791793823242,
+            "right": 251,
+            "bottom": 108.44791793823242
+          },
+          ".header-main .search-box": {
+            "x": 279,
+            "y": 55.21875,
+            "width": 791.4166870117188,
+            "height": 52,
+            "right": 1070.4166870117188,
+            "bottom": 107.21875
+          },
+          ".header-actions": {
+            "x": 1098.416748046875,
+            "y": 55.21875,
+            "width": 276.5833435058594,
+            "height": 52,
+            "right": 1375.0000915527344,
+            "bottom": 107.21875
+          },
+          ".language-button": {
+            "x": 1098.416748046875,
+            "y": 59.21875,
+            "width": 53.69791793823242,
+            "height": 44,
+            "right": 1152.1146659851074,
+            "bottom": 103.21875
+          },
+          ".theme-button": {
+            "x": 1160.1146240234375,
+            "y": 59.21875,
+            "width": 44,
+            "height": 44,
+            "right": 1204.1146240234375,
+            "bottom": 103.21875
+          },
+          ".header-actions .cart-link": {
+            "x": 1212.1146240234375,
+            "y": 55.21875,
+            "width": 162.8854217529297,
+            "height": 52,
+            "right": 1375.0000457763672,
+            "bottom": 107.21875
+          },
+          ".header-language-menu": {
+            "x": 964.1146240234375,
+            "y": 111.21875,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 1152.1146240234375,
+            "bottom": 256.5520935058594
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "ru"
+      },
+      {
+        "language": "ru",
+        "theme": "dark",
+        "viewport": 1920,
+        "status": "PASS",
+        "width": 1920,
+        "clientWidth": 1910,
+        "scrollWidth": 1910,
+        "htmlLang": "ru",
+        "rects": {
+          ".header-main .brand": {
+            "x": 295,
+            "y": 54,
+            "width": 196,
+            "height": 54.44791793823242,
+            "right": 491,
+            "bottom": 108.44791793823242
+          },
+          ".header-main .search-box": {
+            "x": 519,
+            "y": 55.21875,
+            "width": 791.4166870117188,
+            "height": 52,
+            "right": 1310.4166870117188,
+            "bottom": 107.21875
+          },
+          ".header-actions": {
+            "x": 1338.416748046875,
+            "y": 55.21875,
+            "width": 276.5833435058594,
+            "height": 52,
+            "right": 1615.0000915527344,
+            "bottom": 107.21875
+          },
+          ".language-button": {
+            "x": 1338.416748046875,
+            "y": 59.21875,
+            "width": 53.69791793823242,
+            "height": 44,
+            "right": 1392.1146659851074,
+            "bottom": 103.21875
+          },
+          ".theme-button": {
+            "x": 1400.1146240234375,
+            "y": 59.21875,
+            "width": 44,
+            "height": 44,
+            "right": 1444.1146240234375,
+            "bottom": 103.21875
+          },
+          ".header-actions .cart-link": {
+            "x": 1452.1146240234375,
+            "y": 55.21875,
+            "width": 162.8854217529297,
+            "height": 52,
+            "right": 1615.0000457763672,
+            "bottom": 107.21875
+          },
+          ".header-language-menu": {
+            "x": 1204.1146240234375,
+            "y": 111.21875,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 1392.1146240234375,
+            "bottom": 256.5520935058594
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "ru"
+      },
+      {
+        "language": "ru",
+        "theme": "light",
+        "viewport": 320,
+        "status": "PASS",
+        "width": 320,
+        "clientWidth": 310,
+        "scrollWidth": 310,
+        "htmlLang": "ru",
+        "rects": {
+          ".header-main .brand": {
+            "x": 16,
+            "y": 59.083335876464844,
+            "width": 92.96875,
+            "height": 25.822917938232422,
+            "right": 108.96875,
+            "bottom": 84.90625381469727
+          },
+          ".header-main .search-box": {
+            "x": 16,
+            "y": 102,
+            "width": 278,
+            "height": 48,
+            "right": 294,
+            "bottom": 150
+          },
+          ".header-actions": {
+            "x": 120.96875,
+            "y": 50,
+            "width": 173.03125,
+            "height": 44,
+            "right": 294,
+            "bottom": 94
+          },
+          ".language-button": {
+            "x": 120.96875,
+            "y": 50,
+            "width": 47.69791793823242,
+            "height": 44,
+            "right": 168.66666793823242,
+            "bottom": 94
+          },
+          ".theme-button": {
+            "x": 172.6666717529297,
+            "y": 50,
+            "width": 44,
+            "height": 44,
+            "right": 216.6666717529297,
+            "bottom": 94
+          },
+          ".header-actions .cart-link": {
+            "x": 220.6666717529297,
+            "y": 50,
+            "width": 73.33333587646484,
+            "height": 44,
+            "right": 294.00000762939453,
+            "bottom": 94
+          },
+          ".header-language-menu": {
+            "x": 24.666667938232422,
+            "y": 102,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 212.66666793823242,
+            "bottom": 247.33334350585938
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "ru"
+      },
+      {
+        "language": "ru",
+        "theme": "light",
+        "viewport": 390,
+        "status": "PASS",
+        "width": 390,
+        "clientWidth": 380,
+        "scrollWidth": 380,
+        "htmlLang": "ru",
+        "rects": {
+          ".header-main .brand": {
+            "x": 16,
+            "y": 50,
+            "width": 162.96875,
+            "height": 45.270835876464844,
+            "right": 178.96875,
+            "bottom": 95.27083587646484
+          },
+          ".header-main .search-box": {
+            "x": 16,
+            "y": 103.27083587646484,
+            "width": 348,
+            "height": 48,
+            "right": 364,
+            "bottom": 151.27083587646484
+          },
+          ".header-actions": {
+            "x": 190.96875,
+            "y": 50.63541793823242,
+            "width": 173.03125,
+            "height": 44,
+            "right": 364,
+            "bottom": 94.63541793823242
+          },
+          ".language-button": {
+            "x": 190.96875,
+            "y": 50.63541793823242,
+            "width": 47.69791793823242,
+            "height": 44,
+            "right": 238.66666793823242,
+            "bottom": 94.63541793823242
+          },
+          ".theme-button": {
+            "x": 242.6666717529297,
+            "y": 50.63541793823242,
+            "width": 44,
+            "height": 44,
+            "right": 286.6666717529297,
+            "bottom": 94.63541793823242
+          },
+          ".header-actions .cart-link": {
+            "x": 290.66668701171875,
+            "y": 50.63541793823242,
+            "width": 73.33333587646484,
+            "height": 44,
+            "right": 364.0000228881836,
+            "bottom": 94.63541793823242
+          },
+          ".header-language-menu": {
+            "x": 94.66667175292969,
+            "y": 102.63542175292969,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 282.6666717529297,
+            "bottom": 247.96876525878906
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "ru"
+      },
+      {
+        "language": "ru",
+        "theme": "light",
+        "viewport": 768,
+        "status": "PASS",
+        "width": 768,
+        "clientWidth": 758,
+        "scrollWidth": 758,
+        "htmlLang": "ru",
+        "rects": {
+          ".header-main .brand": {
+            "x": 24,
+            "y": 50,
+            "width": 524.96875,
+            "height": 45.552085876464844,
+            "right": 548.96875,
+            "bottom": 95.55208587646484
+          },
+          ".header-main .search-box": {
+            "x": 24,
+            "y": 103.55208587646484,
+            "width": 710,
+            "height": 48,
+            "right": 734,
+            "bottom": 151.55208587646484
+          },
+          ".header-actions": {
+            "x": 560.96875,
+            "y": 50.770835876464844,
+            "width": 173.03125,
+            "height": 44,
+            "right": 734,
+            "bottom": 94.77083587646484
+          },
+          ".language-button": {
+            "x": 560.96875,
+            "y": 50.770835876464844,
+            "width": 47.69791793823242,
+            "height": 44,
+            "right": 608.6666679382324,
+            "bottom": 94.77083587646484
+          },
+          ".theme-button": {
+            "x": 612.6666870117188,
+            "y": 50.770835876464844,
+            "width": 44,
+            "height": 44,
+            "right": 656.6666870117188,
+            "bottom": 94.77083587646484
+          },
+          ".header-actions .cart-link": {
+            "x": 660.6666870117188,
+            "y": 50.770835876464844,
+            "width": 73.33333587646484,
+            "height": 44,
+            "right": 734.0000228881836,
+            "bottom": 94.77083587646484
+          },
+          ".header-language-menu": {
+            "x": 464.66668701171875,
+            "y": 102.77083587646484,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 652.6666870117188,
+            "bottom": 248.10417938232422
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "ru"
+      },
+      {
+        "language": "ru",
+        "theme": "light",
+        "viewport": 1024,
+        "status": "PASS",
+        "width": 1024,
+        "clientWidth": 1014,
+        "scrollWidth": 1014,
+        "htmlLang": "ru",
+        "rects": {
+          ".header-main .brand": {
+            "x": 24,
+            "y": 55.552085876464844,
+            "width": 176,
+            "height": 48.88541793823242,
+            "right": 200,
+            "bottom": 104.43750381469727
+          },
+          ".header-main .search-box": {
+            "x": 220,
+            "y": 54,
+            "width": 548.96875,
+            "height": 52,
+            "right": 768.96875,
+            "bottom": 106
+          },
+          ".header-actions": {
+            "x": 788.96875,
+            "y": 54,
+            "width": 201.03125,
+            "height": 52,
+            "right": 990,
+            "bottom": 106
+          },
+          ".language-button": {
+            "x": 788.96875,
+            "y": 58,
+            "width": 53.69791793823242,
+            "height": 44,
+            "right": 842.6666679382324,
+            "bottom": 102
+          },
+          ".theme-button": {
+            "x": 850.6666870117188,
+            "y": 58,
+            "width": 44,
+            "height": 44,
+            "right": 894.6666870117188,
+            "bottom": 102
+          },
+          ".header-actions .cart-link": {
+            "x": 902.6666870117188,
+            "y": 54,
+            "width": 87.33333587646484,
+            "height": 52,
+            "right": 990.0000228881836,
+            "bottom": 106
+          },
+          ".header-language-menu": {
+            "x": 654.6666870117188,
+            "y": 110,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 842.6666870117188,
+            "bottom": 255.33334350585938
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "ru"
+      },
+      {
+        "language": "ru",
+        "theme": "light",
+        "viewport": 1440,
+        "status": "PASS",
+        "width": 1440,
+        "clientWidth": 1430,
+        "scrollWidth": 1430,
+        "htmlLang": "ru",
+        "rects": {
+          ".header-main .brand": {
+            "x": 55,
+            "y": 54,
+            "width": 196,
+            "height": 54.44791793823242,
+            "right": 251,
+            "bottom": 108.44791793823242
+          },
+          ".header-main .search-box": {
+            "x": 279,
+            "y": 55.21875,
+            "width": 791.4166870117188,
+            "height": 52,
+            "right": 1070.4166870117188,
+            "bottom": 107.21875
+          },
+          ".header-actions": {
+            "x": 1098.416748046875,
+            "y": 55.21875,
+            "width": 276.5833435058594,
+            "height": 52,
+            "right": 1375.0000915527344,
+            "bottom": 107.21875
+          },
+          ".language-button": {
+            "x": 1098.416748046875,
+            "y": 59.21875,
+            "width": 53.69791793823242,
+            "height": 44,
+            "right": 1152.1146659851074,
+            "bottom": 103.21875
+          },
+          ".theme-button": {
+            "x": 1160.1146240234375,
+            "y": 59.21875,
+            "width": 44,
+            "height": 44,
+            "right": 1204.1146240234375,
+            "bottom": 103.21875
+          },
+          ".header-actions .cart-link": {
+            "x": 1212.1146240234375,
+            "y": 55.21875,
+            "width": 162.8854217529297,
+            "height": 52,
+            "right": 1375.0000457763672,
+            "bottom": 107.21875
+          },
+          ".header-language-menu": {
+            "x": 964.1146240234375,
+            "y": 111.21875,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 1152.1146240234375,
+            "bottom": 256.5520935058594
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "ru"
+      },
+      {
+        "language": "ru",
+        "theme": "light",
+        "viewport": 1920,
+        "status": "PASS",
+        "width": 1920,
+        "clientWidth": 1910,
+        "scrollWidth": 1910,
+        "htmlLang": "ru",
+        "rects": {
+          ".header-main .brand": {
+            "x": 295,
+            "y": 54,
+            "width": 196,
+            "height": 54.44791793823242,
+            "right": 491,
+            "bottom": 108.44791793823242
+          },
+          ".header-main .search-box": {
+            "x": 519,
+            "y": 55.21875,
+            "width": 791.4166870117188,
+            "height": 52,
+            "right": 1310.4166870117188,
+            "bottom": 107.21875
+          },
+          ".header-actions": {
+            "x": 1338.416748046875,
+            "y": 55.21875,
+            "width": 276.5833435058594,
+            "height": 52,
+            "right": 1615.0000915527344,
+            "bottom": 107.21875
+          },
+          ".language-button": {
+            "x": 1338.416748046875,
+            "y": 59.21875,
+            "width": 53.69791793823242,
+            "height": 44,
+            "right": 1392.1146659851074,
+            "bottom": 103.21875
+          },
+          ".theme-button": {
+            "x": 1400.1146240234375,
+            "y": 59.21875,
+            "width": 44,
+            "height": 44,
+            "right": 1444.1146240234375,
+            "bottom": 103.21875
+          },
+          ".header-actions .cart-link": {
+            "x": 1452.1146240234375,
+            "y": 55.21875,
+            "width": 162.8854217529297,
+            "height": 52,
+            "right": 1615.0000457763672,
+            "bottom": 107.21875
+          },
+          ".header-language-menu": {
+            "x": 1204.1146240234375,
+            "y": 111.21875,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 1392.1146240234375,
+            "bottom": 256.5520935058594
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "ru"
+      },
+      {
+        "language": "tj",
+        "theme": "dark",
+        "viewport": 320,
+        "status": "PASS",
+        "width": 320,
+        "clientWidth": 310,
+        "scrollWidth": 310,
+        "htmlLang": "tg",
+        "rects": {
+          ".header-main .brand": {
+            "x": 16,
+            "y": 58.57291793823242,
+            "width": 96.66667175292969,
+            "height": 26.84375,
+            "right": 112.66667175292969,
+            "bottom": 85.41666793823242
+          },
+          ".header-main .search-box": {
+            "x": 16,
+            "y": 102,
+            "width": 278,
+            "height": 48,
+            "right": 294,
+            "bottom": 150
+          },
+          ".header-actions": {
+            "x": 124.66667175292969,
+            "y": 50,
+            "width": 169.33334350585938,
+            "height": 44,
+            "right": 294.00001525878906,
+            "bottom": 94
+          },
+          ".language-button": {
+            "x": 124.66667175292969,
+            "y": 50,
+            "width": 44,
+            "height": 44,
+            "right": 168.6666717529297,
+            "bottom": 94
+          },
+          ".theme-button": {
+            "x": 172.6666717529297,
+            "y": 50,
+            "width": 44,
+            "height": 44,
+            "right": 216.6666717529297,
+            "bottom": 94
+          },
+          ".header-actions .cart-link": {
+            "x": 220.6666717529297,
+            "y": 50,
+            "width": 73.33333587646484,
+            "height": 44,
+            "right": 294.00000762939453,
+            "bottom": 94
+          },
+          ".header-language-menu": {
+            "x": 24.666667938232422,
+            "y": 102,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 212.66666793823242,
+            "bottom": 247.33334350585938
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "tg"
+      },
+      {
+        "language": "tj",
+        "theme": "dark",
+        "viewport": 390,
+        "status": "PASS",
+        "width": 390,
+        "clientWidth": 380,
+        "scrollWidth": 380,
+        "htmlLang": "tg",
+        "rects": {
+          ".header-main .brand": {
+            "x": 16,
+            "y": 50,
+            "width": 166.6666717529297,
+            "height": 45.552085876464844,
+            "right": 182.6666717529297,
+            "bottom": 95.55208587646484
+          },
+          ".header-main .search-box": {
+            "x": 16,
+            "y": 103.55208587646484,
+            "width": 348,
+            "height": 48,
+            "right": 364,
+            "bottom": 151.55208587646484
+          },
+          ".header-actions": {
+            "x": 194.6666717529297,
+            "y": 50.770835876464844,
+            "width": 169.33334350585938,
+            "height": 44,
+            "right": 364.00001525878906,
+            "bottom": 94.77083587646484
+          },
+          ".language-button": {
+            "x": 194.6666717529297,
+            "y": 50.770835876464844,
+            "width": 44,
+            "height": 44,
+            "right": 238.6666717529297,
+            "bottom": 94.77083587646484
+          },
+          ".theme-button": {
+            "x": 242.6666717529297,
+            "y": 50.770835876464844,
+            "width": 44,
+            "height": 44,
+            "right": 286.6666717529297,
+            "bottom": 94.77083587646484
+          },
+          ".header-actions .cart-link": {
+            "x": 290.66668701171875,
+            "y": 50.770835876464844,
+            "width": 73.33333587646484,
+            "height": 44,
+            "right": 364.0000228881836,
+            "bottom": 94.77083587646484
+          },
+          ".header-language-menu": {
+            "x": 94.66667175292969,
+            "y": 102.77083587646484,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 282.6666717529297,
+            "bottom": 248.10417938232422
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "tg"
+      },
+      {
+        "language": "tj",
+        "theme": "dark",
+        "viewport": 768,
+        "status": "PASS",
+        "width": 768,
+        "clientWidth": 758,
+        "scrollWidth": 758,
+        "htmlLang": "tg",
+        "rects": {
+          ".header-main .brand": {
+            "x": 24,
+            "y": 50,
+            "width": 528.6666870117188,
+            "height": 45.552085876464844,
+            "right": 552.6666870117188,
+            "bottom": 95.55208587646484
+          },
+          ".header-main .search-box": {
+            "x": 24,
+            "y": 103.55208587646484,
+            "width": 710,
+            "height": 48,
+            "right": 734,
+            "bottom": 151.55208587646484
+          },
+          ".header-actions": {
+            "x": 564.6666870117188,
+            "y": 50.770835876464844,
+            "width": 169.33334350585938,
+            "height": 44,
+            "right": 734.0000305175781,
+            "bottom": 94.77083587646484
+          },
+          ".language-button": {
+            "x": 564.6666870117188,
+            "y": 50.770835876464844,
+            "width": 44,
+            "height": 44,
+            "right": 608.6666870117188,
+            "bottom": 94.77083587646484
+          },
+          ".theme-button": {
+            "x": 612.6666870117188,
+            "y": 50.770835876464844,
+            "width": 44,
+            "height": 44,
+            "right": 656.6666870117188,
+            "bottom": 94.77083587646484
+          },
+          ".header-actions .cart-link": {
+            "x": 660.6666870117188,
+            "y": 50.770835876464844,
+            "width": 73.33333587646484,
+            "height": 44,
+            "right": 734.0000228881836,
+            "bottom": 94.77083587646484
+          },
+          ".header-language-menu": {
+            "x": 464.66668701171875,
+            "y": 102.77083587646484,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 652.6666870117188,
+            "bottom": 248.10417938232422
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "tg"
+      },
+      {
+        "language": "tj",
+        "theme": "dark",
+        "viewport": 1024,
+        "status": "PASS",
+        "width": 1024,
+        "clientWidth": 1014,
+        "scrollWidth": 1014,
+        "htmlLang": "tg",
+        "rects": {
+          ".header-main .brand": {
+            "x": 24,
+            "y": 55.552085876464844,
+            "width": 176,
+            "height": 48.88541793823242,
+            "right": 200,
+            "bottom": 104.43750381469727
+          },
+          ".header-main .search-box": {
+            "x": 220,
+            "y": 54,
+            "width": 555.5208740234375,
+            "height": 52,
+            "right": 775.5208740234375,
+            "bottom": 106
+          },
+          ".header-actions": {
+            "x": 795.5208740234375,
+            "y": 54,
+            "width": 194.4791717529297,
+            "height": 52,
+            "right": 990.0000457763672,
+            "bottom": 106
+          },
+          ".language-button": {
+            "x": 795.5208740234375,
+            "y": 58,
+            "width": 47.145835876464844,
+            "height": 44,
+            "right": 842.6667098999023,
+            "bottom": 102
+          },
+          ".theme-button": {
+            "x": 850.6666870117188,
+            "y": 58,
+            "width": 44,
+            "height": 44,
+            "right": 894.6666870117188,
+            "bottom": 102
+          },
+          ".header-actions .cart-link": {
+            "x": 902.6666870117188,
+            "y": 54,
+            "width": 87.33333587646484,
+            "height": 52,
+            "right": 990.0000228881836,
+            "bottom": 106
+          },
+          ".header-language-menu": {
+            "x": 654.6666870117188,
+            "y": 110,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 842.6666870117188,
+            "bottom": 255.33334350585938
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "tg"
+      },
+      {
+        "language": "tj",
+        "theme": "dark",
+        "viewport": 1440,
+        "status": "PASS",
+        "width": 1440,
+        "clientWidth": 1430,
+        "scrollWidth": 1430,
+        "htmlLang": "tg",
+        "rects": {
+          ".header-main .brand": {
+            "x": 55,
+            "y": 54,
+            "width": 196,
+            "height": 54.44791793823242,
+            "right": 251,
+            "bottom": 108.44791793823242
+          },
+          ".header-main .search-box": {
+            "x": 279,
+            "y": 55.21875,
+            "width": 817.0416870117188,
+            "height": 52,
+            "right": 1096.0416870117188,
+            "bottom": 107.21875
+          },
+          ".header-actions": {
+            "x": 1124.041748046875,
+            "y": 55.21875,
+            "width": 250.95834350585938,
+            "height": 52,
+            "right": 1375.0000915527344,
+            "bottom": 107.21875
+          },
+          ".language-button": {
+            "x": 1124.041748046875,
+            "y": 59.21875,
+            "width": 47.145835876464844,
+            "height": 44,
+            "right": 1171.1875839233398,
+            "bottom": 103.21875
+          },
+          ".theme-button": {
+            "x": 1179.1875,
+            "y": 59.21875,
+            "width": 44,
+            "height": 44,
+            "right": 1223.1875,
+            "bottom": 103.21875
+          },
+          ".header-actions .cart-link": {
+            "x": 1231.1875,
+            "y": 55.21875,
+            "width": 143.8125,
+            "height": 52,
+            "right": 1375,
+            "bottom": 107.21875
+          },
+          ".header-language-menu": {
+            "x": 983.1875,
+            "y": 111.21875,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 1171.1875,
+            "bottom": 256.5520935058594
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "tg"
+      },
+      {
+        "language": "tj",
+        "theme": "dark",
+        "viewport": 1920,
+        "status": "PASS",
+        "width": 1920,
+        "clientWidth": 1910,
+        "scrollWidth": 1910,
+        "htmlLang": "tg",
+        "rects": {
+          ".header-main .brand": {
+            "x": 295,
+            "y": 54,
+            "width": 196,
+            "height": 54.44791793823242,
+            "right": 491,
+            "bottom": 108.44791793823242
+          },
+          ".header-main .search-box": {
+            "x": 519,
+            "y": 55.21875,
+            "width": 817.0416870117188,
+            "height": 52,
+            "right": 1336.0416870117188,
+            "bottom": 107.21875
+          },
+          ".header-actions": {
+            "x": 1364.041748046875,
+            "y": 55.21875,
+            "width": 250.95834350585938,
+            "height": 52,
+            "right": 1615.0000915527344,
+            "bottom": 107.21875
+          },
+          ".language-button": {
+            "x": 1364.041748046875,
+            "y": 59.21875,
+            "width": 47.145835876464844,
+            "height": 44,
+            "right": 1411.1875839233398,
+            "bottom": 103.21875
+          },
+          ".theme-button": {
+            "x": 1419.1875,
+            "y": 59.21875,
+            "width": 44,
+            "height": 44,
+            "right": 1463.1875,
+            "bottom": 103.21875
+          },
+          ".header-actions .cart-link": {
+            "x": 1471.1875,
+            "y": 55.21875,
+            "width": 143.8125,
+            "height": 52,
+            "right": 1615,
+            "bottom": 107.21875
+          },
+          ".header-language-menu": {
+            "x": 1223.1875,
+            "y": 111.21875,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 1411.1875,
+            "bottom": 256.5520935058594
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "tg"
+      },
+      {
+        "language": "tj",
+        "theme": "light",
+        "viewport": 320,
+        "status": "PASS",
+        "width": 320,
+        "clientWidth": 310,
+        "scrollWidth": 310,
+        "htmlLang": "tg",
+        "rects": {
+          ".header-main .brand": {
+            "x": 16,
+            "y": 58.57291793823242,
+            "width": 96.66667175292969,
+            "height": 26.84375,
+            "right": 112.66667175292969,
+            "bottom": 85.41666793823242
+          },
+          ".header-main .search-box": {
+            "x": 16,
+            "y": 102,
+            "width": 278,
+            "height": 48,
+            "right": 294,
+            "bottom": 150
+          },
+          ".header-actions": {
+            "x": 124.66667175292969,
+            "y": 50,
+            "width": 169.33334350585938,
+            "height": 44,
+            "right": 294.00001525878906,
+            "bottom": 94
+          },
+          ".language-button": {
+            "x": 124.66667175292969,
+            "y": 50,
+            "width": 44,
+            "height": 44,
+            "right": 168.6666717529297,
+            "bottom": 94
+          },
+          ".theme-button": {
+            "x": 172.6666717529297,
+            "y": 50,
+            "width": 44,
+            "height": 44,
+            "right": 216.6666717529297,
+            "bottom": 94
+          },
+          ".header-actions .cart-link": {
+            "x": 220.6666717529297,
+            "y": 50,
+            "width": 73.33333587646484,
+            "height": 44,
+            "right": 294.00000762939453,
+            "bottom": 94
+          },
+          ".header-language-menu": {
+            "x": 24.666667938232422,
+            "y": 102,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 212.66666793823242,
+            "bottom": 247.33334350585938
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "tg"
+      },
+      {
+        "language": "tj",
+        "theme": "light",
+        "viewport": 390,
+        "status": "PASS",
+        "width": 390,
+        "clientWidth": 380,
+        "scrollWidth": 380,
+        "htmlLang": "tg",
+        "rects": {
+          ".header-main .brand": {
+            "x": 16,
+            "y": 50,
+            "width": 166.6666717529297,
+            "height": 45.552085876464844,
+            "right": 182.6666717529297,
+            "bottom": 95.55208587646484
+          },
+          ".header-main .search-box": {
+            "x": 16,
+            "y": 103.55208587646484,
+            "width": 348,
+            "height": 48,
+            "right": 364,
+            "bottom": 151.55208587646484
+          },
+          ".header-actions": {
+            "x": 194.6666717529297,
+            "y": 50.770835876464844,
+            "width": 169.33334350585938,
+            "height": 44,
+            "right": 364.00001525878906,
+            "bottom": 94.77083587646484
+          },
+          ".language-button": {
+            "x": 194.6666717529297,
+            "y": 50.770835876464844,
+            "width": 44,
+            "height": 44,
+            "right": 238.6666717529297,
+            "bottom": 94.77083587646484
+          },
+          ".theme-button": {
+            "x": 242.6666717529297,
+            "y": 50.770835876464844,
+            "width": 44,
+            "height": 44,
+            "right": 286.6666717529297,
+            "bottom": 94.77083587646484
+          },
+          ".header-actions .cart-link": {
+            "x": 290.66668701171875,
+            "y": 50.770835876464844,
+            "width": 73.33333587646484,
+            "height": 44,
+            "right": 364.0000228881836,
+            "bottom": 94.77083587646484
+          },
+          ".header-language-menu": {
+            "x": 94.66667175292969,
+            "y": 102.77083587646484,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 282.6666717529297,
+            "bottom": 248.10417938232422
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "tg"
+      },
+      {
+        "language": "tj",
+        "theme": "light",
+        "viewport": 768,
+        "status": "PASS",
+        "width": 768,
+        "clientWidth": 758,
+        "scrollWidth": 758,
+        "htmlLang": "tg",
+        "rects": {
+          ".header-main .brand": {
+            "x": 24,
+            "y": 50,
+            "width": 528.6666870117188,
+            "height": 45.552085876464844,
+            "right": 552.6666870117188,
+            "bottom": 95.55208587646484
+          },
+          ".header-main .search-box": {
+            "x": 24,
+            "y": 103.55208587646484,
+            "width": 710,
+            "height": 48,
+            "right": 734,
+            "bottom": 151.55208587646484
+          },
+          ".header-actions": {
+            "x": 564.6666870117188,
+            "y": 50.770835876464844,
+            "width": 169.33334350585938,
+            "height": 44,
+            "right": 734.0000305175781,
+            "bottom": 94.77083587646484
+          },
+          ".language-button": {
+            "x": 564.6666870117188,
+            "y": 50.770835876464844,
+            "width": 44,
+            "height": 44,
+            "right": 608.6666870117188,
+            "bottom": 94.77083587646484
+          },
+          ".theme-button": {
+            "x": 612.6666870117188,
+            "y": 50.770835876464844,
+            "width": 44,
+            "height": 44,
+            "right": 656.6666870117188,
+            "bottom": 94.77083587646484
+          },
+          ".header-actions .cart-link": {
+            "x": 660.6666870117188,
+            "y": 50.770835876464844,
+            "width": 73.33333587646484,
+            "height": 44,
+            "right": 734.0000228881836,
+            "bottom": 94.77083587646484
+          },
+          ".header-language-menu": {
+            "x": 464.66668701171875,
+            "y": 102.77083587646484,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 652.6666870117188,
+            "bottom": 248.10417938232422
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "tg"
+      },
+      {
+        "language": "tj",
+        "theme": "light",
+        "viewport": 1024,
+        "status": "PASS",
+        "width": 1024,
+        "clientWidth": 1014,
+        "scrollWidth": 1014,
+        "htmlLang": "tg",
+        "rects": {
+          ".header-main .brand": {
+            "x": 24,
+            "y": 55.552085876464844,
+            "width": 176,
+            "height": 48.88541793823242,
+            "right": 200,
+            "bottom": 104.43750381469727
+          },
+          ".header-main .search-box": {
+            "x": 220,
+            "y": 54,
+            "width": 555.5208740234375,
+            "height": 52,
+            "right": 775.5208740234375,
+            "bottom": 106
+          },
+          ".header-actions": {
+            "x": 795.5208740234375,
+            "y": 54,
+            "width": 194.4791717529297,
+            "height": 52,
+            "right": 990.0000457763672,
+            "bottom": 106
+          },
+          ".language-button": {
+            "x": 795.5208740234375,
+            "y": 58,
+            "width": 47.145835876464844,
+            "height": 44,
+            "right": 842.6667098999023,
+            "bottom": 102
+          },
+          ".theme-button": {
+            "x": 850.6666870117188,
+            "y": 58,
+            "width": 44,
+            "height": 44,
+            "right": 894.6666870117188,
+            "bottom": 102
+          },
+          ".header-actions .cart-link": {
+            "x": 902.6666870117188,
+            "y": 54,
+            "width": 87.33333587646484,
+            "height": 52,
+            "right": 990.0000228881836,
+            "bottom": 106
+          },
+          ".header-language-menu": {
+            "x": 654.6666870117188,
+            "y": 110,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 842.6666870117188,
+            "bottom": 255.33334350585938
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "tg"
+      },
+      {
+        "language": "tj",
+        "theme": "light",
+        "viewport": 1440,
+        "status": "PASS",
+        "width": 1440,
+        "clientWidth": 1430,
+        "scrollWidth": 1430,
+        "htmlLang": "tg",
+        "rects": {
+          ".header-main .brand": {
+            "x": 55,
+            "y": 54,
+            "width": 196,
+            "height": 54.44791793823242,
+            "right": 251,
+            "bottom": 108.44791793823242
+          },
+          ".header-main .search-box": {
+            "x": 279,
+            "y": 55.21875,
+            "width": 817.0416870117188,
+            "height": 52,
+            "right": 1096.0416870117188,
+            "bottom": 107.21875
+          },
+          ".header-actions": {
+            "x": 1124.041748046875,
+            "y": 55.21875,
+            "width": 250.95834350585938,
+            "height": 52,
+            "right": 1375.0000915527344,
+            "bottom": 107.21875
+          },
+          ".language-button": {
+            "x": 1124.041748046875,
+            "y": 59.21875,
+            "width": 47.145835876464844,
+            "height": 44,
+            "right": 1171.1875839233398,
+            "bottom": 103.21875
+          },
+          ".theme-button": {
+            "x": 1179.1875,
+            "y": 59.21875,
+            "width": 44,
+            "height": 44,
+            "right": 1223.1875,
+            "bottom": 103.21875
+          },
+          ".header-actions .cart-link": {
+            "x": 1231.1875,
+            "y": 55.21875,
+            "width": 143.8125,
+            "height": 52,
+            "right": 1375,
+            "bottom": 107.21875
+          },
+          ".header-language-menu": {
+            "x": 983.1875,
+            "y": 111.21875,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 1171.1875,
+            "bottom": 256.5520935058594
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "tg"
+      },
+      {
+        "language": "tj",
+        "theme": "light",
+        "viewport": 1920,
+        "status": "PASS",
+        "width": 1920,
+        "clientWidth": 1910,
+        "scrollWidth": 1910,
+        "htmlLang": "tg",
+        "rects": {
+          ".header-main .brand": {
+            "x": 295,
+            "y": 54,
+            "width": 196,
+            "height": 54.44791793823242,
+            "right": 491,
+            "bottom": 108.44791793823242
+          },
+          ".header-main .search-box": {
+            "x": 519,
+            "y": 55.21875,
+            "width": 817.0416870117188,
+            "height": 52,
+            "right": 1336.0416870117188,
+            "bottom": 107.21875
+          },
+          ".header-actions": {
+            "x": 1364.041748046875,
+            "y": 55.21875,
+            "width": 250.95834350585938,
+            "height": 52,
+            "right": 1615.0000915527344,
+            "bottom": 107.21875
+          },
+          ".language-button": {
+            "x": 1364.041748046875,
+            "y": 59.21875,
+            "width": 47.145835876464844,
+            "height": 44,
+            "right": 1411.1875839233398,
+            "bottom": 103.21875
+          },
+          ".theme-button": {
+            "x": 1419.1875,
+            "y": 59.21875,
+            "width": 44,
+            "height": 44,
+            "right": 1463.1875,
+            "bottom": 103.21875
+          },
+          ".header-actions .cart-link": {
+            "x": 1471.1875,
+            "y": 55.21875,
+            "width": 143.8125,
+            "height": 52,
+            "right": 1615,
+            "bottom": 107.21875
+          },
+          ".header-language-menu": {
+            "x": 1223.1875,
+            "y": 111.21875,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 1411.1875,
+            "bottom": 256.5520935058594
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "tg"
+      },
+      {
+        "language": "en",
+        "theme": "dark",
+        "viewport": 320,
+        "status": "PASS",
+        "width": 320,
+        "clientWidth": 310,
+        "scrollWidth": 310,
+        "htmlLang": "en",
+        "rects": {
+          ".header-main .brand": {
+            "x": 16,
+            "y": 59.020835876464844,
+            "width": 93.47917175292969,
+            "height": 25.95833396911621,
+            "right": 109.47917175292969,
+            "bottom": 84.97916984558105
+          },
+          ".header-main .search-box": {
+            "x": 16,
+            "y": 102,
+            "width": 278,
+            "height": 48,
+            "right": 294,
+            "bottom": 150
+          },
+          ".header-actions": {
+            "x": 121.47917175292969,
+            "y": 50,
+            "width": 172.52084350585938,
+            "height": 44,
+            "right": 294.00001525878906,
+            "bottom": 94
+          },
+          ".language-button": {
+            "x": 121.47917175292969,
+            "y": 50,
+            "width": 47.1875,
+            "height": 44,
+            "right": 168.6666717529297,
+            "bottom": 94
+          },
+          ".theme-button": {
+            "x": 172.6666717529297,
+            "y": 50,
+            "width": 44,
+            "height": 44,
+            "right": 216.6666717529297,
+            "bottom": 94
+          },
+          ".header-actions .cart-link": {
+            "x": 220.6666717529297,
+            "y": 50,
+            "width": 73.33333587646484,
+            "height": 44,
+            "right": 294.00000762939453,
+            "bottom": 94
+          },
+          ".header-language-menu": {
+            "x": 24.666667938232422,
+            "y": 102,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 212.66666793823242,
+            "bottom": 247.33334350585938
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "en"
+      },
+      {
+        "language": "en",
+        "theme": "dark",
+        "viewport": 390,
+        "status": "PASS",
+        "width": 390,
+        "clientWidth": 380,
+        "scrollWidth": 380,
+        "htmlLang": "en",
+        "rects": {
+          ".header-main .brand": {
+            "x": 16,
+            "y": 50,
+            "width": 163.4791717529297,
+            "height": 45.40625,
+            "right": 179.4791717529297,
+            "bottom": 95.40625
+          },
+          ".header-main .search-box": {
+            "x": 16,
+            "y": 103.40625,
+            "width": 348,
+            "height": 48,
+            "right": 364,
+            "bottom": 151.40625
+          },
+          ".header-actions": {
+            "x": 191.4791717529297,
+            "y": 50.69791793823242,
+            "width": 172.52084350585938,
+            "height": 44,
+            "right": 364.00001525878906,
+            "bottom": 94.69791793823242
+          },
+          ".language-button": {
+            "x": 191.4791717529297,
+            "y": 50.69791793823242,
+            "width": 47.1875,
+            "height": 44,
+            "right": 238.6666717529297,
+            "bottom": 94.69791793823242
+          },
+          ".theme-button": {
+            "x": 242.6666717529297,
+            "y": 50.69791793823242,
+            "width": 44,
+            "height": 44,
+            "right": 286.6666717529297,
+            "bottom": 94.69791793823242
+          },
+          ".header-actions .cart-link": {
+            "x": 290.66668701171875,
+            "y": 50.69791793823242,
+            "width": 73.33333587646484,
+            "height": 44,
+            "right": 364.0000228881836,
+            "bottom": 94.69791793823242
+          },
+          ".header-language-menu": {
+            "x": 94.66667175292969,
+            "y": 102.69792175292969,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 282.6666717529297,
+            "bottom": 248.03126525878906
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "en"
+      },
+      {
+        "language": "en",
+        "theme": "dark",
+        "viewport": 768,
+        "status": "PASS",
+        "width": 768,
+        "clientWidth": 758,
+        "scrollWidth": 758,
+        "htmlLang": "en",
+        "rects": {
+          ".header-main .brand": {
+            "x": 24,
+            "y": 50,
+            "width": 525.4791870117188,
+            "height": 45.552085876464844,
+            "right": 549.4791870117188,
+            "bottom": 95.55208587646484
+          },
+          ".header-main .search-box": {
+            "x": 24,
+            "y": 103.55208587646484,
+            "width": 710,
+            "height": 48,
+            "right": 734,
+            "bottom": 151.55208587646484
+          },
+          ".header-actions": {
+            "x": 561.4791870117188,
+            "y": 50.770835876464844,
+            "width": 172.52084350585938,
+            "height": 44,
+            "right": 734.0000305175781,
+            "bottom": 94.77083587646484
+          },
+          ".language-button": {
+            "x": 561.4791870117188,
+            "y": 50.770835876464844,
+            "width": 47.1875,
+            "height": 44,
+            "right": 608.6666870117188,
+            "bottom": 94.77083587646484
+          },
+          ".theme-button": {
+            "x": 612.6666870117188,
+            "y": 50.770835876464844,
+            "width": 44,
+            "height": 44,
+            "right": 656.6666870117188,
+            "bottom": 94.77083587646484
+          },
+          ".header-actions .cart-link": {
+            "x": 660.6666870117188,
+            "y": 50.770835876464844,
+            "width": 73.33333587646484,
+            "height": 44,
+            "right": 734.0000228881836,
+            "bottom": 94.77083587646484
+          },
+          ".header-language-menu": {
+            "x": 464.66668701171875,
+            "y": 102.77083587646484,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 652.6666870117188,
+            "bottom": 248.10417938232422
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "en"
+      },
+      {
+        "language": "en",
+        "theme": "dark",
+        "viewport": 1024,
+        "status": "PASS",
+        "width": 1024,
+        "clientWidth": 1014,
+        "scrollWidth": 1014,
+        "htmlLang": "en",
+        "rects": {
+          ".header-main .brand": {
+            "x": 24,
+            "y": 55.552085876464844,
+            "width": 176,
+            "height": 48.88541793823242,
+            "right": 200,
+            "bottom": 104.43750381469727
+          },
+          ".header-main .search-box": {
+            "x": 220,
+            "y": 54,
+            "width": 549.4791870117188,
+            "height": 52,
+            "right": 769.4791870117188,
+            "bottom": 106
+          },
+          ".header-actions": {
+            "x": 789.4791870117188,
+            "y": 54,
+            "width": 200.52084350585938,
+            "height": 52,
+            "right": 990.0000305175781,
+            "bottom": 106
+          },
+          ".language-button": {
+            "x": 789.4791870117188,
+            "y": 58,
+            "width": 53.1875,
+            "height": 44,
+            "right": 842.6666870117188,
+            "bottom": 102
+          },
+          ".theme-button": {
+            "x": 850.6666870117188,
+            "y": 58,
+            "width": 44,
+            "height": 44,
+            "right": 894.6666870117188,
+            "bottom": 102
+          },
+          ".header-actions .cart-link": {
+            "x": 902.6666870117188,
+            "y": 54,
+            "width": 87.33333587646484,
+            "height": 52,
+            "right": 990.0000228881836,
+            "bottom": 106
+          },
+          ".header-language-menu": {
+            "x": 654.6666870117188,
+            "y": 110,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 842.6666870117188,
+            "bottom": 255.33334350585938
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "en"
+      },
+      {
+        "language": "en",
+        "theme": "dark",
+        "viewport": 1440,
+        "status": "PASS",
+        "width": 1440,
+        "clientWidth": 1430,
+        "scrollWidth": 1430,
+        "htmlLang": "en",
+        "rects": {
+          ".header-main .brand": {
+            "x": 55,
+            "y": 54,
+            "width": 196,
+            "height": 54.44791793823242,
+            "right": 251,
+            "bottom": 108.44791793823242
+          },
+          ".header-main .search-box": {
+            "x": 279,
+            "y": 55.21875,
+            "width": 825.6458740234375,
+            "height": 52,
+            "right": 1104.6458740234375,
+            "bottom": 107.21875
+          },
+          ".header-actions": {
+            "x": 1132.6458740234375,
+            "y": 55.21875,
+            "width": 242.3541717529297,
+            "height": 52,
+            "right": 1375.0000457763672,
+            "bottom": 107.21875
+          },
+          ".language-button": {
+            "x": 1132.6458740234375,
+            "y": 59.21875,
+            "width": 53.1875,
+            "height": 44,
+            "right": 1185.8333740234375,
+            "bottom": 103.21875
+          },
+          ".theme-button": {
+            "x": 1193.8333740234375,
+            "y": 59.21875,
+            "width": 44,
+            "height": 44,
+            "right": 1237.8333740234375,
+            "bottom": 103.21875
+          },
+          ".header-actions .cart-link": {
+            "x": 1245.8333740234375,
+            "y": 55.21875,
+            "width": 129.1666717529297,
+            "height": 52,
+            "right": 1375.0000457763672,
+            "bottom": 107.21875
+          },
+          ".header-language-menu": {
+            "x": 997.8333740234375,
+            "y": 111.21875,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 1185.8333740234375,
+            "bottom": 256.5520935058594
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "en"
+      },
+      {
+        "language": "en",
+        "theme": "dark",
+        "viewport": 1920,
+        "status": "PASS",
+        "width": 1920,
+        "clientWidth": 1910,
+        "scrollWidth": 1910,
+        "htmlLang": "en",
+        "rects": {
+          ".header-main .brand": {
+            "x": 295,
+            "y": 54,
+            "width": 196,
+            "height": 54.44791793823242,
+            "right": 491,
+            "bottom": 108.44791793823242
+          },
+          ".header-main .search-box": {
+            "x": 519,
+            "y": 55.21875,
+            "width": 825.6458740234375,
+            "height": 52,
+            "right": 1344.6458740234375,
+            "bottom": 107.21875
+          },
+          ".header-actions": {
+            "x": 1372.6458740234375,
+            "y": 55.21875,
+            "width": 242.3541717529297,
+            "height": 52,
+            "right": 1615.0000457763672,
+            "bottom": 107.21875
+          },
+          ".language-button": {
+            "x": 1372.6458740234375,
+            "y": 59.21875,
+            "width": 53.1875,
+            "height": 44,
+            "right": 1425.8333740234375,
+            "bottom": 103.21875
+          },
+          ".theme-button": {
+            "x": 1433.8333740234375,
+            "y": 59.21875,
+            "width": 44,
+            "height": 44,
+            "right": 1477.8333740234375,
+            "bottom": 103.21875
+          },
+          ".header-actions .cart-link": {
+            "x": 1485.8333740234375,
+            "y": 55.21875,
+            "width": 129.1666717529297,
+            "height": 52,
+            "right": 1615.0000457763672,
+            "bottom": 107.21875
+          },
+          ".header-language-menu": {
+            "x": 1237.8333740234375,
+            "y": 111.21875,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 1425.8333740234375,
+            "bottom": 256.5520935058594
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "en"
+      },
+      {
+        "language": "en",
+        "theme": "light",
+        "viewport": 320,
+        "status": "PASS",
+        "width": 320,
+        "clientWidth": 310,
+        "scrollWidth": 310,
+        "htmlLang": "en",
+        "rects": {
+          ".header-main .brand": {
+            "x": 16,
+            "y": 59.020835876464844,
+            "width": 93.47917175292969,
+            "height": 25.95833396911621,
+            "right": 109.47917175292969,
+            "bottom": 84.97916984558105
+          },
+          ".header-main .search-box": {
+            "x": 16,
+            "y": 102,
+            "width": 278,
+            "height": 48,
+            "right": 294,
+            "bottom": 150
+          },
+          ".header-actions": {
+            "x": 121.47917175292969,
+            "y": 50,
+            "width": 172.52084350585938,
+            "height": 44,
+            "right": 294.00001525878906,
+            "bottom": 94
+          },
+          ".language-button": {
+            "x": 121.47917175292969,
+            "y": 50,
+            "width": 47.1875,
+            "height": 44,
+            "right": 168.6666717529297,
+            "bottom": 94
+          },
+          ".theme-button": {
+            "x": 172.6666717529297,
+            "y": 50,
+            "width": 44,
+            "height": 44,
+            "right": 216.6666717529297,
+            "bottom": 94
+          },
+          ".header-actions .cart-link": {
+            "x": 220.6666717529297,
+            "y": 50,
+            "width": 73.33333587646484,
+            "height": 44,
+            "right": 294.00000762939453,
+            "bottom": 94
+          },
+          ".header-language-menu": {
+            "x": 24.666667938232422,
+            "y": 102,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 212.66666793823242,
+            "bottom": 247.33334350585938
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "en"
+      },
+      {
+        "language": "en",
+        "theme": "light",
+        "viewport": 390,
+        "status": "PASS",
+        "width": 390,
+        "clientWidth": 380,
+        "scrollWidth": 380,
+        "htmlLang": "en",
+        "rects": {
+          ".header-main .brand": {
+            "x": 16,
+            "y": 50,
+            "width": 163.4791717529297,
+            "height": 45.40625,
+            "right": 179.4791717529297,
+            "bottom": 95.40625
+          },
+          ".header-main .search-box": {
+            "x": 16,
+            "y": 103.40625,
+            "width": 348,
+            "height": 48,
+            "right": 364,
+            "bottom": 151.40625
+          },
+          ".header-actions": {
+            "x": 191.4791717529297,
+            "y": 50.69791793823242,
+            "width": 172.52084350585938,
+            "height": 44,
+            "right": 364.00001525878906,
+            "bottom": 94.69791793823242
+          },
+          ".language-button": {
+            "x": 191.4791717529297,
+            "y": 50.69791793823242,
+            "width": 47.1875,
+            "height": 44,
+            "right": 238.6666717529297,
+            "bottom": 94.69791793823242
+          },
+          ".theme-button": {
+            "x": 242.6666717529297,
+            "y": 50.69791793823242,
+            "width": 44,
+            "height": 44,
+            "right": 286.6666717529297,
+            "bottom": 94.69791793823242
+          },
+          ".header-actions .cart-link": {
+            "x": 290.66668701171875,
+            "y": 50.69791793823242,
+            "width": 73.33333587646484,
+            "height": 44,
+            "right": 364.0000228881836,
+            "bottom": 94.69791793823242
+          },
+          ".header-language-menu": {
+            "x": 94.66667175292969,
+            "y": 102.69792175292969,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 282.6666717529297,
+            "bottom": 248.03126525878906
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "en"
+      },
+      {
+        "language": "en",
+        "theme": "light",
+        "viewport": 768,
+        "status": "PASS",
+        "width": 768,
+        "clientWidth": 758,
+        "scrollWidth": 758,
+        "htmlLang": "en",
+        "rects": {
+          ".header-main .brand": {
+            "x": 24,
+            "y": 50,
+            "width": 525.4791870117188,
+            "height": 45.552085876464844,
+            "right": 549.4791870117188,
+            "bottom": 95.55208587646484
+          },
+          ".header-main .search-box": {
+            "x": 24,
+            "y": 103.55208587646484,
+            "width": 710,
+            "height": 48,
+            "right": 734,
+            "bottom": 151.55208587646484
+          },
+          ".header-actions": {
+            "x": 561.4791870117188,
+            "y": 50.770835876464844,
+            "width": 172.52084350585938,
+            "height": 44,
+            "right": 734.0000305175781,
+            "bottom": 94.77083587646484
+          },
+          ".language-button": {
+            "x": 561.4791870117188,
+            "y": 50.770835876464844,
+            "width": 47.1875,
+            "height": 44,
+            "right": 608.6666870117188,
+            "bottom": 94.77083587646484
+          },
+          ".theme-button": {
+            "x": 612.6666870117188,
+            "y": 50.770835876464844,
+            "width": 44,
+            "height": 44,
+            "right": 656.6666870117188,
+            "bottom": 94.77083587646484
+          },
+          ".header-actions .cart-link": {
+            "x": 660.6666870117188,
+            "y": 50.770835876464844,
+            "width": 73.33333587646484,
+            "height": 44,
+            "right": 734.0000228881836,
+            "bottom": 94.77083587646484
+          },
+          ".header-language-menu": {
+            "x": 464.66668701171875,
+            "y": 102.77083587646484,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 652.6666870117188,
+            "bottom": 248.10417938232422
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "en"
+      },
+      {
+        "language": "en",
+        "theme": "light",
+        "viewport": 1024,
+        "status": "PASS",
+        "width": 1024,
+        "clientWidth": 1014,
+        "scrollWidth": 1014,
+        "htmlLang": "en",
+        "rects": {
+          ".header-main .brand": {
+            "x": 24,
+            "y": 55.552085876464844,
+            "width": 176,
+            "height": 48.88541793823242,
+            "right": 200,
+            "bottom": 104.43750381469727
+          },
+          ".header-main .search-box": {
+            "x": 220,
+            "y": 54,
+            "width": 549.4791870117188,
+            "height": 52,
+            "right": 769.4791870117188,
+            "bottom": 106
+          },
+          ".header-actions": {
+            "x": 789.4791870117188,
+            "y": 54,
+            "width": 200.52084350585938,
+            "height": 52,
+            "right": 990.0000305175781,
+            "bottom": 106
+          },
+          ".language-button": {
+            "x": 789.4791870117188,
+            "y": 58,
+            "width": 53.1875,
+            "height": 44,
+            "right": 842.6666870117188,
+            "bottom": 102
+          },
+          ".theme-button": {
+            "x": 850.6666870117188,
+            "y": 58,
+            "width": 44,
+            "height": 44,
+            "right": 894.6666870117188,
+            "bottom": 102
+          },
+          ".header-actions .cart-link": {
+            "x": 902.6666870117188,
+            "y": 54,
+            "width": 87.33333587646484,
+            "height": 52,
+            "right": 990.0000228881836,
+            "bottom": 106
+          },
+          ".header-language-menu": {
+            "x": 654.6666870117188,
+            "y": 110,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 842.6666870117188,
+            "bottom": 255.33334350585938
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "en"
+      },
+      {
+        "language": "en",
+        "theme": "light",
+        "viewport": 1440,
+        "status": "PASS",
+        "width": 1440,
+        "clientWidth": 1430,
+        "scrollWidth": 1430,
+        "htmlLang": "en",
+        "rects": {
+          ".header-main .brand": {
+            "x": 55,
+            "y": 54,
+            "width": 196,
+            "height": 54.44791793823242,
+            "right": 251,
+            "bottom": 108.44791793823242
+          },
+          ".header-main .search-box": {
+            "x": 279,
+            "y": 55.21875,
+            "width": 825.6458740234375,
+            "height": 52,
+            "right": 1104.6458740234375,
+            "bottom": 107.21875
+          },
+          ".header-actions": {
+            "x": 1132.6458740234375,
+            "y": 55.21875,
+            "width": 242.3541717529297,
+            "height": 52,
+            "right": 1375.0000457763672,
+            "bottom": 107.21875
+          },
+          ".language-button": {
+            "x": 1132.6458740234375,
+            "y": 59.21875,
+            "width": 53.1875,
+            "height": 44,
+            "right": 1185.8333740234375,
+            "bottom": 103.21875
+          },
+          ".theme-button": {
+            "x": 1193.8333740234375,
+            "y": 59.21875,
+            "width": 44,
+            "height": 44,
+            "right": 1237.8333740234375,
+            "bottom": 103.21875
+          },
+          ".header-actions .cart-link": {
+            "x": 1245.8333740234375,
+            "y": 55.21875,
+            "width": 129.1666717529297,
+            "height": 52,
+            "right": 1375.0000457763672,
+            "bottom": 107.21875
+          },
+          ".header-language-menu": {
+            "x": 997.8333740234375,
+            "y": 111.21875,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 1185.8333740234375,
+            "bottom": 256.5520935058594
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "en"
+      },
+      {
+        "language": "en",
+        "theme": "light",
+        "viewport": 1920,
+        "status": "PASS",
+        "width": 1920,
+        "clientWidth": 1910,
+        "scrollWidth": 1910,
+        "htmlLang": "en",
+        "rects": {
+          ".header-main .brand": {
+            "x": 295,
+            "y": 54,
+            "width": 196,
+            "height": 54.44791793823242,
+            "right": 491,
+            "bottom": 108.44791793823242
+          },
+          ".header-main .search-box": {
+            "x": 519,
+            "y": 55.21875,
+            "width": 825.6458740234375,
+            "height": 52,
+            "right": 1344.6458740234375,
+            "bottom": 107.21875
+          },
+          ".header-actions": {
+            "x": 1372.6458740234375,
+            "y": 55.21875,
+            "width": 242.3541717529297,
+            "height": 52,
+            "right": 1615.0000457763672,
+            "bottom": 107.21875
+          },
+          ".language-button": {
+            "x": 1372.6458740234375,
+            "y": 59.21875,
+            "width": 53.1875,
+            "height": 44,
+            "right": 1425.8333740234375,
+            "bottom": 103.21875
+          },
+          ".theme-button": {
+            "x": 1433.8333740234375,
+            "y": 59.21875,
+            "width": 44,
+            "height": 44,
+            "right": 1477.8333740234375,
+            "bottom": 103.21875
+          },
+          ".header-actions .cart-link": {
+            "x": 1485.8333740234375,
+            "y": 55.21875,
+            "width": 129.1666717529297,
+            "height": 52,
+            "right": 1615.0000457763672,
+            "bottom": 107.21875
+          },
+          ".header-language-menu": {
+            "x": 1237.8333740234375,
+            "y": 111.21875,
+            "width": 188,
+            "height": 145.33334350585938,
+            "right": 1425.8333740234375,
+            "bottom": 256.5520935058594
+          }
+        },
+        "menuHitTargets": true,
+        "preferenceControls": 2,
+        "checked": "en"
+      }
+    ],
+    "errors": [],
+    "screenshots": 12
+  },
+  "stickyAndNavigation": {
+    "status": "PASS",
+    "desktopSticky": {
+      "nav": "hidden",
+      "top": 0,
+      "themeY": 15.21875,
+      "languageY": 15.21875
+    },
+    "scrollUp": "shown",
+    "stickyLanguage": "PASS",
+    "catalogMenu": "PASS",
+    "searchSuggestions": 1,
+    "normalMotionTheme": "dark",
+    "mobileSticky": {
+      "headerTop": -50,
+      "searchTop": 9.40625
+    },
+    "drawerDeliveryNavigation": "PASS",
+    "errors": [],
+    "restoredPreference": "ru/light"
+  }
+}

@@ -4,14 +4,6 @@
 .catalog-main {
   min-width: 0;
 }
-.catalog-secondary-toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 16px;
-}
 .more-filters {
   max-width: 100%;
 }
@@ -26,20 +18,22 @@
   color: var(--brand-ink);
   font-variant-numeric: tabular-nums;
 }
-.catalog-secondary-toolbar .filter-reset {
-  color: var(--muted);
-  text-decoration: underline;
-  text-underline-offset: 4px;
+.more-filters[aria-expanded="true"],
+.more-filters:has(.filter-group-count) {
+  border-color: var(--green-line);
+}
+.more-filters:has(.filter-group-count) svg {
+  color: var(--brand-ink);
 }
 html:has(.filter-panel[open]) {
   overflow: hidden;
 }
 .filter-panel {
-  width: min(720px, calc(100% - 32px));
-  max-height: min(820px, calc(100dvh - 48px));
+  width: min(640px, calc(100% - 32px));
+  max-height: min(760px, calc(100dvh - 48px));
   margin: auto;
   padding: 0;
-  overflow: auto;
+  overflow: hidden;
   overscroll-behavior: contain;
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-xl);
@@ -55,13 +49,17 @@ html:has(.filter-panel[open]) {
   backdrop-filter: blur(5px);
 }
 .filter-panel form {
+  display: flex;
+  flex-direction: column;
   min-width: 0;
+  max-height: inherit;
 }
 .filter-panel-heading {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  flex-shrink: 0;
   padding: 24px;
   border-bottom: 1px solid var(--line);
 }
@@ -91,6 +89,9 @@ html:has(.filter-panel[open]) {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
   padding: 24px;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 .filter-panel fieldset {
   min-width: 0;
@@ -112,7 +113,7 @@ html:has(.filter-panel[open]) {
   font-weight: 600;
 }
 .filter-panel-fields select,
-.filter-panel-fields input[type="number"] {
+.filter-panel-fields input[type="text"] {
   min-width: 0;
   width: 100%;
   height: 48px;
@@ -173,10 +174,27 @@ html:has(.filter-panel[open]) {
   padding: 12px 24px;
   color: var(--ink);
   background: var(--green-softer);
+  flex-shrink: 0;
+  font-size: 14px;
+}
+.filter-panel-error button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-left: 12px;
+  color: var(--brand-ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.filter-panel-validation {
+  margin: 12px 0 0;
+  font-size: 13px;
+  color: var(--ink);
+}
+.filter-panel-fields input[aria-invalid="true"] {
+  border-color: var(--brand-ink);
 }
 .filter-panel-actions {
-  position: sticky;
-  bottom: 0;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -184,6 +202,7 @@ html:has(.filter-panel[open]) {
   padding: 20px 24px calc(20px + env(safe-area-inset-bottom, 0px));
   border-top: 1px solid var(--line);
   background: var(--surface);
+  flex-shrink: 0;
 }
 .filter-panel-actions .button {
   min-width: 0;
@@ -502,19 +521,20 @@ html:has(.filter-panel[open]) {
   align-items: center;
   gap: 6px;
   max-width: 100%;
-  min-height: 36px;
+  min-height: 44px;
   padding: 0 10px 0 14px;
-  border: 1px solid var(--green-line);
+  border: 1px solid var(--line);
   border-radius: var(--radius-pill);
-  background: var(--green-soft);
-  color: var(--brand-ink);
+  background: var(--hover-surface);
+  color: var(--ink);
   font-size: 14px;
-  font-weight: 650;
+  font-weight: 600;
   overflow-wrap: anywhere;
   transition: background-color var(--dur-2) ease;
 }
 .active-filters a:hover {
-  background: color-mix(in srgb, var(--paykar-green) 24%, transparent);
+  border-color: var(--green-line);
+  background: var(--green-softer);
 }
 .active-filters .filter-reset {
   padding-inline: 10px;
@@ -849,11 +869,39 @@ html:has(.filter-panel[open]) {
   .toolbar-sort {
     flex-basis: 100%;
   }
+  .toolbar-search {
+    order: 0;
+  }
+  .catalog-toolbar .more-filters,
+  .catalog-toolbar .toolbar-sort {
+    flex: 1 1 calc(50% - 4px);
+    min-width: 0;
+    max-width: calc(50% - 4px);
+  }
+  .catalog-toolbar .more-filters {
+    order: 1;
+  }
+  .catalog-toolbar .toolbar-sort {
+    order: 2;
+  }
+  .catalog-toolbar .quick-filter {
+    order: 3;
+    flex-basis: calc(50% - 4px);
+  }
   .toolbar-sort select {
     width: 100%;
+    padding-inline: 34px 26px;
+    font-size: 14px;
+    text-overflow: ellipsis;
+  }
+  .toolbar-sort > svg {
+    left: 12px;
+  }
+  .toolbar-sort::after {
+    right: 12px;
   }
   .filter-toggle {
-    flex: 1 1 0;
+    flex: 1 1 auto;
     justify-content: center;
     padding-inline: 10px;
     font-size: 14px;

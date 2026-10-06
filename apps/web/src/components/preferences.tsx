@@ -1,137 +1,197 @@
 "use client";
-import { Moon, Sun } from "lucide-react";
-import { useSyncExternalStore } from "react";
-import { flushSync } from "react-dom";
+import { Check, ChevronDown, Moon, Sun } from "lucide-react";
+import {
+  AnimatePresence,
+  m,
+  useIsPresent,
+  useReducedMotion,
+} from "framer-motion";
+import { useEffect, useId, useRef, useState } from "react";
 import { usePresentation, type Language } from "@/context/presentation";
-
-function subscribeSystemTheme(callback: () => void) {
-  const media = window.matchMedia("(prefers-color-scheme: dark)");
-  media.addEventListener("change", callback);
-  return () => media.removeEventListener("change", callback);
-}
-function systemTheme() {
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
-}
-
-// Where supported, the new theme grows out of the pressed button. The
-// attribute is set inside the transition so its snapshot is already themed;
-// the provider's own effect then finds nothing left to change.
-function revealTheme(
-  value: "dark" | "light",
-  x: number,
-  y: number,
-  apply: () => void,
-) {
-  const root = document.documentElement;
-  if (
-    !document.startViewTransition ||
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  ) {
-    apply();
-    return;
-  }
-  root.style.setProperty("--vt-x", `${x}px`);
-  root.style.setProperty("--vt-y", `${y}px`);
-  root.dataset.themeSwitch = "true";
-  const transition = document.startViewTransition(() => {
-    flushSync(apply);
-    root.dataset.theme = value;
-  });
-  const finish = () => {
-    delete root.dataset.themeSwitch;
-  };
-  // A second click can skip the first transition; that rejection is expected.
-  void transition.finished.then(finish, finish);
-}
 
 export function Preferences() {
   const { theme, setTheme, t } = usePresentation();
-  const osTheme = useSyncExternalStore(
-    subscribeSystemTheme,
-    systemTheme,
-    () => "dark",
+  const reduce = useReducedMotion();
+  const next = theme === "light" ? "dark" : "light";
+  const Icon = theme === "light" ? Sun : Moon;
+  const label = t(
+    next === "dark"
+      ? "Переключить на тёмную тему"
+      : "Переключить на светлую тему",
   );
-  const activeTheme = theme === "system" ? osTheme : theme;
-  const themes: {
-    value: "dark" | "light";
-    label: string;
-    icon: typeof Moon;
-  }[] = [
-    { value: "dark", label: t("Тёмная тема"), icon: Moon },
-    { value: "light", label: t("Светлая тема"), icon: Sun },
-  ];
   return (
-    <div className="preferences">
-      <div
-        className="theme-toggle"
-        role="group"
-        aria-label={t("Тема оформления")}
-      >
-        <span
-          className="preference-thumb"
-          aria-hidden="true"
-          style={{
-            transform: `translateX(${themes.findIndex((option) => option.value === activeTheme) * 100}%)`,
-          }}
-        />
-        {themes.map(({ value, label, icon: Icon }) => (
-          <button
-            key={value}
-            type="button"
-            aria-label={label}
-            title={label}
-            aria-pressed={activeTheme === value}
-            onClick={(event) => {
-              const box = event.currentTarget.getBoundingClientRect();
-              if (value === activeTheme) setTheme(value);
-              else
-                revealTheme(
-                  value,
-                  box.left + box.width / 2,
-                  box.top + box.height / 2,
-                  () => setTheme(value),
-                );
+    <button
+      type="button"
+      className="header-preference-button theme-button"
+      data-theme-preference={theme}
+      aria-label={label}
+      title={label}
+      onClick={() => setTheme(next)}
+    >
+      <span className="header-control-icon" aria-hidden="true">
+        <AnimatePresence initial={false}>
+          <m.span
+            key={theme}
+            initial={reduce ? false : { opacity: 0, scale: 0.9, rotate: -8 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            exit={{
+              opacity: 0,
+              scale: reduce ? 1 : 0.9,
+              rotate: reduce ? 0 : 8,
             }}
+            transition={{ duration: reduce ? 0 : 0.2, ease: "easeOut" }}
           >
-            <Icon size={16} aria-hidden="true" />
-          </button>
-        ))}
-      </div>
-    </div>
+            <Icon size={18} />
+          </m.span>
+        </AnimatePresence>
+      </span>
+    </button>
+  );
+}
+
+const languages: { value: Language; name: string; lang: string }[] = [
+  { value: "ru", name: "Русский", lang: "ru" },
+  { value: "tj", name: "Тоҷикӣ", lang: "tg" },
+  { value: "en", name: "English", lang: "en" },
+];
+
+function LanguageMenu({
+  id,
+  triggerId,
+  children,
+}: {
+  id: string;
+  triggerId: string;
+  children: React.ReactNode;
+}) {
+  const present = useIsPresent();
+  const reduce = useReducedMotion();
+  return (
+    <m.div
+      className="header-language-menu"
+      id={id}
+      role="menu"
+      aria-labelledby={triggerId}
+      aria-hidden={!present}
+      inert={!present}
+      initial={reduce ? false : { opacity: 0, y: -4, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: reduce ? 0 : -4, scale: reduce ? 1 : 0.98 }}
+      transition={{ duration: reduce ? 0 : 0.16, ease: "easeOut" }}
+    >
+      {children}
+    </m.div>
   );
 }
 
 export function LanguageSelector() {
   const { language, setLanguage, t } = usePresentation();
+  const [open, setOpen] = useState(false);
+  const root = useRef<HTMLDivElement>(null);
+  const trigger = useRef<HTMLButtonElement>(null);
+  const options = useRef<(HTMLButtonElement | null)[]>([]);
+  const menuId = useId();
+  const triggerId = useId();
+  const label = `${t("Язык интерфейса")}: ${language.toUpperCase()}`;
+  const close = (returnFocus = false) => {
+    setOpen(false);
+    if (returnFocus) trigger.current?.focus({ preventScroll: true });
+  };
+  useEffect(() => {
+    if (!open) return;
+    const outside = (event: PointerEvent) => {
+      if (event.target instanceof Node && !root.current?.contains(event.target))
+        setOpen(false);
+    };
+    document.addEventListener("pointerdown", outside);
+    return () => document.removeEventListener("pointerdown", outside);
+  }, [open]);
+  useEffect(() => {
+    if (open)
+      options.current[
+        languages.findIndex((entry) => entry.value === language)
+      ]?.focus();
+  }, [open, language]);
   return (
-    <div className="preferences">
-      <div
-        className="language-toggle"
-        role="group"
-        aria-label={t("Язык интерфейса")}
+    <div
+      className="header-language"
+      ref={root}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) close();
+      }}
+      onKeyDown={(event) => {
+        if (event.key === "Escape" && open) {
+          event.preventDefault();
+          event.stopPropagation();
+          close(true);
+        }
+      }}
+    >
+      <button
+        ref={trigger}
+        id={triggerId}
+        type="button"
+        className="header-preference-button language-button"
+        aria-label={label}
+        title={label}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-controls={menuId}
+        onClick={() => setOpen((current) => !current)}
+        onKeyDown={(event) => {
+          if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+            event.preventDefault();
+            setOpen(true);
+          }
+        }}
       >
-        <span
-          className="preference-thumb"
-          aria-hidden="true"
-          style={{
-            transform: `translateX(${["ru", "tj", "en"].indexOf(language) * 100}%)`,
-          }}
-        />
-        {(["ru", "tj", "en"] as Language[]).map((value) => (
-          <button
-            key={value}
-            type="button"
-            lang={value === "tj" ? "tg" : value}
-            aria-label={{ ru: "Русский", tj: "Тоҷикӣ", en: "English" }[value]}
-            aria-pressed={language === value}
-            onClick={() => setLanguage(value)}
-          >
-            {value.toUpperCase()}
-          </button>
-        ))}
-      </div>
+        {language.toUpperCase()}
+        <ChevronDown size={12} aria-hidden="true" />
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <LanguageMenu key="language-menu" id={menuId} triggerId={triggerId}>
+            {languages.map(({ value, name, lang }, index) => (
+              <button
+                key={value}
+                ref={(node) => {
+                  options.current[index] = node;
+                }}
+                type="button"
+                role="menuitemradio"
+                tabIndex={-1}
+                lang={lang}
+                aria-label={name}
+                aria-checked={language === value}
+                onClick={() => {
+                  setLanguage(value);
+                  close(true);
+                }}
+                onKeyDown={(event) => {
+                  const target =
+                    event.key === "ArrowDown"
+                      ? (index + 1) % languages.length
+                      : event.key === "ArrowUp"
+                        ? (index + languages.length - 1) % languages.length
+                        : event.key === "Home"
+                          ? 0
+                          : event.key === "End"
+                            ? languages.length - 1
+                            : null;
+                  if (target !== null) {
+                    event.preventDefault();
+                    options.current[target]?.focus();
+                  }
+                }}
+              >
+                <span>{value.toUpperCase()}</span>
+                <span className="language-name">{name}</span>
+                {language === value && <Check size={16} aria-hidden="true" />}
+              </button>
+            ))}
+          </LanguageMenu>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

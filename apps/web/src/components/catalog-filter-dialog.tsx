@@ -5,13 +5,18 @@ import { SlidersHorizontal, X } from "lucide-react";
 import { usePresentation } from "@/context/presentation";
 import { Category, CatalogFacets, ProductPage, useResource } from "@/lib/api";
 import {
-  activeFilterCount,
+  advancedFilterCount,
   catalogApiQuery,
+  catalogFilterChanges,
   catalogHref,
+  catalogPriceError,
+  categoryFilterChanges,
   descendantCategories,
+  resetCatalogFilters,
 } from "@/lib/catalog-query";
+import { catalogGroups } from "@/lib/category-presentation";
 
-// Secondary controls extend Diyor's toolbar, using the same surfaces and tokens.
+// Advanced controls extend Diyor's toolbar, using the same surfaces and tokens.
 // Only unapplied dialog edits are local; the URL owns every applied filter.
 export function CatalogFilterDialog({
   params,
@@ -25,6 +30,8 @@ export function CatalogFilterDialog({
   const { t, money } = usePresentation();
   const router = useRouter();
   const titleId = useId();
+  const dialogId = useId();
+  const priceErrorId = useId();
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
@@ -32,21 +39,24 @@ export function CatalogFilterDialog({
   const [previewQuery, setPreviewQuery] = useState<string | null>(null);
   const min = draft.get("min_price") || "";
   const max = draft.get("max_price") || "";
-  const invalidRange = Boolean(min && max && Number(min) > Number(max));
+  const priceError = catalogPriceError(draft);
   const candidate = new URLSearchParams(draft);
   candidate.delete("page");
   const candidateQuery = catalogApiQuery(candidate, false, 1);
   useEffect(() => {
     const timer = setTimeout(
-      () => setPreviewQuery(open && !invalidRange ? candidateQuery : null),
+      () => setPreviewQuery(open && !priceError ? candidateQuery : null),
       250,
     );
     return () => clearTimeout(timer);
-  }, [open, invalidRange, candidateQuery]);
+  }, [open, priceError, candidateQuery]);
   const preview = useResource<ProductPage>(
-    open && !invalidRange ? previewQuery : null,
+    open && !priceError && previewQuery === candidateQuery
+      ? previewQuery
+      : null,
   );
-  const settled = previewQuery === candidateQuery && !preview.loading;
+  const settled =
+    open && !priceError && previewQuery === candidateQuery && !preview.loading;
   const total = settled ? preview.data?.total : undefined;
   const categorySlug = draft.get("category") || "";
   const subcategories = categorySlug
@@ -64,15 +74,16 @@ export function CatalogFilterDialog({
     open && scopeChanged ? catalogApiQuery(scope, true, 1) : null,
   );
   const availableFacets = scopeChanged ? scopedFacets.data?.facets : facets;
+  const units = availableFacets?.units || [];
+  const unit = draft.get("unit") || "";
+  const unitUnavailable = Boolean(
+    unit && availableFacets && !units.includes(unit),
+  );
+  const filterCount = advancedFilterCount(params);
   function update(values: Record<string, string | null>) {
-    setDraft((previous) => {
-      const copy = new URLSearchParams(previous);
-      for (const [key, value] of Object.entries(values)) {
-        if (value) copy.set(key, value);
-        else copy.delete(key);
-      }
-      return copy;
-    });
+    // Re-entering a previously previewed query still needs a fresh server count.
+    preview.retry();
+    setDraft((previous) => catalogFilterChanges(previous, values));
   }
   function close() {
     dialog.current?.close();
@@ -85,22 +96,24 @@ export function CatalogFilterDialog({
         className="filter-toggle more-filters"
         aria-haspopup="dialog"
         aria-expanded={open}
+        aria-controls={dialogId}
         onClick={() => {
+          preview.retry();
           setDraft(new URLSearchParams(params));
+          setPreviewQuery(null);
           setOpen(true);
           dialog.current?.showModal();
         }}
       >
         <SlidersHorizontal size={18} aria-hidden="true" />
         <span>{t("Фильтры")}</span>
-        {activeFilterCount(params) > 0 && (
-          <span className="filter-group-count">
-            {activeFilterCount(params)}
-          </span>
+        {filterCount > 0 && (
+          <span className="filter-group-count">{filterCount}</span>
         )}
       </button>
       <dialog
         ref={dialog}
+        id={dialogId}
         className="filter-panel"
         aria-labelledby={titleId}
         onClose={() => {
@@ -122,7 +135,7 @@ export function CatalogFilterDialog({
         <form
           onSubmit={(event) => {
             event.preventDefault();
-            if (invalidRange || total === undefined || preview.error) return;
+            if (priceError || total === undefined || preview.error) return;
             close();
             router.push(catalogHref(draft), { scroll: false });
           }}
@@ -151,29 +164,30 @@ export function CatalogFilterDialog({
                   name="category"
                   value={categorySlug}
                   onChange={(event) => {
-                    const value = event.target.value;
-                    const child = draft.get("subcategory");
-                    const valid =
-                      !value ||
-                      descendantCategories(categories, value).some(
-                        (item) => item.slug === child,
-                      );
-                    update({
-                      category: value,
-                      ...(valid ? {} : { subcategory: null }),
-                    });
+                    update(
+                      categoryFilterChanges(
+                        draft,
+                        categories,
+                        event.target.value,
+                      ),
+                    );
                   }}
                 >
                   <option value="">{t("Все товары")}</option>
-                  {categories.map((item) => (
-                    <option value={item.slug} key={item.id}>
-                      {item.parent_id !== null ? "— " : ""}
-                      {t(item.name)}
-                    </option>
-                  ))}
+                  {catalogGroups(categories)
+                    .flatMap(({ category, children }) => [
+                      category,
+                      ...children,
+                    ])
+                    .map((item) => (
+                      <option value={item.slug} key={item.id}>
+                        {item.parent_id !== null ? "— " : ""}
+                        {t(item.name)}
+                      </option>
+                    ))}
                 </select>
               </label>
-              {(subcategories.length > 0 || draft.has("subcategory")) && (
+              {subcategories.length > 0 && (
                 <label>
                   {t("Подкатегория")}
                   <select
@@ -216,11 +230,12 @@ export function CatalogFilterDialog({
                     {t(field.label)}
                     <input
                       name={field.key}
-                      type="number"
+                      type="text"
                       inputMode="decimal"
-                      min="0"
-                      max="9999999999.99"
-                      step="0.01"
+                      autoComplete="off"
+                      maxLength={32}
+                      aria-invalid={Boolean(priceError)}
+                      aria-describedby={priceError ? priceErrorId : undefined}
                       value={field.value}
                       placeholder={t(field.placeholder)}
                       onChange={(event) =>
@@ -240,8 +255,13 @@ export function CatalogFilterDialog({
                       type="button"
                       key={`${preset.min_price}:${preset.max_price}`}
                       aria-pressed={
-                        min === (preset.min_price || "") &&
-                        max === (preset.max_price || "")
+                        !priceError &&
+                        (min === (preset.min_price || "") ||
+                          (Boolean(min && preset.min_price) &&
+                            Number(min) === Number(preset.min_price))) &&
+                        (max === (preset.max_price || "") ||
+                          (Boolean(max && preset.max_price) &&
+                            Number(max) === Number(preset.max_price)))
                       }
                       onClick={() => update(preset)}
                     >
@@ -254,9 +274,17 @@ export function CatalogFilterDialog({
                   ))}
                 </div>
               )}
-              {invalidRange && (
-                <p className="filter-panel-error" role="alert">
-                  {t("Минимальная цена не должна превышать максимальную.")}
+              {priceError && (
+                <p
+                  className="filter-panel-validation"
+                  id={priceErrorId}
+                  role="alert"
+                >
+                  {t(
+                    priceError === "reversed_price"
+                      ? "Минимальная цена не должна превышать максимальную."
+                      : "Введите цену от 0 до 9 999 999 999.99, не более двух знаков после точки.",
+                  )}
                 </p>
               )}
             </fieldset>
@@ -285,7 +313,7 @@ export function CatalogFilterDialog({
                 ))}
               </div>
               <label>
-                {t("Минимальная скидка")}
+                {t("Размер скидки")}
                 <select
                   name="min_discount"
                   value={draft.get("min_discount") || ""}
@@ -293,34 +321,44 @@ export function CatalogFilterDialog({
                     update({ min_discount: event.target.value })
                   }
                 >
-                  <option value="">{t("Без ограничения")}</option>
+                  <option value="">{t("Любая")}</option>
+                  {draft.has("min_discount") &&
+                    !["10", "20", "30"].includes(
+                      draft.get("min_discount")!,
+                    ) && (
+                      <option value={draft.get("min_discount")!}>
+                        {draft.get("min_discount")}
+                        {t("% и больше")}
+                      </option>
+                    )}
                   {[10, 20, 30].map((value) => (
                     <option value={value} key={value}>
-                      {value}%+
+                      {value}
+                      {t("% и больше")}
                     </option>
                   ))}
                 </select>
               </label>
             </fieldset>
-            {availableFacets?.units.length || draft.has("unit") ? (
+            {units.length > 1 || unit ? (
               <fieldset>
                 <legend>{t("Единица продажи")}</legend>
                 <label>
                   {t("Продаётся как")}
                   <select
                     name="unit"
-                    value={draft.get("unit") || ""}
+                    value={unit}
                     onChange={(event) => update({ unit: event.target.value })}
                   >
                     <option value="">{t("Все единицы")}</option>
-                    {Array.from(
-                      new Set([
-                        ...(availableFacets?.units || []),
-                        ...(draft.get("unit") ? [draft.get("unit")!] : []),
-                      ]),
-                    ).map((unit) => (
-                      <option key={unit} value={unit}>
+                    {unit && !units.includes(unit) && (
+                      <option value={unit} disabled>
                         {t(unit)}
+                      </option>
+                    )}
+                    {units.map((value) => (
+                      <option key={value} value={value}>
+                        {t(value)}
                       </option>
                     ))}
                   </select>
@@ -328,6 +366,13 @@ export function CatalogFilterDialog({
                 <p className="filter-panel-note">
                   {t("Единица продажи не означает вес или объём упаковки.")}
                 </p>
+                {unitUnavailable && (
+                  <p className="filter-panel-note" role="status">
+                    {t(
+                      "Эта единица недоступна в выбранной категории. Выберите другую или сбросьте фильтр.",
+                    )}
+                  </p>
+                )}
               </fieldset>
             ) : null}
           </div>
@@ -338,13 +383,19 @@ export function CatalogFilterDialog({
                   ? "Проверьте значения фильтров."
                   : "Не удалось загрузить результаты. Повторите попытку.",
               )}
+              <button type="button" onClick={preview.retry}>
+                {t("Повторить")}
+              </button>
             </p>
           )}
           <footer className="filter-panel-actions">
             <button
               className="button ghost"
               type="button"
-              onClick={() => setDraft(new URLSearchParams())}
+              onClick={() => {
+                preview.retry();
+                setDraft(resetCatalogFilters(draft));
+              }}
             >
               {t("Сбросить")}
             </button>
@@ -352,12 +403,16 @@ export function CatalogFilterDialog({
               className="button"
               type="submit"
               disabled={
-                invalidRange || total === undefined || Boolean(preview.error)
+                Boolean(priceError) ||
+                total === undefined ||
+                Boolean(preview.error)
               }
             >
-              {total === undefined
-                ? t("Проверяем результаты…")
-                : `${t("Показать товары")}: ${total}`}
+              {priceError || preview.error
+                ? t("Показать товары")
+                : total === undefined
+                  ? t("Проверяем результаты…")
+                  : `${t("Показать товары")}: ${total}`}
             </button>
           </footer>
         </form>

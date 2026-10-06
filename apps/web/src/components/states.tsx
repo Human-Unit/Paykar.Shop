@@ -95,11 +95,13 @@ export function Empty({
   text,
   icon: Icon = ShoppingBasket,
   compact = false,
+  actionLabel = "Открыть каталог",
 }: {
   title: string;
   text: string;
   icon?: LucideIcon;
   compact?: boolean;
+  actionLabel?: string;
 }) {
   const { t } = usePresentation();
   return (
@@ -110,7 +112,7 @@ export function Empty({
       <h2>{t(title)}</h2>
       <p>{t(text)}</p>
       <Link className="button" href="/catalog">
-        {t("Открыть каталог")}
+        {t(actionLabel)}
       </Link>
     </div>
   );

@@ -1,0 +1,287 @@
+{
+  "dataset_total": 40,
+  "facets": {
+    "units": [
+      "упак.",
+      "шт."
+    ],
+    "price_presets": [
+      {
+        "min_price": null,
+        "max_price": "8.00"
+      },
+      {
+        "min_price": "8.01",
+        "max_price": "14.00"
+      },
+      {
+        "min_price": "14.01",
+        "max_price": "18.00"
+      },
+      {
+        "min_price": "18.01",
+        "max_price": null
+      }
+    ]
+  },
+  "results": [
+    {
+      "case": "search",
+      "params": {
+        "q": "Чай"
+      },
+      "total": 2,
+      "pass": true
+    },
+    {
+      "case": "category",
+      "params": {
+        "category": "produce"
+      },
+      "total": 7,
+      "pass": true
+    },
+    {
+      "case": "subcategory",
+      "params": {
+        "category": "produce",
+        "subcategory": "fruit"
+      },
+      "total": 4,
+      "pass": true
+    },
+    {
+      "case": "minimum price",
+      "params": {
+        "min_price": "20"
+      },
+      "total": 7,
+      "pass": true
+    },
+    {
+      "case": "maximum price",
+      "params": {
+        "max_price": "8"
+      },
+      "total": 11,
+      "pass": true
+    },
+    {
+      "case": "price range",
+      "params": {
+        "min_price": "10",
+        "max_price": "30"
+      },
+      "total": 25,
+      "pass": true
+    },
+    {
+      "case": "in stock",
+      "params": {
+        "in_stock": "true"
+      },
+      "total": 38,
+      "pass": true
+    },
+    {
+      "case": "sale",
+      "params": {
+        "on_sale": "true"
+      },
+      "total": 8,
+      "pass": true
+    },
+    {
+      "case": "discount 10+",
+      "params": {
+        "min_discount": "10"
+      },
+      "total": 8,
+      "pass": true
+    },
+    {
+      "case": "discount 20+",
+      "params": {
+        "min_discount": "20"
+      },
+      "total": 5,
+      "pass": true
+    },
+    {
+      "case": "discount 30+",
+      "params": {
+        "min_discount": "30"
+      },
+      "total": 4,
+      "pass": true
+    },
+    {
+      "case": "sale unit",
+      "params": {
+        "unit": "упак."
+      },
+      "total": 33,
+      "pass": true
+    },
+    {
+      "case": "search + category",
+      "params": {
+        "q": "Чай",
+        "category": "drinks"
+      },
+      "total": 2,
+      "pass": true
+    },
+    {
+      "case": "category + price",
+      "params": {
+        "category": "produce",
+        "min_price": "10",
+        "max_price": "30"
+      },
+      "total": 5,
+      "pass": true
+    },
+    {
+      "case": "price + stock",
+      "params": {
+        "min_price": "10",
+        "max_price": "30",
+        "in_stock": "true"
+      },
+      "total": 23,
+      "pass": true
+    },
+    {
+      "case": "sale + discount",
+      "params": {
+        "on_sale": "true",
+        "min_discount": "20"
+      },
+      "total": 5,
+      "pass": true
+    },
+    {
+      "case": "full intersection",
+      "params": {
+        "q": "Чай",
+        "category": "drinks",
+        "min_price": "10",
+        "max_price": "30",
+        "in_stock": "true",
+        "on_sale": "true",
+        "min_discount": "20",
+        "unit": "упак."
+      },
+      "total": 0,
+      "pass": true
+    },
+    {
+      "case": "zero results",
+      "params": {
+        "q": "this-catalog-item-does-not-exist"
+      },
+      "total": 0,
+      "pass": true
+    },
+    {
+      "case": "data-derived price preset",
+      "params": {
+        "max_price": "8.00"
+      },
+      "total": 11,
+      "pass": true
+    },
+    {
+      "case": "data-derived price preset",
+      "params": {
+        "min_price": "8.01",
+        "max_price": "14.00"
+      },
+      "total": 11,
+      "pass": true
+    },
+    {
+      "case": "data-derived price preset",
+      "params": {
+        "min_price": "14.01",
+        "max_price": "18.00"
+      },
+      "total": 10,
+      "pass": true
+    },
+    {
+      "case": "data-derived price preset",
+      "params": {
+        "min_price": "18.01"
+      },
+      "total": 8,
+      "pass": true
+    },
+    {
+      "case": "invalid filter rejection",
+      "params": {
+        "min_price": "bad"
+      },
+      "status": 422,
+      "pass": true
+    },
+    {
+      "case": "invalid filter rejection",
+      "params": {
+        "min_price": "-1"
+      },
+      "status": 422,
+      "pass": true
+    },
+    {
+      "case": "invalid filter rejection",
+      "params": {
+        "max_price": "NaN"
+      },
+      "status": 422,
+      "pass": true
+    },
+    {
+      "case": "invalid filter rejection",
+      "params": {
+        "max_price": "12.123"
+      },
+      "status": 422,
+      "pass": true
+    },
+    {
+      "case": "invalid filter rejection",
+      "params": {
+        "min_price": "30",
+        "max_price": "10"
+      },
+      "status": 422,
+      "pass": true
+    },
+    {
+      "case": "sorting + filtered pagination",
+      "params": {
+        "on_sale": "true",
+        "sort": "price_asc",
+        "page_size": 2
+      },
+      "total": 8,
+      "pass": true
+    },
+    {
+      "case": "sorting + filtered pagination",
+      "params": {
+        "on_sale": "true",
+        "sort": "price_desc",
+        "page_size": 2
+      },
+      "total": 8,
+      "pass": true
+    },
+    {
+      "case": "facets independent of selected price/page size",
+      "pass": true
+    }
+  ]
+}

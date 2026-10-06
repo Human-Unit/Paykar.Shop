@@ -135,14 +135,6 @@
     translate: 0 0;
   }
 }
-@keyframes theme-reveal {
-  from {
-    clip-path: circle(0 at var(--vt-x, 50%) var(--vt-y, 0px));
-  }
-  to {
-    clip-path: circle(150vmax at var(--vt-x, 50%) var(--vt-y, 0px));
-  }
-}
 @keyframes sheen {
   to {
     translate: 400% 0;
@@ -153,21 +145,6 @@
    `backwards` leaves no transform behind for sticky or fixed descendants. */
 .page-enter {
   animation: page-enter 440ms var(--ease-out) backwards;
-}
-
-/* Theme switch grows from the toggle that was pressed. */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
-}
-::view-transition-new(root) {
-  animation: theme-reveal 560ms var(--ease-out);
-}
-:root[data-theme-switch] *,
-:root[data-theme-switch] *::before,
-:root[data-theme-switch] *::after {
-  transition: none !important;
 }
 
 /* Disclosure panels open with their content instead of snapping. */
@@ -204,8 +181,5 @@
     animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
-  }
-  ::view-transition-new(root) {
-    animation: none;
   }
 }

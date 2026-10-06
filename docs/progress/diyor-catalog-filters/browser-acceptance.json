@@ -1,0 +1,1189 @@
+{
+  "date": "2026-10-06",
+  "baseUrl": "http://localhost:3000",
+  "apiBaseUrl": "http://localhost:8080/api/v1",
+  "browser": "Connected Playwright browser",
+  "status": "PASS",
+  "interactive": [
+    {
+      "checks": [
+        "draft isolation",
+        "exact real preview count",
+        "discount enables sale",
+        "Apply URL + advanced badge",
+        "reload"
+      ],
+      "expectedCount": 1
+    },
+    {
+      "checks": [
+        "invalid price blocks API and Apply",
+        "reversed range blocks API and Apply",
+        "Escape cancels draft",
+        "focus returns to trigger",
+        "reopen uses applied values",
+        "keyboard focus contained"
+      ],
+      "validationMessage": "Минимальная цена не должна превышать максимальную.",
+      "invalidRequests": 0,
+      "urlUnchanged": true
+    },
+    {
+      "checks": [
+        "price chip preserves search/category/sort/other filters",
+        "Back and Forward restore applied filters",
+        "sorting preserves composed filters",
+        "sale off clears its minimum",
+        "pagination and reload preserve filters",
+        "real child category applies; switching parent clears incompatible child; no empty child section"
+      ],
+      "pass": true
+    },
+    {
+      "checks": [
+        "data-derived preset writes exact shared price bounds",
+        "single redundant unit hidden in drinks scope",
+        "real exact discount previews at 10/20/30",
+        "injected preview failure disables Apply; Retry recovers against real API"
+      ],
+      "pass": true,
+      "simulatedFailure": true
+    },
+    {
+      "checks": [
+        "shared discount URL canonicalization preserves page",
+        "fresh count on reopening",
+        "fresh count on re-entering query",
+        "no stale number while preview pending"
+      ],
+      "pass": true,
+      "delayedRealRequests": 3
+    },
+    {
+      "checks": [
+        "search preserves filters and matches exact API count",
+        "category switch preserves filters",
+        "draft reset preserves context and cancellation leaves URL intact",
+        "zero-result recovery with no unrelated products",
+        "normal motion and reduced motion",
+        "native Tab navigation and Escape focus return"
+      ],
+      "searchedSku": "DEMO-010",
+      "searchTotal": 1,
+      "normalMotion": {
+        "duration": "0.36s",
+        "overflow": false
+      },
+      "nativeBrowserChromeStops": 1,
+      "pass": true
+    }
+  ],
+  "responsive": [
+    {
+      "language": "ru",
+      "rows": [
+        {
+          "width": 320,
+          "height": 844,
+          "rootWidth": 310,
+          "viewport": 320,
+          "buttonWidth": 125,
+          "buttonScrollWidth": 125,
+          "nestedForms": 0,
+          "lang": "ru",
+          "theme": "dark",
+          "panel": {
+            "left": 0,
+            "right": 320,
+            "top": 16,
+            "bottom": 844,
+            "contentWidth": 309,
+            "contentScrollWidth": 309,
+            "footerTop": 741.1666870117188,
+            "applyBottom": 824.6667098999023,
+            "viewportHeight": 844,
+            "groups": [
+              "Категории",
+              "Цена, сомони",
+              "Наличие и скидки",
+              "Единица продажи"
+            ],
+            "preview": "Показать товары: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "rootWidth": 380,
+          "viewport": 390,
+          "buttonWidth": 160,
+          "buttonScrollWidth": 160,
+          "nestedForms": 0,
+          "lang": "ru",
+          "theme": "dark",
+          "panel": {
+            "left": 0,
+            "right": 390,
+            "top": 16,
+            "bottom": 844,
+            "contentWidth": 379,
+            "contentScrollWidth": 379,
+            "footerTop": 741.1666870117188,
+            "applyBottom": 824.6667098999023,
+            "viewportHeight": 844,
+            "groups": [
+              "Категории",
+              "Цена, сомони",
+              "Наличие и скидки",
+              "Единица продажи"
+            ],
+            "preview": "Показать товары: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 768,
+          "height": 1000,
+          "rootWidth": 758,
+          "viewport": 768,
+          "buttonWidth": 163,
+          "buttonScrollWidth": 163,
+          "nestedForms": 0,
+          "lang": "ru",
+          "theme": "dark",
+          "panel": {
+            "left": 64,
+            "right": 704,
+            "top": 142.1666717529297,
+            "bottom": 857.8333587646484,
+            "contentWidth": 639,
+            "contentScrollWidth": 639,
+            "footerTop": 768.5,
+            "applyBottom": 837.1666870117188,
+            "viewportHeight": 1000,
+            "groups": [
+              "Категории",
+              "Цена, сомони",
+              "Наличие и скидки",
+              "Единица продажи"
+            ],
+            "preview": "Показать товары: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 1024,
+          "height": 1000,
+          "rootWidth": 1014,
+          "viewport": 1024,
+          "buttonWidth": 157,
+          "buttonScrollWidth": 157,
+          "nestedForms": 0,
+          "lang": "ru",
+          "theme": "dark",
+          "panel": {
+            "left": 192,
+            "right": 832,
+            "top": 142.1666717529297,
+            "bottom": 857.8333587646484,
+            "contentWidth": 639,
+            "contentScrollWidth": 639,
+            "footerTop": 768.5,
+            "applyBottom": 837.1666870117188,
+            "viewportHeight": 1000,
+            "groups": [
+              "Категории",
+              "Цена, сомони",
+              "Наличие и скидки",
+              "Единица продажи"
+            ],
+            "preview": "Показать товары: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 1440,
+          "height": 1000,
+          "rootWidth": 1430,
+          "viewport": 1440,
+          "buttonWidth": 157,
+          "buttonScrollWidth": 157,
+          "nestedForms": 0,
+          "lang": "ru",
+          "theme": "dark",
+          "panel": {
+            "left": 400,
+            "right": 1040,
+            "top": 142.1666717529297,
+            "bottom": 857.8333587646484,
+            "contentWidth": 639,
+            "contentScrollWidth": 639,
+            "footerTop": 768.5,
+            "applyBottom": 837.1666870117188,
+            "viewportHeight": 1000,
+            "groups": [
+              "Категории",
+              "Цена, сомони",
+              "Наличие и скидки",
+              "Единица продажи"
+            ],
+            "preview": "Показать товары: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 1920,
+          "height": 1000,
+          "rootWidth": 1910,
+          "viewport": 1920,
+          "buttonWidth": 157,
+          "buttonScrollWidth": 157,
+          "nestedForms": 0,
+          "lang": "ru",
+          "theme": "dark",
+          "panel": {
+            "left": 640,
+            "right": 1280,
+            "top": 142.1666717529297,
+            "bottom": 857.8333587646484,
+            "contentWidth": 639,
+            "contentScrollWidth": 639,
+            "footerTop": 768.5,
+            "applyBottom": 837.1666870117188,
+            "viewportHeight": 1000,
+            "groups": [
+              "Категории",
+              "Цена, сомони",
+              "Наличие и скидки",
+              "Единица продажи"
+            ],
+            "preview": "Показать товары: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 320,
+          "height": 844,
+          "rootWidth": 310,
+          "viewport": 320,
+          "buttonWidth": 125,
+          "buttonScrollWidth": 125,
+          "nestedForms": 0,
+          "lang": "ru",
+          "theme": "light",
+          "panel": {
+            "left": 0,
+            "right": 320,
+            "top": 16,
+            "bottom": 844,
+            "contentWidth": 309,
+            "contentScrollWidth": 309,
+            "footerTop": 741.1666870117188,
+            "applyBottom": 824.6667098999023,
+            "viewportHeight": 844,
+            "groups": [
+              "Категории",
+              "Цена, сомони",
+              "Наличие и скидки",
+              "Единица продажи"
+            ],
+            "preview": "Показать товары: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "rootWidth": 380,
+          "viewport": 390,
+          "buttonWidth": 160,
+          "buttonScrollWidth": 160,
+          "nestedForms": 0,
+          "lang": "ru",
+          "theme": "light",
+          "panel": {
+            "left": 0,
+            "right": 390,
+            "top": 16,
+            "bottom": 844,
+            "contentWidth": 379,
+            "contentScrollWidth": 379,
+            "footerTop": 741.1666870117188,
+            "applyBottom": 824.6667098999023,
+            "viewportHeight": 844,
+            "groups": [
+              "Категории",
+              "Цена, сомони",
+              "Наличие и скидки",
+              "Единица продажи"
+            ],
+            "preview": "Показать товары: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 768,
+          "height": 1000,
+          "rootWidth": 758,
+          "viewport": 768,
+          "buttonWidth": 163,
+          "buttonScrollWidth": 163,
+          "nestedForms": 0,
+          "lang": "ru",
+          "theme": "light",
+          "panel": {
+            "left": 64,
+            "right": 704,
+            "top": 142.1666717529297,
+            "bottom": 857.8333587646484,
+            "contentWidth": 639,
+            "contentScrollWidth": 639,
+            "footerTop": 768.5,
+            "applyBottom": 837.1666870117188,
+            "viewportHeight": 1000,
+            "groups": [
+              "Категории",
+              "Цена, сомони",
+              "Наличие и скидки",
+              "Единица продажи"
+            ],
+            "preview": "Показать товары: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 1024,
+          "height": 1000,
+          "rootWidth": 1014,
+          "viewport": 1024,
+          "buttonWidth": 157,
+          "buttonScrollWidth": 157,
+          "nestedForms": 0,
+          "lang": "ru",
+          "theme": "light",
+          "panel": {
+            "left": 192,
+            "right": 832,
+            "top": 142.1666717529297,
+            "bottom": 857.8333587646484,
+            "contentWidth": 639,
+            "contentScrollWidth": 639,
+            "footerTop": 768.5,
+            "applyBottom": 837.1666870117188,
+            "viewportHeight": 1000,
+            "groups": [
+              "Категории",
+              "Цена, сомони",
+              "Наличие и скидки",
+              "Единица продажи"
+            ],
+            "preview": "Показать товары: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 1440,
+          "height": 1000,
+          "rootWidth": 1430,
+          "viewport": 1440,
+          "buttonWidth": 157,
+          "buttonScrollWidth": 157,
+          "nestedForms": 0,
+          "lang": "ru",
+          "theme": "light",
+          "panel": {
+            "left": 400,
+            "right": 1040,
+            "top": 142.1666717529297,
+            "bottom": 857.8333587646484,
+            "contentWidth": 639,
+            "contentScrollWidth": 639,
+            "footerTop": 768.5,
+            "applyBottom": 837.1666870117188,
+            "viewportHeight": 1000,
+            "groups": [
+              "Категории",
+              "Цена, сомони",
+              "Наличие и скидки",
+              "Единица продажи"
+            ],
+            "preview": "Показать товары: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 1920,
+          "height": 1000,
+          "rootWidth": 1910,
+          "viewport": 1920,
+          "buttonWidth": 157,
+          "buttonScrollWidth": 157,
+          "nestedForms": 0,
+          "lang": "ru",
+          "theme": "light",
+          "panel": {
+            "left": 640,
+            "right": 1280,
+            "top": 142.1666717529297,
+            "bottom": 857.8333587646484,
+            "contentWidth": 639,
+            "contentScrollWidth": 639,
+            "footerTop": 768.5,
+            "applyBottom": 837.1666870117188,
+            "viewportHeight": 1000,
+            "groups": [
+              "Категории",
+              "Цена, сомони",
+              "Наличие и скидки",
+              "Единица продажи"
+            ],
+            "preview": "Показать товары: 6"
+          },
+          "pass": true
+        }
+      ],
+      "consoleErrors": [],
+      "pass": true
+    },
+    {
+      "language": "tj",
+      "rows": [
+        {
+          "width": 320,
+          "height": 844,
+          "rootWidth": 310,
+          "viewport": 320,
+          "buttonWidth": 125,
+          "buttonScrollWidth": 125,
+          "nestedForms": 0,
+          "lang": "tg",
+          "theme": "dark",
+          "panel": {
+            "left": 0,
+            "right": 320,
+            "top": 16,
+            "bottom": 844,
+            "contentWidth": 309,
+            "contentScrollWidth": 309,
+            "footerTop": 722.4166870117188,
+            "applyBottom": 824.6667098999023,
+            "viewportHeight": 844,
+            "groups": [
+              "Гурӯҳҳо",
+              "Нарх, сомонӣ",
+              "Мавҷудият ва тахфифҳо",
+              "Воҳиди фурӯш"
+            ],
+            "preview": "Нишон додани молҳо: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "rootWidth": 380,
+          "viewport": 390,
+          "buttonWidth": 160,
+          "buttonScrollWidth": 160,
+          "nestedForms": 0,
+          "lang": "tg",
+          "theme": "dark",
+          "panel": {
+            "left": 0,
+            "right": 390,
+            "top": 16,
+            "bottom": 844,
+            "contentWidth": 379,
+            "contentScrollWidth": 379,
+            "footerTop": 741.1666870117188,
+            "applyBottom": 824.6667098999023,
+            "viewportHeight": 844,
+            "groups": [
+              "Гурӯҳҳо",
+              "Нарх, сомонӣ",
+              "Мавҷудият ва тахфифҳо",
+              "Воҳиди фурӯш"
+            ],
+            "preview": "Нишон додани молҳо: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 768,
+          "height": 1000,
+          "rootWidth": 758,
+          "viewport": 768,
+          "buttonWidth": 168,
+          "buttonScrollWidth": 168,
+          "nestedForms": 0,
+          "lang": "tg",
+          "theme": "dark",
+          "panel": {
+            "left": 64,
+            "right": 704,
+            "top": 120,
+            "bottom": 880,
+            "contentWidth": 629,
+            "contentScrollWidth": 629,
+            "footerTop": 792,
+            "applyBottom": 860.6666870117188,
+            "viewportHeight": 1000,
+            "groups": [
+              "Гурӯҳҳо",
+              "Нарх, сомонӣ",
+              "Мавҷудият ва тахфифҳо",
+              "Воҳиди фурӯш"
+            ],
+            "preview": "Нишон додани молҳо: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 1024,
+          "height": 1000,
+          "rootWidth": 1014,
+          "viewport": 1024,
+          "buttonWidth": 155,
+          "buttonScrollWidth": 155,
+          "nestedForms": 0,
+          "lang": "tg",
+          "theme": "dark",
+          "panel": {
+            "left": 192,
+            "right": 832,
+            "top": 120,
+            "bottom": 880,
+            "contentWidth": 629,
+            "contentScrollWidth": 629,
+            "footerTop": 792,
+            "applyBottom": 860.6666870117188,
+            "viewportHeight": 1000,
+            "groups": [
+              "Гурӯҳҳо",
+              "Нарх, сомонӣ",
+              "Мавҷудият ва тахфифҳо",
+              "Воҳиди фурӯш"
+            ],
+            "preview": "Нишон додани молҳо: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 1440,
+          "height": 1000,
+          "rootWidth": 1430,
+          "viewport": 1440,
+          "buttonWidth": 155,
+          "buttonScrollWidth": 155,
+          "nestedForms": 0,
+          "lang": "tg",
+          "theme": "dark",
+          "panel": {
+            "left": 400,
+            "right": 1040,
+            "top": 120,
+            "bottom": 880,
+            "contentWidth": 629,
+            "contentScrollWidth": 629,
+            "footerTop": 792,
+            "applyBottom": 860.6666870117188,
+            "viewportHeight": 1000,
+            "groups": [
+              "Гурӯҳҳо",
+              "Нарх, сомонӣ",
+              "Мавҷудият ва тахфифҳо",
+              "Воҳиди фурӯш"
+            ],
+            "preview": "Нишон додани молҳо: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 1920,
+          "height": 1000,
+          "rootWidth": 1910,
+          "viewport": 1920,
+          "buttonWidth": 155,
+          "buttonScrollWidth": 155,
+          "nestedForms": 0,
+          "lang": "tg",
+          "theme": "dark",
+          "panel": {
+            "left": 640,
+            "right": 1280,
+            "top": 120,
+            "bottom": 880,
+            "contentWidth": 629,
+            "contentScrollWidth": 629,
+            "footerTop": 792,
+            "applyBottom": 860.6666870117188,
+            "viewportHeight": 1000,
+            "groups": [
+              "Гурӯҳҳо",
+              "Нарх, сомонӣ",
+              "Мавҷудият ва тахфифҳо",
+              "Воҳиди фурӯш"
+            ],
+            "preview": "Нишон додани молҳо: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 320,
+          "height": 844,
+          "rootWidth": 310,
+          "viewport": 320,
+          "buttonWidth": 125,
+          "buttonScrollWidth": 125,
+          "nestedForms": 0,
+          "lang": "tg",
+          "theme": "light",
+          "panel": {
+            "left": 0,
+            "right": 320,
+            "top": 16,
+            "bottom": 844,
+            "contentWidth": 309,
+            "contentScrollWidth": 309,
+            "footerTop": 722.4166870117188,
+            "applyBottom": 824.6667098999023,
+            "viewportHeight": 844,
+            "groups": [
+              "Гурӯҳҳо",
+              "Нарх, сомонӣ",
+              "Мавҷудият ва тахфифҳо",
+              "Воҳиди фурӯш"
+            ],
+            "preview": "Нишон додани молҳо: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "rootWidth": 380,
+          "viewport": 390,
+          "buttonWidth": 160,
+          "buttonScrollWidth": 160,
+          "nestedForms": 0,
+          "lang": "tg",
+          "theme": "light",
+          "panel": {
+            "left": 0,
+            "right": 390,
+            "top": 16,
+            "bottom": 844,
+            "contentWidth": 379,
+            "contentScrollWidth": 379,
+            "footerTop": 741.1666870117188,
+            "applyBottom": 824.6667098999023,
+            "viewportHeight": 844,
+            "groups": [
+              "Гурӯҳҳо",
+              "Нарх, сомонӣ",
+              "Мавҷудият ва тахфифҳо",
+              "Воҳиди фурӯш"
+            ],
+            "preview": "Нишон додани молҳо: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 768,
+          "height": 1000,
+          "rootWidth": 758,
+          "viewport": 768,
+          "buttonWidth": 168,
+          "buttonScrollWidth": 168,
+          "nestedForms": 0,
+          "lang": "tg",
+          "theme": "light",
+          "panel": {
+            "left": 64,
+            "right": 704,
+            "top": 120,
+            "bottom": 880,
+            "contentWidth": 629,
+            "contentScrollWidth": 629,
+            "footerTop": 792,
+            "applyBottom": 860.6666870117188,
+            "viewportHeight": 1000,
+            "groups": [
+              "Гурӯҳҳо",
+              "Нарх, сомонӣ",
+              "Мавҷудият ва тахфифҳо",
+              "Воҳиди фурӯш"
+            ],
+            "preview": "Нишон додани молҳо: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 1024,
+          "height": 1000,
+          "rootWidth": 1014,
+          "viewport": 1024,
+          "buttonWidth": 155,
+          "buttonScrollWidth": 155,
+          "nestedForms": 0,
+          "lang": "tg",
+          "theme": "light",
+          "panel": {
+            "left": 192,
+            "right": 832,
+            "top": 120,
+            "bottom": 880,
+            "contentWidth": 629,
+            "contentScrollWidth": 629,
+            "footerTop": 792,
+            "applyBottom": 860.6666870117188,
+            "viewportHeight": 1000,
+            "groups": [
+              "Гурӯҳҳо",
+              "Нарх, сомонӣ",
+              "Мавҷудият ва тахфифҳо",
+              "Воҳиди фурӯш"
+            ],
+            "preview": "Нишон додани молҳо: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 1440,
+          "height": 1000,
+          "rootWidth": 1430,
+          "viewport": 1440,
+          "buttonWidth": 155,
+          "buttonScrollWidth": 155,
+          "nestedForms": 0,
+          "lang": "tg",
+          "theme": "light",
+          "panel": {
+            "left": 400,
+            "right": 1040,
+            "top": 120,
+            "bottom": 880,
+            "contentWidth": 629,
+            "contentScrollWidth": 629,
+            "footerTop": 792,
+            "applyBottom": 860.6666870117188,
+            "viewportHeight": 1000,
+            "groups": [
+              "Гурӯҳҳо",
+              "Нарх, сомонӣ",
+              "Мавҷудият ва тахфифҳо",
+              "Воҳиди фурӯш"
+            ],
+            "preview": "Нишон додани молҳо: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 1920,
+          "height": 1000,
+          "rootWidth": 1910,
+          "viewport": 1920,
+          "buttonWidth": 155,
+          "buttonScrollWidth": 155,
+          "nestedForms": 0,
+          "lang": "tg",
+          "theme": "light",
+          "panel": {
+            "left": 640,
+            "right": 1280,
+            "top": 120,
+            "bottom": 880,
+            "contentWidth": 629,
+            "contentScrollWidth": 629,
+            "footerTop": 792,
+            "applyBottom": 860.6666870117188,
+            "viewportHeight": 1000,
+            "groups": [
+              "Гурӯҳҳо",
+              "Нарх, сомонӣ",
+              "Мавҷудият ва тахфифҳо",
+              "Воҳиди фурӯш"
+            ],
+            "preview": "Нишон додани молҳо: 6"
+          },
+          "pass": true
+        }
+      ],
+      "consoleErrors": [],
+      "pass": true
+    },
+    {
+      "language": "en",
+      "rows": [
+        {
+          "width": 320,
+          "height": 844,
+          "rootWidth": 310,
+          "viewport": 320,
+          "buttonWidth": 125,
+          "buttonScrollWidth": 125,
+          "nestedForms": 0,
+          "lang": "en",
+          "theme": "dark",
+          "panel": {
+            "left": 0,
+            "right": 320,
+            "top": 16,
+            "bottom": 844,
+            "contentWidth": 309,
+            "contentScrollWidth": 309,
+            "footerTop": 741.1666870117188,
+            "applyBottom": 824.6667098999023,
+            "viewportHeight": 844,
+            "groups": [
+              "Categories",
+              "Price, somoni",
+              "Availability and discounts",
+              "Sale unit"
+            ],
+            "preview": "Show products: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "rootWidth": 380,
+          "viewport": 390,
+          "buttonWidth": 160,
+          "buttonScrollWidth": 160,
+          "nestedForms": 0,
+          "lang": "en",
+          "theme": "dark",
+          "panel": {
+            "left": 0,
+            "right": 390,
+            "top": 16,
+            "bottom": 844,
+            "contentWidth": 379,
+            "contentScrollWidth": 379,
+            "footerTop": 756,
+            "applyBottom": 824.6666870117188,
+            "viewportHeight": 844,
+            "groups": [
+              "Categories",
+              "Price, somoni",
+              "Availability and discounts",
+              "Sale unit"
+            ],
+            "preview": "Show products: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 768,
+          "height": 1000,
+          "rootWidth": 758,
+          "viewport": 768,
+          "buttonWidth": 159,
+          "buttonScrollWidth": 159,
+          "nestedForms": 0,
+          "lang": "en",
+          "theme": "dark",
+          "panel": {
+            "left": 64,
+            "right": 704,
+            "top": 142.1666717529297,
+            "bottom": 857.8333587646484,
+            "contentWidth": 639,
+            "contentScrollWidth": 639,
+            "footerTop": 768.5,
+            "applyBottom": 837.1666870117188,
+            "viewportHeight": 1000,
+            "groups": [
+              "Categories",
+              "Price, somoni",
+              "Availability and discounts",
+              "Sale unit"
+            ],
+            "preview": "Show products: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 1024,
+          "height": 1000,
+          "rootWidth": 1014,
+          "viewport": 1024,
+          "buttonWidth": 133,
+          "buttonScrollWidth": 133,
+          "nestedForms": 0,
+          "lang": "en",
+          "theme": "dark",
+          "panel": {
+            "left": 192,
+            "right": 832,
+            "top": 142.1666717529297,
+            "bottom": 857.8333587646484,
+            "contentWidth": 639,
+            "contentScrollWidth": 639,
+            "footerTop": 768.5,
+            "applyBottom": 837.1666870117188,
+            "viewportHeight": 1000,
+            "groups": [
+              "Categories",
+              "Price, somoni",
+              "Availability and discounts",
+              "Sale unit"
+            ],
+            "preview": "Show products: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 1440,
+          "height": 1000,
+          "rootWidth": 1430,
+          "viewport": 1440,
+          "buttonWidth": 133,
+          "buttonScrollWidth": 133,
+          "nestedForms": 0,
+          "lang": "en",
+          "theme": "dark",
+          "panel": {
+            "left": 400,
+            "right": 1040,
+            "top": 142.1666717529297,
+            "bottom": 857.8333587646484,
+            "contentWidth": 639,
+            "contentScrollWidth": 639,
+            "footerTop": 768.5,
+            "applyBottom": 837.1666870117188,
+            "viewportHeight": 1000,
+            "groups": [
+              "Categories",
+              "Price, somoni",
+              "Availability and discounts",
+              "Sale unit"
+            ],
+            "preview": "Show products: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 1920,
+          "height": 1000,
+          "rootWidth": 1910,
+          "viewport": 1920,
+          "buttonWidth": 133,
+          "buttonScrollWidth": 133,
+          "nestedForms": 0,
+          "lang": "en",
+          "theme": "dark",
+          "panel": {
+            "left": 640,
+            "right": 1280,
+            "top": 142.1666717529297,
+            "bottom": 857.8333587646484,
+            "contentWidth": 639,
+            "contentScrollWidth": 639,
+            "footerTop": 768.5,
+            "applyBottom": 837.1666870117188,
+            "viewportHeight": 1000,
+            "groups": [
+              "Categories",
+              "Price, somoni",
+              "Availability and discounts",
+              "Sale unit"
+            ],
+            "preview": "Show products: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 320,
+          "height": 844,
+          "rootWidth": 310,
+          "viewport": 320,
+          "buttonWidth": 125,
+          "buttonScrollWidth": 125,
+          "nestedForms": 0,
+          "lang": "en",
+          "theme": "light",
+          "panel": {
+            "left": 0,
+            "right": 320,
+            "top": 16,
+            "bottom": 844,
+            "contentWidth": 309,
+            "contentScrollWidth": 309,
+            "footerTop": 741.1666870117188,
+            "applyBottom": 824.6667098999023,
+            "viewportHeight": 844,
+            "groups": [
+              "Categories",
+              "Price, somoni",
+              "Availability and discounts",
+              "Sale unit"
+            ],
+            "preview": "Show products: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "rootWidth": 380,
+          "viewport": 390,
+          "buttonWidth": 160,
+          "buttonScrollWidth": 160,
+          "nestedForms": 0,
+          "lang": "en",
+          "theme": "light",
+          "panel": {
+            "left": 0,
+            "right": 390,
+            "top": 16,
+            "bottom": 844,
+            "contentWidth": 379,
+            "contentScrollWidth": 379,
+            "footerTop": 756,
+            "applyBottom": 824.6666870117188,
+            "viewportHeight": 844,
+            "groups": [
+              "Categories",
+              "Price, somoni",
+              "Availability and discounts",
+              "Sale unit"
+            ],
+            "preview": "Show products: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 768,
+          "height": 1000,
+          "rootWidth": 758,
+          "viewport": 768,
+          "buttonWidth": 159,
+          "buttonScrollWidth": 159,
+          "nestedForms": 0,
+          "lang": "en",
+          "theme": "light",
+          "panel": {
+            "left": 64,
+            "right": 704,
+            "top": 142.1666717529297,
+            "bottom": 857.8333587646484,
+            "contentWidth": 639,
+            "contentScrollWidth": 639,
+            "footerTop": 768.5,
+            "applyBottom": 837.1666870117188,
+            "viewportHeight": 1000,
+            "groups": [
+              "Categories",
+              "Price, somoni",
+              "Availability and discounts",
+              "Sale unit"
+            ],
+            "preview": "Show products: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 1024,
+          "height": 1000,
+          "rootWidth": 1014,
+          "viewport": 1024,
+          "buttonWidth": 133,
+          "buttonScrollWidth": 133,
+          "nestedForms": 0,
+          "lang": "en",
+          "theme": "light",
+          "panel": {
+            "left": 192,
+            "right": 832,
+            "top": 142.1666717529297,
+            "bottom": 857.8333587646484,
+            "contentWidth": 639,
+            "contentScrollWidth": 639,
+            "footerTop": 768.5,
+            "applyBottom": 837.1666870117188,
+            "viewportHeight": 1000,
+            "groups": [
+              "Categories",
+              "Price, somoni",
+              "Availability and discounts",
+              "Sale unit"
+            ],
+            "preview": "Show products: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 1440,
+          "height": 1000,
+          "rootWidth": 1430,
+          "viewport": 1440,
+          "buttonWidth": 133,
+          "buttonScrollWidth": 133,
+          "nestedForms": 0,
+          "lang": "en",
+          "theme": "light",
+          "panel": {
+            "left": 400,
+            "right": 1040,
+            "top": 142.1666717529297,
+            "bottom": 857.8333587646484,
+            "contentWidth": 639,
+            "contentScrollWidth": 639,
+            "footerTop": 768.5,
+            "applyBottom": 837.1666870117188,
+            "viewportHeight": 1000,
+            "groups": [
+              "Categories",
+              "Price, somoni",
+              "Availability and discounts",
+              "Sale unit"
+            ],
+            "preview": "Show products: 6"
+          },
+          "pass": true
+        },
+        {
+          "width": 1920,
+          "height": 1000,
+          "rootWidth": 1910,
+          "viewport": 1920,
+          "buttonWidth": 133,
+          "buttonScrollWidth": 133,
+          "nestedForms": 0,
+          "lang": "en",
+          "theme": "light",
+          "panel": {
+            "left": 640,
+            "right": 1280,
+            "top": 142.1666717529297,
+            "bottom": 857.8333587646484,
+            "contentWidth": 639,
+            "contentScrollWidth": 639,
+            "footerTop": 768.5,
+            "applyBottom": 837.1666870117188,
+            "viewportHeight": 1000,
+            "groups": [
+              "Categories",
+              "Price, somoni",
+              "Availability and discounts",
+              "Sale unit"
+            ],
+            "preview": "Show products: 6"
+          },
+          "pass": true
+        }
+      ],
+      "consoleErrors": [],
+      "pass": true
+    }
+  ],
+  "notes": [
+    "One intentional HTTP 503 preview failure was injected to verify disabled Apply and real API Retry recovery; successful acceptance runs had zero unexpected browser errors.",
+    "Viewport checks wait for the native dialog opening animation to settle before measuring geometry.",
+    "Native Tab order may visit browser chrome (document BODY becomes active) between the last modal control and the first; no background interactive control received focus."
+  ]
+}

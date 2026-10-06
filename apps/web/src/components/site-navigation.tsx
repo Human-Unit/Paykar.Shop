@@ -11,9 +11,9 @@ import {
   useState,
 } from "react";
 import { ChevronDown, Grid2X2, Menu, X } from "lucide-react";
+import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { usePresentation } from "@/context/presentation";
 import { Brand } from "@/components/brand";
-import { LanguageSelector, Preferences } from "@/components/preferences";
 import { informationNavigation, type InformationEntry } from "@/lib/navigation";
 import { CatalogMegaMenu } from "./catalog-mega-menu";
 
@@ -186,6 +186,7 @@ export function MainNavigation() {
 
 export function BurgerMenu() {
   const { t } = usePresentation();
+  const reduce = useReducedMotion();
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
@@ -198,16 +199,32 @@ export function BurgerMenu() {
         ref={trigger}
         type="button"
         className="burger-button"
-        aria-label={t("Открыть меню")}
+        aria-label={t(open ? "Закрыть меню" : "Открыть меню")}
         aria-haspopup="dialog"
         aria-expanded={open}
         aria-controls={dialogId}
         onClick={() => {
+          if (open) {
+            close();
+            return;
+          }
           dialog.current?.showModal();
           setOpen(true);
         }}
       >
-        <Menu size={20} aria-hidden="true" />
+        <span className="header-control-icon" aria-hidden="true">
+          <AnimatePresence initial={false}>
+            <m.span
+              key={open ? "close" : "menu"}
+              initial={reduce ? false : { opacity: 0, rotate: -8 }}
+              animate={{ opacity: 1, rotate: 0 }}
+              exit={{ opacity: 0, rotate: reduce ? 0 : 8 }}
+              transition={{ duration: reduce ? 0 : 0.18, ease: "easeOut" }}
+            >
+              {open ? <X size={20} /> : <Menu size={20} />}
+            </m.span>
+          </AnimatePresence>
+        </span>
       </button>
       <dialog
         ref={dialog}
@@ -247,14 +264,6 @@ export function BurgerMenu() {
           >
             <X size={20} aria-hidden="true" />
           </button>
-        </div>
-        <div className="drawer-language">
-          <p>{t("Язык интерфейса")}</p>
-          <LanguageSelector />
-        </div>
-        <div className="drawer-language">
-          <p>{t("Тема оформления")}</p>
-          <Preferences />
         </div>
         <nav aria-label={t("Навигация меню")}>
           <Link href="/catalog" prefetch={false} onClick={close}>

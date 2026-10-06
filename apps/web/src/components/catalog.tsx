@@ -2,7 +2,7 @@
 import { usePresentation } from "@/context/presentation";
 import Link from "next/link";
 import { notFound, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import {
   ArrowUpDown,
   BadgePercent,
@@ -17,7 +17,7 @@ import {
   catalogApiQuery,
   catalogHref,
   catalogParameters,
-  descendantCategories,
+  categoryFilterChanges,
 } from "@/lib/catalog-query";
 import { ProductCard } from "./product-card";
 import { Breadcrumbs } from "./breadcrumbs";
@@ -41,11 +41,20 @@ export function Catalog({ slug }: { slug?: string }) {
   const { t, money } = usePresentation();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const searchId = useId();
   const params = catalogParameters(
     new URLSearchParams(searchParams.toString()),
     slug,
   );
   const paramsKey = params.toString();
+  const discountInUrl = searchParams.get("min_discount");
+  const saleNeedsNormalization =
+    discountInUrl !== null &&
+    discountInUrl !== "" &&
+    Number.isFinite(Number(discountInUrl)) &&
+    Number(discountInUrl) >= 0 &&
+    Number(discountInUrl) <= 100 &&
+    (searchParams.get("on_sale") !== "true" || Number(discountInUrl) === 0);
   const categorySlug = params.get("category") || "";
   const q = params.get("q") || "";
   const sort = params.get("sort") || "name";
@@ -71,6 +80,13 @@ export function Catalog({ slug }: { slug?: string }) {
     if (q !== draft.trim()) setDraft(q);
   }
   useEffect(() => {
+    if (!saleNeedsNormalization) return;
+    const canonical = new URLSearchParams(paramsKey);
+    router.replace(catalogHref(canonical, { page: canonical.get("page") }), {
+      scroll: false,
+    });
+  }, [saleNeedsNormalization, paramsKey, router]);
+  useEffect(() => {
     const value = draft.trim();
     if (value === q) return;
     const timer = setTimeout(
@@ -87,16 +103,10 @@ export function Catalog({ slug }: { slug?: string }) {
     router.push(catalogHref(params, changes), { scroll: false });
   }
   function categoryHref(value: string) {
-    const child = params.get("subcategory");
-    const valid =
-      !value ||
-      descendantCategories(allCategories, value).some(
-        (item) => item.slug === child,
-      );
-    return catalogHref(params, {
-      category: value,
-      ...(valid ? {} : { subcategory: null }),
-    });
+    return catalogHref(
+      params,
+      categoryFilterChanges(params, allCategories, value),
+    );
   }
   if (
     slug &&
@@ -124,12 +134,14 @@ export function Catalog({ slug }: { slug?: string }) {
   if (min || max)
     active.push({
       key: "price",
-      label: [
-        min ? `${t("От")} ${money(Number(min) * 100)}` : "",
-        max ? `${t("До")} ${money(Number(max) * 100)}` : "",
-      ]
-        .filter(Boolean)
-        .join(" · "),
+      label:
+        `${t("Цена")}: ` +
+        [
+          min ? `${t("От")} ${money(Number(min) * 100)}` : "",
+          max ? `${t("До")} ${money(Number(max) * 100)}` : "",
+        ]
+          .filter(Boolean)
+          .join(" · "),
       remove: { min_price: null, max_price: null },
     });
   if (inStock)
@@ -229,19 +241,23 @@ export function Catalog({ slug }: { slug?: string }) {
             ))}
         </aside>
         <section className="catalog-main" aria-label={t("Товары")}>
-          <form
-            className="catalog-toolbar"
-            role="search"
-            onSubmit={(event) => {
-              event.preventDefault();
-              apply({ q: draft.trim() });
-            }}
-          >
-            <label className="toolbar-search">
-              <span className="sr-only">{t("Поиск")}</span>
+          <div className="catalog-toolbar">
+            <form
+              className="toolbar-search"
+              role="search"
+              aria-label={t("Поиск в каталоге")}
+              onSubmit={(event) => {
+                event.preventDefault();
+                apply({ q: draft.trim() });
+              }}
+            >
+              <label htmlFor={searchId} className="sr-only">
+                {t("Поиск")}
+              </label>
               <Search size={18} aria-hidden="true" />
               <input
                 name="q"
+                id={searchId}
                 value={draft}
                 maxLength={200}
                 autoComplete="off"
@@ -261,7 +277,7 @@ export function Catalog({ slug }: { slug?: string }) {
                   <X size={16} aria-hidden="true" />
                 </button>
               )}
-            </label>
+            </form>
             <label className="toolbar-sort">
               <span className="sr-only">{t("Сортировка")}</span>
               <ArrowUpDown size={16} aria-hidden="true" />
@@ -281,7 +297,7 @@ export function Catalog({ slug }: { slug?: string }) {
                 <option value="price_desc">{t("Сначала дороже")}</option>
               </select>
             </label>
-            <label className="filter-toggle">
+            <label className="filter-toggle quick-filter">
               <input
                 name="in_stock"
                 type="checkbox"
@@ -293,7 +309,7 @@ export function Catalog({ slug }: { slug?: string }) {
               <PackageCheck size={16} aria-hidden="true" />
               <span>{t("В наличии")}</span>
             </label>
-            <label className="filter-toggle">
+            <label className="filter-toggle quick-filter">
               <input
                 name="on_sale"
                 type="checkbox"
@@ -305,27 +321,15 @@ export function Catalog({ slug }: { slug?: string }) {
               <BadgePercent size={16} aria-hidden="true" />
               <span>{t("Со скидкой")}</span>
             </label>
-          </form>
-          <div className="catalog-secondary-toolbar">
             <CatalogFilterDialog
               key={paramsKey}
               params={params}
               categories={allCategories}
               facets={products.data?.facets}
             />
-            {active.length > 0 && (
-              <Link
-                className="filter-reset"
-                href="/catalog"
-                scroll={false}
-                onClick={() => setDraft("")}
-              >
-                {t("Сбросить всё")}
-              </Link>
-            )}
           </div>
           {active.length > 0 && (
-            <ul className="active-filters" aria-label={t("Фильтры")}>
+            <ul className="active-filters" aria-label={t("Активные фильтры")}>
               {active.map((filter) => (
                 <li key={filter.key}>
                   <Link
@@ -341,6 +345,16 @@ export function Catalog({ slug }: { slug?: string }) {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link
+                  className="filter-reset"
+                  href="/catalog"
+                  scroll={false}
+                  onClick={() => setDraft("")}
+                >
+                  {t("Сбросить всё")}
+                </Link>
+              </li>
             </ul>
           )}
           {!shown && products.loading && <Loading kind="grid" />}
@@ -349,6 +363,7 @@ export function Catalog({ slug }: { slug?: string }) {
               <Empty
                 title={t("Проверьте значения фильтров.")}
                 text={t("Попробуйте другое название или измените фильтры.")}
+                actionLabel="Сбросить фильтры"
               />
             ) : (
               <Failure error={products.error} retry={products.retry} />
@@ -363,6 +378,9 @@ export function Catalog({ slug }: { slug?: string }) {
                 <Empty
                   title={t("Ничего не найдено")}
                   text={t("Попробуйте другое название или измените фильтры.")}
+                  actionLabel={
+                    active.length ? "Сбросить фильтры" : "Открыть каталог"
+                  }
                 />
               ) : (
                 <div className="product-grid catalog-grid">

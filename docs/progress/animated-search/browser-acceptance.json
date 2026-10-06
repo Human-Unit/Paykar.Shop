@@ -1,0 +1,2256 @@
+{
+  "checkedAt": "2026-10-06",
+  "source": "Connected Playwright Chrome against rebuilt Docker production frontend",
+  "idleAndInput": {
+    "status": "PASS",
+    "audit": {
+      "samples": [
+        {
+          "ms": 569,
+          "text": "М",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 660,
+          "text": "Мо",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 750,
+          "text": "Мол",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 841,
+          "text": "Моло",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 933,
+          "text": "Молок",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 1029,
+          "text": "Молоко",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 2530,
+          "text": "Молок",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 2586,
+          "text": "Моло",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 2648,
+          "text": "Мол",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 2707,
+          "text": "Мо",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 2763,
+          "text": "М",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 2823,
+          "text": "",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 3229,
+          "text": "Х",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 3319,
+          "text": "Хл",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 3410,
+          "text": "Хле",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 3502,
+          "text": "Хлеб",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 5006,
+          "text": "Хле",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 5065,
+          "text": "Хл",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 5121,
+          "text": "Х",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 5180,
+          "text": "",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 5582,
+          "text": "Ч",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 5672,
+          "text": "Ча",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 5768,
+          "text": "Чай",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 7270,
+          "text": "Ча",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 7326,
+          "text": "Ч",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 7387,
+          "text": "",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 7792,
+          "text": "П",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 7883,
+          "text": "Пе",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 7974,
+          "text": "Печ",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 8066,
+          "text": "Пече",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 8161,
+          "text": "Печен",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 8252,
+          "text": "Печень",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 8345,
+          "text": "Печенье",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 9846,
+          "text": "Печень",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 9904,
+          "text": "Печен",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 9962,
+          "text": "Пече",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 10023,
+          "text": "Печ",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 10082,
+          "text": "Пе",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 10138,
+          "text": "П",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 10197,
+          "text": "",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 10603,
+          "text": "М",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 10696,
+          "text": "Мо",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 10791,
+          "text": "Мол",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 10882,
+          "text": "Моло",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 10973,
+          "text": "Молок",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 11064,
+          "text": "Молоко",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 12566,
+          "text": "Молок",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 12627,
+          "text": "Моло",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 12683,
+          "text": "Мол",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 12743,
+          "text": "Мо",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 12803,
+          "text": "М",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 12859,
+          "text": "",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 13261,
+          "text": "Х",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 13356,
+          "text": "Хл",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 13448,
+          "text": "Хле",
+          "value": "",
+          "expanded": "false"
+        },
+        {
+          "ms": 13542,
+          "text": "Хлеб",
+          "value": "",
+          "expanded": "false"
+        }
+      ],
+      "inputEvents": 0,
+      "urlUnchanged": true,
+      "value": ""
+    },
+    "style": {
+      "hidden": "true",
+      "pointerEvents": "none",
+      "color": "rgb(100, 107, 101)",
+      "fontSize": "16px",
+      "fontWeight": "450",
+      "left": 327.66668701171875
+    },
+    "staticStyle": {
+      "placeholder": "Найти молоко, хлеб, фрукты…",
+      "color": "rgb(100, 107, 101)"
+    },
+    "idleSearchRequests": 0,
+    "userQueries": [
+      "Молоко"
+    ],
+    "focusInterruption": "PASS",
+    "clearAndBlurResume": "PASS",
+    "reducedMotionLiveChange": "PASS",
+    "errors": []
+  },
+  "localizationAndSearch": {
+    "status": "PASS",
+    "locales": [
+      {
+        "lang": "tg",
+        "first": "Шир",
+        "second": "Нон",
+        "status": "PASS"
+      },
+      {
+        "lang": "en",
+        "first": "Milk",
+        "second": "Bread",
+        "status": "PASS"
+      }
+    ],
+    "reducedMotionInitialLoad": "PASS",
+    "realCatalogExamples": [
+      {
+        "term": "Молоко",
+        "total": 1
+      },
+      {
+        "term": "Хлеб",
+        "total": 2
+      },
+      {
+        "term": "Чай",
+        "total": 2
+      },
+      {
+        "term": "Печенье",
+        "total": 1
+      }
+    ],
+    "headerOnly": "PASS",
+    "keyboardSuggestionNavigation": "http://localhost:3000/product/yogurt",
+    "realTextSubmit": "http://localhost:3000/catalog?q=%D0%9C%D0%BE%D0%BB%D0%BE%D0%BA%D0%BE",
+    "errors": []
+  },
+  "responsive": {
+    "status": "PASS",
+    "combinations": 36,
+    "rows": [
+      {
+        "viewport": 320,
+        "clientWidth": 310,
+        "scrollWidth": 310,
+        "lang": "ru",
+        "theme": "dark",
+        "text": "Молоко",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 64.66667175292969,
+          "right": 231.33334350585938,
+          "top": 102.66667175292969,
+          "bottom": 149.3333396911621,
+          "width": 166.6666717529297,
+          "height": 46.66666793823242
+        },
+        "input": {
+          "left": 54.66666793823242,
+          "right": 241.3333396911621,
+          "top": 102.66667175292969,
+          "bottom": 149.3333396911621,
+          "width": 186.6666717529297,
+          "height": 46.66666793823242
+        },
+        "search": {
+          "left": 16,
+          "right": 294,
+          "top": 102,
+          "bottom": 150,
+          "width": 278,
+          "height": 48
+        },
+        "actions": {
+          "left": 120.96875,
+          "right": 294,
+          "top": 50,
+          "bottom": 94,
+          "width": 173.03125,
+          "height": 44
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(163, 163, 163)",
+        "textTop": 114,
+        "expectedTextTop": 114.0000057220459,
+        "status": "PASS"
+      },
+      {
+        "viewport": 390,
+        "clientWidth": 380,
+        "scrollWidth": 380,
+        "lang": "ru",
+        "theme": "dark",
+        "text": "Молоко",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 64.66667175292969,
+          "right": 301.3333435058594,
+          "top": 103.9375,
+          "bottom": 150.60416793823242,
+          "width": 236.6666717529297,
+          "height": 46.66666793823242
+        },
+        "input": {
+          "left": 54.66666793823242,
+          "right": 311.3333549499512,
+          "top": 103.9375,
+          "bottom": 150.60416793823242,
+          "width": 256.66668701171875,
+          "height": 46.66666793823242
+        },
+        "search": {
+          "left": 16,
+          "right": 364,
+          "top": 103.27083587646484,
+          "bottom": 151.27083587646484,
+          "width": 348,
+          "height": 48
+        },
+        "actions": {
+          "left": 190.96875,
+          "right": 364,
+          "top": 50.63541793823242,
+          "bottom": 94.63541793823242,
+          "width": 173.03125,
+          "height": 44
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(163, 163, 163)",
+        "textTop": 115.27083587646484,
+        "expectedTextTop": 115.27083396911621,
+        "status": "PASS"
+      },
+      {
+        "viewport": 768,
+        "clientWidth": 758,
+        "scrollWidth": 758,
+        "lang": "ru",
+        "theme": "dark",
+        "text": "Молоко",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 72.66667175292969,
+          "right": 671.3333587646484,
+          "top": 104.21875,
+          "bottom": 150.88541793823242,
+          "width": 598.6666870117188,
+          "height": 46.66666793823242
+        },
+        "input": {
+          "left": 62.66666793823242,
+          "right": 681.3333549499512,
+          "top": 104.21875,
+          "bottom": 150.88541793823242,
+          "width": 618.6666870117188,
+          "height": 46.66666793823242
+        },
+        "search": {
+          "left": 24,
+          "right": 734,
+          "top": 103.55208587646484,
+          "bottom": 151.55208587646484,
+          "width": 710,
+          "height": 48
+        },
+        "actions": {
+          "left": 560.96875,
+          "right": 734,
+          "top": 50.770835876464844,
+          "bottom": 94.77083587646484,
+          "width": 173.03125,
+          "height": 44
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(163, 163, 163)",
+        "textTop": 115.55208587646484,
+        "expectedTextTop": 115.55208396911621,
+        "status": "PASS"
+      },
+      {
+        "viewport": 1024,
+        "clientWidth": 1014,
+        "scrollWidth": 1014,
+        "lang": "ru",
+        "theme": "dark",
+        "text": "Молоко",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 268.66668701171875,
+          "right": 670.3021240234375,
+          "top": 54.66666793823242,
+          "bottom": 105.33333587646484,
+          "width": 401.63543701171875,
+          "height": 50.66666793823242
+        },
+        "input": {
+          "left": 258.66668701171875,
+          "right": 680.3021240234375,
+          "top": 54.66666793823242,
+          "bottom": 105.33333587646484,
+          "width": 421.63543701171875,
+          "height": 50.66666793823242
+        },
+        "search": {
+          "left": 220,
+          "right": 768.96875,
+          "top": 54,
+          "bottom": 106,
+          "width": 548.96875,
+          "height": 52
+        },
+        "actions": {
+          "left": 788.96875,
+          "right": 990,
+          "top": 54,
+          "bottom": 106,
+          "width": 201.03125,
+          "height": 52
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(163, 163, 163)",
+        "textTop": 68,
+        "expectedTextTop": 68.00000190734863,
+        "status": "PASS"
+      },
+      {
+        "viewport": 1440,
+        "clientWidth": 1430,
+        "scrollWidth": 1430,
+        "lang": "ru",
+        "theme": "dark",
+        "text": "Молоко",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 327.66668701171875,
+          "right": 971.7500610351562,
+          "top": 55.88541793823242,
+          "bottom": 106.55208587646484,
+          "width": 644.0833740234375,
+          "height": 50.66666793823242
+        },
+        "input": {
+          "left": 317.66668701171875,
+          "right": 981.7500610351562,
+          "top": 55.88541793823242,
+          "bottom": 106.55208587646484,
+          "width": 664.0833740234375,
+          "height": 50.66666793823242
+        },
+        "search": {
+          "left": 279,
+          "right": 1070.4166870117188,
+          "top": 55.21875,
+          "bottom": 107.21875,
+          "width": 791.4166870117188,
+          "height": 52
+        },
+        "actions": {
+          "left": 1098.416748046875,
+          "right": 1375.0000915527344,
+          "top": 55.21875,
+          "bottom": 107.21875,
+          "width": 276.5833435058594,
+          "height": 52
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(163, 163, 163)",
+        "textTop": 69.21875,
+        "expectedTextTop": 69.21875190734863,
+        "status": "PASS"
+      },
+      {
+        "viewport": 1920,
+        "clientWidth": 1910,
+        "scrollWidth": 1910,
+        "lang": "ru",
+        "theme": "dark",
+        "text": "Молоко",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 567.6666870117188,
+          "right": 1211.7500610351562,
+          "top": 55.88541793823242,
+          "bottom": 106.55208587646484,
+          "width": 644.0833740234375,
+          "height": 50.66666793823242
+        },
+        "input": {
+          "left": 557.6666870117188,
+          "right": 1221.7500610351562,
+          "top": 55.88541793823242,
+          "bottom": 106.55208587646484,
+          "width": 664.0833740234375,
+          "height": 50.66666793823242
+        },
+        "search": {
+          "left": 519,
+          "right": 1310.4166870117188,
+          "top": 55.21875,
+          "bottom": 107.21875,
+          "width": 791.4166870117188,
+          "height": 52
+        },
+        "actions": {
+          "left": 1338.416748046875,
+          "right": 1615.0000915527344,
+          "top": 55.21875,
+          "bottom": 107.21875,
+          "width": 276.5833435058594,
+          "height": 52
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(163, 163, 163)",
+        "textTop": 69.21875,
+        "expectedTextTop": 69.21875190734863,
+        "status": "PASS"
+      },
+      {
+        "viewport": 320,
+        "clientWidth": 310,
+        "scrollWidth": 310,
+        "lang": "ru",
+        "theme": "light",
+        "text": "Хле",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 64.66667175292969,
+          "right": 231.33334350585938,
+          "top": 102.66667175292969,
+          "bottom": 149.3333396911621,
+          "width": 166.6666717529297,
+          "height": 46.66666793823242
+        },
+        "input": {
+          "left": 54.66666793823242,
+          "right": 241.3333396911621,
+          "top": 102.66667175292969,
+          "bottom": 149.3333396911621,
+          "width": 186.6666717529297,
+          "height": 46.66666793823242
+        },
+        "search": {
+          "left": 16,
+          "right": 294,
+          "top": 102,
+          "bottom": 150,
+          "width": 278,
+          "height": 48
+        },
+        "actions": {
+          "left": 120.96875,
+          "right": 294,
+          "top": 50,
+          "bottom": 94,
+          "width": 173.03125,
+          "height": 44
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(100, 107, 101)",
+        "textTop": 114,
+        "expectedTextTop": 114.0000057220459,
+        "status": "PASS"
+      },
+      {
+        "viewport": 390,
+        "clientWidth": 380,
+        "scrollWidth": 380,
+        "lang": "ru",
+        "theme": "light",
+        "text": "Хле",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 64.66667175292969,
+          "right": 301.3333435058594,
+          "top": 103.9375,
+          "bottom": 150.60416793823242,
+          "width": 236.6666717529297,
+          "height": 46.66666793823242
+        },
+        "input": {
+          "left": 54.66666793823242,
+          "right": 311.3333549499512,
+          "top": 103.9375,
+          "bottom": 150.60416793823242,
+          "width": 256.66668701171875,
+          "height": 46.66666793823242
+        },
+        "search": {
+          "left": 16,
+          "right": 364,
+          "top": 103.27083587646484,
+          "bottom": 151.27083587646484,
+          "width": 348,
+          "height": 48
+        },
+        "actions": {
+          "left": 190.96875,
+          "right": 364,
+          "top": 50.63541793823242,
+          "bottom": 94.63541793823242,
+          "width": 173.03125,
+          "height": 44
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(100, 107, 101)",
+        "textTop": 115.27083587646484,
+        "expectedTextTop": 115.27083396911621,
+        "status": "PASS"
+      },
+      {
+        "viewport": 768,
+        "clientWidth": 758,
+        "scrollWidth": 758,
+        "lang": "ru",
+        "theme": "light",
+        "text": "Хлеб",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 72.66667175292969,
+          "right": 671.3333587646484,
+          "top": 104.21875,
+          "bottom": 150.88541793823242,
+          "width": 598.6666870117188,
+          "height": 46.66666793823242
+        },
+        "input": {
+          "left": 62.66666793823242,
+          "right": 681.3333549499512,
+          "top": 104.21875,
+          "bottom": 150.88541793823242,
+          "width": 618.6666870117188,
+          "height": 46.66666793823242
+        },
+        "search": {
+          "left": 24,
+          "right": 734,
+          "top": 103.55208587646484,
+          "bottom": 151.55208587646484,
+          "width": 710,
+          "height": 48
+        },
+        "actions": {
+          "left": 560.96875,
+          "right": 734,
+          "top": 50.770835876464844,
+          "bottom": 94.77083587646484,
+          "width": 173.03125,
+          "height": 44
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(100, 107, 101)",
+        "textTop": 115.55208587646484,
+        "expectedTextTop": 115.55208396911621,
+        "status": "PASS"
+      },
+      {
+        "viewport": 1024,
+        "clientWidth": 1014,
+        "scrollWidth": 1014,
+        "lang": "ru",
+        "theme": "light",
+        "text": "Хлеб",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 268.66668701171875,
+          "right": 670.3021240234375,
+          "top": 54.66666793823242,
+          "bottom": 105.33333587646484,
+          "width": 401.63543701171875,
+          "height": 50.66666793823242
+        },
+        "input": {
+          "left": 258.66668701171875,
+          "right": 680.3021240234375,
+          "top": 54.66666793823242,
+          "bottom": 105.33333587646484,
+          "width": 421.63543701171875,
+          "height": 50.66666793823242
+        },
+        "search": {
+          "left": 220,
+          "right": 768.96875,
+          "top": 54,
+          "bottom": 106,
+          "width": 548.96875,
+          "height": 52
+        },
+        "actions": {
+          "left": 788.96875,
+          "right": 990,
+          "top": 54,
+          "bottom": 106,
+          "width": 201.03125,
+          "height": 52
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(100, 107, 101)",
+        "textTop": 68,
+        "expectedTextTop": 68.00000190734863,
+        "status": "PASS"
+      },
+      {
+        "viewport": 1440,
+        "clientWidth": 1430,
+        "scrollWidth": 1430,
+        "lang": "ru",
+        "theme": "light",
+        "text": "Хлеб",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 327.66668701171875,
+          "right": 971.7500610351562,
+          "top": 55.88541793823242,
+          "bottom": 106.55208587646484,
+          "width": 644.0833740234375,
+          "height": 50.66666793823242
+        },
+        "input": {
+          "left": 317.66668701171875,
+          "right": 981.7500610351562,
+          "top": 55.88541793823242,
+          "bottom": 106.55208587646484,
+          "width": 664.0833740234375,
+          "height": 50.66666793823242
+        },
+        "search": {
+          "left": 279,
+          "right": 1070.4166870117188,
+          "top": 55.21875,
+          "bottom": 107.21875,
+          "width": 791.4166870117188,
+          "height": 52
+        },
+        "actions": {
+          "left": 1098.416748046875,
+          "right": 1375.0000915527344,
+          "top": 55.21875,
+          "bottom": 107.21875,
+          "width": 276.5833435058594,
+          "height": 52
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(100, 107, 101)",
+        "textTop": 69.21875,
+        "expectedTextTop": 69.21875190734863,
+        "status": "PASS"
+      },
+      {
+        "viewport": 1920,
+        "clientWidth": 1910,
+        "scrollWidth": 1910,
+        "lang": "ru",
+        "theme": "light",
+        "text": "Хлеб",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 567.6666870117188,
+          "right": 1211.7500610351562,
+          "top": 55.88541793823242,
+          "bottom": 106.55208587646484,
+          "width": 644.0833740234375,
+          "height": 50.66666793823242
+        },
+        "input": {
+          "left": 557.6666870117188,
+          "right": 1221.7500610351562,
+          "top": 55.88541793823242,
+          "bottom": 106.55208587646484,
+          "width": 664.0833740234375,
+          "height": 50.66666793823242
+        },
+        "search": {
+          "left": 519,
+          "right": 1310.4166870117188,
+          "top": 55.21875,
+          "bottom": 107.21875,
+          "width": 791.4166870117188,
+          "height": 52
+        },
+        "actions": {
+          "left": 1338.416748046875,
+          "right": 1615.0000915527344,
+          "top": 55.21875,
+          "bottom": 107.21875,
+          "width": 276.5833435058594,
+          "height": 52
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(100, 107, 101)",
+        "textTop": 69.21875,
+        "expectedTextTop": 69.21875190734863,
+        "status": "PASS"
+      },
+      {
+        "viewport": 320,
+        "clientWidth": 310,
+        "scrollWidth": 310,
+        "lang": "tg",
+        "theme": "dark",
+        "text": "Шир",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 64.66667175292969,
+          "right": 231.33334350585938,
+          "top": 102.66667175292969,
+          "bottom": 149.3333396911621,
+          "width": 166.6666717529297,
+          "height": 46.66666793823242
+        },
+        "input": {
+          "left": 54.66666793823242,
+          "right": 241.3333396911621,
+          "top": 102.66667175292969,
+          "bottom": 149.3333396911621,
+          "width": 186.6666717529297,
+          "height": 46.66666793823242
+        },
+        "search": {
+          "left": 16,
+          "right": 294,
+          "top": 102,
+          "bottom": 150,
+          "width": 278,
+          "height": 48
+        },
+        "actions": {
+          "left": 124.66667175292969,
+          "right": 294.00001525878906,
+          "top": 50,
+          "bottom": 94,
+          "width": 169.33334350585938,
+          "height": 44
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(163, 163, 163)",
+        "textTop": 114,
+        "expectedTextTop": 114.0000057220459,
+        "status": "PASS"
+      },
+      {
+        "viewport": 390,
+        "clientWidth": 380,
+        "scrollWidth": 380,
+        "lang": "tg",
+        "theme": "dark",
+        "text": "Шир",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 64.66667175292969,
+          "right": 301.3333435058594,
+          "top": 104.21875,
+          "bottom": 150.88541793823242,
+          "width": 236.6666717529297,
+          "height": 46.66666793823242
+        },
+        "input": {
+          "left": 54.66666793823242,
+          "right": 311.3333549499512,
+          "top": 104.21875,
+          "bottom": 150.88541793823242,
+          "width": 256.66668701171875,
+          "height": 46.66666793823242
+        },
+        "search": {
+          "left": 16,
+          "right": 364,
+          "top": 103.55208587646484,
+          "bottom": 151.55208587646484,
+          "width": 348,
+          "height": 48
+        },
+        "actions": {
+          "left": 194.6666717529297,
+          "right": 364.00001525878906,
+          "top": 50.770835876464844,
+          "bottom": 94.77083587646484,
+          "width": 169.33334350585938,
+          "height": 44
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(163, 163, 163)",
+        "textTop": 115.55208587646484,
+        "expectedTextTop": 115.55208396911621,
+        "status": "PASS"
+      },
+      {
+        "viewport": 768,
+        "clientWidth": 758,
+        "scrollWidth": 758,
+        "lang": "tg",
+        "theme": "dark",
+        "text": "Шир",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 72.66667175292969,
+          "right": 671.3333587646484,
+          "top": 104.21875,
+          "bottom": 150.88541793823242,
+          "width": 598.6666870117188,
+          "height": 46.66666793823242
+        },
+        "input": {
+          "left": 62.66666793823242,
+          "right": 681.3333549499512,
+          "top": 104.21875,
+          "bottom": 150.88541793823242,
+          "width": 618.6666870117188,
+          "height": 46.66666793823242
+        },
+        "search": {
+          "left": 24,
+          "right": 734,
+          "top": 103.55208587646484,
+          "bottom": 151.55208587646484,
+          "width": 710,
+          "height": 48
+        },
+        "actions": {
+          "left": 564.6666870117188,
+          "right": 734.0000305175781,
+          "top": 50.770835876464844,
+          "bottom": 94.77083587646484,
+          "width": 169.33334350585938,
+          "height": 44
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(163, 163, 163)",
+        "textTop": 115.55208587646484,
+        "expectedTextTop": 115.55208396911621,
+        "status": "PASS"
+      },
+      {
+        "viewport": 1024,
+        "clientWidth": 1014,
+        "scrollWidth": 1014,
+        "lang": "tg",
+        "theme": "dark",
+        "text": "Шир",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 268.66668701171875,
+          "right": 676.8541870117188,
+          "top": 54.66666793823242,
+          "bottom": 105.33333587646484,
+          "width": 408.1875,
+          "height": 50.66666793823242
+        },
+        "input": {
+          "left": 258.66668701171875,
+          "right": 686.8541870117188,
+          "top": 54.66666793823242,
+          "bottom": 105.33333587646484,
+          "width": 428.1875,
+          "height": 50.66666793823242
+        },
+        "search": {
+          "left": 220,
+          "right": 775.5208740234375,
+          "top": 54,
+          "bottom": 106,
+          "width": 555.5208740234375,
+          "height": 52
+        },
+        "actions": {
+          "left": 795.5208740234375,
+          "right": 990.0000457763672,
+          "top": 54,
+          "bottom": 106,
+          "width": 194.4791717529297,
+          "height": 52
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(163, 163, 163)",
+        "textTop": 68,
+        "expectedTextTop": 68.00000190734863,
+        "status": "PASS"
+      },
+      {
+        "viewport": 1440,
+        "clientWidth": 1430,
+        "scrollWidth": 1430,
+        "lang": "tg",
+        "theme": "dark",
+        "text": "Шир",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 327.66668701171875,
+          "right": 997.3750610351562,
+          "top": 55.88541793823242,
+          "bottom": 106.55208587646484,
+          "width": 669.7083740234375,
+          "height": 50.66666793823242
+        },
+        "input": {
+          "left": 317.66668701171875,
+          "right": 1007.3750610351562,
+          "top": 55.88541793823242,
+          "bottom": 106.55208587646484,
+          "width": 689.7083740234375,
+          "height": 50.66666793823242
+        },
+        "search": {
+          "left": 279,
+          "right": 1096.0416870117188,
+          "top": 55.21875,
+          "bottom": 107.21875,
+          "width": 817.0416870117188,
+          "height": 52
+        },
+        "actions": {
+          "left": 1124.041748046875,
+          "right": 1375.0000915527344,
+          "top": 55.21875,
+          "bottom": 107.21875,
+          "width": 250.95834350585938,
+          "height": 52
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(163, 163, 163)",
+        "textTop": 69.21875,
+        "expectedTextTop": 69.21875190734863,
+        "status": "PASS"
+      },
+      {
+        "viewport": 1920,
+        "clientWidth": 1910,
+        "scrollWidth": 1910,
+        "lang": "tg",
+        "theme": "dark",
+        "text": "Шир",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 567.6666870117188,
+          "right": 1237.3750610351562,
+          "top": 55.88541793823242,
+          "bottom": 106.55208587646484,
+          "width": 669.7083740234375,
+          "height": 50.66666793823242
+        },
+        "input": {
+          "left": 557.6666870117188,
+          "right": 1247.3750610351562,
+          "top": 55.88541793823242,
+          "bottom": 106.55208587646484,
+          "width": 689.7083740234375,
+          "height": 50.66666793823242
+        },
+        "search": {
+          "left": 519,
+          "right": 1336.0416870117188,
+          "top": 55.21875,
+          "bottom": 107.21875,
+          "width": 817.0416870117188,
+          "height": 52
+        },
+        "actions": {
+          "left": 1364.041748046875,
+          "right": 1615.0000915527344,
+          "top": 55.21875,
+          "bottom": 107.21875,
+          "width": 250.95834350585938,
+          "height": 52
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(163, 163, 163)",
+        "textTop": 69.21875,
+        "expectedTextTop": 69.21875190734863,
+        "status": "PASS"
+      },
+      {
+        "viewport": 320,
+        "clientWidth": 310,
+        "scrollWidth": 310,
+        "lang": "tg",
+        "theme": "light",
+        "text": "Нон",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 64.66667175292969,
+          "right": 231.33334350585938,
+          "top": 102.66667175292969,
+          "bottom": 149.3333396911621,
+          "width": 166.6666717529297,
+          "height": 46.66666793823242
+        },
+        "input": {
+          "left": 54.66666793823242,
+          "right": 241.3333396911621,
+          "top": 102.66667175292969,
+          "bottom": 149.3333396911621,
+          "width": 186.6666717529297,
+          "height": 46.66666793823242
+        },
+        "search": {
+          "left": 16,
+          "right": 294,
+          "top": 102,
+          "bottom": 150,
+          "width": 278,
+          "height": 48
+        },
+        "actions": {
+          "left": 124.66667175292969,
+          "right": 294.00001525878906,
+          "top": 50,
+          "bottom": 94,
+          "width": 169.33334350585938,
+          "height": 44
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(100, 107, 101)",
+        "textTop": 114,
+        "expectedTextTop": 114.0000057220459,
+        "status": "PASS"
+      },
+      {
+        "viewport": 390,
+        "clientWidth": 380,
+        "scrollWidth": 380,
+        "lang": "tg",
+        "theme": "light",
+        "text": "Нон",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 64.66667175292969,
+          "right": 301.3333435058594,
+          "top": 104.21875,
+          "bottom": 150.88541793823242,
+          "width": 236.6666717529297,
+          "height": 46.66666793823242
+        },
+        "input": {
+          "left": 54.66666793823242,
+          "right": 311.3333549499512,
+          "top": 104.21875,
+          "bottom": 150.88541793823242,
+          "width": 256.66668701171875,
+          "height": 46.66666793823242
+        },
+        "search": {
+          "left": 16,
+          "right": 364,
+          "top": 103.55208587646484,
+          "bottom": 151.55208587646484,
+          "width": 348,
+          "height": 48
+        },
+        "actions": {
+          "left": 194.6666717529297,
+          "right": 364.00001525878906,
+          "top": 50.770835876464844,
+          "bottom": 94.77083587646484,
+          "width": 169.33334350585938,
+          "height": 44
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(100, 107, 101)",
+        "textTop": 115.55208587646484,
+        "expectedTextTop": 115.55208396911621,
+        "status": "PASS"
+      },
+      {
+        "viewport": 768,
+        "clientWidth": 758,
+        "scrollWidth": 758,
+        "lang": "tg",
+        "theme": "light",
+        "text": "Нон",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 72.66667175292969,
+          "right": 671.3333587646484,
+          "top": 104.21875,
+          "bottom": 150.88541793823242,
+          "width": 598.6666870117188,
+          "height": 46.66666793823242
+        },
+        "input": {
+          "left": 62.66666793823242,
+          "right": 681.3333549499512,
+          "top": 104.21875,
+          "bottom": 150.88541793823242,
+          "width": 618.6666870117188,
+          "height": 46.66666793823242
+        },
+        "search": {
+          "left": 24,
+          "right": 734,
+          "top": 103.55208587646484,
+          "bottom": 151.55208587646484,
+          "width": 710,
+          "height": 48
+        },
+        "actions": {
+          "left": 564.6666870117188,
+          "right": 734.0000305175781,
+          "top": 50.770835876464844,
+          "bottom": 94.77083587646484,
+          "width": 169.33334350585938,
+          "height": 44
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(100, 107, 101)",
+        "textTop": 115.55208587646484,
+        "expectedTextTop": 115.55208396911621,
+        "status": "PASS"
+      },
+      {
+        "viewport": 1024,
+        "clientWidth": 1014,
+        "scrollWidth": 1014,
+        "lang": "tg",
+        "theme": "light",
+        "text": "Нон",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 268.66668701171875,
+          "right": 676.8541870117188,
+          "top": 54.66666793823242,
+          "bottom": 105.33333587646484,
+          "width": 408.1875,
+          "height": 50.66666793823242
+        },
+        "input": {
+          "left": 258.66668701171875,
+          "right": 686.8541870117188,
+          "top": 54.66666793823242,
+          "bottom": 105.33333587646484,
+          "width": 428.1875,
+          "height": 50.66666793823242
+        },
+        "search": {
+          "left": 220,
+          "right": 775.5208740234375,
+          "top": 54,
+          "bottom": 106,
+          "width": 555.5208740234375,
+          "height": 52
+        },
+        "actions": {
+          "left": 795.5208740234375,
+          "right": 990.0000457763672,
+          "top": 54,
+          "bottom": 106,
+          "width": 194.4791717529297,
+          "height": 52
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(100, 107, 101)",
+        "textTop": 68,
+        "expectedTextTop": 68.00000190734863,
+        "status": "PASS"
+      },
+      {
+        "viewport": 1440,
+        "clientWidth": 1430,
+        "scrollWidth": 1430,
+        "lang": "tg",
+        "theme": "light",
+        "text": "Нон",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 327.66668701171875,
+          "right": 997.3750610351562,
+          "top": 55.88541793823242,
+          "bottom": 106.55208587646484,
+          "width": 669.7083740234375,
+          "height": 50.66666793823242
+        },
+        "input": {
+          "left": 317.66668701171875,
+          "right": 1007.3750610351562,
+          "top": 55.88541793823242,
+          "bottom": 106.55208587646484,
+          "width": 689.7083740234375,
+          "height": 50.66666793823242
+        },
+        "search": {
+          "left": 279,
+          "right": 1096.0416870117188,
+          "top": 55.21875,
+          "bottom": 107.21875,
+          "width": 817.0416870117188,
+          "height": 52
+        },
+        "actions": {
+          "left": 1124.041748046875,
+          "right": 1375.0000915527344,
+          "top": 55.21875,
+          "bottom": 107.21875,
+          "width": 250.95834350585938,
+          "height": 52
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(100, 107, 101)",
+        "textTop": 69.21875,
+        "expectedTextTop": 69.21875190734863,
+        "status": "PASS"
+      },
+      {
+        "viewport": 1920,
+        "clientWidth": 1910,
+        "scrollWidth": 1910,
+        "lang": "tg",
+        "theme": "light",
+        "text": "Нон",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 567.6666870117188,
+          "right": 1237.3750610351562,
+          "top": 55.88541793823242,
+          "bottom": 106.55208587646484,
+          "width": 669.7083740234375,
+          "height": 50.66666793823242
+        },
+        "input": {
+          "left": 557.6666870117188,
+          "right": 1247.3750610351562,
+          "top": 55.88541793823242,
+          "bottom": 106.55208587646484,
+          "width": 689.7083740234375,
+          "height": 50.66666793823242
+        },
+        "search": {
+          "left": 519,
+          "right": 1336.0416870117188,
+          "top": 55.21875,
+          "bottom": 107.21875,
+          "width": 817.0416870117188,
+          "height": 52
+        },
+        "actions": {
+          "left": 1364.041748046875,
+          "right": 1615.0000915527344,
+          "top": 55.21875,
+          "bottom": 107.21875,
+          "width": 250.95834350585938,
+          "height": 52
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(100, 107, 101)",
+        "textTop": 69.21875,
+        "expectedTextTop": 69.21875190734863,
+        "status": "PASS"
+      },
+      {
+        "viewport": 320,
+        "clientWidth": 310,
+        "scrollWidth": 310,
+        "lang": "en",
+        "theme": "dark",
+        "text": "Milk",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 64.66667175292969,
+          "right": 231.33334350585938,
+          "top": 102.66667175292969,
+          "bottom": 149.3333396911621,
+          "width": 166.6666717529297,
+          "height": 46.66666793823242
+        },
+        "input": {
+          "left": 54.66666793823242,
+          "right": 241.3333396911621,
+          "top": 102.66667175292969,
+          "bottom": 149.3333396911621,
+          "width": 186.6666717529297,
+          "height": 46.66666793823242
+        },
+        "search": {
+          "left": 16,
+          "right": 294,
+          "top": 102,
+          "bottom": 150,
+          "width": 278,
+          "height": 48
+        },
+        "actions": {
+          "left": 121.47917175292969,
+          "right": 294.00001525878906,
+          "top": 50,
+          "bottom": 94,
+          "width": 172.52084350585938,
+          "height": 44
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(163, 163, 163)",
+        "textTop": 114,
+        "expectedTextTop": 114.0000057220459,
+        "status": "PASS"
+      },
+      {
+        "viewport": 390,
+        "clientWidth": 380,
+        "scrollWidth": 380,
+        "lang": "en",
+        "theme": "dark",
+        "text": "Milk",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 64.66667175292969,
+          "right": 301.3333435058594,
+          "top": 104.07292175292969,
+          "bottom": 150.7395896911621,
+          "width": 236.6666717529297,
+          "height": 46.66666793823242
+        },
+        "input": {
+          "left": 54.66666793823242,
+          "right": 311.3333549499512,
+          "top": 104.07292175292969,
+          "bottom": 150.7395896911621,
+          "width": 256.66668701171875,
+          "height": 46.66666793823242
+        },
+        "search": {
+          "left": 16,
+          "right": 364,
+          "top": 103.40625,
+          "bottom": 151.40625,
+          "width": 348,
+          "height": 48
+        },
+        "actions": {
+          "left": 191.4791717529297,
+          "right": 364.00001525878906,
+          "top": 50.69791793823242,
+          "bottom": 94.69791793823242,
+          "width": 172.52084350585938,
+          "height": 44
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(163, 163, 163)",
+        "textTop": 115.40625,
+        "expectedTextTop": 115.4062557220459,
+        "status": "PASS"
+      },
+      {
+        "viewport": 768,
+        "clientWidth": 758,
+        "scrollWidth": 758,
+        "lang": "en",
+        "theme": "dark",
+        "text": "Milk",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 72.66667175292969,
+          "right": 671.3333587646484,
+          "top": 104.21875,
+          "bottom": 150.88541793823242,
+          "width": 598.6666870117188,
+          "height": 46.66666793823242
+        },
+        "input": {
+          "left": 62.66666793823242,
+          "right": 681.3333549499512,
+          "top": 104.21875,
+          "bottom": 150.88541793823242,
+          "width": 618.6666870117188,
+          "height": 46.66666793823242
+        },
+        "search": {
+          "left": 24,
+          "right": 734,
+          "top": 103.55208587646484,
+          "bottom": 151.55208587646484,
+          "width": 710,
+          "height": 48
+        },
+        "actions": {
+          "left": 561.4791870117188,
+          "right": 734.0000305175781,
+          "top": 50.770835876464844,
+          "bottom": 94.77083587646484,
+          "width": 172.52084350585938,
+          "height": 44
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(163, 163, 163)",
+        "textTop": 115.55208587646484,
+        "expectedTextTop": 115.55208396911621,
+        "status": "PASS"
+      },
+      {
+        "viewport": 1024,
+        "clientWidth": 1014,
+        "scrollWidth": 1014,
+        "lang": "en",
+        "theme": "dark",
+        "text": "Milk",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 268.66668701171875,
+          "right": 670.8125305175781,
+          "top": 54.66666793823242,
+          "bottom": 105.33333587646484,
+          "width": 402.1458435058594,
+          "height": 50.66666793823242
+        },
+        "input": {
+          "left": 258.66668701171875,
+          "right": 680.8125305175781,
+          "top": 54.66666793823242,
+          "bottom": 105.33333587646484,
+          "width": 422.1458435058594,
+          "height": 50.66666793823242
+        },
+        "search": {
+          "left": 220,
+          "right": 769.4791870117188,
+          "top": 54,
+          "bottom": 106,
+          "width": 549.4791870117188,
+          "height": 52
+        },
+        "actions": {
+          "left": 789.4791870117188,
+          "right": 990.0000305175781,
+          "top": 54,
+          "bottom": 106,
+          "width": 200.52084350585938,
+          "height": 52
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(163, 163, 163)",
+        "textTop": 68,
+        "expectedTextTop": 68.00000190734863,
+        "status": "PASS"
+      },
+      {
+        "viewport": 1440,
+        "clientWidth": 1430,
+        "scrollWidth": 1430,
+        "lang": "en",
+        "theme": "dark",
+        "text": "Milk",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 327.66668701171875,
+          "right": 1005.9791870117188,
+          "top": 55.88541793823242,
+          "bottom": 106.55208587646484,
+          "width": 678.3125,
+          "height": 50.66666793823242
+        },
+        "input": {
+          "left": 317.66668701171875,
+          "right": 1015.9791870117188,
+          "top": 55.88541793823242,
+          "bottom": 106.55208587646484,
+          "width": 698.3125,
+          "height": 50.66666793823242
+        },
+        "search": {
+          "left": 279,
+          "right": 1104.6458740234375,
+          "top": 55.21875,
+          "bottom": 107.21875,
+          "width": 825.6458740234375,
+          "height": 52
+        },
+        "actions": {
+          "left": 1132.6458740234375,
+          "right": 1375.0000457763672,
+          "top": 55.21875,
+          "bottom": 107.21875,
+          "width": 242.3541717529297,
+          "height": 52
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(163, 163, 163)",
+        "textTop": 69.21875,
+        "expectedTextTop": 69.21875190734863,
+        "status": "PASS"
+      },
+      {
+        "viewport": 1920,
+        "clientWidth": 1910,
+        "scrollWidth": 1910,
+        "lang": "en",
+        "theme": "dark",
+        "text": "Milk",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 567.6666870117188,
+          "right": 1245.9791870117188,
+          "top": 55.88541793823242,
+          "bottom": 106.55208587646484,
+          "width": 678.3125,
+          "height": 50.66666793823242
+        },
+        "input": {
+          "left": 557.6666870117188,
+          "right": 1255.9791870117188,
+          "top": 55.88541793823242,
+          "bottom": 106.55208587646484,
+          "width": 698.3125,
+          "height": 50.66666793823242
+        },
+        "search": {
+          "left": 519,
+          "right": 1344.6458740234375,
+          "top": 55.21875,
+          "bottom": 107.21875,
+          "width": 825.6458740234375,
+          "height": 52
+        },
+        "actions": {
+          "left": 1372.6458740234375,
+          "right": 1615.0000457763672,
+          "top": 55.21875,
+          "bottom": 107.21875,
+          "width": 242.3541717529297,
+          "height": 52
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(163, 163, 163)",
+        "textTop": 69.21875,
+        "expectedTextTop": 69.21875190734863,
+        "status": "PASS"
+      },
+      {
+        "viewport": 320,
+        "clientWidth": 310,
+        "scrollWidth": 310,
+        "lang": "en",
+        "theme": "light",
+        "text": "Bread",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 64.66667175292969,
+          "right": 231.33334350585938,
+          "top": 102.66667175292969,
+          "bottom": 149.3333396911621,
+          "width": 166.6666717529297,
+          "height": 46.66666793823242
+        },
+        "input": {
+          "left": 54.66666793823242,
+          "right": 241.3333396911621,
+          "top": 102.66667175292969,
+          "bottom": 149.3333396911621,
+          "width": 186.6666717529297,
+          "height": 46.66666793823242
+        },
+        "search": {
+          "left": 16,
+          "right": 294,
+          "top": 102,
+          "bottom": 150,
+          "width": 278,
+          "height": 48
+        },
+        "actions": {
+          "left": 121.47917175292969,
+          "right": 294.00001525878906,
+          "top": 50,
+          "bottom": 94,
+          "width": 172.52084350585938,
+          "height": 44
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(100, 107, 101)",
+        "textTop": 114,
+        "expectedTextTop": 114.0000057220459,
+        "status": "PASS"
+      },
+      {
+        "viewport": 390,
+        "clientWidth": 380,
+        "scrollWidth": 380,
+        "lang": "en",
+        "theme": "light",
+        "text": "Bread",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 64.66667175292969,
+          "right": 301.3333435058594,
+          "top": 104.07292175292969,
+          "bottom": 150.7395896911621,
+          "width": 236.6666717529297,
+          "height": 46.66666793823242
+        },
+        "input": {
+          "left": 54.66666793823242,
+          "right": 311.3333549499512,
+          "top": 104.07292175292969,
+          "bottom": 150.7395896911621,
+          "width": 256.66668701171875,
+          "height": 46.66666793823242
+        },
+        "search": {
+          "left": 16,
+          "right": 364,
+          "top": 103.40625,
+          "bottom": 151.40625,
+          "width": 348,
+          "height": 48
+        },
+        "actions": {
+          "left": 191.4791717529297,
+          "right": 364.00001525878906,
+          "top": 50.69791793823242,
+          "bottom": 94.69791793823242,
+          "width": 172.52084350585938,
+          "height": 44
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(100, 107, 101)",
+        "textTop": 115.40625,
+        "expectedTextTop": 115.4062557220459,
+        "status": "PASS"
+      },
+      {
+        "viewport": 768,
+        "clientWidth": 758,
+        "scrollWidth": 758,
+        "lang": "en",
+        "theme": "light",
+        "text": "Bread",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 72.66667175292969,
+          "right": 671.3333587646484,
+          "top": 104.21875,
+          "bottom": 150.88541793823242,
+          "width": 598.6666870117188,
+          "height": 46.66666793823242
+        },
+        "input": {
+          "left": 62.66666793823242,
+          "right": 681.3333549499512,
+          "top": 104.21875,
+          "bottom": 150.88541793823242,
+          "width": 618.6666870117188,
+          "height": 46.66666793823242
+        },
+        "search": {
+          "left": 24,
+          "right": 734,
+          "top": 103.55208587646484,
+          "bottom": 151.55208587646484,
+          "width": 710,
+          "height": 48
+        },
+        "actions": {
+          "left": 561.4791870117188,
+          "right": 734.0000305175781,
+          "top": 50.770835876464844,
+          "bottom": 94.77083587646484,
+          "width": 172.52084350585938,
+          "height": 44
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(100, 107, 101)",
+        "textTop": 115.55208587646484,
+        "expectedTextTop": 115.55208396911621,
+        "status": "PASS"
+      },
+      {
+        "viewport": 1024,
+        "clientWidth": 1014,
+        "scrollWidth": 1014,
+        "lang": "en",
+        "theme": "light",
+        "text": "Bread",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 268.66668701171875,
+          "right": 670.8125305175781,
+          "top": 54.66666793823242,
+          "bottom": 105.33333587646484,
+          "width": 402.1458435058594,
+          "height": 50.66666793823242
+        },
+        "input": {
+          "left": 258.66668701171875,
+          "right": 680.8125305175781,
+          "top": 54.66666793823242,
+          "bottom": 105.33333587646484,
+          "width": 422.1458435058594,
+          "height": 50.66666793823242
+        },
+        "search": {
+          "left": 220,
+          "right": 769.4791870117188,
+          "top": 54,
+          "bottom": 106,
+          "width": 549.4791870117188,
+          "height": 52
+        },
+        "actions": {
+          "left": 789.4791870117188,
+          "right": 990.0000305175781,
+          "top": 54,
+          "bottom": 106,
+          "width": 200.52084350585938,
+          "height": 52
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(100, 107, 101)",
+        "textTop": 68,
+        "expectedTextTop": 68.00000190734863,
+        "status": "PASS"
+      },
+      {
+        "viewport": 1440,
+        "clientWidth": 1430,
+        "scrollWidth": 1430,
+        "lang": "en",
+        "theme": "light",
+        "text": "Bread",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 327.66668701171875,
+          "right": 1005.9791870117188,
+          "top": 55.88541793823242,
+          "bottom": 106.55208587646484,
+          "width": 678.3125,
+          "height": 50.66666793823242
+        },
+        "input": {
+          "left": 317.66668701171875,
+          "right": 1015.9791870117188,
+          "top": 55.88541793823242,
+          "bottom": 106.55208587646484,
+          "width": 698.3125,
+          "height": 50.66666793823242
+        },
+        "search": {
+          "left": 279,
+          "right": 1104.6458740234375,
+          "top": 55.21875,
+          "bottom": 107.21875,
+          "width": 825.6458740234375,
+          "height": 52
+        },
+        "actions": {
+          "left": 1132.6458740234375,
+          "right": 1375.0000457763672,
+          "top": 55.21875,
+          "bottom": 107.21875,
+          "width": 242.3541717529297,
+          "height": 52
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(100, 107, 101)",
+        "textTop": 69.21875,
+        "expectedTextTop": 69.21875190734863,
+        "status": "PASS"
+      },
+      {
+        "viewport": 1920,
+        "clientWidth": 1910,
+        "scrollWidth": 1910,
+        "lang": "en",
+        "theme": "light",
+        "text": "Bread",
+        "value": "",
+        "hidden": "true",
+        "pointer": "none",
+        "overlay": {
+          "left": 567.6666870117188,
+          "right": 1245.9791870117188,
+          "top": 55.88541793823242,
+          "bottom": 106.55208587646484,
+          "width": 678.3125,
+          "height": 50.66666793823242
+        },
+        "input": {
+          "left": 557.6666870117188,
+          "right": 1255.9791870117188,
+          "top": 55.88541793823242,
+          "bottom": 106.55208587646484,
+          "width": 698.3125,
+          "height": 50.66666793823242
+        },
+        "search": {
+          "left": 519,
+          "right": 1344.6458740234375,
+          "top": 55.21875,
+          "bottom": 107.21875,
+          "width": 825.6458740234375,
+          "height": 52
+        },
+        "actions": {
+          "left": 1372.6458740234375,
+          "right": 1615.0000457763672,
+          "top": 55.21875,
+          "bottom": 107.21875,
+          "width": 242.3541717529297,
+          "height": 52
+        },
+        "fontSize": "16px",
+        "inputFontSize": "16px",
+        "weight": "450",
+        "placeholderWeight": "450",
+        "color": "rgb(100, 107, 101)",
+        "textTop": 69.21875,
+        "expectedTextTop": 69.21875190734863,
+        "status": "PASS"
+      }
+    ],
+    "idleSearchRequests": 0,
+    "errors": [],
+    "screenshots": 12,
+    "restoredPreferences": "ru/light"
+  }
+}

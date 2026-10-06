@@ -7,7 +7,7 @@ import { storePages, articles } from "@/lib/store-content";
 import { Info, MapPin, ShoppingBasket } from "lucide-react";
 import { SearchBox } from "./search-box";
 import { useCart } from "@/context/cart";
-import { Preferences } from "./preferences";
+import { LanguageSelector, Preferences } from "./preferences";
 import { Brand } from "./brand";
 import { BurgerMenu, MainNavigation } from "./site-navigation";
 import { Footer } from "./footer";
@@ -104,10 +104,6 @@ export function Shell({ children }: { children: React.ReactNode }) {
             <MapPin size={14} aria-hidden="true" />
             {t(" Душанбе")}
           </span>
-          <div className="utility-actions">
-            <Preferences />
-            <BurgerMenu />
-          </div>
         </div>
       </div>
       <header className="site-header" ref={header}>
@@ -117,23 +113,28 @@ export function Shell({ children }: { children: React.ReactNode }) {
             <Suspense fallback={null}>
               <SearchBox />
             </Suspense>
-            <Link
-              href="/cart"
-              className="cart-link"
-              data-empty={cart.count === 0}
-              aria-label={t("Корзина, ") + cart.count + t(" товаров")}
-            >
-              <ShoppingBasket size={22} aria-hidden="true" />
-              <span className="cart-label">{t("Корзина")}</span>
-              {/* Keyed by value so the badge replays its pop on every change. */}
-              <span
-                className="cart-count"
-                data-testid="cart-count"
-                key={cart.count}
+            <div className="header-actions">
+              <LanguageSelector />
+              <Preferences />
+              <Link
+                href="/cart"
+                className="cart-link"
+                data-empty={cart.count === 0}
+                aria-label={t("Корзина, ") + cart.count + t(" товаров")}
               >
-                {cart.count}
-              </span>
-            </Link>
+                <ShoppingBasket size={22} aria-hidden="true" />
+                <span className="cart-label">{t("Корзина")}</span>
+                {/* Keyed by value so the badge replays its pop on every change. */}
+                <span
+                  className="cart-count"
+                  data-testid="cart-count"
+                  key={cart.count}
+                >
+                  {cart.count}
+                </span>
+              </Link>
+              <BurgerMenu />
+            </div>
           </div>
         </div>
         <div className="nav-bar">

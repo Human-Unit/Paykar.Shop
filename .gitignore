@@ -18,3 +18,5 @@ __pycache__/
 .ruff_cache/
 test-results/
 .playwright-mcp/
+/graphify-out/
+/grafify/graphify-out/cache/

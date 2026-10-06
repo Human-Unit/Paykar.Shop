@@ -7,6 +7,7 @@ import { Search, X } from "lucide-react";
 import { ProductPage, useResource } from "@/lib/api";
 import { cents } from "@/lib/format";
 import { ProductImage } from "./product-card";
+import { SearchPlaceholder } from "./search-placeholder";
 import {
   catalogApiQuery,
   catalogHref,
@@ -27,6 +28,7 @@ export function SearchBox() {
   const [query, setQuery] = useState("");
   const [term, setTerm] = useState("");
   const [open, setOpen] = useState(false);
+  const [focused, setFocused] = useState(false);
   const [active, setActive] = useState(-1);
   useEffect(() => {
     const timer = setTimeout(() => setTerm(query.trim()), 300);
@@ -73,57 +75,64 @@ export function SearchBox() {
         setOpen(false);
       }}
       onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+          setOpen(false);
+          setFocused(false);
+        }
       }}
+      onFocusCapture={() => setFocused(true)}
     >
       <label htmlFor="site-search" className="sr-only">
         {t("Поиск товаров")}
       </label>
       <Search className="search-leading" size={20} aria-hidden="true" />
-      <input
-        ref={input}
-        id="site-search"
-        name="q"
-        role="combobox"
-        aria-autocomplete="list"
-        aria-expanded={visible}
-        aria-controls="search-suggestions"
-        aria-activedescendant={
-          visible && items[active]
-            ? `suggestion-${items[active].id}`
-            : undefined
-        }
-        autoComplete="off"
-        enterKeyHint="search"
-        placeholder={t("Найти молоко, хлеб, фрукты…")}
-        maxLength={200}
-        value={query}
-        onChange={(event) => {
-          setQuery(event.target.value);
-          setActive(-1);
-          setOpen(true);
-        }}
-        onFocus={() => setOpen(true)}
-        onKeyDown={(event) => {
-          if (event.key === "Escape") {
-            setOpen(false);
+      <div className="search-input-wrap">
+        <input
+          ref={input}
+          id="site-search"
+          name="q"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-expanded={visible}
+          aria-controls="search-suggestions"
+          aria-activedescendant={
+            visible && items[active]
+              ? `suggestion-${items[active].id}`
+              : undefined
+          }
+          autoComplete="off"
+          enterKeyHint="search"
+          placeholder={t("Найти молоко, хлеб, фрукты…")}
+          maxLength={200}
+          value={query}
+          onChange={(event) => {
+            setQuery(event.target.value);
             setActive(-1);
-          }
-          if (event.key === "ArrowDown" || event.key === "ArrowUp") {
-            event.preventDefault();
             setOpen(true);
-            setActive((index) =>
-              Math.max(
-                0,
-                Math.min(
-                  items.length - 1,
-                  index + (event.key === "ArrowDown" ? 1 : -1),
+          }}
+          onFocus={() => setOpen(true)}
+          onKeyDown={(event) => {
+            if (event.key === "Escape") {
+              setOpen(false);
+              setActive(-1);
+            }
+            if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+              event.preventDefault();
+              setOpen(true);
+              setActive((index) =>
+                Math.max(
+                  0,
+                  Math.min(
+                    items.length - 1,
+                    index + (event.key === "ArrowDown" ? 1 : -1),
+                  ),
                 ),
-              ),
-            );
-          }
-        }}
-      />
+              );
+            }
+          }}
+        />
+        {!focused && !query && !visible && <SearchPlaceholder />}
+      </div>
       {query ? (
         <button
           type="button"
