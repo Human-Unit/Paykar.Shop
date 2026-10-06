@@ -24,11 +24,26 @@ class ProductOut(BaseModel):
         return f"{value:.2f}" if value is not None else None
 
 
+class PricePreset(BaseModel):
+    min_price: Decimal | None = None
+    max_price: Decimal | None = None
+
+    @field_serializer("min_price", "max_price")
+    def money(self, value: Decimal | None):
+        return format(value, ".2f") if value is not None else None
+
+
+class CatalogFacets(BaseModel):
+    units: list[str]
+    price_presets: list[PricePreset]
+
+
 class ProductPage(BaseModel):
     items: list[ProductOut]
     total: int
     page: int
     page_size: int
+    facets: CatalogFacets | None = None
 
 
 class ProductConnectionList(BaseModel):

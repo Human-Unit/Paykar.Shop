@@ -6,7 +6,7 @@ import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { ChevronDown, Grid2X2, Menu, X } from "lucide-react";
 import { usePresentation } from "@/context/presentation";
 import { Brand } from "@/components/brand";
-import { LanguageSelector } from "@/components/preferences";
+import { LanguageSelector, Preferences } from "@/components/preferences";
 import { informationNavigation, type InformationEntry } from "@/lib/navigation";
 import { CatalogMegaMenu } from "./catalog-mega-menu";
 
@@ -216,6 +216,10 @@ export function BurgerMenu() {
         <div className="drawer-language">
           <p>{t("Язык интерфейса")}</p>
           <LanguageSelector />
+        </div>
+        <div className="drawer-language">
+          <p>{t("Тема оформления")}</p>
+          <Preferences />
         </div>
         <nav aria-label={t("Навигация меню")}>
           <Link href="/catalog" prefetch={false} onClick={close}>

@@ -27,6 +27,11 @@ export type ProductPage = {
   total: number;
   page: number;
   page_size: number;
+  facets?: CatalogFacets | null;
+};
+export type CatalogFacets = {
+  units: string[];
+  price_presets: { min_price: string | null; max_price: string | null }[];
 };
 export type ProductConnectionList = { items: Product[] };
 export type ProductConnectionBatch = {

@@ -1,4 +1,4 @@
-from datetime import timezone, datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from uuid import UUID, uuid4
 
 from fastapi import HTTPException
@@ -56,7 +56,7 @@ async def create_session(
             amount=total,
             checkout=body.model_dump(mode="json"),
             quote=quote.model_dump(mode="json"),
-            expires_at=datetime.now(timezone.utc) + timedelta(minutes=15),
+            expires_at=datetime.now(UTC) + timedelta(minutes=15),
         )
         session.add(payment)
         await session.flush()
@@ -84,7 +84,7 @@ async def confirm(
                 payment=PaymentOut.model_validate(payment),
                 order=await get_order(payment.order_id, session),
             )
-        if payment.expires_at <= datetime.now(timezone.utc):
+        if payment.expires_at <= datetime.now(UTC):
             payment.status, payment.failure_reason = "cancelled", "session_expired"
             await session.flush()
             return Confirmation(payment=PaymentOut.model_validate(payment))

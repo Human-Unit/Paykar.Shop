@@ -2,12 +2,11 @@
 import { usePresentation } from "@/context/presentation";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { storePages, articles } from "@/lib/store-content";
-import { MapPin, ShoppingBasket } from "lucide-react";
+import { ShoppingBasket } from "lucide-react";
 import { SearchBox } from "./search-box";
 import { useCart } from "@/context/cart";
-import { Preferences } from "./preferences";
 import { Brand } from "./brand";
 import { BurgerMenu, MainNavigation } from "./site-navigation";
 import { Footer } from "./footer";
@@ -57,7 +56,11 @@ export function Shell({ children }: { children: React.ReactNode }) {
             </div>
           </div>
           <div className="header-search">
-            <SearchBox />
+            <Suspense
+              fallback={<div className="search-box" aria-hidden="true" />}
+            >
+              <SearchBox />
+            </Suspense>
           </div>
           <div className="header-right">
             <Link
@@ -71,9 +74,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
                 {cart.count}
               </span>
             </Link>
-            <div className="mobile-only">
-              <BurgerMenu />
-            </div>
+            <BurgerMenu />
           </div>
         </div>
       </header>

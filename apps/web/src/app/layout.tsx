@@ -7,6 +7,7 @@ import "./paykar-theme.css";
 import "./site-polish.css";
 import "./shopping-redesign.css";
 import "./phase4-editorial.css";
+import "./catalog-filters.css";
 
 export const metadata: Metadata = {
   title: "Пайкар",

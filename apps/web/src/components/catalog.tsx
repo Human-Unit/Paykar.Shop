@@ -1,145 +1,248 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { notFound, useSearchParams } from "next/navigation";
-import { Check, RotateCcw, SlidersHorizontal, X } from "lucide-react";
+import { notFound, useRouter, useSearchParams } from "next/navigation";
+import { RotateCcw, Search, X } from "lucide-react";
 import { usePresentation } from "@/context/presentation";
 import { Category, ProductPage, useResource } from "@/lib/api";
+import {
+  catalogApiQuery,
+  catalogHref,
+  catalogParameters,
+  descendantCategories,
+} from "@/lib/catalog-query";
 import { ProductCard } from "./product-card";
 import { Breadcrumbs } from "./breadcrumbs";
 import { Empty, Failure, Loading } from "./states";
-import { CategoryLabel } from "./category-label";
+import { CatalogFilters } from "./catalog-filters";
 
 export function Catalog({ slug }: { slug?: string }) {
-  const { t } = usePresentation();
-  const params = useSearchParams();
-  const [filtersOpen, setFiltersOpen] = useState(false);
+  const { t, money } = usePresentation();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const params = catalogParameters(
+    new URLSearchParams(searchParams.toString()),
+    slug,
+  );
+  const paramsKey = params.toString();
+  const categorySlug = params.get("category") || "";
   const q = params.get("q") || "";
-  const sort = ["name", "price_asc", "price_desc"].includes(
-    params.get("sort") || "",
-  )
-    ? params.get("sort")!
-    : "name";
+  const sort = params.get("sort") || "name";
   const inStock = params.get("in_stock") === "true";
   const onSale = params.get("on_sale") === "true";
-  const minPrice = params.get("min_price") || "";
-  const maxPrice = params.get("max_price") || "";
-  const page = Math.max(1, Number.parseInt(params.get("page") || "1") || 1);
-  const query = new URLSearchParams({
-    q,
-    sort,
-    page: String(page),
-    page_size: "12",
-    in_stock: String(inStock),
-    on_sale: String(onSale),
-  });
-  if (minPrice) query.set("min_price", minPrice);
-  if (maxPrice) query.set("max_price", maxPrice);
-  if (slug) query.set("category", slug);
-  const products = useResource<ProductPage>(`/products?${query}`);
+  const min = params.get("min_price");
+  const max = params.get("max_price");
+  const page = Number(params.get("page") || "1");
+  const products = useResource<ProductPage>(catalogApiQuery(params, true));
   const categories = useResource<Category[]>("/categories");
-  const category = useResource<Category>(
-    slug ? `/categories/${encodeURIComponent(slug)}` : null,
+  const allCategories = categories.data || [];
+  const category = allCategories.find((item) => item.slug === categorySlug);
+  const subcategory = allCategories.find(
+    (item) => item.slug === params.get("subcategory"),
   );
-  const path = slug ? `/catalog/${slug}` : "/catalog";
+  const roots = allCategories.filter((item) => item.parent_id === null);
+  const root = roots.find(
+    (item) =>
+      item.slug === categorySlug ||
+      descendantCategories(allCategories, item.slug).some(
+        (child) => child.slug === categorySlug,
+      ),
+  );
 
-  function pageHref(value: number) {
-    const copy = new URLSearchParams(query);
-    copy.delete("category");
-    copy.set("page", String(value));
-    return `${path}?${copy}`;
+  if (
+    slug &&
+    categories.data &&
+    !allCategories.some((item) => item.slug === slug)
+  )
+    notFound();
+
+  function categoryHref(value: string) {
+    const child = params.get("subcategory");
+    const valid =
+      !value ||
+      descendantCategories(allCategories, value).some(
+        (item) => item.slug === child,
+      );
+    return catalogHref(params, {
+      category: value,
+      ...(valid ? {} : { subcategory: null }),
+    });
   }
 
-  function removeFilter(key: string) {
-    const copy = new URLSearchParams(params.toString());
-    copy.delete(key);
-    copy.delete("page");
-    return copy.size ? `${path}?${copy}` : path;
-  }
-
-  if (category.error?.status === 404) notFound();
+  const active: { key: string; label: string; remove: Record<string, null> }[] =
+    [];
+  if (categorySlug)
+    active.push({
+      key: "category",
+      label: t(category?.name) || categorySlug,
+      remove: { category: null },
+    });
+  if (params.get("subcategory"))
+    active.push({
+      key: "subcategory",
+      label: t(subcategory?.name) || params.get("subcategory")!,
+      remove: { subcategory: null },
+    });
+  if (q)
+    active.push({
+      key: "q",
+      label: `${t("Поиск")}: ${q}`,
+      remove: { q: null },
+    });
+  if (min || max)
+    active.push({
+      key: "price",
+      label: [
+        min ? `${t("От")} ${money(Number(min) * 100)}` : "",
+        max ? `${t("До")} ${money(Number(max) * 100)}` : "",
+      ]
+        .filter(Boolean)
+        .join(" · "),
+      remove: { min_price: null, max_price: null },
+    });
+  if (inStock)
+    active.push({
+      key: "in_stock",
+      label: t("В наличии"),
+      remove: { in_stock: null },
+    });
+  if (onSale)
+    active.push({
+      key: "on_sale",
+      label: t("По акции"),
+      remove: { on_sale: null },
+    });
+  if (params.has("min_discount"))
+    active.push({
+      key: "min_discount",
+      label: `${t("Скидка")}: ${params.get("min_discount")}%+`,
+      remove: { min_discount: null },
+    });
+  if (params.get("unit"))
+    active.push({
+      key: "unit",
+      label: `${t("Единица продажи")}: ${t(params.get("unit") || undefined)}`,
+      remove: { unit: null },
+    });
+  if (sort !== "name")
+    active.push({
+      key: "sort",
+      label: `${t("Сортировка")}: ${t(sort === "price_asc" ? "Сначала дешевле" : "Сначала дороже")}`,
+      remove: { sort: null },
+    });
 
   return (
-    <div className="polish-page catalog-page shopping-catalog">
+    <div className="polish-page catalog-page shopping-catalog catalog-discovery">
       <Breadcrumbs
         items={[
           { label: t("Главная"), href: "/" },
-          { label: t("Каталог"), href: slug ? "/catalog" : undefined },
-          ...(slug ? [{ label: t(category.data?.name) || "…" }] : []),
+          { label: t("Каталог"), href: categorySlug ? "/catalog" : undefined },
+          ...(categorySlug
+            ? [{ label: t(category?.name) || categorySlug }]
+            : []),
         ]}
       />
       <header className="catalog-heading shopping-catalog-heading">
         <div className="page-title">
           <span className="eyebrow">{t("Покупки на каждый день")}</span>
-          <h1>{t(category.data?.name) || t("Каталог товаров")}</h1>
+          <h1>{t(category?.name) || t("Каталог товаров")}</h1>
           <p>{t("Выбирайте продукты по названию, цене и наличию.")}</p>
         </div>
       </header>
-      {category.error && (
-        <Failure error={category.error} retry={category.retry} />
-      )}
-
       <div className="catalog-layout shopping-catalog-layout phase4-catalog-layout">
         <section className="catalog-results" aria-label={t("Товары")}>
-          <div className="catalog-top-controls">
-            <nav className="catalog-categories-horizontal" aria-label={t("Категории товаров")}>
-              {categories.loading && <Loading label="Загружаем категории…" />}
-              {categories.error && (
-                <Failure error={categories.error} retry={categories.retry} />
-              )}
-              <Link
-                className={!slug ? "active" : ""}
-                aria-current={!slug ? "page" : undefined}
-                href="/catalog"
-              >
-                {t("Все товары")}
-              </Link>
-              {categories.data?.filter(c => c.parent_id === null).map((item) => (
-                <Link
-                  key={item.id}
-                  className={`${slug === item.slug ? "active" : ""}`}
-                  href={`/catalog/${item.slug}`}
-                  aria-current={slug === item.slug ? "page" : undefined}
-                >
-                  {t(item.name)}
-                </Link>
-              ))}
-            </nav>
-          </div>
-          
-          <form
-            action={path}
-            className="catalog-controls shopping-filters phase4-filters"
-            key={`${q}:${sort}:${inStock}:${onSale}:${minPrice}:${maxPrice}`}
+          <nav
+            className="catalog-categories-horizontal"
+            aria-label={t("Категории товаров")}
           >
-            <div className="catalog-filter-toolbar">
-              <label className="filter-search">
-                <span className="sr-only">{t("Поиск")}</span>
-                <input
-                  name="q"
-                  defaultValue={q}
-                  maxLength={200}
-                  placeholder={t("Искать в каталоге...")}
-                />
+            <Link
+              className={!categorySlug ? "active" : ""}
+              aria-current={!categorySlug ? "page" : undefined}
+              href={categoryHref("")}
+              scroll={false}
+            >
+              {t("Все товары")}
+            </Link>
+            {roots.map((item) => (
+              <Link
+                key={item.id}
+                className={root?.id === item.id ? "active" : ""}
+                aria-current={root?.id === item.id ? "page" : undefined}
+                href={categoryHref(item.slug)}
+                scroll={false}
+              >
+                {t(item.name)}
+              </Link>
+            ))}
+          </nav>
+          {categories.loading && <Loading label="Загружаем категории…" />}
+          {categories.error && (
+            <Failure error={categories.error} retry={categories.retry} />
+          )}
+
+          <div className="catalog-discovery-controls">
+            <form
+              className="catalog-search-form"
+              role="search"
+              key={paramsKey}
+              onSubmit={(event) => {
+                event.preventDefault();
+                const value = String(
+                  new FormData(event.currentTarget).get("q") || "",
+                ).trim();
+                router.push(catalogHref(params, { q: value }), {
+                  scroll: false,
+                });
+              }}
+            >
+              <label htmlFor="catalog-search" className="sr-only">
+                {t("Поиск в каталоге")}
               </label>
-              
-              <div className="catalog-toolbar-actions">
-                <button
-                  className="button secondary mobile-filter-toggle"
-                  type="button"
-                  aria-expanded={filtersOpen}
-                  onClick={() => setFiltersOpen((open) => !open)}
-                >
-                  <SlidersHorizontal size={17} aria-hidden="true" />
-                  {t("Фильтры")}
-                </button>
-                <div className="catalog-product-count">
-                  {products.data?.total || 0} {t("товаров")}
-                </div>
-                <label className="catalog-sort">
+              <input
+                id="catalog-search"
+                name="q"
+                defaultValue={q}
+                maxLength={200}
+                placeholder={t("Искать в каталоге...")}
+              />
+              <button
+                type="submit"
+                className="button secondary"
+                aria-label={t("Искать")}
+              >
+                <Search size={20} aria-hidden="true" />
+              </button>
+            </form>
+            <div className="catalog-discovery-toolbar">
+              <p
+                className="catalog-discovery-count"
+                role="status"
+                aria-live="polite"
+              >
+                {products.loading
+                  ? t("Загружаем товары…")
+                  : products.data
+                    ? `${products.data.total} ${t("товаров")}`
+                    : "—"}
+              </p>
+              <div className="catalog-discovery-actions">
+                <CatalogFilters
+                  key={paramsKey}
+                  params={params}
+                  categories={allCategories}
+                  facets={products.data?.facets}
+                />
+                <label className="catalog-discovery-sort">
                   <span className="sr-only">{t("Сортировка")}</span>
-                  <select name="sort" defaultValue={sort}>
+                  <select
+                    value={sort}
+                    onChange={(event) =>
+                      router.push(
+                        catalogHref(params, { sort: event.target.value }),
+                        { scroll: false },
+                      )
+                    }
+                  >
                     <option value="name">{t("По названию")}</option>
                     <option value="price_asc">{t("Сначала дешевле")}</option>
                     <option value="price_desc">{t("Сначала дороже")}</option>
@@ -148,116 +251,67 @@ export function Catalog({ slug }: { slug?: string }) {
               </div>
             </div>
             <div
-              className={`catalog-filter-panel${filtersOpen ? " is-open" : ""}`}
+              className="catalog-quick-filters"
+              aria-label={t("Быстрые фильтры")}
             >
-              <fieldset className="price-filter">
-                <legend>{t("Цена, сомони")}</legend>
-                <label>
-                  <span className="sr-only">{t("Цена от")}</span>
-                  <input
-                    name="min_price"
-                    type="number"
-                    min="0"
-                    step="0.01"
-                    inputMode="decimal"
-                    placeholder={t("От")}
-                    defaultValue={minPrice}
-                  />
-                </label>
-                <span aria-hidden="true">—</span>
-                <label>
-                  <span className="sr-only">{t("Цена до")}</span>
-                  <input
-                    name="max_price"
-                    type="number"
-                    min="0"
-                    step="0.01"
-                    inputMode="decimal"
-                    placeholder={t("До")}
-                    defaultValue={maxPrice}
-                  />
-                </label>
-              </fieldset>
-              <label className="filter-check">
-                <input
-                  name="in_stock"
-                  type="checkbox"
-                  value="true"
-                  defaultChecked={inStock}
-                />
+              <Link
+                className={inStock ? "selected" : ""}
+                href={catalogHref(params, {
+                  in_stock: inStock ? null : "true",
+                })}
+                scroll={false}
+              >
                 {t("В наличии")}
-              </label>
-              <label className="filter-check">
-                <input
-                  name="on_sale"
-                  type="checkbox"
-                  value="true"
-                  defaultChecked={onSale}
-                />
-                <span>{t("По акции")}</span>
-              </label>
-              <button className="button filter-apply" type="submit">
-                <Check size={17} aria-hidden="true" /> {t("Показать товары")}
-              </button>
-              {(q || inStock || onSale || minPrice || maxPrice) && (
-                <Link className="filter-reset" href={path}>
-                  <RotateCcw size={15} aria-hidden="true" /> {t("Сбросить")}
-                </Link>
-              )}
+              </Link>
+              <Link
+                className={onSale ? "selected" : ""}
+                href={catalogHref(params, { on_sale: onSale ? null : "true" })}
+                scroll={false}
+              >
+                {t("По акции")}
+              </Link>
             </div>
-          </form>
-
-          {(q || inStock || onSale || minPrice || maxPrice) && (
-            <div
-              className="active-filter-chips"
-              aria-label={t("Активные фильтры")}
-            >
-              {q && (
-                <Link href={removeFilter("q")} className="filter-chip">
-                  {t("Поиск")}: {q}
-                  <X size={14} aria-hidden="true" />
+            {active.length > 0 && (
+              <div
+                className="catalog-active-filters"
+                aria-label={t("Активные фильтры")}
+              >
+                {active.map((filter) => (
+                  <Link
+                    key={filter.key}
+                    href={catalogHref(params, filter.remove)}
+                    scroll={false}
+                    className="filter-chip"
+                    aria-label={`${t("Удалить фильтр")}: ${filter.label}`}
+                  >
+                    {filter.label}
+                    <X size={14} aria-hidden="true" />
+                  </Link>
+                ))}
+                <Link
+                  className="catalog-clear-filters"
+                  href="/catalog"
+                  scroll={false}
+                >
+                  <RotateCcw size={14} aria-hidden="true" />
+                  {t("Сбросить всё")}
                 </Link>
-              )}
-              {minPrice && (
-                <Link href={removeFilter("min_price")} className="filter-chip">
-                  {t("От")}: {minPrice}
-                  <X size={14} aria-hidden="true" />
-                </Link>
-              )}
-              {maxPrice && (
-                <Link href={removeFilter("max_price")} className="filter-chip">
-                  {t("До")}: {maxPrice}
-                  <X size={14} aria-hidden="true" />
-                </Link>
-              )}
-              {inStock && (
-                <Link href={removeFilter("in_stock")} className="filter-chip">
-                  {t("В наличии")}
-                  <X size={14} aria-hidden="true" />
-                </Link>
-              )}
-              {onSale && (
-                <Link href={removeFilter("on_sale")} className="filter-chip">
-                  {t("По акции")}
-                  <X size={14} aria-hidden="true" />
-                </Link>
-              )}
-            </div>
-          )}
+              </div>
+            )}
+          </div>
 
           {products.loading && <Loading kind="grid" />}
-          {products.error && (
-            <Failure error={products.error} retry={products.retry} />
-          )}
+          {products.error &&
+            (products.error.status === 422 ? (
+              <div className="catalog-filter-error" role="alert">
+                <p>{t("Проверьте значения фильтров.")}</p>
+                <Link href="/catalog">{t("Сбросить всё")}</Link>
+              </div>
+            ) : (
+              <Failure error={products.error} retry={products.retry} />
+            ))}
           {products.data && (
             <>
-              <div className="catalog-results-line">
-                <p className="result-count">
-                  {t("Найдено товаров: ")}
-                  <strong>{products.data.total}</strong>
-                </p>
-                <span>{t(inStock ? "В наличии" : "Все товары")}</span>
-              </div>
               {!products.data.items.length ? (
                 <Empty
                   title={t("Ничего не найдено")}
@@ -272,15 +326,20 @@ export function Catalog({ slug }: { slug?: string }) {
               )}
               <nav className="pagination" aria-label={t("Страницы каталога")}>
                 {page > 1 && (
-                  <Link href={pageHref(page - 1)}>{t("← Назад")}</Link>
+                  <Link href={catalogHref(params, { page: String(page - 1) })}>
+                    {t("← Назад")}
+                  </Link>
                 )}
                 <span>
                   {t("Страница ")}
                   {page}
-                  {t(" из ")} {Math.max(1, Math.ceil(products.data.total / 12))}
+                  {t(" из ")}
+                  {Math.max(1, Math.ceil(products.data.total / 12))}
                 </span>
                 {page * 12 < products.data.total && (
-                  <Link href={pageHref(page + 1)}>{t("Далее →")}</Link>
+                  <Link href={catalogHref(params, { page: String(page + 1) })}>
+                    {t("Далее →")}
+                  </Link>
                 )}
               </nav>
             </>

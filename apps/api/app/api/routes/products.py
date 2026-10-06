@@ -8,6 +8,8 @@ from sqlalchemy.orm import aliased
 from app.core.database import Session
 from app.models import Category, Product, ProductConnection
 from app.schemas.product import (
+    CatalogFacets,
+    PricePreset,
     ProductConnectionBatch,
     ProductConnectionBatchIn,
     ProductConnectionGroup,
@@ -23,30 +25,47 @@ router = APIRouter(prefix="/products", tags=["products"])
 async def products(
     session: Session,
     q: Annotated[str, Query(max_length=200)] = "",
-    category: str | None = None,
+    category: Annotated[str | None, Query(max_length=160)] = None,
+    subcategory: Annotated[str | None, Query(max_length=160)] = None,
     sort: Literal["name", "price_asc", "price_desc"] = "name",
     in_stock: bool = False,
     on_sale: bool = False,
-    min_price: Annotated[Decimal | None, Query(ge=0)] = None,
-    max_price: Annotated[Decimal | None, Query(ge=0)] = None,
+    min_price: Annotated[Decimal | None, Query(ge=0, max_digits=12, decimal_places=2)] = None,
+    max_price: Annotated[Decimal | None, Query(ge=0, max_digits=12, decimal_places=2)] = None,
+    min_discount: Annotated[Decimal | None, Query(ge=0, le=100, allow_inf_nan=False)] = None,
+    unit: Annotated[str | None, Query(max_length=40)] = None,
+    include_facets: bool = False,
     page: Annotated[int, Query(ge=1)] = 1,
     page_size: Annotated[int, Query(ge=1, le=48)] = 24,
     ids: Annotated[str | None, Query(max_length=2000)] = None,
 ):
+    if min_price is not None and max_price is not None and min_price > max_price:
+        raise HTTPException(422, "min_price must not exceed max_price")
     filters = [Product.is_active.is_(True)]
     if q.strip():
         term = q.strip().replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
         filters.append(or_(Product.name.ilike(f"%{term}%"), Product.sku.ilike(f"%{term}%")))
-    if category:
-        tree = (
-            select(Category.id).where(Category.slug == category).cte("descendants", recursive=True)
-        )
+    for name, slug in (("category", category), ("subcategory", subcategory)):
+        if not slug:
+            continue
+        tree = select(Category.id).where(Category.slug == slug).cte(f"{name}_tree", recursive=True)
         tree = tree.union(select(Category.id).join(tree, Category.parent_id == tree.c.id))
         filters.append(Product.category_id.in_(select(tree.c.id)))
+    # Facets describe the current search/category scope, independent of price/stock selections.
+    facet_filters = filters.copy()
     if in_stock:
         filters.append(Product.stock_quantity >= 1)
     if on_sale:
         filters.append(Product.old_price > Product.price)
+    if min_discount is not None:
+        filters.extend(
+            [
+                Product.old_price > Product.price,
+                Product.price <= Product.old_price * (1 - min_discount / Decimal("100")),
+            ]
+        )
+    if unit:
+        filters.append(Product.unit == unit)
     if min_price is not None:
         filters.append(Product.price >= min_price)
     if max_price is not None:
@@ -72,11 +91,38 @@ async def products(
         .offset((page - 1) * page_size)
         .limit(page_size)
     )
+    items = [ProductOut.model_validate(p) for p in rows]
+    facets = None
+    if include_facets:
+        stats = (
+            await session.execute(
+                select(
+                    func.max(Product.price),
+                    func.percentile_disc(0.25).within_group(Product.price),
+                    func.percentile_disc(0.5).within_group(Product.price),
+                    func.percentile_disc(0.75).within_group(Product.price),
+                    func.array_agg(func.distinct(Product.unit)),
+                ).where(*facet_filters)
+            )
+        ).one()
+        maximum, *rest = stats
+        breaks = sorted({value for value in rest[:3] if value is not None and value < maximum})
+        presets = []
+        lower = None
+        for boundary in breaks:
+            presets.append(PricePreset(min_price=lower, max_price=boundary))
+            lower = boundary + Decimal("0.01")
+        if breaks:
+            presets.append(PricePreset(min_price=lower))
+        facets = CatalogFacets(
+            units=sorted(value for value in (stats[-1] or []) if value), price_presets=presets
+        )
     return ProductPage(
-        items=[ProductOut.model_validate(p) for p in rows],
+        items=items,
         total=total or 0,
         page=page,
         page_size=page_size,
+        facets=facets,
     )
 
 
