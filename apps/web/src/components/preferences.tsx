@@ -1,11 +1,8 @@
 "use client";
 import { Moon, Sun } from "lucide-react";
 import { useSyncExternalStore } from "react";
-import {
-  usePresentation,
-  type Language,
-  type Theme,
-} from "@/context/presentation";
+import { flushSync } from "react-dom";
+import { usePresentation, type Language } from "@/context/presentation";
 
 function subscribeSystemTheme(callback: () => void) {
   const media = window.matchMedia("(prefers-color-scheme: dark)");
@@ -18,6 +15,35 @@ function systemTheme() {
     : "light";
 }
 
+// Where supported, the new theme grows out of the pressed button. The
+// attribute is set inside the transition so its snapshot is already themed;
+// the provider's own effect then finds nothing left to change.
+function revealTheme(
+  value: "dark" | "light",
+  x: number,
+  y: number,
+  apply: () => void,
+) {
+  const root = document.documentElement;
+  if (
+    !document.startViewTransition ||
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  ) {
+    apply();
+    return;
+  }
+  root.style.setProperty("--vt-x", `${x}px`);
+  root.style.setProperty("--vt-y", `${y}px`);
+  root.dataset.themeSwitch = "true";
+  const transition = document.startViewTransition(() => {
+    flushSync(apply);
+    root.dataset.theme = value;
+  });
+  transition.finished.finally(() => {
+    delete root.dataset.themeSwitch;
+  });
+}
+
 export function Preferences() {
   const { theme, setTheme, t } = usePresentation();
   const osTheme = useSyncExternalStore(
@@ -26,7 +52,11 @@ export function Preferences() {
     () => "dark",
   );
   const activeTheme = theme === "system" ? osTheme : theme;
-  const themes: { value: Theme; label: string; icon: typeof Moon }[] = [
+  const themes: {
+    value: "dark" | "light";
+    label: string;
+    icon: typeof Moon;
+  }[] = [
     { value: "dark", label: t("Тёмная тема"), icon: Moon },
     { value: "light", label: t("Светлая тема"), icon: Sun },
   ];
@@ -51,7 +81,17 @@ export function Preferences() {
             aria-label={label}
             title={label}
             aria-pressed={activeTheme === value}
-            onClick={() => setTheme(value)}
+            onClick={(event) => {
+              const box = event.currentTarget.getBoundingClientRect();
+              if (value === activeTheme) setTheme(value);
+              else
+                revealTheme(
+                  value,
+                  box.left + box.width / 2,
+                  box.top + box.height / 2,
+                  () => setTheme(value),
+                );
+            }}
           >
             <Icon size={16} aria-hidden="true" />
           </button>

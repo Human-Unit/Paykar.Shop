@@ -2,7 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useId, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { ChevronDown, Grid2X2, Menu, X } from "lucide-react";
 import { usePresentation } from "@/context/presentation";
 import { Brand } from "@/components/brand";
@@ -97,8 +104,36 @@ function InfoNavMenu({
 }
 
 export function MainNavigation() {
-  const { t } = usePresentation();
+  const { t, language } = usePresentation();
   const path = usePathname();
+  const row = useRef<HTMLDivElement>(null);
+  // Labels differ in length by language, so links that do not fit are hidden
+  // from the end rather than at fixed widths. The menu button lists them all.
+  // Items in the right half open their panel leftwards to stay on screen.
+  useLayoutEffect(() => {
+    const node = row.current;
+    if (!node) return;
+    const fit = () => {
+      const items = Array.from(node.children) as HTMLElement[];
+      for (const item of items) delete item.dataset.overflow;
+      for (
+        let index = items.length - 1;
+        index > 0 && node.scrollWidth > node.clientWidth + 1;
+        index -= 1
+      )
+        items[index].dataset.overflow = "true";
+      for (const item of items)
+        item.dataset.align =
+          item.offsetLeft + item.offsetWidth / 2 > node.clientWidth / 2
+            ? "end"
+            : "start";
+    };
+    fit();
+    const observer = new ResizeObserver(fit);
+    observer.observe(node);
+    document.fonts.ready.then(fit);
+    return () => observer.disconnect();
+  }, [language]);
   const [activeMenu, setActiveMenu] = useState<{
     id: string;
     path: string;
@@ -111,7 +146,7 @@ export function MainNavigation() {
       className="container main-navigation"
       aria-label={t("Основная навигация")}
     >
-      <div className="nav-row">
+      <div className="nav-row" ref={row}>
         <CatalogMegaMenu
           open={activeMenu?.id === "catalog" && activeMenu.path === path}
           onOpen={() => setActiveMenu({ id: "catalog", path })}

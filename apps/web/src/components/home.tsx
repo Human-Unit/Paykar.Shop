@@ -1,15 +1,12 @@
 "use client";
 import { usePresentation } from "@/context/presentation";
-import { m, MotionLink, useReveal } from "./motion-primitives";
+import { m, useReveal } from "./motion-primitives";
 import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowUpRight,
-  Leaf,
   ShoppingBasket,
-  PackageCheck,
   Route,
-  ShoppingBag,
   CheckCircle2,
   MapPin,
 } from "lucide-react";
@@ -17,7 +14,7 @@ import { cents } from "@/lib/format";
 import { Category, ProductPage, useResource } from "@/lib/api";
 import { ProductCard } from "./product-card";
 import { Empty, Failure, Loading } from "./states";
-import { ShoppingBanner } from "./shopping-banner";
+import { HomeHero } from "./home-hero";
 import { categoryImages } from "@/lib/category-presentation";
 import { articles, storePages } from "@/lib/store-content";
 import { SectionHeader, StepFlow, CTASection } from "./page-patterns";
@@ -25,74 +22,23 @@ import { ArticleCard } from "./article-card";
 import { HomeStoreNetwork } from "./home-store-network";
 export function Home() {
   const { t } = usePresentation();
-  const firstCard = useReveal({ rise: 10, delay: 0.1, hover: true });
-  const secondCard = useReveal({ rise: 10, delay: 0.17, hover: true });
-  const benefits = useReveal({ rise: 8 });
-  const grid = useReveal({ rise: 8 });
+  const grid = useReveal({ rise: 14 });
   const categories = useResource<Category[]>("/categories");
   const products = useResource<ProductPage>(
     "/products?page_size=48&in_stock=true",
   );
+  // The grids hide what does not fill a row, so fetch one row's worth extra.
   const discounts =
     products.data?.items
       .filter((p) => p.old_price && cents(p.old_price) > cents(p.price))
-      .slice(0, 4) ?? [];
+      .slice(0, 5) ?? [];
   const everyday =
     products.data?.items
       .filter((p) => !discounts.some((d) => d.id === p.id))
-      .slice(0, 8) ?? [];
+      .slice(0, 10) ?? [];
   return (
     <div className="polish-page home-page">
-      <div className="promo-grid">
-        <ShoppingBanner hero />
-        <div className="promo-side">
-          <MotionLink
-            {...firstCard}
-            href="/delivery"
-            className="promo-card promo-route"
-          >
-            <Route size={30} aria-hidden="true" />
-            <span className="eyebrow">{t("ДОСТАВКА")}</span>
-            <h2>
-              {t("Весь маршрут.")} {t("До заказа.")}
-            </h2>
-            <p>{t("Расстояние, время и стоимость на одной карте.")}</p>
-            <span className="promo-action">
-              {t("Как работает доставка")}{" "}
-              <ArrowUpRight size={18} aria-hidden="true" />
-            </span>
-          </MotionLink>
-          <MotionLink
-            {...secondCard}
-            href="/catalog"
-            className="promo-card promo-shopping"
-          >
-            <ShoppingBag size={30} aria-hidden="true" />
-            <span className="eyebrow">{t("ПРОСТО ПОКУПКИ")}</span>
-            <h2>
-              {t("Без регистрации.")} {t("В вашем темпе.")}
-            </h2>
-            <span className="promo-action">
-              {t("Собрать корзину ")}
-              <ArrowUpRight size={18} />
-            </span>
-          </MotionLink>
-        </div>
-      </div>
-      <m.div {...benefits} className="benefits">
-        <span>
-          <Leaf size={20} />
-          {t(" Продукты на каждый день")}
-        </span>
-        <span>
-          <ShoppingBasket size={20} />
-          {t(" Покупки без регистрации")}
-        </span>
-        <span>
-          <PackageCheck size={20} />
-          {t(" Маршрут и цена до заказа")}
-        </span>
-      </m.div>
+      <HomeHero />
       <section>
         <SectionHeader
           eyebrow="Свежий выбор на каждый день"
@@ -112,19 +58,25 @@ export function Home() {
                 key={c.id}
                 className="category-tile"
               >
-                <Image
-                  src={
-                    categoryImages[c.slug]
-                      ? `/images/paykar/${categoryImages[c.slug]}.webp`
-                      : "/images/products/fallback.svg"
-                  }
-                  width={180}
-                  height={180}
-                  unoptimized
-                  alt=""
-                />
-                <span>{t(c.name)}</span>
-                <ArrowUpRight size={16} />
+                <span className="category-tile-media">
+                  <Image
+                    src={
+                      categoryImages[c.slug]
+                        ? `/images/paykar/${categoryImages[c.slug]}.webp`
+                        : "/images/products/fallback.svg"
+                    }
+                    width={240}
+                    height={240}
+                    unoptimized
+                    alt=""
+                  />
+                </span>
+                <span className="category-tile-name">
+                  <span>{t(c.name)}</span>
+                  <span className="category-tile-arrow">
+                    <ArrowUpRight size={16} aria-hidden="true" />
+                  </span>
+                </span>
               </Link>
             ))}
         </m.div>
@@ -144,7 +96,7 @@ export function Home() {
             title="Акции"
             action={{ href: "/promotions", label: "Все акции" }}
           />
-          <div className="product-grid">
+          <div className="product-grid one-row">
             {discounts.map((p, index) => (
               <ProductCard key={p.id} product={p} revealIndex={index} />
             ))}
@@ -164,7 +116,7 @@ export function Home() {
         {products.error && (
           <Failure error={products.error} retry={products.retry} />
         )}
-        <div className="product-grid">
+        <div className="product-grid two-rows">
           {everyday.map((p, index) => (
             <ProductCard key={p.id} product={p} revealIndex={index} />
           ))}

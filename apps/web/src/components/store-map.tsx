@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
 import L from "leaflet";
-import "leaflet/dist/leaflet.css";
 import { usePresentation } from "@/context/presentation";
 export default function StoreMap({
   latitude,

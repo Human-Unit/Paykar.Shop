@@ -4,7 +4,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Category, ProductPage, Product, useResource } from "@/lib/api";
 import { cents } from "@/lib/format";
-import { AddButton, ProductCard, ProductImage } from "./product-card";
+import {
+  AddButton,
+  ProductCard,
+  ProductImage,
+  discountPercent,
+} from "./product-card";
 import { Breadcrumbs } from "./breadcrumbs";
 import { Empty, Failure, Loading } from "./states";
 import {
@@ -29,13 +34,16 @@ export function ProductDetail({ slug }: { slug: string }) {
       ? `/products?category=${encodeURIComponent(category.slug)}&in_stock=true&page_size=6`
       : null,
   );
+  // One spare so the row stays full at every column count.
   const alternatives =
-    related.data?.items.filter((item) => item.id !== p?.id).slice(0, 4) ?? [];
+    related.data?.items.filter((item) => item.id !== p?.id).slice(0, 5) ?? [];
   if (resource.loading) return <Loading kind="product" />;
   if (resource.error?.status === 404) notFound();
   if (resource.error)
     return <Failure error={resource.error} retry={resource.retry} />;
   if (!p) return null;
+  const discount = discountPercent(p);
+  const available = Number(p.stock_quantity) >= 1;
   return (
     <div className="polish-page product-page">
       <Breadcrumbs
@@ -69,23 +77,23 @@ export function ProductDetail({ slug }: { slug: string }) {
             {p.sku.replace(/^DEMO-/, "")} · {t(p.unit)}
           </p>
           <div className="detail-purchase">
-            <div className="prices detail-price">
+            <div
+              className="prices detail-price"
+              data-sale={discount > 0 || undefined}
+            >
               <strong>{money(cents(p.price))}</strong>
               {p.old_price && <del>{money(cents(p.old_price))}</del>}
-              {p.old_price && cents(p.old_price) > cents(p.price) && (
-                <span className="detail-discount">
-                  −{Math.round((1 - cents(p.price) / cents(p.old_price)) * 100)}
-                  %
-                </span>
+              {discount > 0 && (
+                <span className="detail-discount">−{discount}%</span>
               )}
             </div>
-            <p className="stock-state">
-              {Number(p.stock_quantity) >= 1 ? (
+            <p className="stock-state" data-available={available}>
+              {available ? (
                 <CheckCircle2 size={16} aria-hidden="true" />
               ) : (
                 <Package size={16} aria-hidden="true" />
               )}
-              {Number(p.stock_quantity) >= 1
+              {available
                 ? t("В наличии: ") +
                   Math.floor(Number(p.stock_quantity)) +
                   " " +
@@ -162,9 +170,13 @@ export function ProductDetail({ slug }: { slug: string }) {
           {related.loading ? (
             <Loading kind="grid" />
           ) : (
-            <div className="product-grid">
-              {alternatives.map((product) => (
-                <ProductCard key={product.id} product={product} />
+            <div className="product-grid one-row">
+              {alternatives.map((product, index) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  revealIndex={index}
+                />
               ))}
             </div>
           )}

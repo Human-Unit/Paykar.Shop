@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import L from "leaflet";
-import "leaflet/dist/leaflet.css";
 import { DeliveryConfig, Point, Quote } from "@/lib/api";
 import { usePresentation } from "@/context/presentation";
 

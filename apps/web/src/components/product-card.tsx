@@ -60,6 +60,12 @@ export function ProductImage({
     />
   );
 }
+// Whole percent saved against the previous price, or 0 when not discounted.
+export function discountPercent(product: Product) {
+  return product.old_price && cents(product.old_price) > cents(product.price)
+    ? Math.round((1 - cents(product.price) / cents(product.old_price)) * 100)
+    : 0;
+}
 export function AddButton({ product }: { product: Product }) {
   const { t } = usePresentation();
   const cart = useCart();
@@ -84,7 +90,10 @@ export function AddButton({ product }: { product: Product }) {
           <Minus size={18} />
         </button>
         <span aria-live="polite">
-          {count}
+          {/* Keyed by value so each change replays the count animation. */}
+          <b className="quantity-value" key={count}>
+            {count}
+          </b>
           <small>{t("в корзине")}</small>
         </span>
         <button
@@ -119,12 +128,18 @@ export function ProductCard({
 }) {
   const { t, money } = usePresentation();
   const reveal = useReveal({
-    rise: 8,
-    delay: Math.min(revealIndex, 5) * 0.05,
+    rise: 16,
+    delay: Math.min(revealIndex, 6) * 0.055,
     hover: true,
   });
+  const discount = discountPercent(product);
+  const soldOut = Number(product.stock_quantity) < 1;
   return (
-    <m.article {...reveal} className="product-card">
+    <m.article
+      {...reveal}
+      className="product-card"
+      data-sold-out={soldOut || undefined}
+    >
       <Link
         href={`/product/${product.slug}`}
         className="image-wrap"
@@ -132,23 +147,19 @@ export function ProductCard({
         aria-hidden="true"
       >
         <ProductImage product={product} />
-        {product.old_price &&
-          cents(product.old_price) > cents(product.price) && (
-            <span className="badge">
-              −
-              {Math.round(
-                (1 - cents(product.price) / cents(product.old_price)) * 100,
-              )}
-              %
-            </span>
-          )}
+        {discount > 0 && <span className="badge">−{discount}%</span>}
+        {soldOut && <span className="stock-flag">{t("Нет в наличии")}</span>}
       </Link>
       <div className="product-card-body">
         <p className="unit">{t(product.unit)}</p>
-        <Link className="product-name" href={`/product/${product.slug}`}>
+        <Link
+          className="product-name"
+          href={`/product/${product.slug}`}
+          title={t(product.name)}
+        >
           {t(product.name)}
         </Link>
-        <div className="prices">
+        <div className="prices" data-sale={discount > 0 || undefined}>
           <strong>{money(cents(product.price))}</strong>
           {product.old_price && <del>{money(cents(product.old_price))}</del>}
         </div>

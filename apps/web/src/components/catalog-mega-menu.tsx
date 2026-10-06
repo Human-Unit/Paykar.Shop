@@ -22,7 +22,6 @@ import {
   categoryHref,
   categoryImages,
 } from "@/lib/category-presentation";
-import "./catalog-mega-menu.css";
 import { m } from "./motion-primitives";
 
 const desktopQuery = "(min-width: 769px)";

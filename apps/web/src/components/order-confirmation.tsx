@@ -5,18 +5,12 @@ import { notFound } from "next/navigation";
 import { Order, useResource } from "@/lib/api";
 import { cents } from "@/lib/format";
 import { Failure, Loading } from "./states";
-import {
-  CheckCircle2,
-  Bookmark,
-  Route,
-  Clock3,
-  ArrowRight,
-} from "lucide-react";
+import { Bookmark, Route, Clock3, ArrowRight } from "lucide-react";
 import { Breadcrumbs } from "./breadcrumbs";
 import { m, useReveal } from "./motion-primitives";
 export function OrderConfirmation({ id }: { id: string }) {
   const { t, money, distance, duration, locale } = usePresentation();
-  const success = useReveal({ rise: 0, scale: 0.94, inView: false });
+  const success = useReveal({ rise: 0, scale: 0.6, inView: false });
   const heading = useReveal({ rise: 12, delay: 0.06, inView: false });
   const details = useReveal({ rise: 0, delay: 0.12 });
   const validID =
@@ -48,7 +42,17 @@ export function OrderConfirmation({ id }: { id: string }) {
       />
       <m.div {...heading} className="confirmation-heading">
         <m.span {...success} className="confirmation-check" aria-hidden="true">
-          <CheckCircle2 size={40} strokeWidth={1.6} />
+          {/* Drawn stroke by stroke in CSS; pathLength normalises the dashes. */}
+          <svg viewBox="0 0 52 52" fill="none">
+            <circle
+              className="check-ring"
+              cx="26"
+              cy="26"
+              r="23"
+              pathLength="1"
+            />
+            <path className="check-mark" d="M15 27l8 8 15-17" pathLength="1" />
+          </svg>
         </m.span>
         <div className="eyebrow">{t("Подтверждение заказа")}</div>
         <h1>{t("Спасибо! Заказ получен")}</h1>

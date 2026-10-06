@@ -3,8 +3,6 @@ import { CartProvider } from "@/context/cart";
 import { Shell } from "@/components/shell";
 import { PresentationProvider } from "@/context/presentation";
 import "./globals.css";
-import "./paykar-theme.css";
-import "./site-polish.css";
 
 export const metadata: Metadata = {
   title: "Пайкар",

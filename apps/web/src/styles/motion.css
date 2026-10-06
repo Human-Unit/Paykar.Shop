@@ -1,0 +1,211 @@
+/* Shared motion. Durations stay short and every loop is decorative only:
+   nothing here gates content or input. */
+@keyframes float-soft {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -9px;
+  }
+}
+@keyframes pulse-ring {
+  0% {
+    scale: 1;
+    opacity: 0.55;
+  }
+  100% {
+    scale: var(--ring-scale, 2.6);
+    opacity: 0;
+  }
+}
+@keyframes glow-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+    scale: 1;
+  }
+  50% {
+    opacity: 0.9;
+    scale: 1.06;
+  }
+}
+@keyframes pop-in {
+  0% {
+    scale: 0.55;
+    opacity: 0;
+  }
+  60% {
+    scale: 1.14;
+    opacity: 1;
+  }
+  100% {
+    scale: 1;
+  }
+}
+@keyframes settle-in {
+  from {
+    opacity: 0;
+    scale: 0.94;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    translate: 0 10px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes drop-in {
+  from {
+    opacity: 0;
+    translate: 0 -8px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes count-up {
+  from {
+    opacity: 0;
+    translate: 0 60%;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+@keyframes route-dash {
+  to {
+    stroke-dashoffset: -30;
+  }
+}
+@keyframes route-travel {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+@keyframes draw-stroke {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes toast-life {
+  0% {
+    opacity: 0;
+    translate: 0 16px;
+    scale: 0.96;
+  }
+  6%,
+  92% {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+  100% {
+    opacity: 0;
+    translate: 0 8px;
+    scale: 0.98;
+    visibility: hidden;
+  }
+}
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    translate: 0 10px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0 at var(--vt-x, 50%) var(--vt-y, 0px));
+  }
+  to {
+    clip-path: circle(150vmax at var(--vt-x, 50%) var(--vt-y, 0px));
+  }
+}
+@keyframes sheen {
+  to {
+    translate: 400% 0;
+  }
+}
+
+/* Section change: the root template remounts, so this plays once on arrival.
+   `backwards` leaves no transform behind for sticky or fixed descendants. */
+.page-enter {
+  animation: page-enter 440ms var(--ease-out) backwards;
+}
+
+/* Theme switch grows from the toggle that was pressed. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) {
+  animation: theme-reveal 560ms var(--ease-out);
+}
+:root[data-theme-switch] *,
+:root[data-theme-switch] *::before,
+:root[data-theme-switch] *::after {
+  transition: none !important;
+}
+
+/* Disclosure panels open with their content instead of snapping. */
+@supports (interpolate-size: allow-keywords) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+  details::details-content {
+    block-size: 0;
+    overflow: clip;
+    opacity: 0;
+    transition:
+      block-size var(--dur-3) var(--ease-out),
+      opacity var(--dur-2) ease,
+      content-visibility var(--dur-3) allow-discrete;
+  }
+  details[open]::details-content {
+    block-size: auto;
+    opacity: 1;
+  }
+  /* Footer groups are only collapsible on small screens. */
+  @media (min-width: 641px) {
+    .footer-group::details-content {
+      transition: none;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}

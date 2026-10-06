@@ -20,6 +20,7 @@ import { cents } from "@/lib/format";
 import { Empty } from "./states";
 import { SandboxCard, validSandbox, type SandboxFields } from "./sandbox-card";
 import {
+  Check,
   UserRound,
   MapPin,
   CreditCard,
@@ -28,6 +29,7 @@ import {
   Clock3,
   ShoppingBasket,
 } from "lucide-react";
+import { ProductImage } from "./product-card";
 import { Breadcrumbs } from "./breadcrumbs";
 import { PageIntro } from "./page-patterns";
 const Map = dynamic(() => import("./delivery-map"), {
@@ -279,6 +281,18 @@ export function Checkout() {
         text={t("Добавьте товары, чтобы оформить доставку.")}
       />
     );
+  // Presentation only: mirrors the checks the submit button already applies.
+  const steps = [
+    { id: "checkout-contact", label: "Контактные данные", done: validCustomer },
+    { id: "checkout-delivery", label: "Доставка", done: !!quote },
+    {
+      id: "checkout-payment",
+      label: "Способ оплаты",
+      done: method === "cash" || validSandbox(card),
+    },
+    { id: "checkout-summary", label: "Ваш заказ", done: false },
+  ];
+  const currentStep = steps.findIndex((step) => !step.done);
   return (
     <div className="polish-page checkout-page">
       <Breadcrumbs
@@ -294,6 +308,23 @@ export function Checkout() {
         description="Без регистрации · с доставкой до вашей двери"
         icon={ShoppingBasket}
       />
+      <nav className="checkout-steps" aria-label={t("Шаги оформления")}>
+        <ol>
+          {steps.map(({ id, label, done }, index) => (
+            <li key={id} data-done={done || undefined}>
+              <a
+                href={`#${id}`}
+                aria-current={index === currentStep ? "step" : undefined}
+              >
+                <span className="checkout-step-mark">
+                  {done ? <Check size={16} aria-hidden="true" /> : index + 1}
+                </span>
+                <span>{t(label)}</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </nav>
       <form
         onSubmit={submit}
         className="checkout-layout"
@@ -301,7 +332,7 @@ export function Checkout() {
         aria-describedby={error ? "checkout-error" : undefined}
       >
         <div className="checkout-sections">
-          <section className="checkout-panel">
+          <section className="checkout-panel" id="checkout-contact">
             <h2 className="checkout-step-heading">
               <span className="flow-number">01</span>
               <UserRound size={22} aria-hidden="true" />
@@ -331,7 +362,7 @@ export function Checkout() {
                   autoComplete="tel"
                   required
                   maxLength={30}
-                  pattern="\+?[0-9 ()\-]{7,30}"
+                  pattern="\+?[0-9 \(\)\-]{7,30}"
                   placeholder="+992 …"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
@@ -373,7 +404,7 @@ export function Checkout() {
               />
             </label>
           </section>
-          <section className="checkout-panel">
+          <section className="checkout-panel" id="checkout-delivery">
             <h2 className="checkout-step-heading">
               <span className="flow-number">02</span>
               <MapPin size={22} aria-hidden="true" />
@@ -499,7 +530,10 @@ export function Checkout() {
               )}
             </p>
           </section>
-          <section className="checkout-panel payment-panel">
+          <section
+            className="checkout-panel payment-panel"
+            id="checkout-payment"
+          >
             <h2 className="checkout-step-heading">
               <span className="flow-number">03</span>
               <CreditCard size={22} aria-hidden="true" />
@@ -540,7 +574,7 @@ export function Checkout() {
             )}
           </section>
         </div>
-        <aside className="cart-summary checkout-summary">
+        <aside className="cart-summary checkout-summary" id="checkout-summary">
           <h2 className="checkout-step-heading">
             <span className="flow-number">04</span>
             <span>{t("Ваш заказ")}</span>
@@ -549,6 +583,9 @@ export function Checkout() {
             const product = cart.products.find((p) => p.id === item.product_id);
             return (
               <div className="checkout-item" key={item.product_id}>
+                <span className="thumb">
+                  {product && <ProductImage product={product} />}
+                </span>
                 <span>
                   {t(product?.name) || t("Товар недоступен")}
                   <small>
