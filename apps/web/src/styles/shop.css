@@ -1,0 +1,387 @@
+/* Shopping surfaces: product tiles, catalog, product page, cart, checkout and
+   order confirmation. */
+
+/* Photo stage shared by every product thumbnail. Photographs fill it edge to
+   edge: their off-white backdrops vary, so a contained image would read as a
+   box inside the tile. Multiply then tints them all to the same stage tone. */
+.image-wrap,
+.thumb,
+.cart-image,
+.detail-image {
+  isolation: isolate;
+  display: block;
+  overflow: hidden;
+  background: var(--stage);
+}
+.image-wrap .product-image,
+.thumb .product-image,
+.cart-image .product-image,
+.detail-image .product-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  background: none;
+  object-fit: cover;
+  mix-blend-mode: multiply;
+}
+
+/* Product grid */
+.product-grid,
+.product-grid:not(.catalog-grid) {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+}
+.catalog-grid,
+.product-grid.catalog-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+/* Row-limited grids hide the items that would leave a ragged last row. */
+.product-grid.one-row > :nth-child(n + 6),
+.product-grid.two-rows > :nth-child(n + 11) {
+  display: none;
+}
+
+.product-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  min-width: 0;
+  padding: 8px;
+  overflow: visible;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--card-shadow);
+  transition:
+    border-color var(--dur-2) ease,
+    box-shadow var(--dur-3) ease,
+    background-color var(--theme-transition);
+}
+.product-card:hover,
+.product-card:focus-within {
+  border-color: var(--green-line);
+  box-shadow: var(--card-shadow-hover);
+}
+.product-card .image-wrap {
+  position: relative;
+  aspect-ratio: 1.14;
+  margin: 0;
+  padding: 0;
+  border-radius: 16px;
+  box-shadow: inset 0 0 0 1px var(--stage-edge);
+}
+.product-card .image-wrap .product-image {
+  aspect-ratio: auto;
+  transition:
+    scale var(--dur-4) var(--ease-out),
+    filter var(--dur-3) ease;
+}
+@media (hover: hover) {
+  .product-card:hover .image-wrap .product-image {
+    scale: 1.08;
+  }
+}
+.badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 5px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--paykar-green);
+  color: var(--on-accent);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  box-shadow: 0 8px 16px -8px rgb(0 0 0 / 55%);
+}
+.stock-flag {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  left: 10px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: rgb(20 20 20 / 78%);
+  color: #f5f5f5;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.3;
+  text-align: center;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.product-card[data-sold-out] .product-image {
+  filter: grayscale(1);
+  opacity: 0.45;
+}
+.product-card-body,
+.catalog-grid .product-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 12px 8px 8px;
+}
+.unit {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+.product-name {
+  display: -webkit-box;
+  flex: none;
+  min-height: 2.7em;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  transition: color var(--dur-2) ease;
+}
+.product-name:hover {
+  color: var(--brand-ink);
+}
+.prices,
+.product-card .prices {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  align-content: flex-end;
+  gap: 2px 8px;
+  min-height: 0;
+  margin: auto 0 12px;
+  padding-top: 12px;
+}
+.prices strong,
+.catalog-grid .prices strong {
+  color: var(--ink);
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.prices[data-sale] strong {
+  color: var(--sale-ink);
+}
+.prices del {
+  color: var(--muted);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Add to cart. Quiet until the card is engaged, so a grid of products does
+   not read as a wall of green; a filled stepper then marks what is in cart. */
+.add-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--green-line);
+  border-radius: 12px;
+  background: var(--green-soft);
+  color: var(--brand-ink);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  transition:
+    background-color var(--dur-2) ease,
+    border-color var(--dur-2) ease,
+    color var(--dur-2) ease,
+    box-shadow var(--dur-2) ease,
+    scale var(--dur-1) var(--ease-out);
+}
+.add-button:not(:disabled):hover,
+.product-card .add-button:not(:disabled):hover {
+  border-color: transparent;
+  background: var(--paykar-green);
+  color: var(--on-accent);
+  box-shadow: 0 12px 24px -14px var(--green-glow);
+}
+.add-button:not(:disabled):active {
+  background: color-mix(in srgb, var(--paykar-green) 88%, black);
+  scale: 0.97;
+}
+.add-button:disabled {
+  border-color: var(--line);
+  background: transparent;
+  color: var(--muted);
+  cursor: not-allowed;
+  opacity: 1;
+}
+.product-card .add-button,
+.product-card .card-quantity {
+  min-height: 44px;
+}
+.quantity-control {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  background: transparent;
+}
+.quantity-control button,
+.product-card .quantity-control button {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  color: var(--brand-ink);
+  transition:
+    background-color var(--dur-2) ease,
+    scale var(--dur-1) var(--ease-out);
+}
+.quantity-control button:not(:disabled):hover {
+  background: var(--green-soft);
+}
+.quantity-control button:not(:disabled):active {
+  scale: 0.88;
+}
+.quantity-control button:disabled {
+  opacity: 0.35;
+}
+.quantity-control span {
+  min-width: 32px;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.card-quantity {
+  justify-content: space-between;
+  width: 100%;
+  border-color: transparent;
+  border-radius: 12px;
+  background: var(--paykar-green);
+  color: var(--on-accent);
+  box-shadow: 0 12px 24px -14px var(--green-glow);
+  animation: settle-in var(--dur-3) var(--ease-spring);
+}
+.card-quantity button,
+.product-card .card-quantity button {
+  color: var(--on-accent);
+}
+.card-quantity button:not(:disabled):hover {
+  background: rgb(0 0 0 / 14%);
+}
+.card-quantity > span {
+  display: grid;
+  flex: 1;
+  justify-items: center;
+  overflow: hidden;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+.card-quantity small {
+  display: block;
+  margin-top: 1px;
+  font-size: 10px;
+  font-weight: 650;
+  opacity: 0.78;
+}
+.quantity-value {
+  display: block;
+  font-weight: inherit;
+  animation: count-up var(--dur-2) var(--ease-out);
+}
+
+@media (max-width: 1199px) {
+  .product-grid,
+  .product-grid:not(.catalog-grid) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .catalog-grid,
+  .product-grid.catalog-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .product-grid.one-row > :nth-child(n + 5),
+  .product-grid.two-rows > :nth-child(n + 9) {
+    display: none;
+  }
+}
+@media (max-width: 959px) {
+  .product-grid,
+  .product-grid:not(.catalog-grid) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .product-grid.one-row > :nth-child(n + 4),
+  .product-grid.two-rows > :nth-child(n + 10) {
+    display: none;
+  }
+  .product-grid.two-rows > :nth-child(9) {
+    display: flex;
+  }
+}
+@media (max-width: 640px) {
+  .product-grid,
+  .product-grid:not(.catalog-grid),
+  .catalog-grid,
+  .product-grid.catalog-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .product-grid.one-row > :nth-child(4),
+  .product-grid.two-rows > :nth-child(-n + 8) {
+    display: flex;
+  }
+  .product-grid.one-row > :nth-child(n + 5),
+  .product-grid.two-rows > :nth-child(n + 9) {
+    display: none;
+  }
+  .product-card {
+    padding: 6px;
+    border-radius: 18px;
+  }
+  .product-card .image-wrap {
+    aspect-ratio: 1.08;
+    border-radius: 13px;
+  }
+  .product-card-body,
+  .catalog-grid .product-card-body {
+    padding: 10px 6px 6px;
+  }
+  .product-name {
+    font-size: 14px;
+  }
+  .prices,
+  .product-card .prices {
+    margin-bottom: 10px;
+    padding-top: 10px;
+  }
+  .prices strong,
+  .catalog-grid .prices strong {
+    font-size: 19px;
+  }
+  .prices del {
+    font-size: 12px;
+  }
+  .badge {
+    top: 8px;
+    left: 8px;
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+  .stock-flag {
+    right: 6px;
+    bottom: 6px;
+    left: 6px;
+    font-size: 11px;
+  }
+  .add-button {
+    gap: 6px;
+    font-size: 13px;
+  }
+}

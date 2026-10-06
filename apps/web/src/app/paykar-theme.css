@@ -356,45 +356,6 @@ body:has(.cart-layout, .checkout-layout, .confirmation) {
   margin-top: 16px;
   line-height: 1.4;
 }
-.promo-side {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  gap: 16px;
-}
-.promo-card {
-  position: relative;
-  padding: 24px;
-  border-radius: var(--radius);
-  overflow: hidden;
-  background: var(--charcoal);
-  color: white;
-}
-.promo-card > svg {
-  position: absolute;
-  right: 17px;
-  top: 19px;
-  color: var(--paykar-green);
-}
-.promo-card .eyebrow {
-  display: block;
-  color: color-mix(in srgb, var(--paykar-green), white 50%);
-  font-size: 9px;
-  letter-spacing: 1.5px;
-  margin-bottom: 16px;
-}
-.promo-card h2 {
-  font-size: 22px;
-  font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: -0.5px;
-  margin-bottom: 12px;
-}
-.promo-card p {
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.5;
-  max-width: 205px;
-}
 .promo-shopping {
   background: var(--green-wash);
   color: var(--ink);
@@ -898,12 +859,6 @@ body:has(.cart-layout, .checkout-layout, .confirmation) {
   .hero h1 {
     font-size: 40px;
   }
-  .promo-card {
-    padding: 20px;
-  }
-  .promo-card h2 {
-    font-size: 20px;
-  }
   .category-tile img {
     width: 110px;
     height: 110px;
@@ -940,13 +895,6 @@ body:has(.cart-layout, .checkout-layout, .confirmation) {
   }
   .hero h1 {
     font-size: 44px;
-  }
-  .promo-side {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: auto;
-  }
-  .promo-card {
-    min-height: 162px;
   }
   .category-grid {
     gap: 8px;
@@ -1071,31 +1019,6 @@ body:has(.cart-layout, .checkout-layout, .confirmation) {
     max-width: 195px;
     font-size: 9px;
   }
-  .promo-side {
-    gap: 8px;
-  }
-  .promo-card {
-    padding: 16px 12px;
-    min-height: 160px;
-  }
-  .promo-card > svg {
-    width: 22px;
-    height: 22px;
-    top: 12px;
-    right: 10px;
-  }
-  .promo-card .eyebrow {
-    font-size: 7px;
-    letter-spacing: 0.6px;
-    margin-top: 16px;
-    margin-bottom: 12px;
-  }
-  .promo-card h2 {
-    font-size: 17px;
-    letter-spacing: -0.4px;
-    margin-bottom: 8px;
-  }
-  .promo-card p,
   .promo-action {
     font-size: 10px;
     line-height: 1.4;
@@ -1488,22 +1411,6 @@ body:has(.cart-layout, .checkout-layout, .confirmation) {
   background: var(--surface);
   border-style: solid;
 }
-.empty-state > .shopping-promo {
-  text-align: left;
-  width: min(650px, 100%);
-  margin-inline: auto;
-}
-.empty-state .shopping-promo h2 {
-  font-size: 20px;
-  margin-block: 8px;
-}
-.empty-state .shopping-promo p {
-  margin-bottom: 8px;
-  max-width: none;
-}
-.empty-state .shopping-promo .text-link {
-  margin: 0;
-}
 :root[data-theme="light"] .search-box {
   border-color: var(--line);
   background: var(--page-surface);
@@ -1517,58 +1424,6 @@ body:has(.cart-layout, .checkout-layout, .confirmation) {
 }
 .nav-row {
   font-weight: 750;
-}
-.shopping-promo {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  background: var(--green-wash);
-  border: 1px solid var(--green-line);
-  border-radius: var(--radius);
-  padding: 24px;
-  margin-top: 24px;
-}
-.shopping-promo h2 {
-  font-size: 22px;
-  line-height: 1.25;
-  margin-block: 8px;
-  font-weight: 800;
-}
-.shopping-promo p {
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 8px;
-}
-.shopping-promo img {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
-}
-.shopping-promo .text-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  font-size: 13px;
-  font-weight: 700;
-}
-.shopping-promo.compact {
-  margin: 16px -8px 0;
-  padding: 16px 16px;
-  display: block;
-}
-.shopping-promo.compact h2 {
-  font-size: 19px;
-}
-.shopping-promo.compact img {
-  display: none;
-}
-.catalog-sidebar .shopping-promo a {
-  padding: 0;
-  color: var(--green);
-  background: transparent;
 }
 .delivery-marker.store-marker,
 .delivery-marker.customer-marker {
@@ -1623,29 +1478,6 @@ body:has(.cart-layout, .checkout-layout, .confirmation) {
   }
   .empty-state {
     padding: 24px 16px;
-  }
-  .empty-state > .shopping-promo {
-    padding: 16px;
-  }
-  .empty-state .shopping-promo h2 {
-    font-size: 17px;
-  }
-  .empty-state .shopping-promo img {
-    display: none;
-  }
-  .shopping-promo {
-    padding: 16px;
-    gap: 12px;
-  }
-  .shopping-promo h2 {
-    font-size: 19px;
-  }
-  .shopping-promo img {
-    width: 72px;
-    height: 72px;
-  }
-  .catalog-sidebar .shopping-promo {
-    display: none;
   }
 }
 @media (max-width: 360px) {
@@ -1819,19 +1651,6 @@ body:has(.cart-layout, .checkout-layout, .confirmation) {
 }
 :root[data-theme="dark"] .hero .button:hover {
   background: var(--paykar-green-hover);
-}
-.promo-card {
-  padding: 24px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  color: var(--ink);
-}
-.promo-card > svg {
-  top: 16px;
-  right: 16px;
-}
-.promo-card .eyebrow {
-  color: var(--green);
 }
 .promo-shopping {
   background: var(--green-wash);
@@ -2011,12 +1830,6 @@ textarea:autofill {
   min-height: 44px;
   padding: 8px 16px;
 }
-.shopping-promo.compact {
-  margin: 24px 0 0;
-  padding: 16px;
-}
-.shopping-promo,
-.promo-side,
 .promo-grid {
   gap: 16px;
 }
@@ -2045,8 +1858,6 @@ body,
 .confirmation-heading,
 .route-metrics,
 .detail-note,
-.promo-card,
-.shopping-promo,
 .discount-section,
 .message,
 .empty-state,
@@ -2186,9 +1997,7 @@ select {
   .catalog-grid .prices strong {
     font-size: 20px;
   }
-  .promo-card,
-  .hero-copy,
-  .shopping-promo {
+  .hero-copy {
     padding: 16px;
   }
   .field-grid {
@@ -2460,69 +2269,6 @@ select {
   line-height: 1.15;
   overflow-wrap: anywhere;
 }
-.shopping-banner,
-:root[data-theme="dark"] .shopping-banner.hero {
-  position: relative;
-  isolation: isolate;
-  min-height: 200px;
-  border: 1px solid var(--green-line);
-  border-radius: var(--radius);
-  overflow: hidden;
-  background: linear-gradient(110deg, #0b0b0b 30%, var(--paykar-green) 100%);
-  color: #f5f5f5;
-}
-.banner-photo {
-  position: absolute;
-  inset: 0 0 0 auto;
-  width: 64%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  opacity: 1;
-  z-index: -2;
-}
-.shopping-banner.hero .banner-photo {
-  object-fit: contain;
-  object-position: right center;
-}
-.shopping-banner::after,
-:root[data-theme="dark"] .shopping-banner.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    #0b0b0b 24%,
-    rgb(11 11 11 / 88%) 42%,
-    rgb(11 11 11 / 64%) 54%,
-    rgb(11 11 11 / 28%) 70%,
-    transparent 84%
-  );
-  z-index: -1;
-}
-.banner-copy {
-  position: relative;
-  width: 74%;
-  padding: 24px;
-  z-index: 1;
-}
-.banner-copy .paykar-brand {
-  --brand-width: 144px;
-  margin-bottom: 12px;
-}
-.banner-copy h2 {
-  font-size: clamp(20px, 2vw, 28px);
-  font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: -0.6px;
-  margin-bottom: 12px;
-}
-.banner-copy p {
-  font-size: 13px;
-  line-height: 1.5;
-  color: #d0d0d0;
-  margin-bottom: 8px;
-}
 .banner-link {
   display: inline-flex;
   align-items: center;
@@ -2531,43 +2277,6 @@ select {
   color: var(--paykar-green);
   font-size: 13px;
   font-weight: 600;
-}
-.shopping-banner.hero {
-  min-height: 360px;
-}
-.shopping-banner.hero .banner-copy {
-  width: 64%;
-  padding: 32px;
-}
-.shopping-banner.hero .banner-copy .paykar-brand {
-  --brand-width: 176px;
-}
-.shopping-banner.hero .eyebrow {
-  display: block;
-  color: var(--paykar-green);
-}
-.shopping-banner.hero h1 {
-  color: #f5f5f5;
-  margin-block: 16px;
-}
-.shopping-banner.hero p,
-.shopping-banner.hero small,
-:root[data-theme="dark"] .shopping-banner.hero p,
-:root[data-theme="dark"] .shopping-banner.hero small {
-  color: #d0d0d0;
-}
-.shopping-banner.hero .button {
-  color: var(--on-accent);
-  background: var(--paykar-green);
-  margin-top: 16px;
-}
-.shopping-banner.hero .button:hover {
-  background: var(--paykar-green-hover);
-  color: var(--on-accent);
-}
-.shopping-banner.hero small {
-  display: block;
-  margin-top: 16px;
 }
 .catalog-sidebar a {
   gap: 12px;
@@ -2632,13 +2341,6 @@ select {
   .catalog-heading {
     grid-template-columns: minmax(0, 1fr);
   }
-  .banner-copy {
-    width: 64%;
-  }
-  .shopping-banner.hero .banner-copy {
-    width: 68%;
-    padding: 24px;
-  }
 }
 @media (max-width: 640px) {
   .main-navigation .nav-row .info-nav-item {
@@ -2658,20 +2360,6 @@ select {
   }
   .catalog-sidebar a > span {
     white-space: nowrap;
-  }
-  .banner-copy,
-  .shopping-banner.hero .banner-copy {
-    width: 84%;
-    padding: 20px;
-  }
-  .shopping-banner.hero {
-    min-height: 340px;
-  }
-  .shopping-banner.hero h1 {
-    font-size: 32px;
-  }
-  .banner-copy .paykar-brand {
-    --brand-width: 120px;
   }
   .detail-info,
   .navigation-drawer {

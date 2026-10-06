@@ -80,6 +80,7 @@ type CartContext = {
   loading: boolean;
   error?: Error;
   notice: string;
+  noticeId: number;
   retry: () => void;
   add: (product: Product) => void;
   quantity: (id: number, quantity: number, stock: number) => void;
@@ -90,7 +91,13 @@ const Context = createContext<CartContext | null>(null);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const items = useSyncExternalStore(subscribe, snapshot, () => EMPTY);
-  const [notice, setNotice] = useState("");
+  // The id changes on every announcement so a repeated message shows again.
+  const [notice, setNotice] = useState({ text: "", id: 0 });
+  function announce(text: string) {
+    setNotice((current) =>
+      text || current.text ? { text, id: current.id + 1 } : current,
+    );
+  }
   const ids = items
     .map((item) => item.product_id)
     .sort((a, b) => a - b)
@@ -100,7 +107,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   );
   function update(next: Item[]) {
     save(next);
-    setNotice(
+    announce(
       memoryOnly
         ? "Хранилище недоступно: корзина сохранится только до закрытия страницы."
         : "",
@@ -112,18 +119,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     loading: resource.loading,
     error: resource.error,
     count: items.reduce((sum, item) => sum + item.quantity, 0),
-    notice,
+    notice: notice.text,
+    noticeId: notice.id,
     retry: resource.retry,
     add: (product) => {
       const current = snapshot();
       const existing = current.find((item) => item.product_id === product.id);
       const limit = Math.min(99, Math.floor(Number(product.stock_quantity)));
       if (limit < 1 || (existing?.quantity || 0) >= limit) {
-        setNotice("Достигнуто доступное количество товара.");
+        announce("Достигнуто доступное количество товара.");
         return;
       }
       if (!existing && current.length >= 48) {
-        setNotice("В корзине может быть до 48 разных товаров.");
+        announce("В корзине может быть до 48 разных товаров.");
         return;
       }
       update(

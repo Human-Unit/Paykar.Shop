@@ -41,12 +41,13 @@ type RevealProps = Pick<
 // Keep initial styles identical on server/client. CSS removes these transforms
 // before hydration for reduced motion; the hook also shortens the animation.
 export function useReveal({
-  rise = 12,
+  rise = 18,
   delay = 0,
-  duration = 0.38,
+  duration = 0.56,
   scale,
   inView = true,
   hover = false,
+  lift = 4,
 }: {
   rise?: number;
   delay?: number;
@@ -54,6 +55,7 @@ export function useReveal({
   scale?: number;
   inView?: boolean;
   hover?: boolean;
+  lift?: number;
 } = {}): RevealProps {
   const reduceMotion = useReducedMotion();
   const visible = {
@@ -70,7 +72,7 @@ export function useReveal({
       ...(scale ? { scale } : {}),
     },
     ...(inView
-      ? { whileInView: visible, viewport: { once: true, amount: 0.15 } }
+      ? { whileInView: visible, viewport: { once: true, amount: 0.12 } }
       : { animate: visible }),
     transition: {
       duration: reduceMotion ? 0 : duration,
@@ -80,8 +82,8 @@ export function useReveal({
     ...(hover
       ? {
           whileHover: {
-            y: reduceMotion ? 0 : -2,
-            transition: { duration: 0.18, delay: 0, ease },
+            y: reduceMotion ? 0 : -lift,
+            transition: { duration: 0.24, delay: 0, ease },
           },
         }
       : {}),

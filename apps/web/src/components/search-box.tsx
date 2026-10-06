@@ -2,7 +2,7 @@
 import { usePresentation } from "@/context/presentation";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Search, X } from "lucide-react";
 import { ProductPage, useResource } from "@/lib/api";
 import { cents } from "@/lib/format";
@@ -23,6 +23,7 @@ export function SearchBox() {
         pathname.startsWith("/catalog/") ? pathname.slice(9) : undefined,
       )
     : new URLSearchParams();
+  const input = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
   const [term, setTerm] = useState("");
   const [open, setOpen] = useState(false);
@@ -31,6 +32,24 @@ export function SearchBox() {
     const timer = setTimeout(() => setTerm(query.trim()), 300);
     return () => clearTimeout(timer);
   }, [query]);
+  // "/" jumps to search from anywhere outside a text field.
+  useEffect(() => {
+    const shortcut = (event: KeyboardEvent) => {
+      if (event.key !== "/" || event.ctrlKey || event.metaKey || event.altKey)
+        return;
+      const target = event.target;
+      if (
+        target instanceof HTMLElement &&
+        (target.isContentEditable ||
+          ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName))
+      )
+        return;
+      event.preventDefault();
+      input.current?.focus();
+    };
+    document.addEventListener("keydown", shortcut);
+    return () => document.removeEventListener("keydown", shortcut);
+  }, []);
   const visible = open && query.trim().length >= 2;
   const settled = term === query.trim();
   const suggestionQuery = new URLSearchParams(catalogState);
@@ -60,7 +79,9 @@ export function SearchBox() {
       <label htmlFor="site-search" className="sr-only">
         {t("Поиск товаров")}
       </label>
+      <Search className="search-leading" size={20} aria-hidden="true" />
       <input
+        ref={input}
         id="site-search"
         name="q"
         role="combobox"
@@ -73,6 +94,7 @@ export function SearchBox() {
             : undefined
         }
         autoComplete="off"
+        enterKeyHint="search"
         placeholder={t("Найти молоко, хлеб, фрукты…")}
         maxLength={200}
         value={query}
@@ -102,21 +124,26 @@ export function SearchBox() {
           }
         }}
       />
-      {query && (
+      {query ? (
         <button
           type="button"
+          className="search-clear"
           aria-label={t("Очистить поиск")}
           onClick={() => {
             setQuery("");
             setActive(-1);
-            document.getElementById("site-search")?.focus();
+            input.current?.focus();
           }}
         >
-          <X size={18} />
+          <X size={18} aria-hidden="true" />
         </button>
+      ) : (
+        <kbd className="search-kbd" aria-hidden="true">
+          /
+        </kbd>
       )}
-      <button type="submit" aria-label={t("Искать")}>
-        <Search size={21} />
+      <button type="submit" className="search-submit" aria-label={t("Искать")}>
+        <Search size={20} aria-hidden="true" />
       </button>
       {visible && (
         <div className="search-dropdown">
@@ -153,7 +180,9 @@ export function SearchBox() {
                 href={`/product/${product.slug}`}
                 onClick={() => setOpen(false)}
               >
-                <ProductImage product={product} />
+                <span className="thumb">
+                  <ProductImage product={product} />
+                </span>
                 <span>
                   {t(product.name)}
                   <small>

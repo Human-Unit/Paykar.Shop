@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import L from "leaflet";
-import "leaflet/dist/leaflet.css";
 import { usePresentation } from "@/context/presentation";
 import type { StoreLocation } from "@/lib/store-locations";
 import styles from "./home-store-network.module.css";

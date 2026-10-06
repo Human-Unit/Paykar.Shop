@@ -4,21 +4,26 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
   Category,
+  ProductPage,
   Product,
   ProductConnectionList,
   useResource,
 } from "@/lib/api";
 import { cents } from "@/lib/format";
-import { AddButton, ProductCard, ProductImage } from "./product-card";
+import {
+  AddButton,
+  ProductCard,
+  ProductImage,
+  discountPercent,
+} from "./product-card";
 import { Breadcrumbs } from "./breadcrumbs";
-import { Failure, Loading } from "./states";
+import { Empty, Failure, Loading } from "./states";
 import {
   CheckCircle2,
   Package,
   Route,
   CreditCard,
   ArrowRight,
-  Plus,
 } from "lucide-react";
 import { SectionHeader } from "./page-patterns";
 export function ProductDetail({ slug }: { slug: string }) {
@@ -30,6 +35,14 @@ export function ProductDetail({ slug }: { slug: string }) {
   const p = resource.data;
   const category = categories.data?.find((c) => c.id === p?.category_id);
   const parent = categories.data?.find((c) => c.id === category?.parent_id);
+  const related = useResource<ProductPage>(
+    category
+      ? `/products?category=${encodeURIComponent(category.slug)}&in_stock=true&page_size=6`
+      : null,
+  );
+  // One spare so the row stays full at every column count.
+  const alternatives =
+    related.data?.items.filter((item) => item.id !== p?.id).slice(0, 5) ?? [];
   const connections = useResource<ProductConnectionList>(
     `/products/${encodeURIComponent(slug)}/connections`,
   );
@@ -38,6 +51,8 @@ export function ProductDetail({ slug }: { slug: string }) {
   if (resource.error)
     return <Failure error={resource.error} retry={resource.retry} />;
   if (!p) return null;
+  const discount = discountPercent(p);
+  const available = Number(p.stock_quantity) >= 1;
   return (
     <div className="polish-page product-page">
       <Breadcrumbs
@@ -71,23 +86,23 @@ export function ProductDetail({ slug }: { slug: string }) {
             {p.sku.replace(/^DEMO-/, "")} · {t(p.unit)}
           </p>
           <div className="detail-purchase">
-            <div className="prices detail-price">
+            <div
+              className="prices detail-price"
+              data-sale={discount > 0 || undefined}
+            >
               <strong>{money(cents(p.price))}</strong>
               {p.old_price && <del>{money(cents(p.old_price))}</del>}
-              {p.old_price && cents(p.old_price) > cents(p.price) && (
-                <span className="detail-discount">
-                  −{Math.round((1 - cents(p.price) / cents(p.old_price)) * 100)}
-                  %
-                </span>
+              {discount > 0 && (
+                <span className="detail-discount">−{discount}%</span>
               )}
             </div>
-            <p className="stock-state">
-              {Number(p.stock_quantity) >= 1 ? (
+            <p className="stock-state" data-available={available}>
+              {available ? (
                 <CheckCircle2 size={16} aria-hidden="true" />
               ) : (
                 <Package size={16} aria-hidden="true" />
               )}
-              {Number(p.stock_quantity) >= 1
+              {available
                 ? t("В наличии: ") +
                   Math.floor(Number(p.stock_quantity)) +
                   " " +
@@ -154,26 +169,58 @@ export function ProductDetail({ slug }: { slug: string }) {
           )}
         </dl>
       </section>
-      {connections.data?.items.length ? (
-        <section className="related-products editorial-product-connections">
-          <div className="connection-section-heading">
-            <SectionHeader title="Хорошо подходит к этому" />
-            <p>{t(p.name)}</p>
-          </div>
-          <div className="editorial-connection-sequence">
-            <ProductCard product={p} />
-            {connections.data.items.slice(0, 3).map((product, index) => (
-              <div className="editorial-connection-step" key={product.id}>
-                <Plus aria-hidden="true" />
-                <ProductCard product={product} revealIndex={index + 1} />
-              </div>
-            ))}
-          </div>
+      {(connections.loading || Boolean(connections.data?.items.length)) && (
+        <section className="related-products">
+          <SectionHeader title="Хорошо подходит к этому" />
+          {connections.loading ? (
+            <Loading kind="grid" />
+          ) : (
+            <div className="product-grid">
+              {connections.data?.items.map((product, index) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  revealIndex={index}
+                />
+              ))}
+            </div>
+          )}
         </section>
-      ) : null}
+      )}
       {connections.error && (
         <Failure error={connections.error} retry={connections.retry} />
       )}
+      {category && (related.loading || alternatives.length > 0) && (
+        <section className="related-products">
+          <SectionHeader
+            eyebrow="Дополните корзину"
+            title="В этом разделе"
+            action={{ href: `/catalog/${category.slug}`, label: category.name }}
+          />
+          {related.loading ? (
+            <Loading kind="grid" />
+          ) : (
+            <div className="product-grid one-row">
+              {alternatives.map((product, index) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  revealIndex={index}
+                />
+              ))}
+            </div>
+          )}
+        </section>
+      )}
+      {category && related.data && alternatives.length === 0 && (
+        <Empty
+          compact
+          icon={Package}
+          title={t("В этом разделе")}
+          text={t("Другие товары в этом разделе пока не представлены.")}
+        />
+      )}
+      {related.error && <Failure error={related.error} retry={related.retry} />}
     </div>
   );
 }

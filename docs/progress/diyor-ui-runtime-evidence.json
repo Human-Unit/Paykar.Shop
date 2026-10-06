@@ -1,0 +1,405 @@
+{
+  "timestamp_utc": "2026-10-06T14:06:22.236905+00:00",
+  "pre_merge_main": "d37365176a776d5ccba86281037ec369b0d66cd2",
+  "diyor_commit": "5dc421093eac6064bebb3a9c474e2a4049aeb990",
+  "health": {
+    "/health": {
+      "status": "ok",
+      "service": "paykar-api"
+    },
+    "/health/db": {
+      "status": "ok",
+      "database": "connected"
+    }
+  },
+  "catalog_cases": [
+    {
+      "params": {
+        "q": "Чай",
+        "category": "drinks",
+        "min_price": "3",
+        "max_price": "20",
+        "in_stock": "true",
+        "on_sale": "true",
+        "min_discount": "20",
+        "unit": "упак."
+      },
+      "total": 0,
+      "slugs": [],
+      "passed": true
+    },
+    {
+      "params": {
+        "category": "produce",
+        "subcategory": "fruit",
+        "min_price": "5",
+        "max_price": "25",
+        "in_stock": "true",
+        "on_sale": "true"
+      },
+      "total": 0,
+      "slugs": [],
+      "passed": true
+    },
+    {
+      "params": {
+        "min_price": "20"
+      },
+      "total": 7,
+      "slugs": [
+        "oranges",
+        "bananas",
+        "coffee",
+        "butter",
+        "honey",
+        "orange-juice",
+        "cheese"
+      ],
+      "passed": true
+    },
+    {
+      "params": {
+        "max_price": "10"
+      },
+      "total": 14,
+      "slugs": [
+        "baguette",
+        "raisin-bun",
+        "wafers",
+        "sparkling-water",
+        "water",
+        "sponges",
+        "yogurt",
+        "potatoes",
+        "lavash",
+        "flatbread",
+        "carrots",
+        "napkins",
+        "wheat-bread",
+        "rye-bread"
+      ],
+      "passed": true
+    },
+    {
+      "params": {
+        "min_price": "10",
+        "max_price": "20"
+      },
+      "total": 21,
+      "slugs": [
+        "wafers",
+        "kefir",
+        "croissant",
+        "lemons",
+        "marmalade",
+        "milk",
+        "liquid-soap",
+        "cucumbers",
+        "trash-bags",
+        "oat-cookies",
+        "paper-towels",
+        "sour-cream",
+        "orange-juice",
+        "apple-juice",
+        "dish-soap",
+        "cottage-cheese",
+        "green-tea",
+        "black-tea",
+        "milk-chocolate",
+        "dark-chocolate",
+        "apples-red"
+      ],
+      "passed": true
+    },
+    {
+      "params": {
+        "in_stock": "true",
+        "on_sale": "true"
+      },
+      "total": 8,
+      "slugs": [
+        "raisin-bun",
+        "yogurt",
+        "carrots",
+        "trash-bags",
+        "orange-juice",
+        "dish-soap",
+        "wheat-bread",
+        "dark-chocolate"
+      ],
+      "passed": true
+    },
+    {
+      "params": {
+        "min_discount": "10"
+      },
+      "total": 8,
+      "slugs": [
+        "raisin-bun",
+        "yogurt",
+        "carrots",
+        "trash-bags",
+        "orange-juice",
+        "dish-soap",
+        "wheat-bread",
+        "dark-chocolate"
+      ],
+      "passed": true
+    },
+    {
+      "params": {
+        "min_discount": "20"
+      },
+      "total": 5,
+      "slugs": ["raisin-bun", "yogurt", "carrots", "trash-bags", "wheat-bread"],
+      "passed": true
+    },
+    {
+      "params": {
+        "min_discount": "30"
+      },
+      "total": 4,
+      "slugs": ["raisin-bun", "yogurt", "carrots", "wheat-bread"],
+      "passed": true
+    },
+    {
+      "params": {
+        "unit": "упак."
+      },
+      "total": 33,
+      "slugs": [
+        "oranges",
+        "bananas",
+        "wafers",
+        "sparkling-water",
+        "water",
+        "sponges",
+        "yogurt",
+        "potatoes",
+        "kefir",
+        "coffee",
+        "lemons",
+        "marmalade",
+        "butter",
+        "milk",
+        "carrots",
+        "liquid-soap",
+        "honey",
+        "cucumbers",
+        "trash-bags",
+        "oat-cookies",
+        "paper-towels",
+        "napkins",
+        "sour-cream",
+        "orange-juice",
+        "apple-juice",
+        "dish-soap",
+        "cheese",
+        "cottage-cheese",
+        "green-tea",
+        "black-tea",
+        "milk-chocolate",
+        "dark-chocolate",
+        "apples-red"
+      ],
+      "passed": true
+    },
+    {
+      "params": {
+        "unit": "шт."
+      },
+      "total": 7,
+      "slugs": [
+        "baguette",
+        "raisin-bun",
+        "croissant",
+        "lavash",
+        "flatbread",
+        "wheat-bread",
+        "rye-bread"
+      ],
+      "passed": true
+    },
+    {
+      "params": {
+        "category": "drinks",
+        "subcategory": "fruit"
+      },
+      "total": 0,
+      "slugs": [],
+      "passed": true
+    },
+    {
+      "params": {
+        "q": "does-not-exist"
+      },
+      "total": 0,
+      "slugs": [],
+      "passed": true
+    },
+    {
+      "params": {
+        "on_sale": "true",
+        "sort": "price_asc",
+        "page_size": 3,
+        "page": 2
+      },
+      "total": 8,
+      "slugs": ["yogurt", "trash-bags", "dark-chocolate"],
+      "passed": true
+    },
+    {
+      "params": {
+        "category": "produce",
+        "min_price": "5",
+        "max_price": "25",
+        "in_stock": "true",
+        "sort": "price_desc"
+      },
+      "total": 7,
+      "slugs": [
+        "oranges",
+        "bananas",
+        "apples-red",
+        "lemons",
+        "cucumbers",
+        "carrots",
+        "potatoes"
+      ],
+      "passed": true
+    },
+    {
+      "params": {
+        "min_price": "20",
+        "max_price": "10"
+      },
+      "status": 422,
+      "passed": true
+    },
+    {
+      "params": {
+        "min_discount": "101"
+      },
+      "status": 422,
+      "passed": true
+    },
+    {
+      "params": {
+        "min_price": "NaN"
+      },
+      "status": 422,
+      "passed": true
+    }
+  ],
+  "curated_connections": ["oat-cookies", "honey", "wafers"],
+  "cart_connection_batch": {
+    "black-tea": ["oat-cookies", "honey", "wafers"],
+    "coffee": ["milk", "oat-cookies", "milk-chocolate"]
+  },
+  "delivery_config": {
+    "available": true,
+    "delivery_price": "20.00"
+  },
+  "real_delivery_quote": {
+    "status": "PASS",
+    "distance_meters": 2887,
+    "duration_seconds": 273,
+    "delivery_price": "20.00",
+    "latitude": 38.575,
+    "longitude": 68.78,
+    "geometry_type": "LineString",
+    "route_vertices": 51
+  },
+  "homepage_ssr_structure": {
+    "home-bento": true,
+    "hero-card": true,
+    "site-header": true,
+    "header-bar": true,
+    "nav-bar": true,
+    "tabbar": true,
+    "NotoSans-Latin-Cyrillic.woff2": true,
+    "/images/paykar/logo.png": true
+  },
+  "http_pages": [
+    {
+      "path": "/",
+      "status": 200
+    },
+    {
+      "path": "/catalog",
+      "status": 200
+    },
+    {
+      "path": "/catalog?category=produce&subcategory=fruit&min_price=5&max_price=25&in_stock=true&on_sale=true&sort=price_asc",
+      "status": 200
+    },
+    {
+      "path": "/catalog/produce",
+      "status": 200
+    },
+    {
+      "path": "/product/black-tea",
+      "status": 200
+    },
+    {
+      "path": "/cart",
+      "status": 200
+    },
+    {
+      "path": "/checkout",
+      "status": 200
+    },
+    {
+      "path": "/delivery",
+      "status": 200
+    },
+    {
+      "path": "/stores",
+      "status": 200
+    }
+  ],
+  "browser_acceptance": {
+    "status": "BLOCKED",
+    "reason": "No browser is available",
+    "widths_pending": [320, 390, 768, 1024, 1440, 1920],
+    "visual_or_interaction_checks_performed": false
+  },
+  "final_rebuild_http_pages": [
+    {
+      "path": "/",
+      "status": 200
+    },
+    {
+      "path": "/catalog",
+      "status": 200
+    },
+    {
+      "path": "/catalog?category=produce&subcategory=fruit&in_stock=true&sort=price_asc",
+      "status": 200
+    },
+    {
+      "path": "/catalog/produce",
+      "status": 200
+    },
+    {
+      "path": "/product/black-tea",
+      "status": 200
+    },
+    {
+      "path": "/cart",
+      "status": 200
+    },
+    {
+      "path": "/checkout",
+      "status": 200
+    },
+    {
+      "path": "/delivery",
+      "status": 200
+    },
+    {
+      "path": "/stores",
+      "status": 200
+    }
+  ]
+}

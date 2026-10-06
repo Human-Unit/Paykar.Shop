@@ -20,7 +20,6 @@ import { usePresentation } from "@/context/presentation";
 import { useResource, type DeliveryConfig } from "@/lib/api";
 import { cents } from "@/lib/format";
 import { Breadcrumbs } from "./breadcrumbs";
-import "./delivery-page.css";
 import { m, useReveal } from "./motion-primitives";
 
 const benefits = [

@@ -17,7 +17,7 @@ import {
 export type Language = "ru" | "tj" | "en";
 export type Theme = "dark" | "light" | "system";
 type Preferences = { language: Language; theme: Theme };
-const defaults: Preferences = { language: "ru", theme: "light" };
+const defaults: Preferences = { language: "ru", theme: "dark" };
 const storageKey = "paykar-presentation-v1";
 const changed = "paykar-presentation-change";
 let fallback = JSON.stringify(defaults);
@@ -47,9 +47,9 @@ function parse(raw: string): Preferences {
           ? candidate.language
           : "ru",
       theme:
-        candidate.theme === "dark" || candidate.theme === "system"
+        candidate.theme === "light" || candidate.theme === "system"
           ? candidate.theme
-          : "light",
+          : "dark",
     };
   } catch {
     return defaults;

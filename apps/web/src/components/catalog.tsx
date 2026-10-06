@@ -1,9 +1,17 @@
 "use client";
-
+import { usePresentation } from "@/context/presentation";
 import Link from "next/link";
 import { notFound, useRouter, useSearchParams } from "next/navigation";
-import { RotateCcw, Search, X } from "lucide-react";
-import { usePresentation } from "@/context/presentation";
+import { useEffect, useState } from "react";
+import {
+  ArrowUpDown,
+  BadgePercent,
+  ChevronLeft,
+  ChevronRight,
+  PackageCheck,
+  Search,
+  X,
+} from "lucide-react";
 import { Category, ProductPage, useResource } from "@/lib/api";
 import {
   catalogApiQuery,
@@ -14,12 +22,25 @@ import {
 import { ProductCard } from "./product-card";
 import { Breadcrumbs } from "./breadcrumbs";
 import { Empty, Failure, Loading } from "./states";
-import { CatalogFilters } from "./catalog-filters";
+import { CategoryLabel } from "./category-label";
+import { catalogGroups } from "@/lib/category-presentation";
+import { CatalogFilterDialog } from "./catalog-filter-dialog";
 
+const pageSize = 12;
+const sorts = ["name", "price_asc", "price_desc"] as const;
+// Diyor's compact pagination: first, last, and the current page's neighbours.
+function pageNumbers(current: number, total: number) {
+  const pages = [...new Set([1, current - 1, current, current + 1, total])]
+    .filter((page) => page >= 1 && page <= total)
+    .sort((a, b) => a - b);
+  return pages.flatMap((page, index) =>
+    index && page - pages[index - 1] > 1 ? [0, page] : [page],
+  );
+}
 export function Catalog({ slug }: { slug?: string }) {
   const { t, money } = usePresentation();
-  const searchParams = useSearchParams();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const params = catalogParameters(
     new URLSearchParams(searchParams.toString()),
     slug,
@@ -30,32 +51,41 @@ export function Catalog({ slug }: { slug?: string }) {
   const sort = params.get("sort") || "name";
   const inStock = params.get("in_stock") === "true";
   const onSale = params.get("on_sale") === "true";
-  const min = params.get("min_price");
-  const max = params.get("max_price");
   const page = Number(params.get("page") || "1");
-  const products = useResource<ProductPage>(catalogApiQuery(params, true));
+  const products = useResource<ProductPage>(
+    catalogApiQuery(params, true, pageSize),
+  );
   const categories = useResource<Category[]>("/categories");
   const allCategories = categories.data || [];
   const category = allCategories.find((item) => item.slug === categorySlug);
   const subcategory = allCategories.find(
     (item) => item.slug === params.get("subcategory"),
   );
-  const roots = allCategories.filter((item) => item.parent_id === null);
-  const root = roots.find(
-    (item) =>
-      item.slug === categorySlug ||
-      descendantCategories(allCategories, item.slug).some(
-        (child) => child.slug === categorySlug,
-      ),
-  );
-
-  if (
-    slug &&
-    categories.data &&
-    !allCategories.some((item) => item.slug === slug)
-  )
-    notFound();
-
+  // Retain Diyor's previous grid while loading, without reporting its old count.
+  const [shown, setShown] = useState<ProductPage>();
+  if (products.data && products.data !== shown) setShown(products.data);
+  const [draft, setDraft] = useState(q);
+  const [applied, setApplied] = useState(q);
+  if (q !== applied) {
+    setApplied(q);
+    if (q !== draft.trim()) setDraft(q);
+  }
+  useEffect(() => {
+    const value = draft.trim();
+    if (value === q) return;
+    const timer = setTimeout(
+      () =>
+        router.replace(
+          catalogHref(new URLSearchParams(paramsKey), { q: value }),
+          { scroll: false },
+        ),
+      450,
+    );
+    return () => clearTimeout(timer);
+  }, [draft, q, paramsKey, router]);
+  function apply(changes: Record<string, string | null>) {
+    router.push(catalogHref(params, changes), { scroll: false });
+  }
   function categoryHref(value: string) {
     const child = params.get("subcategory");
     const valid =
@@ -68,7 +98,12 @@ export function Catalog({ slug }: { slug?: string }) {
       ...(valid ? {} : { subcategory: null }),
     });
   }
-
+  if (
+    slug &&
+    categories.data &&
+    !allCategories.some((item) => item.slug === slug)
+  )
+    notFound();
   const active: { key: string; label: string; remove: Record<string, null> }[] =
     [];
   if (categorySlug)
@@ -83,12 +118,9 @@ export function Catalog({ slug }: { slug?: string }) {
       label: t(subcategory?.name) || params.get("subcategory")!,
       remove: { subcategory: null },
     });
-  if (q)
-    active.push({
-      key: "q",
-      label: `${t("Поиск")}: ${q}`,
-      remove: { q: null },
-    });
+  if (q) active.push({ key: "q", label: `«${q}»`, remove: { q: null } });
+  const min = params.get("min_price");
+  const max = params.get("max_price");
   if (min || max)
     active.push({
       key: "price",
@@ -109,7 +141,7 @@ export function Catalog({ slug }: { slug?: string }) {
   if (onSale)
     active.push({
       key: "on_sale",
-      label: t("По акции"),
+      label: t("Со скидкой"),
       remove: { on_sale: null },
     });
   if (params.has("min_discount"))
@@ -127,12 +159,13 @@ export function Catalog({ slug }: { slug?: string }) {
   if (sort !== "name")
     active.push({
       key: "sort",
-      label: `${t("Сортировка")}: ${t(sort === "price_asc" ? "Сначала дешевле" : "Сначала дороже")}`,
+      label: t(sort === "price_asc" ? "Сначала дешевле" : "Сначала дороже"),
       remove: { sort: null },
     });
-
+  const total = products.data?.total;
+  const pages = Math.max(1, Math.ceil((total ?? 0) / pageSize));
   return (
-    <div className="polish-page catalog-page shopping-catalog catalog-discovery">
+    <div className="polish-page catalog-page">
       <Breadcrumbs
         items={[
           { label: t("Главная"), href: "/" },
@@ -142,207 +175,244 @@ export function Catalog({ slug }: { slug?: string }) {
             : []),
         ]}
       />
-      <header className="catalog-heading shopping-catalog-heading">
+      <header className="catalog-head">
         <div className="page-title">
-          <span className="eyebrow">{t("Покупки на каждый день")}</span>
           <h1>{t(category?.name) || t("Каталог товаров")}</h1>
-          <p>{t("Выбирайте продукты по названию, цене и наличию.")}</p>
+          <p>
+            {q
+              ? t("Поиск: «") + q + "»"
+              : t("Выбирайте любимые продукты и товары для дома")}
+          </p>
         </div>
+        <p className="result-count" role="status" aria-live="polite">
+          {total === undefined ? (
+            products.loading ? (
+              t("Проверяем результаты…")
+            ) : (
+              t("Не удалось загрузить результаты. Повторите попытку.")
+            )
+          ) : (
+            <>
+              {t("Найдено товаров: ")}
+              <strong>{total}</strong>
+            </>
+          )}
+        </p>
       </header>
-      <div className="catalog-layout shopping-catalog-layout phase4-catalog-layout">
-        <section className="catalog-results" aria-label={t("Товары")}>
-          <nav
-            className="catalog-categories-horizontal"
-            aria-label={t("Категории товаров")}
-          >
-            <Link
-              className={!categorySlug ? "active" : ""}
-              aria-current={!categorySlug ? "page" : undefined}
-              href={categoryHref("")}
-              scroll={false}
-            >
-              {t("Все товары")}
-            </Link>
-            {roots.map((item) => (
-              <Link
-                key={item.id}
-                className={root?.id === item.id ? "active" : ""}
-                aria-current={root?.id === item.id ? "page" : undefined}
-                href={categoryHref(item.slug)}
-                scroll={false}
-              >
-                {t(item.name)}
-              </Link>
-            ))}
-          </nav>
+      <div className="catalog-layout">
+        <aside className="catalog-sidebar" aria-label={t("Категории")}>
+          <h2>{t("Категории")}</h2>
           {categories.loading && <Loading label="Загружаем категории…" />}
           {categories.error && (
             <Failure error={categories.error} retry={categories.retry} />
           )}
-
-          <div className="catalog-discovery-controls">
-            <form
-              className="catalog-search-form"
-              role="search"
-              key={paramsKey}
-              onSubmit={(event) => {
-                event.preventDefault();
-                const value = String(
-                  new FormData(event.currentTarget).get("q") || "",
-                ).trim();
-                router.push(catalogHref(params, { q: value }), {
-                  scroll: false,
-                });
-              }}
-            >
-              <label htmlFor="catalog-search" className="sr-only">
-                {t("Поиск в каталоге")}
-              </label>
+          <Link
+            className={!categorySlug ? "active" : ""}
+            aria-current={!categorySlug ? "page" : undefined}
+            href={categoryHref("")}
+            scroll={false}
+          >
+            <CategoryLabel name="Все товары" />
+          </Link>
+          {catalogGroups(allCategories)
+            .flatMap(({ category: root, children }) => [root, ...children])
+            .map((c) => (
+              <Link
+                key={c.id}
+                className={`${categorySlug === c.slug ? "active" : ""} ${c.parent_id !== null ? "child" : ""}`}
+                href={categoryHref(c.slug)}
+                scroll={false}
+                aria-current={categorySlug === c.slug ? "page" : undefined}
+              >
+                <CategoryLabel slug={c.slug} name={c.name} />
+              </Link>
+            ))}
+        </aside>
+        <section className="catalog-main" aria-label={t("Товары")}>
+          <form
+            className="catalog-toolbar"
+            role="search"
+            onSubmit={(event) => {
+              event.preventDefault();
+              apply({ q: draft.trim() });
+            }}
+          >
+            <label className="toolbar-search">
+              <span className="sr-only">{t("Поиск")}</span>
+              <Search size={18} aria-hidden="true" />
               <input
-                id="catalog-search"
                 name="q"
-                defaultValue={q}
+                value={draft}
                 maxLength={200}
-                placeholder={t("Искать в каталоге...")}
+                autoComplete="off"
+                enterKeyHint="search"
+                placeholder={t("Название или артикул")}
+                onChange={(event) => setDraft(event.target.value)}
               />
-              <button
-                type="submit"
-                className="button secondary"
-                aria-label={t("Искать")}
+              {draft && (
+                <button
+                  type="button"
+                  aria-label={t("Очистить поиск")}
+                  onClick={() => {
+                    setDraft("");
+                    apply({ q: "" });
+                  }}
+                >
+                  <X size={16} aria-hidden="true" />
+                </button>
+              )}
+            </label>
+            <label className="toolbar-sort">
+              <span className="sr-only">{t("Сортировка")}</span>
+              <ArrowUpDown size={16} aria-hidden="true" />
+              <select
+                name="sort"
+                value={sort}
+                onChange={(event) =>
+                  apply({
+                    sort:
+                      sorts.find((value) => value === event.target.value) ??
+                      "name",
+                  })
+                }
               >
-                <Search size={20} aria-hidden="true" />
-              </button>
-            </form>
-            <div className="catalog-discovery-toolbar">
-              <p
-                className="catalog-discovery-count"
-                role="status"
-                aria-live="polite"
-              >
-                {products.loading
-                  ? t("Загружаем товары…")
-                  : products.data
-                    ? `${products.data.total} ${t("товаров")}`
-                    : "—"}
-              </p>
-              <div className="catalog-discovery-actions">
-                <CatalogFilters
-                  key={paramsKey}
-                  params={params}
-                  categories={allCategories}
-                  facets={products.data?.facets}
-                />
-                <label className="catalog-discovery-sort">
-                  <span className="sr-only">{t("Сортировка")}</span>
-                  <select
-                    value={sort}
-                    onChange={(event) =>
-                      router.push(
-                        catalogHref(params, { sort: event.target.value }),
-                        { scroll: false },
-                      )
-                    }
-                  >
-                    <option value="name">{t("По названию")}</option>
-                    <option value="price_asc">{t("Сначала дешевле")}</option>
-                    <option value="price_desc">{t("Сначала дороже")}</option>
-                  </select>
-                </label>
-              </div>
-            </div>
-            <div
-              className="catalog-quick-filters"
-              aria-label={t("Быстрые фильтры")}
-            >
-              <Link
-                className={inStock ? "selected" : ""}
-                href={catalogHref(params, {
-                  in_stock: inStock ? null : "true",
-                })}
-                scroll={false}
-              >
-                {t("В наличии")}
-              </Link>
-              <Link
-                className={onSale ? "selected" : ""}
-                href={catalogHref(params, { on_sale: onSale ? null : "true" })}
-                scroll={false}
-              >
-                {t("По акции")}
-              </Link>
-            </div>
+                <option value="name">{t("По названию")}</option>
+                <option value="price_asc">{t("Сначала дешевле")}</option>
+                <option value="price_desc">{t("Сначала дороже")}</option>
+              </select>
+            </label>
+            <label className="filter-toggle">
+              <input
+                name="in_stock"
+                type="checkbox"
+                checked={inStock}
+                onChange={(event) =>
+                  apply({ in_stock: event.target.checked ? "true" : null })
+                }
+              />
+              <PackageCheck size={16} aria-hidden="true" />
+              <span>{t("В наличии")}</span>
+            </label>
+            <label className="filter-toggle">
+              <input
+                name="on_sale"
+                type="checkbox"
+                checked={onSale}
+                onChange={(event) =>
+                  apply({ on_sale: event.target.checked ? "true" : null })
+                }
+              />
+              <BadgePercent size={16} aria-hidden="true" />
+              <span>{t("Со скидкой")}</span>
+            </label>
+          </form>
+          <div className="catalog-secondary-toolbar">
+            <CatalogFilterDialog
+              key={paramsKey}
+              params={params}
+              categories={allCategories}
+              facets={products.data?.facets}
+            />
             {active.length > 0 && (
-              <div
-                className="catalog-active-filters"
-                aria-label={t("Активные фильтры")}
+              <Link
+                className="filter-reset"
+                href="/catalog"
+                scroll={false}
+                onClick={() => setDraft("")}
               >
-                {active.map((filter) => (
+                {t("Сбросить всё")}
+              </Link>
+            )}
+          </div>
+          {active.length > 0 && (
+            <ul className="active-filters" aria-label={t("Фильтры")}>
+              {active.map((filter) => (
+                <li key={filter.key}>
                   <Link
-                    key={filter.key}
                     href={catalogHref(params, filter.remove)}
                     scroll={false}
-                    className="filter-chip"
-                    aria-label={`${t("Удалить фильтр")}: ${filter.label}`}
+                    aria-label={t("Убрать фильтр: ") + filter.label}
+                    onClick={() => {
+                      if (filter.key === "q") setDraft("");
+                    }}
                   >
                     {filter.label}
                     <X size={14} aria-hidden="true" />
                   </Link>
-                ))}
-                <Link
-                  className="catalog-clear-filters"
-                  href="/catalog"
-                  scroll={false}
-                >
-                  <RotateCcw size={14} aria-hidden="true" />
-                  {t("Сбросить всё")}
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {products.loading && <Loading kind="grid" />}
+                </li>
+              ))}
+            </ul>
+          )}
+          {!shown && products.loading && <Loading kind="grid" />}
           {products.error &&
             (products.error.status === 422 ? (
-              <div className="catalog-filter-error" role="alert">
-                <p>{t("Проверьте значения фильтров.")}</p>
-                <Link href="/catalog">{t("Сбросить всё")}</Link>
-              </div>
+              <Empty
+                title={t("Проверьте значения фильтров.")}
+                text={t("Попробуйте другое название или измените фильтры.")}
+              />
             ) : (
               <Failure error={products.error} retry={products.retry} />
             ))}
-          {products.data && (
-            <>
-              {!products.data.items.length ? (
+          {shown && !products.error && (
+            <div
+              className="catalog-results"
+              aria-busy={products.loading}
+              inert={products.loading}
+            >
+              {!shown.items.length ? (
                 <Empty
                   title={t("Ничего не найдено")}
                   text={t("Попробуйте другое название или измените фильтры.")}
                 />
               ) : (
                 <div className="product-grid catalog-grid">
-                  {products.data.items.map((product) => (
-                    <ProductCard key={product.id} product={product} />
+                  {shown.items.map((p, index) => (
+                    <ProductCard key={p.id} product={p} revealIndex={index} />
                   ))}
                 </div>
               )}
-              <nav className="pagination" aria-label={t("Страницы каталога")}>
-                {page > 1 && (
-                  <Link href={catalogHref(params, { page: String(page - 1) })}>
-                    {t("← Назад")}
-                  </Link>
-                )}
-                <span>
-                  {t("Страница ")}
-                  {page}
-                  {t(" из ")}
-                  {Math.max(1, Math.ceil(products.data.total / 12))}
-                </span>
-                {page * 12 < products.data.total && (
-                  <Link href={catalogHref(params, { page: String(page + 1) })}>
-                    {t("Далее →")}
-                  </Link>
-                )}
-              </nav>
-            </>
+              {pages > 1 && (
+                <nav className="pagination" aria-label={t("Страницы каталога")}>
+                  {page > 1 && (
+                    <Link
+                      className="pagination-step"
+                      href={catalogHref(params, { page: String(page - 1) })}
+                    >
+                      <ChevronLeft size={16} aria-hidden="true" />
+                      {t("Назад")}
+                    </Link>
+                  )}
+                  {pageNumbers(page, pages).map((number, index) =>
+                    !number ? (
+                      <span
+                        key={`gap-${index}`}
+                        className="pagination-gap"
+                        aria-hidden="true"
+                      >
+                        …
+                      </span>
+                    ) : (
+                      <Link
+                        key={number}
+                        href={catalogHref(params, { page: String(number) })}
+                        aria-current={number === page ? "page" : undefined}
+                      >
+                        {number}
+                      </Link>
+                    ),
+                  )}
+                  {page < pages && (
+                    <Link
+                      className="pagination-step"
+                      href={catalogHref(params, { page: String(page + 1) })}
+                    >
+                      {t("Далее")}
+                      <ChevronRight size={16} aria-hidden="true" />
+                    </Link>
+                  )}
+                </nav>
+              )}
+            </div>
           )}
         </section>
       </div>

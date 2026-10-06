@@ -24,7 +24,7 @@ A polished ecommerce recreation focused on a complete shopping journey: catalog 
 ## Highlights
 
 - **Responsive grocery storefront** with a dark-first Paykar design system, light theme, RU/TJ/EN localization and a responsive catalog mega-menu.
-- **Catalog discovery** with search suggestions, keyboard navigation, categories, sorting, stock filtering, sale filtering, pagination and related products.
+- **Catalog discovery** with URL-backed search, recursive categories/subcategories, exact prices and catalog-derived presets, stock/sale/discount/unit filters, sorting, pagination, active chips and curated product connections.
 - **Persistent guest cart** stored locally with stock-aware quantity controls and server-resolved prices.
 - **Map-based checkout** using Leaflet + OpenStreetMap with manual delivery-point correction.
 - **Real road routing** through server-side openrouteservice integration: route geometry, distance, ETA and configured delivery fee are returned before order confirmation.
@@ -471,7 +471,8 @@ Key reports:
 - [`docs/progress/store-completion-pass.md`](docs/progress/store-completion-pass.md) — informational pages + sandbox payments
 - [`docs/progress/delivery-page-redesign.md`](docs/progress/delivery-page-redesign.md) — delivery-page visual benchmark
 - [`docs/progress/catalog-mega-menu.md`](docs/progress/catalog-mega-menu.md) — catalog mega-menu
-- [`docs/progress/full-site-polish.md`](docs/progress/full-site-polish.md) — latest full-site visual polish and verification boundary
+- [`docs/progress/full-site-polish.md`](docs/progress/full-site-polish.md) — earlier full-site visual polish and verification boundary
+- [`docs/progress/diyor-ui-integration.md`](docs/progress/diyor-ui-integration.md) — Diyor UI integration, preservation audit and current verification boundary
 
 ---
 
