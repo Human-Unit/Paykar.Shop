@@ -118,3 +118,15 @@ async def test_promotions_filter_and_pagination(client):
     assert (await client.get("/api/v1/products?on_sale=true&page_size=1&page=2")).json()[
         "items"
     ] == []
+
+
+async def test_price_range_filters(client):
+    result = (
+        await client.get("/api/v1/products", params={"min_price": "15", "max_price": "21"})
+    ).json()
+    assert result["total"] == 1
+    assert result["items"][0]["slug"] == "test-banana"
+    result = (await client.get("/api/v1/products", params={"max_price": "11"})).json()
+    assert result["total"] == 1
+    assert result["items"][0]["slug"] == "test-apple"
+    assert (await client.get("/api/v1/products?min_price=-1")).status_code == 422

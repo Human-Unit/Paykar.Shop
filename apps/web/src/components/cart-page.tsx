@@ -11,13 +11,38 @@ import {
 } from "lucide-react";
 import { useCart } from "@/context/cart";
 import { cents } from "@/lib/format";
-import { ProductImage } from "./product-card";
+import { ProductCard, ProductImage } from "./product-card";
 import { Empty, Failure, Loading } from "./states";
 import { Breadcrumbs } from "./breadcrumbs";
-import { PageIntro } from "./page-patterns";
+import { PageIntro, SectionHeader } from "./page-patterns";
+import { useProductConnectionBatch } from "@/lib/api";
 export function CartPage() {
   const { t, money } = usePresentation();
   const cart = useCart();
+  const sourceSlugs = cart.items.flatMap((item) => {
+    const product = cart.products.find(
+      (candidate) => candidate.id === item.product_id,
+    );
+    return product ? [product.slug] : [];
+  });
+  const connections = useProductConnectionBatch(sourceSlugs);
+  const inCart = new Set(cart.items.map((item) => item.product_id));
+  const seen = new Set<number>();
+  const suggestions = (connections.data?.items ?? [])
+    .flatMap((group) =>
+      group.items.filter((product) => {
+        if (
+          inCart.has(product.id) ||
+          seen.has(product.id) ||
+          !product.is_active ||
+          Number(product.stock_quantity) < 1
+        )
+          return false;
+        seen.add(product.id);
+        return true;
+      }),
+    )
+    .slice(0, 4);
   if (!cart.items.length)
     return (
       <Empty
@@ -170,6 +195,23 @@ export function CartPage() {
           </Link>
         </aside>
       </div>
+      {suggestions.length > 0 && (
+        <section className="related-products cart-suggestions">
+          <SectionHeader
+            title={
+              "\u041c\u043e\u0436\u043d\u043e \u0434\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u043a \u043f\u043e\u043a\u0443\u043f\u043a\u0435"
+            }
+          />
+          <div className="product-grid">
+            {suggestions.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </section>
+      )}
+      {connections.error && (
+        <Failure error={connections.error} retry={connections.retry} />
+      )}
     </div>
   );
 }

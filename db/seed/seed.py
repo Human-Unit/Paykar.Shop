@@ -18,7 +18,7 @@ from sqlalchemy.ext.asyncio import async_sessionmaker  # noqa: E402
 
 from app.core.config import Settings  # noqa: E402
 from app.core.database import make_engine  # noqa: E402
-from app.models import Category, Product  # noqa: E402
+from app.models import Category, Product, ProductConnection  # noqa: E402
 
 
 async def seed():
@@ -51,9 +51,36 @@ async def seed():
                 await session.execute(
                     insert(Product).values(**values).on_conflict_do_nothing(index_elements=["sku"])
                 )
+            for connection in data.get("product_connections", []):
+                source_id = await session.scalar(
+                    select(Product.id).where(Product.slug == connection["source"])
+                )
+                target_id = await session.scalar(
+                    select(Product.id).where(Product.slug == connection["target"])
+                )
+                if source_id is None or target_id is None:
+                    raise ValueError(
+                        "Seed product connection references unknown slugs: "
+                        f"{connection['source']} -> {connection['target']}"
+                    )
+                await session.execute(
+                    insert(ProductConnection)
+                    .values(
+                        source_product_id=source_id,
+                        target_product_id=target_id,
+                        relation_type="complementary",
+                        position=connection["position"],
+                    )
+                    .on_conflict_do_nothing(
+                        index_elements=["source_product_id", "target_product_id"]
+                    )
+                )
             counts = {
                 "categories": await session.scalar(select(func.count()).select_from(Category)),
                 "products": await session.scalar(select(func.count()).select_from(Product)),
+                "product_connections": await session.scalar(
+                    select(func.count()).select_from(ProductConnection)
+                ),
             }
         print(json.dumps(counts))
     finally:

@@ -118,7 +118,7 @@ export function MainNavigation() {
           onClose={closeCatalog}
         />
         {informationNavigation
-          .filter((item) => item.desktop !== false)
+          .filter((item) => item.id === "delivery" || item.id === "stores")
           .map((item) =>
             item.content.length ? (
               <InfoNavMenu

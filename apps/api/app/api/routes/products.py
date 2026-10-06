@@ -1,11 +1,20 @@
+from decimal import Decimal
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, HTTPException, Query
-from sqlalchemy import func, or_, select
+from sqlalchemy import case, func, or_, select
+from sqlalchemy.orm import aliased
 
 from app.core.database import Session
-from app.models import Category, Product
-from app.schemas.product import ProductOut, ProductPage
+from app.models import Category, Product, ProductConnection
+from app.schemas.product import (
+    ProductConnectionBatch,
+    ProductConnectionBatchIn,
+    ProductConnectionGroup,
+    ProductConnectionList,
+    ProductOut,
+    ProductPage,
+)
 
 router = APIRouter(prefix="/products", tags=["products"])
 
@@ -18,6 +27,8 @@ async def products(
     sort: Literal["name", "price_asc", "price_desc"] = "name",
     in_stock: bool = False,
     on_sale: bool = False,
+    min_price: Annotated[Decimal | None, Query(ge=0)] = None,
+    max_price: Annotated[Decimal | None, Query(ge=0)] = None,
     page: Annotated[int, Query(ge=1)] = 1,
     page_size: Annotated[int, Query(ge=1, le=48)] = 24,
     ids: Annotated[str | None, Query(max_length=2000)] = None,
@@ -36,6 +47,10 @@ async def products(
         filters.append(Product.stock_quantity >= 1)
     if on_sale:
         filters.append(Product.old_price > Product.price)
+    if min_price is not None:
+        filters.append(Product.price >= min_price)
+    if max_price is not None:
+        filters.append(Product.price <= max_price)
     if ids is not None:
         try:
             product_ids = [int(value) for value in ids.split(",") if value]
@@ -63,6 +78,55 @@ async def products(
         page=page,
         page_size=page_size,
     )
+
+
+@router.post("/connections", response_model=ProductConnectionBatch)
+async def product_connections_batch(body: ProductConnectionBatchIn, session: Session):
+    source_order = {slug: index for index, slug in enumerate(body.source_slugs)}
+    target = aliased(Product)
+    rows = await session.execute(
+        select(Product.slug, ProductConnection.position, target)
+        .join(ProductConnection, ProductConnection.source_product_id == Product.id)
+        .join(target, ProductConnection.target_product_id == target.id)
+        .where(
+            Product.slug.in_(source_order),
+            Product.is_active.is_(True),
+            ProductConnection.is_active.is_(True),
+            target.is_active.is_(True),
+            target.stock_quantity >= 1,
+        )
+        .order_by(case(source_order, value=Product.slug), ProductConnection.position, target.id)
+    )
+    grouped: dict[str, list[ProductOut]] = {slug: [] for slug in body.source_slugs}
+    for source_slug, _, target in rows:
+        grouped[source_slug].append(ProductOut.model_validate(target))
+    return ProductConnectionBatch(
+        items=[
+            ProductConnectionGroup(source_slug=slug, items=grouped[slug])
+            for slug in body.source_slugs
+        ]
+    )
+
+
+@router.get("/{slug}/connections", response_model=ProductConnectionList)
+async def product_connections(slug: str, session: Session):
+    source_id = await session.scalar(
+        select(Product.id).where(Product.slug == slug, Product.is_active.is_(True))
+    )
+    if source_id is None:
+        raise HTTPException(404, "Product not found")
+    rows = await session.scalars(
+        select(Product)
+        .join(ProductConnection, ProductConnection.target_product_id == Product.id)
+        .where(
+            ProductConnection.source_product_id == source_id,
+            ProductConnection.is_active.is_(True),
+            Product.is_active.is_(True),
+            Product.stock_quantity >= 1,
+        )
+        .order_by(ProductConnection.position, Product.id)
+    )
+    return ProductConnectionList(items=[ProductOut.model_validate(row) for row in rows])
 
 
 @router.get("/{slug}", response_model=ProductOut)

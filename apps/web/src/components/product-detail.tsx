@@ -2,17 +2,23 @@
 import { usePresentation } from "@/context/presentation";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Category, ProductPage, Product, useResource } from "@/lib/api";
+import {
+  Category,
+  Product,
+  ProductConnectionList,
+  useResource,
+} from "@/lib/api";
 import { cents } from "@/lib/format";
 import { AddButton, ProductCard, ProductImage } from "./product-card";
 import { Breadcrumbs } from "./breadcrumbs";
-import { Empty, Failure, Loading } from "./states";
+import { Failure, Loading } from "./states";
 import {
   CheckCircle2,
   Package,
   Route,
   CreditCard,
   ArrowRight,
+  Plus,
 } from "lucide-react";
 import { SectionHeader } from "./page-patterns";
 export function ProductDetail({ slug }: { slug: string }) {
@@ -24,13 +30,9 @@ export function ProductDetail({ slug }: { slug: string }) {
   const p = resource.data;
   const category = categories.data?.find((c) => c.id === p?.category_id);
   const parent = categories.data?.find((c) => c.id === category?.parent_id);
-  const related = useResource<ProductPage>(
-    category
-      ? `/products?category=${encodeURIComponent(category.slug)}&in_stock=true&page_size=6`
-      : null,
+  const connections = useResource<ProductConnectionList>(
+    `/products/${encodeURIComponent(slug)}/connections`,
   );
-  const alternatives =
-    related.data?.items.filter((item) => item.id !== p?.id).slice(0, 4) ?? [];
   if (resource.loading) return <Loading kind="product" />;
   if (resource.error?.status === 404) notFound();
   if (resource.error)
@@ -152,33 +154,26 @@ export function ProductDetail({ slug }: { slug: string }) {
           )}
         </dl>
       </section>
-      {category && (related.loading || alternatives.length > 0) && (
-        <section className="related-products">
-          <SectionHeader
-            eyebrow="Дополните корзину"
-            title="В этом разделе"
-            action={{ href: `/catalog/${category.slug}`, label: category.name }}
-          />
-          {related.loading ? (
-            <Loading kind="grid" />
-          ) : (
-            <div className="product-grid">
-              {alternatives.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          )}
+      {connections.data?.items.length ? (
+        <section className="related-products editorial-product-connections">
+          <div className="connection-section-heading">
+            <SectionHeader title="Хорошо подходит к этому" />
+            <p>{t(p.name)}</p>
+          </div>
+          <div className="editorial-connection-sequence">
+            <ProductCard product={p} />
+            {connections.data.items.slice(0, 3).map((product, index) => (
+              <div className="editorial-connection-step" key={product.id}>
+                <Plus aria-hidden="true" />
+                <ProductCard product={product} revealIndex={index + 1} />
+              </div>
+            ))}
+          </div>
         </section>
+      ) : null}
+      {connections.error && (
+        <Failure error={connections.error} retry={connections.retry} />
       )}
-      {category && related.data && alternatives.length === 0 && (
-        <Empty
-          compact
-          icon={Package}
-          title={t("В этом разделе")}
-          text={t("Другие товары в этом разделе пока не представлены.")}
-        />
-      )}
-      {related.error && <Failure error={related.error} retry={related.retry} />}
     </div>
   );
 }

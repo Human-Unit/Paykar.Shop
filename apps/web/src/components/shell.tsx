@@ -48,35 +48,34 @@ export function Shell({ children }: { children: React.ReactNode }) {
       <a className="skip-link" href="#main">
         {t("Перейти к содержимому")}
       </a>
-      <div className="info-strip">
-        <div className="container topbar-inner">
-          <span className="flex items-center gap-2">
-            <MapPin size={14} />
-            {t(" Душанбе")}
-          </span>
-          <div className="utility-actions">
-            <Preferences />
-            <BurgerMenu />
+      <header className="site-header phase4-header">
+        <div className="container header-main phase4-header-main">
+          <div className="header-left">
+            <Brand />
+            <div className="desktop-only">
+              <MainNavigation />
+            </div>
+          </div>
+          <div className="header-search">
+            <SearchBox />
+          </div>
+          <div className="header-right">
+            <Link
+              href="/cart"
+              className="cart-link"
+              aria-label={t("Корзина, ") + cart.count + t(" товаров")}
+            >
+              <ShoppingBasket size={22} />
+              <span className="cart-label desktop-only">{t("Корзина")}</span>
+              <span className="cart-count" data-testid="cart-count">
+                {cart.count}
+              </span>
+            </Link>
+            <div className="mobile-only">
+              <BurgerMenu />
+            </div>
           </div>
         </div>
-      </div>
-      <header className="site-header">
-        <div className="container header-main">
-          <Brand />
-          <SearchBox />
-          <Link
-            href="/cart"
-            className="cart-link"
-            aria-label={t("Корзина, ") + cart.count + t(" товаров")}
-          >
-            <ShoppingBasket size={22} />
-            <span className="cart-label">{t("Корзина")}</span>
-            <span className="cart-count" data-testid="cart-count">
-              {cart.count}
-            </span>
-          </Link>
-        </div>
-        <MainNavigation />
       </header>
       {cart.notice && (
         <div className="container pt-4" role="status">

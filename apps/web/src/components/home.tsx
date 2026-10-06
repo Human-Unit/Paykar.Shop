@@ -1,99 +1,134 @@
 "use client";
-import { usePresentation } from "@/context/presentation";
-import { m, MotionLink, useReveal } from "./motion-primitives";
+
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowUpRight,
-  Leaf,
-  ShoppingBasket,
-  PackageCheck,
-  Route,
-  ShoppingBag,
-  CheckCircle2,
-  MapPin,
-} from "lucide-react";
+import { ArrowRight, ArrowUpRight, MapPin, Plus } from "lucide-react";
 import { cents } from "@/lib/format";
-import { Category, ProductPage, useResource } from "@/lib/api";
-import { ProductCard } from "./product-card";
-import { Empty, Failure, Loading } from "./states";
-import { ShoppingBanner } from "./shopping-banner";
+import {
+  Category,
+  Product,
+  ProductConnectionList,
+  ProductPage,
+  useResource,
+} from "@/lib/api";
 import { categoryImages } from "@/lib/category-presentation";
-import { articles, storePages } from "@/lib/store-content";
-import { SectionHeader, StepFlow, CTASection } from "./page-patterns";
+import { articles } from "@/lib/store-content";
+import { usePresentation } from "@/context/presentation";
 import { ArticleCard } from "./article-card";
 import { HomeStoreNetwork } from "./home-store-network";
+import { AddButton, ProductCard, ProductImage } from "./product-card";
+import { SectionHeader } from "./page-patterns";
+import { Empty, Failure, Loading } from "./states";
+import { m, useReveal } from "./motion-primitives";
+
+const featuredSlugs = ["oranges", "wheat-bread", "yogurt", "black-tea"];
+
+function EditorialProduct({
+  product,
+  index = 0,
+  compact = false,
+}: {
+  product: Product;
+  index?: number;
+  compact?: boolean;
+}) {
+  const { t, money } = usePresentation();
+  const reveal = useReveal({
+    rise: 12,
+    delay: Math.min(index, 3) * 0.045,
+    hover: true,
+  });
+
+  return (
+    <m.article
+      {...reveal}
+      className={`editorial-product${compact ? " editorial-product-compact" : ""}`}
+    >
+      <Link
+        className="editorial-product-image"
+        href={`/product/${product.slug}`}
+        aria-label={t(product.name)}
+      >
+        <ProductImage product={product} large />
+        <span className="editorial-product-open" aria-hidden="true">
+          <ArrowUpRight size={18} />
+        </span>
+      </Link>
+      <div className="editorial-product-copy">
+        <div className="editorial-product-meta">
+          <span className="unit">{t(product.unit)}</span>
+          <Link className="product-name" href={`/product/${product.slug}`}>
+            {t(product.name)}
+          </Link>
+          <strong className="editorial-price">
+            {money(cents(product.price))}
+          </strong>
+        </div>
+        <AddButton product={product} />
+      </div>
+    </m.article>
+  );
+}
+
 export function Home() {
   const { t } = usePresentation();
-  const firstCard = useReveal({ rise: 10, delay: 0.1, hover: true });
-  const secondCard = useReveal({ rise: 10, delay: 0.17, hover: true });
-  const benefits = useReveal({ rise: 8 });
-  const grid = useReveal({ rise: 8 });
   const categories = useResource<Category[]>("/categories");
   const products = useResource<ProductPage>(
     "/products?page_size=48&in_stock=true",
   );
+  const teaConnections = useResource<ProductConnectionList>(
+    "/products/black-tea/connections",
+  );
   const discounts =
     products.data?.items
-      .filter((p) => p.old_price && cents(p.old_price) > cents(p.price))
+      .filter(
+        (product) =>
+          product.old_price && cents(product.old_price) > cents(product.price),
+      )
       .slice(0, 4) ?? [];
-  const everyday =
-    products.data?.items
-      .filter((p) => !discounts.some((d) => d.id === p.id))
-      .slice(0, 8) ?? [];
+  const featured =
+    products.data?.items.filter(
+      (product) => featuredSlugs.includes(product.slug) && product.is_active,
+    ) ?? [];
+  const tea = products.data?.items.find(
+    (product) => product.slug === "black-tea",
+  );
+  const teaPairings = teaConnections.data?.items.filter(
+    (product) => product.is_active && Number(product.stock_quantity) >= 1,
+  );
+
   return (
-    <div className="polish-page home-page">
-      <div className="promo-grid">
-        <ShoppingBanner hero />
-        <div className="promo-side">
-          <MotionLink
-            {...firstCard}
-            href="/delivery"
-            className="promo-card promo-route"
-          >
-            <Route size={30} aria-hidden="true" />
-            <span className="eyebrow">{t("ДОСТАВКА")}</span>
-            <h2>
-              {t("Весь маршрут.")} {t("До заказа.")}
-            </h2>
-            <p>{t("Расстояние, время и стоимость на одной карте.")}</p>
-            <span className="promo-action">
-              {t("Как работает доставка")}{" "}
-              <ArrowUpRight size={18} aria-hidden="true" />
-            </span>
-          </MotionLink>
-          <MotionLink
-            {...secondCard}
-            href="/catalog"
-            className="promo-card promo-shopping"
-          >
-            <ShoppingBag size={30} aria-hidden="true" />
-            <span className="eyebrow">{t("ПРОСТО ПОКУПКИ")}</span>
-            <h2>
-              {t("Без регистрации.")} {t("В вашем темпе.")}
-            </h2>
-            <span className="promo-action">
-              {t("Собрать корзину ")}
-              <ArrowUpRight size={18} />
-            </span>
-          </MotionLink>
+    <div className="polish-page home-page shopping-home phase4-home">
+      <section className="editorial-hero" aria-labelledby="shop-intro-title">
+        <div className="editorial-hero-copy">
+          <span className="eyebrow">
+            <MapPin size={15} aria-hidden="true" />
+            {t("Душанбе")}
+          </span>
+          <h1 id="shop-intro-title">{t("Покупки на каждый день")}</h1>
+          <p>
+            {t(
+              "Выбирайте продукты, проверяйте цены и собирайте корзину онлайн.",
+            )}
+          </p>
+          <Link className="button editorial-hero-action" href="/catalog">
+            {t("Открыть каталог")}
+            <ArrowRight size={18} aria-hidden="true" />
+          </Link>
         </div>
-      </div>
-      <m.div {...benefits} className="benefits">
-        <span>
-          <Leaf size={20} />
-          {t(" Продукты на каждый день")}
-        </span>
-        <span>
-          <ShoppingBasket size={20} />
-          {t(" Покупки без регистрации")}
-        </span>
-        <span>
-          <PackageCheck size={20} />
-          {t(" Маршрут и цена до заказа")}
-        </span>
-      </m.div>
-      <section>
+        <div className="editorial-hero-art">
+          <Image
+            src="/images/paykar/produce.webp"
+            width={900}
+            height={900}
+            priority
+            unoptimized
+            alt=""
+          />
+        </div>
+      </section>
+
+      <section className="home-categories phase4-categories">
         <SectionHeader
           eyebrow="Свежий выбор на каждый день"
           title="Категории товаров"
@@ -103,31 +138,31 @@ export function Home() {
         {categories.error && (
           <Failure error={categories.error} retry={categories.retry} />
         )}
-        <m.div {...grid} className="category-grid">
+        <div className="category-grid">
           {categories.data
-            ?.filter((c) => c.parent_id === null)
-            .map((c) => (
+            ?.filter((category) => category.parent_id === null)
+            .map((category) => (
               <Link
-                href={`/catalog/${c.slug}`}
-                key={c.id}
+                href={`/catalog/${category.slug}`}
+                key={category.id}
                 className="category-tile"
               >
                 <Image
                   src={
-                    categoryImages[c.slug]
-                      ? `/images/paykar/${categoryImages[c.slug]}.webp`
+                    categoryImages[category.slug]
+                      ? `/images/paykar/${categoryImages[category.slug]}.webp`
                       : "/images/products/fallback.svg"
                   }
-                  width={180}
-                  height={180}
+                  width={240}
+                  height={240}
                   unoptimized
                   alt=""
                 />
-                <span>{t(c.name)}</span>
-                <ArrowUpRight size={16} />
+                <span>{t(category.name)}</span>
+                <ArrowUpRight size={16} aria-hidden="true" />
               </Link>
             ))}
-        </m.div>
+        </div>
         {categories.data?.length === 0 && (
           <Empty
             title={t("Категории скоро появятся")}
@@ -137,24 +172,8 @@ export function Home() {
           />
         )}
       </section>
-      {discounts.length > 0 && (
-        <section id="promotions" className="discount-section">
-          <SectionHeader
-            eyebrow="МЕНЬШЕ ЦЕНА — ТОТ ЖЕ ВЫБОР"
-            title="Акции"
-            action={{ href: "/promotions", label: "Все акции" }}
-          />
-          <div className="product-grid">
-            {discounts.map((p, index) => (
-              <ProductCard key={p.id} product={p} revealIndex={index} />
-            ))}
-          </div>
-          <p className="section-note">
-            {t("Скидки относительно прежних цен.")}
-          </p>
-        </section>
-      )}
-      <section>
+
+      <section className="home-everyday phase4-featured">
         <SectionHeader
           eyebrow="Продукты на каждый день"
           title="Повседневные покупки"
@@ -164,11 +183,17 @@ export function Home() {
         {products.error && (
           <Failure error={products.error} retry={products.retry} />
         )}
-        <div className="product-grid">
-          {everyday.map((p, index) => (
-            <ProductCard key={p.id} product={p} revealIndex={index} />
-          ))}
-        </div>
+        {featured.length > 0 && (
+          <div className="editorial-product-grid">
+            {featured.map((product, index) => (
+              <EditorialProduct
+                key={product.id}
+                product={product}
+                index={index}
+              />
+            ))}
+          </div>
+        )}
         {products.data?.total === 0 && (
           <Empty
             title={t("Товары скоро появятся.")}
@@ -178,42 +203,79 @@ export function Home() {
           />
         )}
       </section>
-      <section className="home-shopping-flow">
-        <SectionHeader
-          eyebrow="ПРОСТО ПОКУПКИ"
-          title="Покупки в вашем темпе"
-          text="Без регистрации. Всё заранее."
-          action={{ href: "/how-to-buy", label: "Как купить" }}
-        />
-        <StepFlow
-          steps={[
-            { ...storePages[0].sections[0], icon: ShoppingBasket },
-            { ...storePages[0].sections[3], icon: MapPin },
-            { ...storePages[0].sections[5], icon: CheckCircle2 },
-          ]}
-        />
+
+      {tea && teaPairings && teaPairings.length > 0 && (
+        <section className="home-pairing editorial-pairing">
+          <div className="editorial-pairing-heading">
+            <span className="eyebrow">{t("Свежий выбор на каждый день")}</span>
+            <h2>{t("Хорошо подходит к этому")}</h2>
+            <p>{t(tea.name)}</p>
+            <Link href={`/product/${tea.slug}`} className="text-link">
+              {t("Подробнее о товаре")}
+              <ArrowRight size={16} aria-hidden="true" />
+            </Link>
+          </div>
+          <div className="editorial-connection-sequence">
+            <EditorialProduct product={tea} compact />
+            {teaPairings.slice(0, 3).map((product, index) => (
+              <div className="editorial-connection-step" key={product.id}>
+                <Plus aria-hidden="true" />
+                <EditorialProduct product={product} index={index + 1} compact />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+      {teaConnections.error && (
+        <Failure error={teaConnections.error} retry={teaConnections.retry} />
+      )}
+
+      {discounts.length > 0 && (
+        <section className="discount-section phase4-discounts" id="promotions">
+          <SectionHeader
+            eyebrow="Сниженные цены"
+            title="Акции"
+            action={{ href: "/promotions", label: "Все акции" }}
+          />
+          <div className="product-grid">
+            {discounts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+          <p className="section-note">
+            {t("Скидки относительно прежних цен.")}
+          </p>
+        </section>
+      )}
+
+      <section className="editorial-service">
+        <div>
+          <span className="eyebrow">{t("Доставка с Пайкар")}</span>
+          <h2>
+            {t(
+              "Продукты на каждый день — с понятной доставкой до вашей двери.",
+            )}
+          </h2>
+        </div>
+        <Link className="text-link" href="/delivery">
+          {t("Условия доставки")}
+          <ArrowUpRight size={18} aria-hidden="true" />
+        </Link>
       </section>
-      <CTASection
-        eyebrow="Сначала маршрут. Потом заказ."
-        title="Доставка с Пайкар"
-        text="Выберите адрес и узнайте маршрут, время в пути и стоимость до подтверждения заказа."
-        href="/delivery"
-        label="Как работает доставка"
-        icon={Route}
-      />
+
       <HomeStoreNetwork />
-      <section>
+
+      <section className="home-editorial">
         <SectionHeader
           eyebrow="Полезно знать"
           title="Блог"
-          text="Практические заметки о покупках, продуктах и доставке."
           action={{ href: "/blog", label: "Все статьи" }}
         />
-        <m.div {...grid} className="editorial-grid">
+        <div className="editorial-grid">
           {articles.slice(0, 3).map((article) => (
             <ArticleCard key={article.slug} article={article} />
           ))}
-        </m.div>
+        </div>
       </section>
     </div>
   );
