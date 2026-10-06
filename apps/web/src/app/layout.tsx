@@ -5,18 +5,24 @@ import { PresentationProvider } from "@/context/presentation";
 import "./globals.css";
 import "./paykar-theme.css";
 import "./site-polish.css";
+import "./shopping-redesign.css";
+import "./phase4-editorial.css";
+import "./catalog-filters.css";
 
 export const metadata: Metadata = {
   title: "Пайкар",
   description: "Продукты на каждый день: каталог, поиск, корзина и доставка.",
+  icons: {
+    icon: "/images/paykar/logo.png",
+  },
 };
-// Resolve saved chrome before the first paint; invalid/blocked storage uses the dark default.
-const restorePresentation = `try{const p=JSON.parse(localStorage.getItem("paykar-presentation-v1")||"{}");document.documentElement.dataset.theme=p.theme==="light"?"light":p.theme==="system"?(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):"dark";document.documentElement.lang=p.language==="tj"?"tg":p.language==="en"?"en":"ru";}catch{document.documentElement.dataset.theme="dark";document.documentElement.lang="ru";}`;
+// Resolve saved preferences before first paint; light is the grocery storefront default.
+const restorePresentation = `try{const p=JSON.parse(localStorage.getItem("paykar-presentation-v1")||"{}");document.documentElement.dataset.theme=p.theme==="dark"?"dark":p.theme==="system"?(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):"light";document.documentElement.lang=p.language==="tj"?"tg":p.language==="en"?"en":"ru";}catch{document.documentElement.dataset.theme="light";document.documentElement.lang="ru";}`;
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ru" data-theme="dark" suppressHydrationWarning>
+    <html lang="ru" data-theme="light" suppressHydrationWarning>
       <head>
         <link
           rel="preload"

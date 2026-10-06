@@ -2995,3 +2995,7 @@ select {
     flex: 1 1 160px;
   }
 }
+
+.cart-suggestions {
+  margin-top: clamp(2rem, 4vw, 4rem);
+}

@@ -1,15 +1,28 @@
 "use client";
 import { usePresentation } from "@/context/presentation";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Search, X } from "lucide-react";
 import { ProductPage, useResource } from "@/lib/api";
 import { cents } from "@/lib/format";
 import { ProductImage } from "./product-card";
+import {
+  catalogApiQuery,
+  catalogHref,
+  catalogParameters,
+} from "@/lib/catalog-query";
 export function SearchBox() {
   const { t, money } = usePresentation();
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const catalogState = pathname.startsWith("/catalog")
+    ? catalogParameters(
+        new URLSearchParams(searchParams.toString()),
+        pathname.startsWith("/catalog/") ? pathname.slice(9) : undefined,
+      )
+    : new URLSearchParams();
   const [query, setQuery] = useState("");
   const [term, setTerm] = useState("");
   const [open, setOpen] = useState(false);
@@ -20,10 +33,12 @@ export function SearchBox() {
   }, [query]);
   const visible = open && query.trim().length >= 2;
   const settled = term === query.trim();
+  const suggestionQuery = new URLSearchParams(catalogState);
+  suggestionQuery.set("q", term);
+  suggestionQuery.delete("page");
+  const allResultsHref = catalogHref(catalogState, { q: query.trim() });
   const resource = useResource<ProductPage>(
-    visible && settled
-      ? `/products?q=${encodeURIComponent(term)}&page_size=6`
-      : null,
+    visible && settled ? catalogApiQuery(suggestionQuery, false, 6) : null,
   );
   const items = settled ? (resource.data?.items ?? []) : [];
   return (
@@ -32,10 +47,10 @@ export function SearchBox() {
       className="search-box"
       role="search"
       onSubmit={(event) => {
+        event.preventDefault();
         if (visible && active >= 0 && items[active]) {
-          event.preventDefault();
           router.push(`/product/${items[active].slug}`);
-        }
+        } else router.push(allResultsHref);
         setOpen(false);
       }}
       onBlur={(event) => {
@@ -154,7 +169,7 @@ export function SearchBox() {
           </div>
           <Link
             className="search-all"
-            href={`/catalog?q=${encodeURIComponent(query.trim())}`}
+            href={allResultsHref}
             onClick={() => setOpen(false)}
           >
             {t("Все результаты →")}

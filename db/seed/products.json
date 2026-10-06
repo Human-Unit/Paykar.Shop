@@ -551,5 +551,177 @@
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
       "image_url": "/images/products/cleaner.svg"
     }
+  ],
+  "product_connections": [
+    {
+      "source": "black-tea",
+      "target": "oat-cookies",
+      "position": 0
+    },
+    {
+      "source": "black-tea",
+      "target": "honey",
+      "position": 1
+    },
+    {
+      "source": "black-tea",
+      "target": "wafers",
+      "position": 2
+    },
+    {
+      "source": "coffee",
+      "target": "milk",
+      "position": 0
+    },
+    {
+      "source": "coffee",
+      "target": "oat-cookies",
+      "position": 1
+    },
+    {
+      "source": "coffee",
+      "target": "milk-chocolate",
+      "position": 2
+    },
+    {
+      "source": "wheat-bread",
+      "target": "butter",
+      "position": 0
+    },
+    {
+      "source": "wheat-bread",
+      "target": "cheese",
+      "position": 1
+    },
+    {
+      "source": "wheat-bread",
+      "target": "cottage-cheese",
+      "position": 2
+    },
+    {
+      "source": "rye-bread",
+      "target": "butter",
+      "position": 0
+    },
+    {
+      "source": "rye-bread",
+      "target": "cottage-cheese",
+      "position": 1
+    },
+    {
+      "source": "flatbread",
+      "target": "cheese",
+      "position": 0
+    },
+    {
+      "source": "flatbread",
+      "target": "cottage-cheese",
+      "position": 1
+    },
+    {
+      "source": "apple-juice",
+      "target": "wafers",
+      "position": 0
+    },
+    {
+      "source": "apple-juice",
+      "target": "oat-cookies",
+      "position": 1
+    },
+    {
+      "source": "orange-juice",
+      "target": "wafers",
+      "position": 0
+    },
+    {
+      "source": "orange-juice",
+      "target": "marmalade",
+      "position": 1
+    },
+    {
+      "source": "sparkling-water",
+      "target": "wafers",
+      "position": 0
+    },
+    {
+      "source": "sparkling-water",
+      "target": "dark-chocolate",
+      "position": 1
+    },
+    {
+      "source": "yogurt",
+      "target": "honey",
+      "position": 0
+    },
+    {
+      "source": "yogurt",
+      "target": "bananas",
+      "position": 1
+    },
+    {
+      "source": "yogurt",
+      "target": "oat-cookies",
+      "position": 2
+    },
+    {
+      "source": "cottage-cheese",
+      "target": "honey",
+      "position": 0
+    },
+    {
+      "source": "cottage-cheese",
+      "target": "raisin-bun",
+      "position": 1
+    },
+    {
+      "source": "cottage-cheese",
+      "target": "sour-cream",
+      "position": 2
+    },
+    {
+      "source": "butter",
+      "target": "rye-bread",
+      "position": 0
+    },
+    {
+      "source": "cheese",
+      "target": "flatbread",
+      "position": 0
+    },
+    {
+      "source": "honey",
+      "target": "black-tea",
+      "position": 0
+    },
+    {
+      "source": "butter",
+      "target": "wheat-bread",
+      "position": 1
+    },
+    {
+      "source": "cheese",
+      "target": "wheat-bread",
+      "position": 1
+    },
+    {
+      "source": "cheese",
+      "target": "cottage-cheese",
+      "position": 2
+    },
+    {
+      "source": "honey",
+      "target": "yogurt",
+      "position": 1
+    },
+    {
+      "source": "honey",
+      "target": "cottage-cheese",
+      "position": 2
+    },
+    {
+      "source": "honey",
+      "target": "coffee",
+      "position": 3
+    }
   ]
 }

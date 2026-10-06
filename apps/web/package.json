@@ -8,6 +8,7 @@
     "start": "next start --hostname 0.0.0.0",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "next typegen && tsc --noEmit",
+    "test:catalog": "node --test tests/catalog-query.test.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },

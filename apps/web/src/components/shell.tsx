@@ -2,12 +2,11 @@
 import { usePresentation } from "@/context/presentation";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { storePages, articles } from "@/lib/store-content";
-import { MapPin, ShoppingBasket } from "lucide-react";
+import { ShoppingBasket } from "lucide-react";
 import { SearchBox } from "./search-box";
 import { useCart } from "@/context/cart";
-import { Preferences } from "./preferences";
 import { Brand } from "./brand";
 import { BurgerMenu, MainNavigation } from "./site-navigation";
 import { Footer } from "./footer";
@@ -48,35 +47,36 @@ export function Shell({ children }: { children: React.ReactNode }) {
       <a className="skip-link" href="#main">
         {t("Перейти к содержимому")}
       </a>
-      <div className="info-strip">
-        <div className="container topbar-inner">
-          <span className="flex items-center gap-2">
-            <MapPin size={14} />
-            {t(" Душанбе")}
-          </span>
-          <div className="utility-actions">
-            <Preferences />
+      <header className="site-header phase4-header">
+        <div className="container header-main phase4-header-main">
+          <div className="header-left">
+            <Brand />
+            <div className="desktop-only">
+              <MainNavigation />
+            </div>
+          </div>
+          <div className="header-search">
+            <Suspense
+              fallback={<div className="search-box" aria-hidden="true" />}
+            >
+              <SearchBox />
+            </Suspense>
+          </div>
+          <div className="header-right">
+            <Link
+              href="/cart"
+              className="cart-link"
+              aria-label={t("Корзина, ") + cart.count + t(" товаров")}
+            >
+              <ShoppingBasket size={22} />
+              <span className="cart-label desktop-only">{t("Корзина")}</span>
+              <span className="cart-count" data-testid="cart-count">
+                {cart.count}
+              </span>
+            </Link>
             <BurgerMenu />
           </div>
         </div>
-      </div>
-      <header className="site-header">
-        <div className="container header-main">
-          <Brand />
-          <SearchBox />
-          <Link
-            href="/cart"
-            className="cart-link"
-            aria-label={t("Корзина, ") + cart.count + t(" товаров")}
-          >
-            <ShoppingBasket size={22} />
-            <span className="cart-label">{t("Корзина")}</span>
-            <span className="cart-count" data-testid="cart-count">
-              {cart.count}
-            </span>
-          </Link>
-        </div>
-        <MainNavigation />
       </header>
       {cart.notice && (
         <div className="container pt-4" role="status">

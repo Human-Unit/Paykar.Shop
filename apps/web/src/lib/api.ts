@@ -27,6 +27,15 @@ export type ProductPage = {
   total: number;
   page: number;
   page_size: number;
+  facets?: CatalogFacets | null;
+};
+export type CatalogFacets = {
+  units: string[];
+  price_presets: { min_price: string | null; max_price: string | null }[];
+};
+export type ProductConnectionList = { items: Product[] };
+export type ProductConnectionBatch = {
+  items: { source_slug: string; items: Product[] }[];
 };
 export class ApiError extends Error {
   constructor(
@@ -166,6 +175,38 @@ export function useResource<T>(path: string | null) {
     data: result?.key === key ? result.data : undefined,
     error: result?.key === key ? result.error : undefined,
     loading: path !== null && result?.key !== key,
+    retry: () => setAttempt((value) => value + 1),
+  };
+}
+
+export function useProductConnectionBatch(sourceSlugs: string[]) {
+  const key = [...new Set(sourceSlugs)].join("\u001f");
+  const [attempt, setAttempt] = useState(0);
+  const requestKey = `${key}:${attempt}`;
+  const [result, setResult] = useState<{
+    key: string;
+    data?: ProductConnectionBatch;
+    error?: ApiError;
+  }>();
+  useEffect(() => {
+    if (!key) return;
+    const controller = new AbortController();
+    api<ProductConnectionBatch>("/products/connections", controller.signal, {
+      source_slugs: key.split("\u001f"),
+    }).then(
+      (data) => {
+        if (!controller.signal.aborted) setResult({ key: requestKey, data });
+      },
+      (error) => {
+        if (!controller.signal.aborted) setResult({ key: requestKey, error });
+      },
+    );
+    return () => controller.abort();
+  }, [key, requestKey]);
+  return {
+    data: result?.key === requestKey ? result.data : undefined,
+    error: result?.key === requestKey ? result.error : undefined,
+    loading: Boolean(key) && result?.key !== requestKey,
     retry: () => setAttempt((value) => value + 1),
   };
 }

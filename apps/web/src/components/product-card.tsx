@@ -148,6 +148,11 @@ export function ProductCard({
         <Link className="product-name" href={`/product/${product.slug}`}>
           {t(product.name)}
         </Link>
+        <span className="product-availability">
+          {t(
+            Number(product.stock_quantity) >= 1 ? "В наличии" : "Нет в наличии",
+          )}
+        </span>
         <div className="prices">
           <strong>{money(cents(product.price))}</strong>
           {product.old_price && <del>{money(cents(product.old_price))}</del>}
