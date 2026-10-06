@@ -23,6 +23,7 @@
 @import "../styles/catalog.css";
 @import "../styles/checkout.css";
 @import "../styles/pages.css";
+@import "../styles/premium-motion.css";
 
 @font-face {
   font-family: "Noto Sans";

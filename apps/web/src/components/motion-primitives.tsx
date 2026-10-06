@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useEffect, useRef, type PointerEvent, type ReactNode } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -26,6 +26,37 @@ export function MotionProvider({ children }: { children: ReactNode }) {
 }
 
 const ease = [0.22, 1, 0.36, 1] as const;
+
+// Local, frame-limited lighting; pointer movement never updates React state.
+export function usePointerLight() {
+  const frame = useRef(0);
+  useEffect(() => () => cancelAnimationFrame(frame.current), []);
+  const clear = (event: PointerEvent<HTMLElement>) => {
+    cancelAnimationFrame(frame.current);
+    event.currentTarget.style.removeProperty("--mouse-x");
+    event.currentTarget.style.removeProperty("--mouse-y");
+  };
+  return {
+    onPointerMove: (event: PointerEvent<HTMLElement>) => {
+      if (
+        event.pointerType !== "mouse" ||
+        !window.matchMedia("(hover: hover) and (pointer: fine)").matches ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      )
+        return;
+      const node = event.currentTarget;
+      const { clientX, clientY } = event;
+      cancelAnimationFrame(frame.current);
+      frame.current = requestAnimationFrame(() => {
+        const rect = node.getBoundingClientRect();
+        node.style.setProperty("--mouse-x", `${clientX - rect.left}px`);
+        node.style.setProperty("--mouse-y", `${clientY - rect.top}px`);
+      });
+    },
+    onPointerLeave: clear,
+    onPointerCancel: clear,
+  };
+}
 
 type RevealProps = Pick<
   MotionProps,

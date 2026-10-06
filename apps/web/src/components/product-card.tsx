@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import { usePresentation } from "@/context/presentation";
-import { m, useReveal } from "./motion-primitives";
 import Link from "next/link";
 import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
@@ -30,7 +29,7 @@ export function ProductImage({
   product,
   large = false,
 }: {
-  product: Product;
+  product: Pick<Product, "name" | "slug" | "image_url">;
   large?: boolean;
 }) {
   const { t } = usePresentation();
@@ -121,25 +120,16 @@ export function AddButton({ product }: { product: Product }) {
 }
 export function ProductCard({
   product,
-  revealIndex = 0,
 }: {
   product: Product;
+  // Existing grids can keep this prop; product tiles render immediately.
   revealIndex?: number;
 }) {
   const { t, money } = usePresentation();
-  const reveal = useReveal({
-    rise: 16,
-    delay: Math.min(revealIndex, 6) * 0.055,
-    hover: true,
-  });
   const discount = discountPercent(product);
   const soldOut = Number(product.stock_quantity) < 1;
   return (
-    <m.article
-      {...reveal}
-      className="product-card"
-      data-sold-out={soldOut || undefined}
-    >
+    <article className="product-card" data-sold-out={soldOut || undefined}>
       <Link
         href={`/product/${product.slug}`}
         className="image-wrap"
@@ -165,6 +155,6 @@ export function ProductCard({
         </div>
         <AddButton product={product} />
       </div>
-    </m.article>
+    </article>
   );
 }

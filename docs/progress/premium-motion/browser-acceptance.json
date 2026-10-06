@@ -1,0 +1,1972 @@
+{
+  "verifiedAt": "2026-10-06",
+  "runtime": "Production Docker web at http://localhost:3000, Chrome via standalone Playwright",
+  "inAppBrowser": "Unavailable: No browser available; agent.browsers.list() returned []",
+  "normal": {
+    "status": "PASS",
+    "cases": [
+      {
+        "width": 320,
+        "language": "ru",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 310,
+        "section": {
+          "x": 16,
+          "y": -105.28125,
+          "width": 278,
+          "height": 1294.8646240234375,
+          "right": 294,
+          "bottom": 1189.5833740234375
+        },
+        "phone": {
+          "x": 32.66666793823242,
+          "y": 460.07293701171875,
+          "width": 244.6666717529297,
+          "height": 692.84375,
+          "right": 277.3333396911621,
+          "bottom": 1152.9166870117188
+        },
+        "phoneTotal": "79,00 с.",
+        "heading": "От корзины до двери.",
+        "phoneHeading": "Заказ оформлен"
+      },
+      {
+        "width": 320,
+        "language": "ru",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 310,
+        "section": {
+          "x": 16,
+          "y": -105.28125,
+          "width": 278,
+          "height": 1294.8646240234375,
+          "right": 294,
+          "bottom": 1189.5833740234375
+        },
+        "phone": {
+          "x": 32.66666793823242,
+          "y": 460.07293701171875,
+          "width": 244.6666717529297,
+          "height": 692.84375,
+          "right": 277.3333396911621,
+          "bottom": 1152.9166870117188
+        },
+        "phoneTotal": "79,00 с.",
+        "heading": "От корзины до двери.",
+        "phoneHeading": "Заказ оформлен"
+      },
+      {
+        "width": 320,
+        "language": "tj",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 310,
+        "section": {
+          "x": 16,
+          "y": -105.34375,
+          "width": 278,
+          "height": 1328.5208740234375,
+          "right": 294,
+          "bottom": 1223.1771240234375
+        },
+        "phone": {
+          "x": 32.66666793823242,
+          "y": 460.01043701171875,
+          "width": 244.6666717529297,
+          "height": 726.5,
+          "right": 277.3333396911621,
+          "bottom": 1186.5104370117188
+        },
+        "phoneTotal": "79,00 сом.",
+        "heading": "Аз сабад то дари хона.",
+        "phoneHeading": "Фармоиш сабт шуд"
+      },
+      {
+        "width": 320,
+        "language": "tj",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 310,
+        "section": {
+          "x": 16,
+          "y": -198.0104217529297,
+          "width": 278,
+          "height": 1328.5208740234375,
+          "right": 294,
+          "bottom": 1130.5104522705078
+        },
+        "phone": {
+          "x": 32.66666793823242,
+          "y": 367.34375,
+          "width": 244.6666717529297,
+          "height": 726.5,
+          "right": 277.3333396911621,
+          "bottom": 1093.84375
+        },
+        "phoneTotal": "79,00 сом.",
+        "heading": "Аз сабад то дари хона.",
+        "phoneHeading": "Фармоиш сабт шуд"
+      },
+      {
+        "width": 320,
+        "language": "en",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 310,
+        "section": {
+          "x": 16,
+          "y": -171.92709350585938,
+          "width": 278,
+          "height": 1249.697998046875,
+          "right": 294,
+          "bottom": 1077.7709045410156
+        },
+        "phone": {
+          "x": 32.66666793823242,
+          "y": 367.03125,
+          "width": 244.6666717529297,
+          "height": 674.0729370117188,
+          "right": 277.3333396911621,
+          "bottom": 1041.1041870117188
+        },
+        "phoneTotal": "79.00 TJS",
+        "heading": "From basket to doorstep.",
+        "phoneHeading": "Order confirmed"
+      },
+      {
+        "width": 320,
+        "language": "en",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 310,
+        "section": {
+          "x": 16,
+          "y": -171.92709350585938,
+          "width": 278,
+          "height": 1249.697998046875,
+          "right": 294,
+          "bottom": 1077.7709045410156
+        },
+        "phone": {
+          "x": 32.66666793823242,
+          "y": 367.03125,
+          "width": 244.6666717529297,
+          "height": 674.0729370117188,
+          "right": 277.3333396911621,
+          "bottom": 1041.1041870117188
+        },
+        "phoneTotal": "79.00 TJS",
+        "heading": "From basket to doorstep.",
+        "phoneHeading": "Order confirmed"
+      },
+      {
+        "width": 390,
+        "language": "ru",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 380,
+        "section": {
+          "x": 16,
+          "y": -171.6875,
+          "width": 348,
+          "height": 1217.8125,
+          "right": 364,
+          "bottom": 1046.125
+        },
+        "phone": {
+          "x": 32.66666793823242,
+          "y": 344.7708435058594,
+          "width": 314.66668701171875,
+          "height": 664.6875,
+          "right": 347.3333549499512,
+          "bottom": 1009.4583435058594
+        },
+        "phoneTotal": "79,00 с.",
+        "heading": "От корзины до двери.",
+        "phoneHeading": "Заказ оформлен"
+      },
+      {
+        "width": 390,
+        "language": "ru",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 380,
+        "section": {
+          "x": 16,
+          "y": -159.02084350585938,
+          "width": 348,
+          "height": 1217.8125,
+          "right": 364,
+          "bottom": 1058.7916564941406
+        },
+        "phone": {
+          "x": 32.66666793823242,
+          "y": 357.4375,
+          "width": 314.66668701171875,
+          "height": 664.6875,
+          "right": 347.3333549499512,
+          "bottom": 1022.125
+        },
+        "phoneTotal": "79,00 с.",
+        "heading": "От корзины до двери.",
+        "phoneHeading": "Заказ оформлен"
+      },
+      {
+        "width": 390,
+        "language": "tj",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 380,
+        "section": {
+          "x": 16,
+          "y": -172.55209350585938,
+          "width": 348,
+          "height": 1244.2083740234375,
+          "right": 364,
+          "bottom": 1071.6562805175781
+        },
+        "phone": {
+          "x": 32.66666793823242,
+          "y": 370.3020935058594,
+          "width": 314.66668701171875,
+          "height": 664.6875,
+          "right": 347.3333549499512,
+          "bottom": 1034.9895935058594
+        },
+        "phoneTotal": "79,00 сом.",
+        "heading": "Аз сабад то дари хона.",
+        "phoneHeading": "Фармоиш сабт шуд"
+      },
+      {
+        "width": 390,
+        "language": "tj",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 380,
+        "section": {
+          "x": 16,
+          "y": -185.8854217529297,
+          "width": 348,
+          "height": 1244.2083740234375,
+          "right": 364,
+          "bottom": 1058.3229522705078
+        },
+        "phone": {
+          "x": 32.66666793823242,
+          "y": 356.96875,
+          "width": 314.66668701171875,
+          "height": 664.6875,
+          "right": 347.3333549499512,
+          "bottom": 1021.65625
+        },
+        "phoneTotal": "79,00 сом.",
+        "heading": "Аз сабад то дари хона.",
+        "phoneHeading": "Фармоиш сабт шуд"
+      },
+      {
+        "width": 390,
+        "language": "en",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 380,
+        "section": {
+          "x": 16,
+          "y": -173.3854217529297,
+          "width": 348,
+          "height": 1198.6146240234375,
+          "right": 364,
+          "bottom": 1025.2292022705078
+        },
+        "phone": {
+          "x": 32.66666793823242,
+          "y": 323.875,
+          "width": 314.66668701171875,
+          "height": 664.6875,
+          "right": 347.3333549499512,
+          "bottom": 988.5625
+        },
+        "phoneTotal": "79.00 TJS",
+        "heading": "From basket to doorstep.",
+        "phoneHeading": "Order confirmed"
+      },
+      {
+        "width": 390,
+        "language": "en",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 380,
+        "section": {
+          "x": 16,
+          "y": -160.71875,
+          "width": 348,
+          "height": 1198.6146240234375,
+          "right": 364,
+          "bottom": 1037.8958740234375
+        },
+        "phone": {
+          "x": 32.66666793823242,
+          "y": 336.54168701171875,
+          "width": 314.66668701171875,
+          "height": 664.6875,
+          "right": 347.3333549499512,
+          "bottom": 1001.2291870117188
+        },
+        "phoneTotal": "79.00 TJS",
+        "heading": "From basket to doorstep.",
+        "phoneHeading": "Order confirmed"
+      },
+      {
+        "width": 768,
+        "language": "ru",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 758,
+        "section": {
+          "x": 24,
+          "y": -148.8229217529297,
+          "width": 710,
+          "height": 1148.96875,
+          "right": 734,
+          "bottom": 1000.1458282470703
+        },
+        "phone": {
+          "x": 221,
+          "y": 294.79168701171875,
+          "width": 316,
+          "height": 664.6875,
+          "right": 537,
+          "bottom": 959.4791870117188
+        },
+        "phoneTotal": "79,00 с.",
+        "heading": "От корзины до двери.",
+        "phoneHeading": "Заказ оформлен"
+      },
+      {
+        "width": 768,
+        "language": "ru",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 758,
+        "section": {
+          "x": 24,
+          "y": -148.8229217529297,
+          "width": 710,
+          "height": 1148.96875,
+          "right": 734,
+          "bottom": 1000.1458282470703
+        },
+        "phone": {
+          "x": 221,
+          "y": 294.79168701171875,
+          "width": 316,
+          "height": 664.6875,
+          "right": 537,
+          "bottom": 959.4791870117188
+        },
+        "phoneTotal": "79,00 с.",
+        "heading": "От корзины до двери.",
+        "phoneHeading": "Заказ оформлен"
+      },
+      {
+        "width": 768,
+        "language": "tj",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 758,
+        "section": {
+          "x": 24,
+          "y": -178.3541717529297,
+          "width": 710,
+          "height": 1178.666748046875,
+          "right": 734,
+          "bottom": 1000.3125762939453
+        },
+        "phone": {
+          "x": 221,
+          "y": 294.9583435058594,
+          "width": 316,
+          "height": 664.6875,
+          "right": 537,
+          "bottom": 959.6458435058594
+        },
+        "phoneTotal": "79,00 сом.",
+        "heading": "Аз сабад то дари хона.",
+        "phoneHeading": "Фармоиш сабт шуд"
+      },
+      {
+        "width": 768,
+        "language": "tj",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 758,
+        "section": {
+          "x": 24,
+          "y": -178.3541717529297,
+          "width": 710,
+          "height": 1178.666748046875,
+          "right": 734,
+          "bottom": 1000.3125762939453
+        },
+        "phone": {
+          "x": 221,
+          "y": 294.9583435058594,
+          "width": 316,
+          "height": 664.6875,
+          "right": 537,
+          "bottom": 959.6458435058594
+        },
+        "phoneTotal": "79,00 сом.",
+        "heading": "Аз сабад то дари хона.",
+        "phoneHeading": "Фармоиш сабт шуд"
+      },
+      {
+        "width": 768,
+        "language": "en",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 758,
+        "section": {
+          "x": 24,
+          "y": -148.8541717529297,
+          "width": 710,
+          "height": 1148.96875,
+          "right": 734,
+          "bottom": 1000.1145782470703
+        },
+        "phone": {
+          "x": 221,
+          "y": 294.76043701171875,
+          "width": 316,
+          "height": 664.6875,
+          "right": 537,
+          "bottom": 959.4479370117188
+        },
+        "phoneTotal": "79.00 TJS",
+        "heading": "From basket to doorstep.",
+        "phoneHeading": "Order confirmed"
+      },
+      {
+        "width": 768,
+        "language": "en",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 758,
+        "section": {
+          "x": 24,
+          "y": -148.8541717529297,
+          "width": 710,
+          "height": 1148.96875,
+          "right": 734,
+          "bottom": 1000.1145782470703
+        },
+        "phone": {
+          "x": 221,
+          "y": 294.76043701171875,
+          "width": 316,
+          "height": 664.6875,
+          "right": 537,
+          "bottom": 959.4479370117188
+        },
+        "phoneTotal": "79.00 TJS",
+        "heading": "From basket to doorstep.",
+        "phoneHeading": "Order confirmed"
+      },
+      {
+        "width": 1024,
+        "language": "ru",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 1014,
+        "section": {
+          "x": 24,
+          "y": 140.2291717529297,
+          "width": 966,
+          "height": 730.0208740234375,
+          "right": 990,
+          "bottom": 870.2500457763672
+        },
+        "phone": {
+          "x": 579.1666870117188,
+          "y": 172.89584350585938,
+          "width": 316,
+          "height": 664.6875,
+          "right": 895.1666870117188,
+          "bottom": 837.5833435058594
+        },
+        "phoneTotal": "79,00 с.",
+        "heading": "От корзины до двери.",
+        "phoneHeading": "Заказ оформлен"
+      },
+      {
+        "width": 1024,
+        "language": "ru",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 1014,
+        "section": {
+          "x": 24,
+          "y": 140.2291717529297,
+          "width": 966,
+          "height": 730.0208740234375,
+          "right": 990,
+          "bottom": 870.2500457763672
+        },
+        "phone": {
+          "x": 579.1666870117188,
+          "y": 172.89584350585938,
+          "width": 316,
+          "height": 664.6875,
+          "right": 895.1666870117188,
+          "bottom": 837.5833435058594
+        },
+        "phoneTotal": "79,00 с.",
+        "heading": "От корзины до двери.",
+        "phoneHeading": "Заказ оформлен"
+      },
+      {
+        "width": 1024,
+        "language": "tj",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 1014,
+        "section": {
+          "x": 24,
+          "y": 139.7291717529297,
+          "width": 966,
+          "height": 730.0208740234375,
+          "right": 990,
+          "bottom": 869.7500457763672
+        },
+        "phone": {
+          "x": 579.1666870117188,
+          "y": 172.39584350585938,
+          "width": 316,
+          "height": 664.6875,
+          "right": 895.1666870117188,
+          "bottom": 837.0833435058594
+        },
+        "phoneTotal": "79,00 сом.",
+        "heading": "Аз сабад то дари хона.",
+        "phoneHeading": "Фармоиш сабт шуд"
+      },
+      {
+        "width": 1024,
+        "language": "tj",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 1014,
+        "section": {
+          "x": 24,
+          "y": 139.7291717529297,
+          "width": 966,
+          "height": 730.0208740234375,
+          "right": 990,
+          "bottom": 869.7500457763672
+        },
+        "phone": {
+          "x": 579.1666870117188,
+          "y": 172.39584350585938,
+          "width": 316,
+          "height": 664.6875,
+          "right": 895.1666870117188,
+          "bottom": 837.0833435058594
+        },
+        "phoneTotal": "79,00 сом.",
+        "heading": "Аз сабад то дари хона.",
+        "phoneHeading": "Фармоиш сабт шуд"
+      },
+      {
+        "width": 1024,
+        "language": "en",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 1014,
+        "section": {
+          "x": 24,
+          "y": 140.2291717529297,
+          "width": 966,
+          "height": 730.0208740234375,
+          "right": 990,
+          "bottom": 870.2500457763672
+        },
+        "phone": {
+          "x": 579.1666870117188,
+          "y": 172.89584350585938,
+          "width": 316,
+          "height": 664.6875,
+          "right": 895.1666870117188,
+          "bottom": 837.5833435058594
+        },
+        "phoneTotal": "79.00 TJS",
+        "heading": "From basket to doorstep.",
+        "phoneHeading": "Order confirmed"
+      },
+      {
+        "width": 1024,
+        "language": "en",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 1014,
+        "section": {
+          "x": 24,
+          "y": 140.2291717529297,
+          "width": 966,
+          "height": 730.0208740234375,
+          "right": 990,
+          "bottom": 870.2500457763672
+        },
+        "phone": {
+          "x": 579.1666870117188,
+          "y": 172.89584350585938,
+          "width": 316,
+          "height": 664.6875,
+          "right": 895.1666870117188,
+          "bottom": 837.5833435058594
+        },
+        "phoneTotal": "79.00 TJS",
+        "heading": "From basket to doorstep.",
+        "phoneHeading": "Order confirmed"
+      },
+      {
+        "width": 1440,
+        "language": "ru",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 1430,
+        "section": {
+          "x": 55,
+          "y": 139.9479217529297,
+          "width": 1320,
+          "height": 746.0208740234375,
+          "right": 1375,
+          "bottom": 885.9687957763672
+        },
+        "phone": {
+          "x": 866.6666870117188,
+          "y": 180.61459350585938,
+          "width": 316,
+          "height": 664.6875,
+          "right": 1182.6666870117188,
+          "bottom": 845.3020935058594
+        },
+        "phoneTotal": "79,00 с.",
+        "heading": "От корзины до двери.",
+        "phoneHeading": "Заказ оформлен"
+      },
+      {
+        "width": 1440,
+        "language": "ru",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 1430,
+        "section": {
+          "x": 55,
+          "y": 139.9479217529297,
+          "width": 1320,
+          "height": 746.0208740234375,
+          "right": 1375,
+          "bottom": 885.9687957763672
+        },
+        "phone": {
+          "x": 866.6666870117188,
+          "y": 180.61459350585938,
+          "width": 316,
+          "height": 664.6875,
+          "right": 1182.6666870117188,
+          "bottom": 845.3020935058594
+        },
+        "phoneTotal": "79,00 с.",
+        "heading": "От корзины до двери.",
+        "phoneHeading": "Заказ оформлен"
+      },
+      {
+        "width": 1440,
+        "language": "tj",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 1430,
+        "section": {
+          "x": 55,
+          "y": 139.8125,
+          "width": 1320,
+          "height": 746.0208740234375,
+          "right": 1375,
+          "bottom": 885.8333740234375
+        },
+        "phone": {
+          "x": 866.6666870117188,
+          "y": 180.4791717529297,
+          "width": 316,
+          "height": 664.6875,
+          "right": 1182.6666870117188,
+          "bottom": 845.1666717529297
+        },
+        "phoneTotal": "79,00 сом.",
+        "heading": "Аз сабад то дари хона.",
+        "phoneHeading": "Фармоиш сабт шуд"
+      },
+      {
+        "width": 1440,
+        "language": "tj",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 1430,
+        "section": {
+          "x": 55,
+          "y": 139.8125,
+          "width": 1320,
+          "height": 746.0208740234375,
+          "right": 1375,
+          "bottom": 885.8333740234375
+        },
+        "phone": {
+          "x": 866.6666870117188,
+          "y": 180.4791717529297,
+          "width": 316,
+          "height": 664.6875,
+          "right": 1182.6666870117188,
+          "bottom": 845.1666717529297
+        },
+        "phoneTotal": "79,00 сом.",
+        "heading": "Аз сабад то дари хона.",
+        "phoneHeading": "Фармоиш сабт шуд"
+      },
+      {
+        "width": 1440,
+        "language": "en",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 1430,
+        "section": {
+          "x": 55,
+          "y": 139.8125,
+          "width": 1320,
+          "height": 746.0208740234375,
+          "right": 1375,
+          "bottom": 885.8333740234375
+        },
+        "phone": {
+          "x": 866.6666870117188,
+          "y": 180.4791717529297,
+          "width": 316,
+          "height": 664.6875,
+          "right": 1182.6666870117188,
+          "bottom": 845.1666717529297
+        },
+        "phoneTotal": "79.00 TJS",
+        "heading": "From basket to doorstep.",
+        "phoneHeading": "Order confirmed"
+      },
+      {
+        "width": 1440,
+        "language": "en",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 1430,
+        "section": {
+          "x": 55,
+          "y": 139.8125,
+          "width": 1320,
+          "height": 746.0208740234375,
+          "right": 1375,
+          "bottom": 885.8333740234375
+        },
+        "phone": {
+          "x": 866.6666870117188,
+          "y": 180.4791717529297,
+          "width": 316,
+          "height": 664.6875,
+          "right": 1182.6666870117188,
+          "bottom": 845.1666717529297
+        },
+        "phoneTotal": "79.00 TJS",
+        "heading": "From basket to doorstep.",
+        "phoneHeading": "Order confirmed"
+      },
+      {
+        "width": 1920,
+        "language": "ru",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 1910,
+        "section": {
+          "x": 295,
+          "y": 141.28125,
+          "width": 1320,
+          "height": 746.0208740234375,
+          "right": 1615,
+          "bottom": 887.3021240234375
+        },
+        "phone": {
+          "x": 1106.666748046875,
+          "y": 181.9479217529297,
+          "width": 316,
+          "height": 664.6875,
+          "right": 1422.666748046875,
+          "bottom": 846.6354217529297
+        },
+        "phoneTotal": "79,00 с.",
+        "heading": "От корзины до двери.",
+        "phoneHeading": "Заказ оформлен"
+      },
+      {
+        "width": 1920,
+        "language": "ru",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 1910,
+        "section": {
+          "x": 295,
+          "y": 141.28125,
+          "width": 1320,
+          "height": 746.0208740234375,
+          "right": 1615,
+          "bottom": 887.3021240234375
+        },
+        "phone": {
+          "x": 1106.666748046875,
+          "y": 181.9479217529297,
+          "width": 316,
+          "height": 664.6875,
+          "right": 1422.666748046875,
+          "bottom": 846.6354217529297
+        },
+        "phoneTotal": "79,00 с.",
+        "heading": "От корзины до двери.",
+        "phoneHeading": "Заказ оформлен"
+      },
+      {
+        "width": 1920,
+        "language": "tj",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 1910,
+        "section": {
+          "x": 295,
+          "y": 141.8125,
+          "width": 1320,
+          "height": 746.0208740234375,
+          "right": 1615,
+          "bottom": 887.8333740234375
+        },
+        "phone": {
+          "x": 1106.666748046875,
+          "y": 182.4791717529297,
+          "width": 316,
+          "height": 664.6875,
+          "right": 1422.666748046875,
+          "bottom": 847.1666717529297
+        },
+        "phoneTotal": "79,00 сом.",
+        "heading": "Аз сабад то дари хона.",
+        "phoneHeading": "Фармоиш сабт шуд"
+      },
+      {
+        "width": 1920,
+        "language": "tj",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 1910,
+        "section": {
+          "x": 295,
+          "y": 141.8125,
+          "width": 1320,
+          "height": 746.0208740234375,
+          "right": 1615,
+          "bottom": 887.8333740234375
+        },
+        "phone": {
+          "x": 1106.666748046875,
+          "y": 182.4791717529297,
+          "width": 316,
+          "height": 664.6875,
+          "right": 1422.666748046875,
+          "bottom": 847.1666717529297
+        },
+        "phoneTotal": "79,00 сом.",
+        "heading": "Аз сабад то дари хона.",
+        "phoneHeading": "Фармоиш сабт шуд"
+      },
+      {
+        "width": 1920,
+        "language": "en",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 1910,
+        "section": {
+          "x": 295,
+          "y": 141.8125,
+          "width": 1320,
+          "height": 746.0208740234375,
+          "right": 1615,
+          "bottom": 887.8333740234375
+        },
+        "phone": {
+          "x": 1106.666748046875,
+          "y": 182.4791717529297,
+          "width": 316,
+          "height": 664.6875,
+          "right": 1422.666748046875,
+          "bottom": 847.1666717529297
+        },
+        "phoneTotal": "79.00 TJS",
+        "heading": "From basket to doorstep.",
+        "phoneHeading": "Order confirmed"
+      },
+      {
+        "width": 1920,
+        "language": "en",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "viewport": 1910,
+        "section": {
+          "x": 295,
+          "y": 141.8125,
+          "width": 1320,
+          "height": 746.0208740234375,
+          "right": 1615,
+          "bottom": 887.8333740234375
+        },
+        "phone": {
+          "x": 1106.666748046875,
+          "y": 182.4791717529297,
+          "width": 316,
+          "height": 664.6875,
+          "right": 1422.666748046875,
+          "bottom": 847.1666717529297
+        },
+        "phoneTotal": "79.00 TJS",
+        "heading": "From basket to doorstep.",
+        "phoneHeading": "Order confirmed"
+      }
+    ],
+    "errors": [],
+    "consoleErrors": [],
+    "screenshots": [
+      "premium-motion-320-tj-light.png",
+      "premium-motion-390-ru-light.png",
+      "premium-motion-390-ru-dark.png",
+      "premium-motion-390-tj-light.png",
+      "premium-motion-390-tj-dark.png",
+      "premium-motion-390-en-light.png",
+      "premium-motion-390-en-dark.png",
+      "premium-motion-1440-ru-light.png",
+      "premium-motion-1440-ru-dark.png",
+      "premium-motion-1440-tj-light.png",
+      "premium-motion-1440-tj-dark.png",
+      "premium-motion-1440-en-light.png",
+      "premium-motion-1440-en-dark.png"
+    ]
+  },
+  "reduced": {
+    "status": "PASS",
+    "cases": [
+      {
+        "width": 320,
+        "language": "ru",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 310,
+          "document": 310,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 32.66666793823242,
+          "right": 277.3333396911621,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 320,
+        "language": "ru",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 310,
+          "document": 310,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 32.66666793823242,
+          "right": 277.3333396911621,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 320,
+        "language": "tj",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 310,
+          "document": 310,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 32.66666793823242,
+          "right": 277.3333396911621,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 320,
+        "language": "tj",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 310,
+          "document": 310,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 32.66666793823242,
+          "right": 277.3333396911621,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 320,
+        "language": "en",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 310,
+          "document": 310,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 32.66666793823242,
+          "right": 277.3333396911621,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 320,
+        "language": "en",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 310,
+          "document": 310,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 32.66666793823242,
+          "right": 277.3333396911621,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 390,
+        "language": "ru",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 380,
+          "document": 380,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 32.66666793823242,
+          "right": 347.3333549499512,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 390,
+        "language": "ru",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 380,
+          "document": 380,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 32.66666793823242,
+          "right": 347.3333549499512,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 390,
+        "language": "tj",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 380,
+          "document": 380,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 32.66666793823242,
+          "right": 347.3333549499512,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 390,
+        "language": "tj",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 380,
+          "document": 380,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 32.66666793823242,
+          "right": 347.3333549499512,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 390,
+        "language": "en",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 380,
+          "document": 380,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 32.66666793823242,
+          "right": 347.3333549499512,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 390,
+        "language": "en",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 380,
+          "document": 380,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 32.66666793823242,
+          "right": 347.3333549499512,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 768,
+        "language": "ru",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 758,
+          "document": 758,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 221,
+          "right": 537,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 768,
+        "language": "ru",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 758,
+          "document": 758,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 221,
+          "right": 537,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 768,
+        "language": "tj",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 758,
+          "document": 758,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 221,
+          "right": 537,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 768,
+        "language": "tj",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 758,
+          "document": 758,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 221,
+          "right": 537,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 768,
+        "language": "en",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 758,
+          "document": 758,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 221,
+          "right": 537,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 768,
+        "language": "en",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 758,
+          "document": 758,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 221,
+          "right": 537,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 1024,
+        "language": "ru",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 1014,
+          "document": 1014,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 579.1666870117188,
+          "right": 895.1666870117188,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 1024,
+        "language": "ru",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 1014,
+          "document": 1014,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 579.1666870117188,
+          "right": 895.1666870117188,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 1024,
+        "language": "tj",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 1014,
+          "document": 1014,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 579.1666870117188,
+          "right": 895.1666870117188,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 1024,
+        "language": "tj",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 1014,
+          "document": 1014,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 579.1666870117188,
+          "right": 895.1666870117188,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 1024,
+        "language": "en",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 1014,
+          "document": 1014,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 579.1666870117188,
+          "right": 895.1666870117188,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 1024,
+        "language": "en",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 1014,
+          "document": 1014,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 579.1666870117188,
+          "right": 895.1666870117188,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 1440,
+        "language": "ru",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 1430,
+          "document": 1430,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 866.6666870117188,
+          "right": 1182.6666870117188,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 1440,
+        "language": "ru",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 1430,
+          "document": 1430,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 866.6666870117188,
+          "right": 1182.6666870117188,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 1440,
+        "language": "tj",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 1430,
+          "document": 1430,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 866.6666870117188,
+          "right": 1182.6666870117188,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 1440,
+        "language": "tj",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 1430,
+          "document": 1430,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 866.6666870117188,
+          "right": 1182.6666870117188,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 1440,
+        "language": "en",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 1430,
+          "document": 1430,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 866.6666870117188,
+          "right": 1182.6666870117188,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 1440,
+        "language": "en",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 1430,
+          "document": 1430,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 866.6666870117188,
+          "right": 1182.6666870117188,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 1920,
+        "language": "ru",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 1910,
+          "document": 1910,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 1106.666748046875,
+          "right": 1422.666748046875,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 1920,
+        "language": "ru",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 1910,
+          "document": 1910,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 1106.666748046875,
+          "right": 1422.666748046875,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 1920,
+        "language": "tj",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 1910,
+          "document": 1910,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 1106.666748046875,
+          "right": 1422.666748046875,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 1920,
+        "language": "tj",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 1910,
+          "document": 1910,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 1106.666748046875,
+          "right": 1422.666748046875,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 1920,
+        "language": "en",
+        "theme": "light",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 1910,
+          "document": 1910,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 1106.666748046875,
+          "right": 1422.666748046875,
+          "clipped": false,
+          "overflowingText": []
+        }
+      },
+      {
+        "width": 1920,
+        "language": "en",
+        "theme": "dark",
+        "status": "PASS",
+        "issues": [],
+        "metrics": {
+          "viewport": 1910,
+          "document": 1910,
+          "transform": "none",
+          "entryTransform": "none",
+          "entryOpacity": "1",
+          "light": "none",
+          "left": 1106.666748046875,
+          "right": 1422.666748046875,
+          "clipped": false,
+          "overflowingText": []
+        }
+      }
+    ],
+    "errors": []
+  },
+  "touch": {
+    "status": "PASS",
+    "cases": [
+      {
+        "width": 320,
+        "status": "PASS",
+        "issues": [],
+        "coarse": true,
+        "hoverNone": true,
+        "transform": "none",
+        "light": "none",
+        "mouseX": "",
+        "overflow": false,
+        "phone": {
+          "x": 32.66666793823242,
+          "y": 68.89583587646484,
+          "width": 254.6666717529297,
+          "height": 700.25,
+          "top": 68.89583587646484,
+          "right": 287.3333396911621,
+          "bottom": 769.1458358764648,
+          "left": 32.66666793823242
+        },
+        "screenOverflow": false
+      },
+      {
+        "width": 390,
+        "status": "PASS",
+        "issues": [],
+        "coarse": true,
+        "hoverNone": true,
+        "transform": "none",
+        "light": "none",
+        "mouseX": "",
+        "overflow": false,
+        "phone": {
+          "x": 37,
+          "y": 86.73958587646484,
+          "width": 316,
+          "height": 664.6875,
+          "top": 86.73958587646484,
+          "right": 353,
+          "bottom": 751.4270858764648,
+          "left": 37
+        },
+        "screenOverflow": false
+      },
+      {
+        "width": 768,
+        "status": "PASS",
+        "issues": [],
+        "coarse": true,
+        "hoverNone": true,
+        "transform": "none",
+        "light": "none",
+        "mouseX": "",
+        "overflow": false,
+        "phone": {
+          "x": 226,
+          "y": 86.90625,
+          "width": 316,
+          "height": 664.6875,
+          "top": 86.90625,
+          "right": 542,
+          "bottom": 751.59375,
+          "left": 226
+        },
+        "screenOverflow": false
+      },
+      {
+        "width": 1024,
+        "status": "PASS",
+        "issues": [],
+        "coarse": true,
+        "hoverNone": true,
+        "transform": "none",
+        "light": "none",
+        "mouseX": "",
+        "overflow": false,
+        "phone": {
+          "x": 586.6666870117188,
+          "y": 86.71875,
+          "width": 316,
+          "height": 664.6875,
+          "top": 86.71875,
+          "right": 902.6666870117188,
+          "bottom": 751.40625,
+          "left": 586.6666870117188
+        },
+        "screenOverflow": false
+      }
+    ],
+    "errors": [],
+    "unexpectedRequests": []
+  },
+  "interactions": {
+    "status": "PASS",
+    "checks": [
+      {
+        "name": "bounded phone tilt and local light",
+        "status": "PASS",
+        "detail": {
+          "transform": "translateZ(9.41879px) scale(1.00785) rotateX(3.61054deg) rotateY(5.05475deg)",
+          "lightX": "563.840087890625px",
+          "lightY": "26.587493896484375px"
+        }
+      },
+      {
+        "name": "pointer exit clears tracking",
+        "status": "PASS"
+      },
+      {
+        "name": "hero local pointer light tracks",
+        "status": "PASS",
+        "detail": {
+          "before": {
+            "x": "458.82000732421875px",
+            "shadow": "oklab(0.635847 -0.163756 0.114647 / 0.42) 0px 44px 80px -52px, rgba(0, 0, 0, 0) 0px 0px 0px 0px"
+          },
+          "after": {
+            "x": "50px",
+            "shadow": "oklab(0.635847 -0.163756 0.114647 / 0.405534) 0px 41.3436px 75.1702px -48.8003px, rgba(0, 168, 45, 0.008) 0px 0.724471px 2.17341px 0px",
+            "imageScale": "1.00437"
+          }
+        }
+      },
+      {
+        "name": "category surface reaction",
+        "status": "PASS",
+        "detail": {
+          "translate": "0px",
+          "scale": "1"
+        }
+      },
+      {
+        "name": "product grids immediately visible",
+        "status": "PASS",
+        "detail": {
+          "reveal": false,
+          "translate": "0px",
+          "opacity": "1",
+          "shadow": "rgba(0, 168, 45, 0.1) 0px 0px 0px 1px, rgba(0, 168, 45, 0.05) 0px 8px 20px 0px"
+        }
+      },
+      {
+        "name": "phone reveal runs once after revisit",
+        "status": "PASS"
+      },
+      {
+        "name": "reduced motion static phone and visible entry",
+        "status": "PASS",
+        "detail": {
+          "transform": "none",
+          "entry": "none",
+          "light": "none",
+          "opacity": "1"
+        }
+      }
+    ],
+    "errors": []
+  },
+  "settledSurfaces": {
+    "status": "PASS",
+    "checks": [
+      {
+        "selector": ".hero-card",
+        "status": "PASS",
+        "detail": {
+          "translate": "0px -2.99997px",
+          "imageScale": "1.015",
+          "shadow": "oklab(0.635847 -0.163756 0.114647 / 0.180609) 0px 0.0397494px 0.0722717px 0.95212px, rgba(0, 168, 45, 0.1) 0px 11.9892px 35.9675px 0px",
+          "light": "1"
+        }
+      },
+      {
+        "selector": ".category-tile",
+        "status": "PASS",
+        "detail": {
+          "translate": "0px -3px",
+          "imageScale": "1.015",
+          "shadow": "rgba(0, 168, 45, 0.18) 0px 0px 0px 1px, rgba(0, 168, 45, 0.1) 0px 12px 36px 0px",
+          "light": null
+        }
+      },
+      {
+        "selector": ".product-card",
+        "status": "PASS",
+        "detail": {
+          "translate": "0px -2px",
+          "imageScale": "1.01498",
+          "shadow": "rgba(0, 168, 45, 0.1) 0px 0px 0px 1px, rgba(0, 168, 45, 0.05) 0px 8px 20px 0px",
+          "light": null
+        }
+      }
+    ]
+  },
+  "performance": {
+    "status": "PASS",
+    "pointerMoves": 80,
+    "perf": {
+      "reactPropsObserved": true,
+      "reactPropsUnchanged": true,
+      "structuralMutations": 0,
+      "layoutShifts": 0,
+      "longTasks": [],
+      "layoutUnchanged": true
+    },
+    "frameStats": {
+      "count": 99,
+      "meanMs": 6.429292929292929,
+      "p95Ms": 6.5,
+      "maxMs": 18.29999999998836
+    },
+    "requests": []
+  },
+  "entranceAccessibility": {
+    "status": "PASS",
+    "initial": {
+      "opacity": "0",
+      "transform": "translateY(30px) scale(0.96) rotateY(6deg)"
+    },
+    "settled": {
+      "opacity": "1",
+      "transform": "none"
+    },
+    "accessibility": {
+      "labelledBy": "order-showcase-title",
+      "heading": "От корзины до двери.",
+      "hiddenPhone": "true",
+      "focusables": 0,
+      "cta": "/catalog"
+    },
+    "focus": {
+      "visible": true,
+      "outline": "solid",
+      "outlineWidth": "2px"
+    },
+    "errors": []
+  },
+  "regression": {
+    "status": "PASS",
+    "checks": [
+      {
+        "name": "theme persistence",
+        "status": "PASS",
+        "theme": "light"
+      },
+      {
+        "name": "language keyboard selection and persistence",
+        "status": "PASS",
+        "lang": "tg"
+      },
+      {
+        "name": "product add, quantity and cart reload",
+        "status": "PASS"
+      },
+      {
+        "name": "search suggestions and keyboard",
+        "status": "PASS",
+        "selected": "suggestion-27"
+      },
+      {
+        "name": "catalog sort retains URL filter",
+        "status": "PASS",
+        "url": "http://localhost:3000/catalog?in_stock=true&sort=price_desc"
+      },
+      {
+        "name": "mobile navigation Escape",
+        "status": "PASS"
+      }
+    ],
+    "errors": []
+  },
+  "capture": {
+    "browser": "154.0.8037.98",
+    "screenshot": "premium-motion-bento-hover-1440-ru-dark.png",
+    "restored": {
+      "width": 1440,
+      "language": "ru",
+      "theme": "light",
+      "motion": "normal"
+    }
+  }
+}

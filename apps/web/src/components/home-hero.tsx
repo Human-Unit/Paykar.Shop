@@ -7,13 +7,20 @@ import { usePresentation } from "@/context/presentation";
 import { useResource, type DeliveryConfig } from "@/lib/api";
 import { cents } from "@/lib/format";
 import { storeLocations } from "@/lib/store-locations";
-import { m, MotionImage, MotionLink, useReveal } from "./motion-primitives";
+import {
+  m,
+  MotionImage,
+  MotionLink,
+  usePointerLight,
+  useReveal,
+} from "./motion-primitives";
 
 // The same curve draws the dashed line and carries the moving dot.
 const routePath = "M10 58C46 58 44 16 86 16s52 38 96 12";
 
 export function HomeHero() {
   const { t, money } = usePresentation();
+  const light = usePointerLight();
   const config = useResource<DeliveryConfig>("/delivery/config");
   const eyebrow = useReveal({ rise: 12, inView: false });
   const headline = useReveal({ rise: 24, delay: 0.07, inView: false });
@@ -38,11 +45,22 @@ export function HomeHero() {
     delay: 0.64,
     inView: false,
   });
-  const routeCard = useReveal({ delay: 0.16, inView: false, hover: true });
-  const shopCard = useReveal({ delay: 0.24, inView: false, hover: true });
+  const routeCard = useReveal({
+    delay: 0.16,
+    inView: false,
+    hover: true,
+    lift: 3,
+  });
+  const shopCard = useReveal({
+    delay: 0.24,
+    inView: false,
+    hover: true,
+    lift: 3,
+  });
   return (
     <section className="home-bento">
-      <div className="hero-card">
+      <div className="hero-card pointer-surface" {...light}>
+        <span className="surface-light" aria-hidden="true" />
         <MotionImage
           {...photo}
           src="/images/paykar/hero.webp"

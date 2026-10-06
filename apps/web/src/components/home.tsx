@@ -25,6 +25,7 @@ import { articles, storePages } from "@/lib/store-content";
 import { SectionHeader, StepFlow, CTASection } from "./page-patterns";
 import { ArticleCard } from "./article-card";
 import { HomeStoreNetwork } from "./home-store-network";
+import { OrderShowcase } from "./order-showcase";
 export function Home() {
   const { t } = usePresentation();
   const grid = useReveal({ rise: 14 });
@@ -57,7 +58,7 @@ export function Home() {
         {categories.error && (
           <Failure error={categories.error} retry={categories.retry} />
         )}
-        <m.div {...grid} className="category-grid">
+        <div className="category-grid">
           {categories.data
             ?.filter((c) => c.parent_id === null)
             .map((c) => (
@@ -87,7 +88,7 @@ export function Home() {
                 </span>
               </Link>
             ))}
-        </m.div>
+        </div>
         {categories.data?.length === 0 && (
           <Empty
             title={t("Категории скоро появятся")}
@@ -138,6 +139,7 @@ export function Home() {
           />
         )}
       </section>
+      <OrderShowcase />
       {connections.data?.items.length ? (
         <section className="home-connections">
           <SectionHeader

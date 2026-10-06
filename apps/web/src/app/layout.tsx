@@ -7,7 +7,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Пайкар",
   description: "Продукты на каждый день: каталог, поиск, корзина и доставка.",
-  icons: { icon: "/images/paykar/logo.png" },
+  icons: {
+    icon: [{ url: "/icon.png", type: "image/png", sizes: "512x512" }],
+  },
 };
 // Resolve saved chrome before the first paint; invalid/blocked storage uses the dark default.
 const restorePresentation = `try{const p=JSON.parse(localStorage.getItem("paykar-presentation-v1")||"{}");document.documentElement.dataset.theme=p.theme==="light"?"light":p.theme==="system"?(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):"dark";document.documentElement.lang=p.language==="tj"?"tg":p.language==="en"?"en":"ru";}catch{document.documentElement.dataset.theme="dark";document.documentElement.lang="ru";}`;
