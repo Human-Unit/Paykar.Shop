@@ -1,13 +1,15 @@
 "use client";
 import Image from "next/image";
 import { usePresentation } from "@/context/presentation";
+import { useSavedItems } from "@/context/saved-items";
 import { m, useReveal } from "./motion-primitives";
 import Link from "next/link";
 import { useState } from "react";
-import { Plus, Minus } from "lucide-react";
+import { Heart, Plus, Minus } from "lucide-react";
 import { Product } from "@/lib/api";
 import { cents } from "@/lib/format";
 import { useCart } from "@/context/cart";
+import styles from "./shopping-assistance.module.css";
 // Only replace the known demo illustrations; supplied product photographs remain intact.
 const demoPhotos: Record<string, string> = {
   apple: "produce",
@@ -118,13 +120,31 @@ export function ProductCard({
   revealIndex?: number;
 }) {
   const { t, money } = usePresentation();
+  const saved = useSavedItems();
+  const isSaved = saved.has(product.id);
   const reveal = useReveal({
     rise: 8,
     delay: Math.min(revealIndex, 5) * 0.05,
     hover: true,
   });
   return (
-    <m.article {...reveal} className="product-card">
+    <m.article {...reveal} className={`product-card ${styles.card}`}>
+      <button
+        type="button"
+        className={styles.saveButton}
+        data-saved={isSaved}
+        aria-pressed={isSaved}
+        aria-label={
+          t(isSaved ? "Убрать из сохранённых: " : "Сохранить: ") + t(product.name)
+        }
+        onClick={() => saved.toggle(product.id)}
+      >
+        <Heart
+          size={18}
+          fill={isSaved ? "currentColor" : "none"}
+          aria-hidden="true"
+        />
+      </button>
       <Link
         href={`/product/${product.slug}`}
         className="image-wrap"
