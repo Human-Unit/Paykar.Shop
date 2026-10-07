@@ -7,6 +7,11 @@ import {
   useState,
 } from "react";
 import { Product, ProductPage, useResource } from "@/lib/api";
+import {
+  mergeShoppingCart,
+  type AddSummary,
+  type PreviewItem,
+} from "@/lib/shopping";
 
 type Item = { product_id: number; quantity: number };
 const EMPTY: Item[] = [];
@@ -83,6 +88,7 @@ type CartContext = {
   noticeId: number;
   retry: () => void;
   add: (product: Product) => void;
+  addMany: (items: PreviewItem[]) => AddSummary;
   quantity: (id: number, quantity: number, stock: number) => void;
   remove: (id: number) => void;
   clear: () => void;
@@ -122,6 +128,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     notice: notice.text,
     noticeId: notice.id,
     retry: resource.retry,
+    addMany: (rows) => {
+      const result = mergeShoppingCart(snapshot(), rows);
+      update(result.items);
+      resource.retry();
+      return result.summary;
+    },
     add: (product) => {
       const current = snapshot();
       const existing = current.find((item) => item.product_id === product.id);

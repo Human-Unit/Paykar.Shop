@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.api.routes import categories, delivery, health, orders, payments, products
+from app.api.routes import categories, delivery, health, orders, payments, products, shopping
 
 router = APIRouter(prefix="/api/v1")
 router.include_router(health.router)
@@ -9,3 +9,4 @@ router.include_router(products.router)
 router.include_router(delivery.router)
 router.include_router(orders.router)
 router.include_router(payments.router)
+router.include_router(shopping.router)
