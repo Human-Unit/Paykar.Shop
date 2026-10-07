@@ -8,6 +8,7 @@ import { Failure, Loading } from "./states";
 import { Bookmark, Route, Clock3, ArrowRight } from "lucide-react";
 import { Breadcrumbs } from "./breadcrumbs";
 import { m, useReveal } from "./motion-primitives";
+import { OrderShoppingActions } from "./my-shopping";
 export function OrderConfirmation({ id }: { id: string }) {
   const { t, money, distance, duration, locale } = usePresentation();
   const success = useReveal({ rise: 0, scale: 0.6, inView: false });
@@ -150,6 +151,7 @@ export function OrderConfirmation({ id }: { id: string }) {
           </div>
         </section>
       </m.div>
+      <OrderShoppingActions order={order} />
       <div className="page-actions confirmation-actions">
         <Link href="/catalog" className="button">
           {t("Продолжить покупки")} <ArrowRight size={20} aria-hidden="true" />

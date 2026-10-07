@@ -9,6 +9,7 @@
     "lint": "eslint . --max-warnings=0",
     "typecheck": "next typegen && tsc --noEmit",
     "test:catalog": "node --test tests/catalog-query.test.mjs",
+    "test:shopping": "node --test tests/shopping.test.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },

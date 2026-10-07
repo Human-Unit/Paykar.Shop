@@ -83,9 +83,11 @@ export function Shell({ children }: { children: React.ReactNode }) {
             ? "Корзина"
             : path.startsWith("/saved")
               ? "Сохранённые товары"
-              : path.startsWith("/order/")
-                ? "Ваш заказ"
-                : "Пайкар");
+              : path.startsWith("/my-shopping")
+                ? "Мои покупки"
+                : path.startsWith("/order/")
+                  ? "Ваш заказ"
+                  : "Пайкар");
     document.title =
       title === "Пайкар" ? t(title) : `${t(title)} · ${t("Пайкар")}`;
     const description =
@@ -119,8 +121,6 @@ export function Shell({ children }: { children: React.ReactNode }) {
               <SearchBox />
             </Suspense>
             <div className="header-actions">
-              <LanguageSelector />
-              <Preferences />
               <Link
                 href="/saved"
                 className={`cart-link ${styles.headerSavedLink}`}
@@ -149,6 +149,8 @@ export function Shell({ children }: { children: React.ReactNode }) {
                   {cart.count}
                 </span>
               </Link>
+              <LanguageSelector />
+              <Preferences />
               <BurgerMenu />
             </div>
           </div>

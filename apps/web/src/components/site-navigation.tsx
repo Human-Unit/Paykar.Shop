@@ -10,12 +10,13 @@ import {
   useRef,
   useState,
 } from "react";
-import { ChevronDown, Grid2X2, Menu, X } from "lucide-react";
+import { ChevronDown, Grid2X2, Menu, X, ShoppingBag } from "lucide-react";
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { usePresentation } from "@/context/presentation";
 import { Brand } from "@/components/brand";
 import { informationNavigation, type InformationEntry } from "@/lib/navigation";
 import { CatalogMegaMenu } from "./catalog-mega-menu";
+import { LanguageSelector, Preferences } from "./preferences";
 
 function InformationContent({ content }: { content: string[] }) {
   const { t } = usePresentation();
@@ -266,6 +267,31 @@ export function BurgerMenu() {
           </button>
         </div>
         <nav aria-label={t("Навигация меню")}>
+          <div className="drawer-utilities">
+            <LanguageSelector />
+            <Preferences />
+          </div>
+          <section className="drawer-shopping" aria-label={t("Мои покупки")}>
+            <Link
+              className="drawer-shopping-title"
+              href="/my-shopping"
+              onClick={close}
+            >
+              <ShoppingBag size={18} aria-hidden="true" />
+              <span>{t("Мои покупки")}</span>
+            </Link>
+            <div className="drawer-shopping-links">
+              <Link href="/my-shopping#history" onClick={close}>
+                {t("История заказов")}
+              </Link>
+              <Link href="/my-shopping#templates" onClick={close}>
+                {t("Мои шаблоны")}
+              </Link>
+              <Link href="/my-shopping#curated" onClick={close}>
+                {t("Готовые наборы")}
+              </Link>
+            </div>
+          </section>
           <Link href="/catalog" prefetch={false} onClick={close}>
             <Grid2X2 size={18} aria-hidden="true" />
             <span>{t("Каталог")}</span>

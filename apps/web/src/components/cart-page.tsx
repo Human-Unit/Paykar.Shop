@@ -16,6 +16,7 @@ import { Empty, Failure, Loading } from "./states";
 import { Breadcrumbs } from "./breadcrumbs";
 import { PageIntro, SectionHeader } from "./page-patterns";
 import { useProductConnectionBatch } from "@/lib/api";
+import { SaveShoppingTemplate } from "./my-shopping";
 export function CartPage() {
   const { t, money } = usePresentation();
   const cart = useCart();
@@ -154,6 +155,14 @@ export function CartPage() {
           <button className="text-link mt-5" onClick={cart.clear}>
             {t("Очистить корзину")}
           </button>
+          <SaveShoppingTemplate
+            items={cart.items.map((item) => ({
+              ...item,
+              name: cart.products.find(
+                (product) => product.id === item.product_id,
+              )?.name,
+            }))}
+          />
         </section>
         <aside className="cart-summary">
           <span className="eyebrow">
