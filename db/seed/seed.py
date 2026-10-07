@@ -18,11 +18,13 @@ from sqlalchemy.ext.asyncio import async_sessionmaker  # noqa: E402
 
 from app.core.config import Settings  # noqa: E402
 from app.core.database import make_engine  # noqa: E402
-from app.models import Category, Product  # noqa: E402
+from app.models import Category, Product, ProductConnection  # noqa: E402
 
 
 async def seed():
-    data = json.loads(Path(__file__).with_name("products.json").read_text(encoding="utf-8"))
+    seed_dir = Path(__file__).parent
+    data = json.loads(seed_dir.joinpath("products.json").read_text(encoding="utf-8"))
+    connections = json.loads(seed_dir.joinpath("connections.json").read_text(encoding="utf-8"))
     engine = make_engine(Settings())
     try:
         async with async_sessionmaker(engine).begin() as session:
@@ -51,9 +53,40 @@ async def seed():
                 await session.execute(
                     insert(Product).values(**values).on_conflict_do_nothing(index_elements=["sku"])
                 )
+
+            product_ids = dict((await session.execute(select(Product.slug, Product.id))).all())
+            for connection in connections:
+                source_id = product_ids.get(connection["source"])
+                target_id = product_ids.get(connection["target"])
+                if source_id is None or target_id is None:
+                    raise RuntimeError(
+                        "Unknown seeded product connection: "
+                        f"{connection['source']} -> {connection['target']}"
+                    )
+                await session.execute(
+                    insert(ProductConnection)
+                    .values(
+                        source_product_id=source_id,
+                        target_product_id=target_id,
+                        relation_type=connection.get("relation_type", "complementary"),
+                        position=connection.get("position", 0),
+                        is_active=True,
+                    )
+                    .on_conflict_do_nothing(
+                        index_elements=[
+                            "source_product_id",
+                            "target_product_id",
+                            "relation_type",
+                        ]
+                    )
+                )
+
             counts = {
                 "categories": await session.scalar(select(func.count()).select_from(Category)),
                 "products": await session.scalar(select(func.count()).select_from(Product)),
+                "connections": await session.scalar(
+                    select(func.count()).select_from(ProductConnection)
+                ),
             }
         print(json.dumps(counts))
     finally:
