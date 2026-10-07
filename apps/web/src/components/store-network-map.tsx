@@ -6,6 +6,19 @@ import { usePresentation } from "@/context/presentation";
 import type { StoreLocation } from "@/lib/store-locations";
 import styles from "./home-store-network.module.css";
 
+function escapeMarkup(value: string) {
+  return value.replace(/[&<>"']/g, (character) => {
+    const entities: Record<string, string> = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;",
+    };
+    return entities[character] ?? character;
+  });
+}
+
 export default function StoreNetworkMap({
   stores,
   selectedStoreId,
@@ -29,8 +42,17 @@ export default function StoreNetworkMap({
     if (!element.current || stores.length === 0) return;
 
     const map = L.map(element.current, {
-      scrollWheelZoom: false,
+      scrollWheelZoom: true,
+      touchZoom: true,
+      dragging: true,
+      doubleClickZoom: true,
+      boxZoom: true,
+      keyboard: true,
       zoomControl: true,
+      zoomSnap: 0.25,
+      zoomDelta: 0.5,
+      wheelDebounceTime: 20,
+      wheelPxPerZoomLevel: 90,
     });
     mapRef.current = map;
     const mapMarkers = markersRef.current;
@@ -44,18 +66,40 @@ export default function StoreNetworkMap({
     const markers = stores.map((store) => {
       const icon = L.divIcon({
         className: "paykar-network-marker",
-        html: `<span>${store.id}</span>`,
-        iconSize: [44, 44],
-        iconAnchor: [22, 22],
+        html: [
+          '<span class="paykar-network-pin" aria-hidden="true">П</span>',
+          '<span class="paykar-network-label">',
+          `<strong>${escapeMarkup(store.name)}</strong>`,
+          `<small>${escapeMarkup(store.shortAddress)}</small>`,
+          "</span>",
+        ].join(""),
+        iconSize: [154, 48],
+        iconAnchor: [20, 42],
+        popupAnchor: [0, -34],
       });
 
       const popup = document.createElement("div");
       popup.className = "paykar-network-popup";
+
+      const meta = document.createElement("span");
+      meta.className = "paykar-network-popup-meta";
+      meta.textContent = `${t("Супермаркет")} · ${store.city}`;
+
       const title = document.createElement("strong");
       title.textContent = store.name;
+
       const address = document.createElement("span");
+      address.className = "paykar-network-popup-address";
       address.textContent = store.address;
-      popup.append(title, address);
+
+      const mapLink = document.createElement("a");
+      mapLink.className = "paykar-network-popup-link";
+      mapLink.href = `https://www.openstreetmap.org/?mlat=${store.latitude}&mlon=${store.longitude}#map=17/${store.latitude}/${store.longitude}`;
+      mapLink.target = "_blank";
+      mapLink.rel = "noopener noreferrer";
+      mapLink.textContent = `${t("Открыть на карте")} ↗`;
+
+      popup.append(meta, title, address, mapLink);
 
       const marker = L.marker([store.latitude, store.longitude], {
         icon,
@@ -63,7 +107,11 @@ export default function StoreNetworkMap({
         keyboard: true,
       })
         .addTo(map)
-        .bindPopup(popup);
+        .bindPopup(popup, {
+          closeButton: true,
+          maxWidth: 260,
+          minWidth: 190,
+        });
 
       marker.on("click", () => onSelectStoreRef.current(store.id));
       mapMarkers.set(store.id, marker);
@@ -75,7 +123,7 @@ export default function StoreNetworkMap({
     } else {
       const group = L.featureGroup(markers);
       map.fitBounds(group.getBounds(), {
-        padding: [48, 48],
+        padding: [56, 56],
         maxZoom: 13,
       });
     }
@@ -89,7 +137,7 @@ export default function StoreNetworkMap({
       mapRef.current = null;
       map.remove();
     };
-  }, [stores]);
+  }, [stores, t]);
 
   useEffect(() => {
     const map = mapRef.current;
