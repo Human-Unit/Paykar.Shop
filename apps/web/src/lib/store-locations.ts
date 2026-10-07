@@ -2,6 +2,8 @@ export type StoreLocation = {
   id: number;
   name: string;
   address: string;
+  shortAddress: string;
+  city: string;
   latitude: number;
   longitude: number;
 };
@@ -16,6 +18,8 @@ export const storeLocations: StoreLocation[] = [
     id: 1,
     name: "Пайкар 1",
     address: "ул. Айни 16б",
+    shortAddress: "Айни 16б",
+    city: "Душанбе",
     latitude: 38.562512,
     longitude: 68.791511,
   },
@@ -23,6 +27,8 @@ export const storeLocations: StoreLocation[] = [
     id: 2,
     name: "Пайкар 2",
     address: "ул. Бухоро 27",
+    shortAddress: "Бухоро 27",
+    city: "Душанбе",
     latitude: 38.56845,
     longitude: 68.786229,
   },
@@ -30,6 +36,8 @@ export const storeLocations: StoreLocation[] = [
     id: 3,
     name: "Пайкар 3",
     address: "ул. Яккачинор 148",
+    shortAddress: "Яккачинор 148",
+    city: "Душанбе",
     latitude: 38.567245,
     longitude: 68.755381,
   },
@@ -37,6 +45,8 @@ export const storeLocations: StoreLocation[] = [
     id: 4,
     name: "Пайкар 4",
     address: "ул. Айни 57",
+    shortAddress: "Айни 57",
+    city: "Душанбе",
     latitude: 38.563584,
     longitude: 68.80999,
   },
@@ -44,6 +54,8 @@ export const storeLocations: StoreLocation[] = [
     id: 5,
     name: "Пайкар 5",
     address: "пр. Рудаки 66",
+    shortAddress: "Рудаки 66",
+    city: "Душанбе",
     latitude: 38.579079,
     longitude: 68.78781,
   },
@@ -51,6 +63,8 @@ export const storeLocations: StoreLocation[] = [
     id: 6,
     name: "Пайкар 6",
     address: "ул. Бободжон Гафуров 10/б, 112 мкр.",
+    shortAddress: "Б. Гафуров 10/б",
+    city: "Душанбе",
     latitude: 38.589605,
     longitude: 68.740783,
   },
@@ -58,6 +72,8 @@ export const storeLocations: StoreLocation[] = [
     id: 7,
     name: "Пайкар 7",
     address: "ул. Борбад 101",
+    shortAddress: "Борбад 101",
+    city: "Душанбе",
     latitude: 38.5263,
     longitude: 68.748033,
   },
@@ -65,6 +81,8 @@ export const storeLocations: StoreLocation[] = [
     id: 8,
     name: "Пайкар 8",
     address: "ул. С. Носира 25",
+    shortAddress: "С. Носира 25",
+    city: "Душанбе",
     latitude: 38.594824,
     longitude: 68.782061,
   },
