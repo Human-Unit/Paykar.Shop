@@ -24,6 +24,11 @@ export function HomeStoreNetwork() {
   const mapReveal = useReveal({ rise: 0 });
   const directoryReveal = useReveal({ rise: 10, delay: 0.06 });
   const [selectedStoreId, setSelectedStoreId] = useState<number | null>(null);
+  const [selectionRevision, setSelectionRevision] = useState(0);
+  const selectStore = (storeId: number) => {
+    setSelectedStoreId(storeId);
+    setSelectionRevision((revision) => revision + 1);
+  };
   const list = useRef<HTMLDivElement>(null);
   const storeButtons = useRef<Record<number, HTMLButtonElement | null>>({});
 
@@ -69,7 +74,8 @@ export function HomeStoreNetwork() {
           <StoreNetworkMap
             stores={storeLocations}
             selectedStoreId={selectedStoreId}
-            onSelectStore={setSelectedStoreId}
+            selectionRevision={selectionRevision}
+            onSelectStore={selectStore}
           />
           <div className={styles.mapBadge} aria-hidden="true">
             <Store size={18} />
@@ -91,9 +97,7 @@ export function HomeStoreNetwork() {
             </span>
             <div>
               <strong>{t("Магазины")}</strong>
-              <small>
-                {storeLocations.length} · Душанбе
-              </small>
+              <small>{storeLocations.length} · Душанбе</small>
             </div>
           </div>
 
@@ -117,7 +121,7 @@ export function HomeStoreNetwork() {
                     type="button"
                     aria-pressed={selected}
                     aria-label={`${t("Показать на карте")}: ${store.name}, ${store.address}`}
-                    onClick={() => setSelectedStoreId(store.id)}
+                    onClick={() => selectStore(store.id)}
                   >
                     <span className={styles.storeMarker} aria-hidden="true">
                       <Store size={17} />

@@ -1,0 +1,844 @@
+{
+  "storeMapInteraction": {
+    "browser": "154.0.8037.98",
+    "checks": [
+      {
+        "name": "initial labels do not overlap",
+        "pass": true,
+        "detail": {
+          "visible": 7,
+          "collisions": []
+        }
+      },
+      {
+        "name": "mouse drag pans",
+        "pass": true,
+        "detail": {
+          "before": {
+            "x": 555.6666870117188,
+            "y": 518.2083740234375
+          },
+          "after": {
+            "x": 669.6666870117188,
+            "y": 569.2083740234375
+          }
+        }
+      },
+      {
+        "name": "mouse wheel zoom",
+        "pass": true,
+        "detail": {
+          "before": 13,
+          "after": 14
+        }
+      },
+      {
+        "name": "zoom in control",
+        "pass": true,
+        "detail": {
+          "before": 14,
+          "after": 15
+        }
+      },
+      {
+        "name": "zoom out control",
+        "pass": true,
+        "detail": {
+          "before": 15,
+          "after": 14
+        }
+      },
+      {
+        "name": "double-click zoom",
+        "pass": true,
+        "detail": {
+          "before": 14,
+          "after": 15
+        }
+      },
+      {
+        "name": "keyboard arrow pans",
+        "pass": true,
+        "detail": {
+          "before": {
+            "x": 2212.666748046875,
+            "y": 423.2083435058594
+          },
+          "after": {
+            "x": 2132.666748046875,
+            "y": 423.2083435058594
+          }
+        }
+      },
+      {
+        "name": "keyboard plus zoom",
+        "pass": true,
+        "detail": {
+          "before": 15,
+          "after": 16
+        }
+      },
+      {
+        "name": "store 1 directory and popup",
+        "pass": true,
+        "detail": {
+          "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 1\nул. Айни 16б\nОткрыть на карте ↗\n×",
+          "link": {
+            "href": "https://www.openstreetmap.org/?mlat=38.562512&mlon=68.791511#map=17/38.562512/68.791511",
+            "rel": "noopener noreferrer"
+          },
+          "inside": true
+        }
+      },
+      {
+        "name": "store 5 directory and popup",
+        "pass": true,
+        "detail": {
+          "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 5\nпр. Рудаки 66\nОткрыть на карте ↗\n×",
+          "link": {
+            "href": "https://www.openstreetmap.org/?mlat=38.579079&mlon=68.78781#map=17/38.579079/68.78781",
+            "rel": "noopener noreferrer"
+          },
+          "inside": true
+        }
+      },
+      {
+        "name": "store 8 directory and popup",
+        "pass": true,
+        "detail": {
+          "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 8\nул. С. Носира 25\nОткрыть на карте ↗\n×",
+          "link": {
+            "href": "https://www.openstreetmap.org/?mlat=38.594824&mlon=68.782061#map=17/38.594824/68.782061",
+            "rel": "noopener noreferrer"
+          },
+          "inside": true
+        }
+      },
+      {
+        "name": "same store reopens closed popup",
+        "pass": true
+      },
+      {
+        "name": "marker synchronizes directory",
+        "pass": true
+      },
+      {
+        "name": "language change preserves selection and popup",
+        "pass": true,
+        "detail": "SUPERMARKET · ДУШАНБЕ\nПайкар 8\nул. С. Носира 25\nOpen on map ↗\n×"
+      },
+      {
+        "name": "map copy translated",
+        "pass": true
+      },
+      {
+        "name": "page scroll outside map",
+        "pass": true
+      },
+      {
+        "name": "no browser exceptions",
+        "pass": true,
+        "detail": []
+      }
+    ]
+  },
+  "storeMapResponsive": {
+    "cases": [
+      {
+        "width": 1440,
+        "theme": "dark",
+        "initial": {
+          "size": {
+            "width": 905.8646240234375,
+            "height": 520
+          },
+          "overflow": 0,
+          "visibleLabels": 7,
+          "collisions": [],
+          "tiles": 24,
+          "tileFilter": "brightness(0.68) saturate(0.68) contrast(1.12)",
+          "zoomButtonSize": 44,
+          "markerNames": [
+            "Пайкар 1 — ул. Айни 16б",
+            "Пайкар 2 — ул. Бухоро 27",
+            "Пайкар 3 — ул. Яккачинор 148",
+            "Пайкар 4 — ул. Айни 57",
+            "Пайкар 5 — пр. Рудаки 66",
+            "Пайкар 6 — ул. Бободжон Гафуров 10/б, 112 мкр.",
+            "Пайкар 7 — ул. Борбад 101",
+            "Пайкар 8 — ул. С. Носира 25"
+          ]
+        },
+        "popups": [
+          {
+            "id": 1,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 1\nул. Айни 16б\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          },
+          {
+            "id": 5,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 5\nпр. Рудаки 66\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          },
+          {
+            "id": 8,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 8\nул. С. Носира 25\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          }
+        ],
+        "screenshots": [
+          "C:/Workshop/Paykar/Test_Task_Paykar_Shop/.playwright-mcp/store-map-1440-dark.png"
+        ],
+        "pass": true
+      },
+      {
+        "width": 1024,
+        "theme": "dark",
+        "initial": {
+          "size": {
+            "width": 598.1146240234375,
+            "height": 520
+          },
+          "overflow": 0,
+          "visibleLabels": 6,
+          "collisions": [],
+          "tiles": 16,
+          "tileFilter": "brightness(0.68) saturate(0.68) contrast(1.12)",
+          "zoomButtonSize": 44,
+          "markerNames": [
+            "Пайкар 1 — ул. Айни 16б",
+            "Пайкар 2 — ул. Бухоро 27",
+            "Пайкар 3 — ул. Яккачинор 148",
+            "Пайкар 4 — ул. Айни 57",
+            "Пайкар 5 — пр. Рудаки 66",
+            "Пайкар 6 — ул. Бободжон Гафуров 10/б, 112 мкр.",
+            "Пайкар 7 — ул. Борбад 101",
+            "Пайкар 8 — ул. С. Носира 25"
+          ]
+        },
+        "popups": [
+          {
+            "id": 1,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 1\nул. Айни 16б\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          },
+          {
+            "id": 5,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 5\nпр. Рудаки 66\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          },
+          {
+            "id": 8,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 8\nул. С. Носира 25\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          }
+        ],
+        "screenshots": [
+          "C:/Workshop/Paykar/Test_Task_Paykar_Shop/.playwright-mcp/store-map-1024-dark.png"
+        ],
+        "pass": true
+      },
+      {
+        "width": 768,
+        "theme": "dark",
+        "initial": {
+          "size": {
+            "width": 708.6666870117188,
+            "height": 420
+          },
+          "overflow": 0,
+          "visibleLabels": 7,
+          "collisions": [],
+          "tiles": 6,
+          "tileFilter": "brightness(0.68) saturate(0.68) contrast(1.12)",
+          "zoomButtonSize": 44,
+          "markerNames": [
+            "Пайкар 1 — ул. Айни 16б",
+            "Пайкар 2 — ул. Бухоро 27",
+            "Пайкар 3 — ул. Яккачинор 148",
+            "Пайкар 4 — ул. Айни 57",
+            "Пайкар 5 — пр. Рудаки 66",
+            "Пайкар 6 — ул. Бободжон Гафуров 10/б, 112 мкр.",
+            "Пайкар 7 — ул. Борбад 101",
+            "Пайкар 8 — ул. С. Носира 25"
+          ]
+        },
+        "popups": [
+          {
+            "id": 1,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 1\nул. Айни 16б\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          },
+          {
+            "id": 5,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 5\nпр. Рудаки 66\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          },
+          {
+            "id": 8,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 8\nул. С. Носира 25\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          }
+        ],
+        "screenshots": [
+          "C:/Workshop/Paykar/Test_Task_Paykar_Shop/.playwright-mcp/store-map-768-dark.png"
+        ],
+        "pass": true
+      },
+      {
+        "width": 390,
+        "theme": "dark",
+        "initial": {
+          "size": {
+            "width": 346.66668701171875,
+            "height": 330
+          },
+          "overflow": 0,
+          "visibleLabels": 2,
+          "collisions": [],
+          "tiles": 6,
+          "tileFilter": "brightness(0.68) saturate(0.68) contrast(1.12)",
+          "zoomButtonSize": 44,
+          "markerNames": [
+            "Пайкар 1 — ул. Айни 16б",
+            "Пайкар 2 — ул. Бухоро 27",
+            "Пайкар 3 — ул. Яккачинор 148",
+            "Пайкар 4 — ул. Айни 57",
+            "Пайкар 5 — пр. Рудаки 66",
+            "Пайкар 6 — ул. Бободжон Гафуров 10/б, 112 мкр.",
+            "Пайкар 7 — ул. Борбад 101",
+            "Пайкар 8 — ул. С. Носира 25"
+          ]
+        },
+        "popups": [
+          {
+            "id": 1,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 1\nул. Айни 16б\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          },
+          {
+            "id": 5,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 5\nпр. Рудаки 66\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          },
+          {
+            "id": 8,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 8\nул. С. Носира 25\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          }
+        ],
+        "screenshots": [
+          "C:/Workshop/Paykar/Test_Task_Paykar_Shop/.playwright-mcp/store-map-390-dark.png",
+          "C:/Workshop/Paykar/Test_Task_Paykar_Shop/.playwright-mcp/store-map-390-dark-popup.png"
+        ],
+        "pass": true
+      },
+      {
+        "width": 320,
+        "theme": "dark",
+        "initial": {
+          "size": {
+            "width": 276.66668701171875,
+            "height": 330
+          },
+          "overflow": 0,
+          "visibleLabels": 2,
+          "collisions": [],
+          "tiles": 9,
+          "tileFilter": "brightness(0.68) saturate(0.68) contrast(1.12)",
+          "zoomButtonSize": 44,
+          "markerNames": [
+            "Пайкар 1 — ул. Айни 16б",
+            "Пайкар 2 — ул. Бухоро 27",
+            "Пайкар 3 — ул. Яккачинор 148",
+            "Пайкар 4 — ул. Айни 57",
+            "Пайкар 5 — пр. Рудаки 66",
+            "Пайкар 6 — ул. Бободжон Гафуров 10/б, 112 мкр.",
+            "Пайкар 7 — ул. Борбад 101",
+            "Пайкар 8 — ул. С. Носира 25"
+          ]
+        },
+        "popups": [
+          {
+            "id": 1,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 1\nул. Айни 16б\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          },
+          {
+            "id": 5,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 5\nпр. Рудаки 66\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          },
+          {
+            "id": 8,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 8\nул. С. Носира 25\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          }
+        ],
+        "screenshots": [
+          "C:/Workshop/Paykar/Test_Task_Paykar_Shop/.playwright-mcp/store-map-320-dark.png",
+          "C:/Workshop/Paykar/Test_Task_Paykar_Shop/.playwright-mcp/store-map-320-dark-popup.png"
+        ],
+        "pass": true
+      },
+      {
+        "width": 1440,
+        "theme": "light",
+        "initial": {
+          "size": {
+            "width": 905.8646240234375,
+            "height": 520
+          },
+          "overflow": 0,
+          "visibleLabels": 7,
+          "collisions": [],
+          "tiles": 24,
+          "tileFilter": "saturate(0.86) contrast(0.98)",
+          "zoomButtonSize": 44,
+          "markerNames": [
+            "Пайкар 1 — ул. Айни 16б",
+            "Пайкар 2 — ул. Бухоро 27",
+            "Пайкар 3 — ул. Яккачинор 148",
+            "Пайкар 4 — ул. Айни 57",
+            "Пайкар 5 — пр. Рудаки 66",
+            "Пайкар 6 — ул. Бободжон Гафуров 10/б, 112 мкр.",
+            "Пайкар 7 — ул. Борбад 101",
+            "Пайкар 8 — ул. С. Носира 25"
+          ]
+        },
+        "popups": [
+          {
+            "id": 1,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 1\nул. Айни 16б\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          },
+          {
+            "id": 5,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 5\nпр. Рудаки 66\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          },
+          {
+            "id": 8,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 8\nул. С. Носира 25\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          }
+        ],
+        "screenshots": [
+          "C:/Workshop/Paykar/Test_Task_Paykar_Shop/.playwright-mcp/store-map-1440-light.png"
+        ],
+        "pass": true
+      },
+      {
+        "width": 1024,
+        "theme": "light",
+        "initial": {
+          "size": {
+            "width": 598.1146240234375,
+            "height": 520
+          },
+          "overflow": 0,
+          "visibleLabels": 6,
+          "collisions": [],
+          "tiles": 16,
+          "tileFilter": "saturate(0.86) contrast(0.98)",
+          "zoomButtonSize": 44,
+          "markerNames": [
+            "Пайкар 1 — ул. Айни 16б",
+            "Пайкар 2 — ул. Бухоро 27",
+            "Пайкар 3 — ул. Яккачинор 148",
+            "Пайкар 4 — ул. Айни 57",
+            "Пайкар 5 — пр. Рудаки 66",
+            "Пайкар 6 — ул. Бободжон Гафуров 10/б, 112 мкр.",
+            "Пайкар 7 — ул. Борбад 101",
+            "Пайкар 8 — ул. С. Носира 25"
+          ]
+        },
+        "popups": [
+          {
+            "id": 1,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 1\nул. Айни 16б\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          },
+          {
+            "id": 5,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 5\nпр. Рудаки 66\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          },
+          {
+            "id": 8,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 8\nул. С. Носира 25\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          }
+        ],
+        "screenshots": [
+          "C:/Workshop/Paykar/Test_Task_Paykar_Shop/.playwright-mcp/store-map-1024-light.png"
+        ],
+        "pass": true
+      },
+      {
+        "width": 768,
+        "theme": "light",
+        "initial": {
+          "size": {
+            "width": 708.6666870117188,
+            "height": 420
+          },
+          "overflow": 0,
+          "visibleLabels": 7,
+          "collisions": [],
+          "tiles": 6,
+          "tileFilter": "saturate(0.86) contrast(0.98)",
+          "zoomButtonSize": 44,
+          "markerNames": [
+            "Пайкар 1 — ул. Айни 16б",
+            "Пайкар 2 — ул. Бухоро 27",
+            "Пайкар 3 — ул. Яккачинор 148",
+            "Пайкар 4 — ул. Айни 57",
+            "Пайкар 5 — пр. Рудаки 66",
+            "Пайкар 6 — ул. Бободжон Гафуров 10/б, 112 мкр.",
+            "Пайкар 7 — ул. Борбад 101",
+            "Пайкар 8 — ул. С. Носира 25"
+          ]
+        },
+        "popups": [
+          {
+            "id": 1,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 1\nул. Айни 16б\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          },
+          {
+            "id": 5,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 5\nпр. Рудаки 66\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          },
+          {
+            "id": 8,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 8\nул. С. Носира 25\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          }
+        ],
+        "screenshots": [
+          "C:/Workshop/Paykar/Test_Task_Paykar_Shop/.playwright-mcp/store-map-768-light.png"
+        ],
+        "pass": true
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "initial": {
+          "size": {
+            "width": 346.66668701171875,
+            "height": 330
+          },
+          "overflow": 0,
+          "visibleLabels": 2,
+          "collisions": [],
+          "tiles": 6,
+          "tileFilter": "saturate(0.86) contrast(0.98)",
+          "zoomButtonSize": 44,
+          "markerNames": [
+            "Пайкар 1 — ул. Айни 16б",
+            "Пайкар 2 — ул. Бухоро 27",
+            "Пайкар 3 — ул. Яккачинор 148",
+            "Пайкар 4 — ул. Айни 57",
+            "Пайкар 5 — пр. Рудаки 66",
+            "Пайкар 6 — ул. Бободжон Гафуров 10/б, 112 мкр.",
+            "Пайкар 7 — ул. Борбад 101",
+            "Пайкар 8 — ул. С. Носира 25"
+          ]
+        },
+        "popups": [
+          {
+            "id": 1,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 1\nул. Айни 16б\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          },
+          {
+            "id": 5,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 5\nпр. Рудаки 66\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          },
+          {
+            "id": 8,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 8\nул. С. Носира 25\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          }
+        ],
+        "screenshots": [
+          "C:/Workshop/Paykar/Test_Task_Paykar_Shop/.playwright-mcp/store-map-390-light.png",
+          "C:/Workshop/Paykar/Test_Task_Paykar_Shop/.playwright-mcp/store-map-390-light-popup.png"
+        ],
+        "pass": true
+      },
+      {
+        "width": 320,
+        "theme": "light",
+        "initial": {
+          "size": {
+            "width": 276.66668701171875,
+            "height": 330
+          },
+          "overflow": 0,
+          "visibleLabels": 2,
+          "collisions": [],
+          "tiles": 9,
+          "tileFilter": "saturate(0.86) contrast(0.98)",
+          "zoomButtonSize": 44,
+          "markerNames": [
+            "Пайкар 1 — ул. Айни 16б",
+            "Пайкар 2 — ул. Бухоро 27",
+            "Пайкар 3 — ул. Яккачинор 148",
+            "Пайкар 4 — ул. Айни 57",
+            "Пайкар 5 — пр. Рудаки 66",
+            "Пайкар 6 — ул. Бободжон Гафуров 10/б, 112 мкр.",
+            "Пайкар 7 — ул. Борбад 101",
+            "Пайкар 8 — ул. С. Носира 25"
+          ]
+        },
+        "popups": [
+          {
+            "id": 1,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 1\nул. Айни 16б\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          },
+          {
+            "id": 5,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 5\nпр. Рудаки 66\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          },
+          {
+            "id": 8,
+            "controlsClear": true,
+            "badgeHidden": true,
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 8\nул. С. Носира 25\nОткрыть на карте ↗\n×",
+            "inside": true,
+            "selectedLabelVisible": true
+          }
+        ],
+        "screenshots": [
+          "C:/Workshop/Paykar/Test_Task_Paykar_Shop/.playwright-mcp/store-map-320-light.png",
+          "C:/Workshop/Paykar/Test_Task_Paykar_Shop/.playwright-mcp/store-map-320-light-popup.png"
+        ],
+        "pass": true
+      }
+    ],
+    "errors": [],
+    "pass": true
+  },
+  "storeMapTouch": {
+    "width": 390,
+    "drag": {
+      "pass": true,
+      "before": {
+        "x": 214.6666717529297,
+        "y": 416.76043701171875
+      },
+      "after": {
+        "x": 254.70404052734375,
+        "y": 392.76043701171875
+      },
+      "pageScrollDelta": 0
+    },
+    "pinch": {
+      "pass": true,
+      "before": 12,
+      "after": 14
+    },
+    "hardware": "touchpad hardware verification pending",
+    "method": "Chromium CDP synthetic touch events; no physical touchpad or touchscreen"
+  },
+  "storeMapRegression": {
+    "checks": [
+      {
+        "name": "homepage renders",
+        "pass": true
+      },
+      {
+        "name": "order phone journey renders and reaches final stage",
+        "pass": true,
+        "detail": {
+          "current": "Доставлен",
+          "steps": 4
+        }
+      },
+      {
+        "name": "animated directory pan opens popup",
+        "pass": true
+      },
+      {
+        "name": "language UI tg",
+        "pass": true,
+        "detail": {
+          "popup": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 1\nул. Айни 16б\nДар харита кушоед ↗\n×"
+        }
+      },
+      {
+        "name": "language UI en",
+        "pass": true,
+        "detail": {
+          "popup": "SUPERMARKET · ДУШАНБЕ\nПайкар 1\nул. Айни 16б\nOpen on map ↗\n×"
+        }
+      },
+      {
+        "name": "language UI ru",
+        "pass": true,
+        "detail": {
+          "popup": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 1\nул. Айни 16б\nОткрыть на карте ↗\n×"
+        }
+      },
+      {
+        "name": "theme UI switches light",
+        "pass": true
+      },
+      {
+        "name": "preferences persist after reload",
+        "pass": true
+      },
+      {
+        "name": "render /catalog",
+        "pass": true,
+        "detail": {
+          "heading": "Каталог товаров",
+          "overflow": 0
+        }
+      },
+      {
+        "name": "render /saved",
+        "pass": true,
+        "detail": {
+          "heading": "Сохранённых товаров пока нет",
+          "overflow": 0
+        }
+      },
+      {
+        "name": "render /cart",
+        "pass": true,
+        "detail": {
+          "heading": "Ваша корзина пока пуста",
+          "overflow": 0
+        }
+      },
+      {
+        "name": "render /my-shopping",
+        "pass": true,
+        "detail": {
+          "heading": "Мои покупки",
+          "overflow": 0
+        }
+      },
+      {
+        "name": "render /product/raisin-bun",
+        "pass": true,
+        "detail": {
+          "heading": "Булочка с изюмом, 1 шт",
+          "overflow": 0
+        }
+      },
+      {
+        "name": "no browser exceptions",
+        "pass": true,
+        "detail": []
+      }
+    ],
+    "pass": true
+  },
+  "storeMapAccessibility": {
+    "focusReveal": true,
+    "hoverReveal": true,
+    "markerSelectsDifferentDirectoryEntry": true,
+    "popup": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 2\nул. Бухоро 27\nОткрыть на карте ↗\n×",
+    "resized": {
+      "width": 347,
+      "active": 1,
+      "labels": 3
+    },
+    "pass": true
+  }
+}

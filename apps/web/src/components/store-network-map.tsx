@@ -22,10 +22,12 @@ function escapeMarkup(value: string) {
 export default function StoreNetworkMap({
   stores,
   selectedStoreId,
+  selectionRevision,
   onSelectStore,
 }: {
   stores: StoreLocation[];
   selectedStoreId: number | null;
+  selectionRevision: number;
   onSelectStore: (storeId: number) => void;
 }) {
   const { t } = usePresentation();
@@ -73,7 +75,7 @@ export default function StoreNetworkMap({
           `<small>${escapeMarkup(store.shortAddress)}</small>`,
           "</span>",
         ].join(""),
-        iconSize: [154, 48],
+        iconSize: [40, 48],
         iconAnchor: [20, 42],
         popupAnchor: [0, -34],
       });
@@ -111,12 +113,75 @@ export default function StoreNetworkMap({
           closeButton: true,
           maxWidth: 260,
           minWidth: 190,
+          autoPanPadding: [12, 16],
+          autoPanPaddingTopLeft: [12, 112],
         });
 
       marker.on("click", () => onSelectStoreRef.current(store.id));
       mapMarkers.set(store.id, marker);
       return marker;
     });
+
+    // Labels may move or collapse; Leaflet alone owns each pin's transform.
+    const layoutLabels = () => {
+      const size = map.getSize();
+      const points = markers.map((marker) =>
+        map.latLngToContainerPoint(marker.getLatLng()),
+      );
+      const occupied: L.Bounds[] = [
+        L.bounds([8, 8], [64, 112]), // Zoom controls.
+        L.bounds([size.x - 184, 8], [size.x - 8, 76]), // Store count badge.
+        ...points.map((point) =>
+          L.bounds(point.subtract([24, 46]), point.add([24, 6])),
+        ),
+      ];
+      const viewport = L.bounds([8, 8], [size.x - 8, size.y - 24]);
+      const priority = (marker: L.Marker) =>
+        Number(
+          marker.getElement()?.matches(".is-active, :hover, :focus") ?? false,
+        );
+
+      for (const marker of [...markers].sort(
+        (a, b) => priority(b) - priority(a),
+      )) {
+        const root = marker.getElement();
+        const label = root?.querySelector<HTMLElement>(".paykar-network-label");
+        if (!root || !label) continue;
+        const point = map.latLngToContainerPoint(marker.getLatLng());
+        const origin = point.subtract([20, 42]);
+        const width = label.offsetWidth;
+        const height = label.offsetHeight;
+        const candidates = [
+          L.point(47, (48 - height) / 2),
+          L.point(-width - 7, (48 - height) / 2),
+          L.point(20 - width / 2, -height - 10),
+          L.point(20 - width / 2, 54),
+        ];
+        const offset = candidates.find((candidate) => {
+          const start = origin.add(candidate);
+          const bounds = L.bounds(start, start.add([width, height]));
+          return (
+            viewport.contains(bounds) &&
+            occupied.every((other) => !other.overlaps(bounds))
+          );
+        });
+        const visible = offset !== undefined || priority(marker) === 1;
+        const position =
+          offset ??
+          L.point(
+            Math.max(8, Math.min(size.x - width - 8, origin.x + 47)) - origin.x,
+            Math.max(8, Math.min(size.y - height - 24, origin.y)) - origin.y,
+          );
+        label.style.left = `${position.x}px`;
+        label.style.top = `${position.y}px`;
+        label.dataset.collapsed = String(!visible);
+        if (visible) {
+          const start = origin.add(position);
+          occupied.push(L.bounds(start, start.add([width, height])));
+        }
+      }
+    };
+    map.on("moveend zoomend resize", layoutLabels);
 
     if (markers.length === 1) {
       map.setView(markers[0].getLatLng(), 16);
@@ -126,6 +191,12 @@ export default function StoreNetworkMap({
         padding: [56, 56],
         maxZoom: 13,
       });
+    }
+    layoutLabels();
+    for (const marker of markers) {
+      marker.on("mouseover mouseout", layoutLabels);
+      marker.getElement()?.addEventListener("focus", layoutLabels);
+      marker.getElement()?.addEventListener("blur", layoutLabels);
     }
 
     const resize = new ResizeObserver(() => map.invalidateSize());
@@ -146,21 +217,27 @@ export default function StoreNetworkMap({
       marker
         .getElement()
         ?.classList.toggle("is-active", storeId === selectedStoreId);
+      marker.setZIndexOffset(storeId === selectedStoreId ? 1000 : 0);
     }
 
     if (!map || selectedStoreId === null) return;
     const marker = markersRef.current.get(selectedStoreId);
     if (!marker) return;
 
-    marker.openPopup();
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
+    const openPopup = () => marker.openPopup();
+    map.stop();
+    map.once("moveend", openPopup);
     map.panTo(marker.getLatLng(), {
       animate: !reduceMotion,
       duration: reduceMotion ? 0 : 0.35,
     });
-  }, [selectedStoreId]);
+    return () => {
+      map.off("moveend", openPopup);
+    };
+  }, [selectedStoreId, selectionRevision, stores, t]);
 
   return (
     <div
