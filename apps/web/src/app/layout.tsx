@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { CartProvider } from "@/context/cart";
 import { Shell } from "@/components/shell";
 import { PresentationProvider } from "@/context/presentation";
+import { SavedItemsProvider } from "@/context/saved-items";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -33,9 +34,11 @@ export default function RootLayout({
       </head>
       <body>
         <PresentationProvider>
-          <CartProvider>
-            <Shell>{children}</Shell>
-          </CartProvider>
+          <SavedItemsProvider>
+            <CartProvider>
+              <Shell>{children}</Shell>
+            </CartProvider>
+          </SavedItemsProvider>
         </PresentationProvider>
       </body>
     </html>

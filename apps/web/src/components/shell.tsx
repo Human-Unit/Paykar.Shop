@@ -4,15 +4,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Suspense, useEffect, useRef } from "react";
 import { storePages, articles } from "@/lib/store-content";
-import { Info, MapPin, ShoppingBasket } from "lucide-react";
+import { Heart, Info, MapPin, ShoppingBasket } from "lucide-react";
 import { SearchBox } from "./search-box";
 import { useCart } from "@/context/cart";
+import { useSavedItems } from "@/context/saved-items";
 import { LanguageSelector, Preferences } from "./preferences";
 import { Brand } from "./brand";
 import { BurgerMenu, MainNavigation } from "./site-navigation";
 import { Footer } from "./footer";
 import { MotionProvider } from "./motion-primitives";
 import { MobileTabBar } from "./mobile-tabbar";
+import styles from "./shopping-assistance.module.css";
 
 // Sticky header state lives on the element, not in React: scrolling must not
 // re-render the page. The navigation row tucks away on the way down and
@@ -64,6 +66,7 @@ function useHeaderScroll() {
 export function Shell({ children }: { children: React.ReactNode }) {
   const { t } = usePresentation();
   const cart = useCart();
+  const saved = useSavedItems();
   const path = usePathname();
   const header = useHeaderScroll();
   useEffect(() => {
@@ -78,9 +81,11 @@ export function Shell({ children }: { children: React.ReactNode }) {
           ? "Оформление заказа"
           : path.startsWith("/cart")
             ? "Корзина"
-            : path.startsWith("/order/")
-              ? "Ваш заказ"
-              : "Пайкар");
+            : path.startsWith("/saved")
+              ? "Сохранённые товары"
+              : path.startsWith("/order/")
+                ? "Ваш заказ"
+                : "Пайкар");
     document.title =
       title === "Пайкар" ? t(title) : `${t(title)} · ${t("Пайкар")}`;
     const description =
@@ -116,6 +121,17 @@ export function Shell({ children }: { children: React.ReactNode }) {
             <div className="header-actions">
               <LanguageSelector />
               <Preferences />
+              <Link
+                href="/saved"
+                className={`cart-link ${styles.headerSavedLink}`}
+                aria-label={t("Сохранённые товары, ") + saved.count}
+              >
+                <Heart size={22} aria-hidden="true" />
+                <span className="cart-label">{t("Сохранённые")}</span>
+                {saved.count > 0 && (
+                  <span className={styles.savedCount}>{saved.count}</span>
+                )}
+              </Link>
               <Link
                 href="/cart"
                 className="cart-link"
