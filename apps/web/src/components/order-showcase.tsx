@@ -2,13 +2,18 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState, type PointerEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type PointerEvent,
+} from "react";
 import { useReducedMotion, useSpring } from "framer-motion";
 import {
   ArrowRight,
   Check,
   CheckCircle2,
-  PackageCheck,
   Route,
   ShoppingBasket,
   Truck,
@@ -47,28 +52,56 @@ const demoSubtotal = demoProducts.reduce(
 );
 const spring = { stiffness: 130, damping: 22, mass: 0.8 };
 const orderStages = [
-  { label: "Принят", status: "Заказ принят", detail: "Оплата при получении" },
   {
-    label: "Собираем",
-    status: "Собираем заказ",
-    detail: "Готовим покупки к отправке",
+    key: "accepted",
+    label: "Принят",
+    status: "Заказ принят",
+    detail: "Мы получили ваш заказ",
+    Icon: Check,
   },
   {
+    key: "preparing",
+    label: "Собираем",
+    status: "Собираем заказ",
+    detail: "Подготавливаем товары",
+    Icon: ShoppingBasket,
+  },
+  {
+    key: "courier",
     label: "В пути",
     status: "Курьер в пути",
     detail: "Оплата при получении",
+    Icon: Truck,
   },
   {
+    key: "delivered",
     label: "Доставлен",
     status: "Заказ доставлен",
     detail: "Спасибо за покупку",
+    Icon: CheckCircle2,
   },
 ] as const;
-const stageIcons = [Check, ShoppingBasket, Truck, PackageCheck];
+const lastStage = orderStages.length - 1;
+
+// Hydration uses the same stage as the server, then resolves the live preference.
+function subscribeReducedMotion(callback: () => void) {
+  const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+  preference.addEventListener("change", callback);
+  return () => preference.removeEventListener("change", callback);
+}
+function reducedMotionSnapshot() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
 
 function OrderPhone() {
   const { t, money } = usePresentation();
   const reduce = useReducedMotion();
+  const motionPreference = useSyncExternalStore(
+    subscribeReducedMotion,
+    reducedMotionSnapshot,
+    () => null,
+  );
+  const shouldReduceMotion = motionPreference ?? reduce;
   const light = usePointerLight();
   const rotateX = useSpring(0, spring);
   const rotateY = useSpring(0, spring);
@@ -80,20 +113,34 @@ function OrderPhone() {
   const sequenceStarted = useRef(false);
   const sequenceFinished = useRef(false);
   const [currentStage, setCurrentStage] = useState(0);
+  const activeStage = motionPreference === true ? lastStage : currentStage;
+  const stage = orderStages[activeStage];
+  const StatusIcon = stage.Icon;
 
   useEffect(() => {
     const node = stageNode.current;
-    if (!node || reduce) return;
+    if (!node) return;
+    if (shouldReduceMotion) {
+      // Commit the delivered state after hydration and retain it if the setting changes.
+      const frame = requestAnimationFrame(() => {
+        stageIndex.current = lastStage;
+        sequenceStarted.current = true;
+        sequenceFinished.current = true;
+        setCurrentStage(lastStage);
+      });
+      return () => cancelAnimationFrame(frame);
+    }
+    if (sequenceFinished.current) return;
     let cancelled = false;
     let timer: number | undefined;
 
     const advance = () => {
       timer = window.setTimeout(() => {
         if (cancelled) return;
-        const next = Math.min(stageIndex.current + 1, orderStages.length - 1);
+        const next = Math.min(stageIndex.current + 1, lastStage);
         stageIndex.current = next;
         setCurrentStage(next);
-        if (next === orderStages.length - 1) {
+        if (next === lastStage) {
           sequenceFinished.current = true;
           return;
         }
@@ -117,15 +164,15 @@ function OrderPhone() {
       if (timer !== undefined) window.clearTimeout(timer);
       if (!sequenceFinished.current) sequenceStarted.current = false;
     };
-  }, [reduce]);
+  }, [shouldReduceMotion]);
 
   useEffect(() => {
-    if (!reduce) return;
+    if (!shouldReduceMotion) return;
     rotateX.jump(0);
     rotateY.jump(0);
     depth.jump(0);
     scale.jump(1);
-  }, [reduce, rotateX, rotateY, depth, scale]);
+  }, [shouldReduceMotion, rotateX, rotateY, depth, scale]);
 
   const reset = () => {
     rotateX.set(0);
@@ -135,7 +182,7 @@ function OrderPhone() {
   };
   const move = (event: PointerEvent<HTMLDivElement>) => {
     if (
-      reduce ||
+      shouldReduceMotion ||
       event.pointerType !== "mouse" ||
       !window.matchMedia("(hover: hover) and (pointer: fine)").matches
     )
@@ -233,35 +280,42 @@ function OrderPhone() {
               </p>
             </div>
             <div className="phone-delivery-status">
-              {(() => {
-                const StatusIcon = stageIcons[currentStage];
-                const stage = orderStages[currentStage];
-                return (
-                  <>
-                    <StatusIcon size={20} />
-                    <m.div
-                      key={currentStage}
-                      className="phone-status-copy"
-                      initial={reduce ? false : { opacity: 0, y: 4 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: reduce ? 0 : 0.24 }}
-                    >
-                      <strong>{t(stage.status)}</strong>
-                      <small>{t(stage.detail)}</small>
-                    </m.div>
-                  </>
-                );
-              })()}
+              <m.span
+                key={stage.key + "-icon"}
+                className="phone-status-icon"
+                initial={
+                  shouldReduceMotion || activeStage === 0
+                    ? false
+                    : { opacity: 0, scale: 0.92 }
+                }
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.24 }}
+              >
+                <StatusIcon size={20} />
+              </m.span>
+              <m.div
+                key={stage.key}
+                className="phone-status-copy"
+                initial={
+                  shouldReduceMotion || activeStage === 0
+                    ? false
+                    : { opacity: 0, y: 4 }
+                }
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.24 }}
+              >
+                <strong>{t(stage.status)}</strong>
+                <small>{t(stage.detail)}</small>
+              </m.div>
             </div>
             <div className="phone-progress">
-              {orderStages.map(({ label }, index) => {
-                const StepIcon =
-                  index < currentStage ? Check : stageIcons[index];
+              {orderStages.map(({ key, label, Icon }, index) => {
+                const StepIcon = index < activeStage ? Check : Icon;
                 return (
                   <span
-                    key={label}
-                    data-current={index === currentStage || undefined}
-                    data-complete={index < currentStage || undefined}
+                    key={key}
+                    data-current={index === activeStage || undefined}
+                    data-complete={index < activeStage || undefined}
                   >
                     <i>
                       <StepIcon size={10} />

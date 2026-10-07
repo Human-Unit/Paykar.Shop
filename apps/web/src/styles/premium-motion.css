@@ -382,7 +382,9 @@
   border-radius: 14px;
   background: var(--green-softer);
 }
-.phone-delivery-status > svg {
+.phone-status-icon {
+  display: grid;
+  place-items: center;
   flex-shrink: 0;
   color: var(--brand-ink);
 }
@@ -403,30 +405,38 @@
   font-size: 9px;
 }
 .phone-progress {
+  --phone-step-gap: 8px;
   display: flex;
   justify-content: space-between;
-  gap: 10px;
+  gap: var(--phone-step-gap);
   padding-top: 20px;
 }
 .phone-progress > span {
   position: relative;
   flex: 1;
+  min-width: 0;
   color: var(--muted);
   text-align: center;
   transition: color 220ms ease;
 }
+.phone-progress > span:not(:last-child)::before,
 .phone-progress > span:not(:last-child)::after {
   content: "";
   position: absolute;
   top: 8px;
   left: calc(50% + 12px);
-  width: calc(100% - 14px);
+  width: calc(100% + var(--phone-step-gap) - 24px);
   height: 1px;
   background: var(--green-line);
-  transition: background-color 320ms ease;
 }
-.phone-progress [data-complete]::after {
+.phone-progress > span:not(:last-child)::after {
   background: var(--paykar-green);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 320ms ease;
+}
+.phone-progress > span[data-complete]::after {
+  transform: scaleX(1);
 }
 .phone-progress i {
   position: relative;
@@ -437,8 +447,8 @@
   height: 18px;
   margin: 0 auto 7px;
   border-radius: 50%;
-  background: var(--green-soft);
-  color: var(--brand-ink);
+  background: var(--stage);
+  color: var(--muted);
   transition:
     background-color 320ms ease,
     color 320ms ease,
@@ -446,6 +456,7 @@
 }
 .phone-progress [data-complete] i {
   background: var(--green-line);
+  color: var(--brand-ink);
 }
 .phone-progress [data-current] {
   color: var(--brand-ink);
@@ -459,6 +470,7 @@
   display: block;
   font-size: 9px;
   line-height: 1.2;
+  overflow-wrap: anywhere;
 }
 .phone-reflection {
   position: absolute;
@@ -499,6 +511,9 @@
   }
   .phone-screen {
     padding-inline: 12px;
+  }
+  .phone-progress {
+    --phone-step-gap: 6px;
   }
 }
 @media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
