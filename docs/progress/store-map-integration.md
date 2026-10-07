@@ -121,7 +121,14 @@ GET /api/v1/health returns status=ok; GET /api/v1/health/db returns database=con
 
 ## Final main verification
 
-Pending the requested feature push, ordinary main merge, final checks and main push. This section will be updated with actual results before publication.
+- Feature branch pushed successfully: a46a22f87d2ca9b45fabec87df25301fb50d1132.
+- Refreshed main using fetch and pull --ff-only; it was already up to date.
+- Ordinary --no-ff main merge: e98bb0dd2a550b2bb1f40abe031dd4ef0d24a7dd. No conflicts.
+- Verified both original main and map tips remain ancestors and the app source matches the verified feature branch exactly.
+- Re-ran lint, format:check, typecheck and production build on main: all PASS.
+- Re-ran Compose configuration validation and up --build -d from main: PASS; postgres/api/web healthy and both API health endpoints healthy.
+- Repeated all 17 map interaction assertions and the focus/hover/marker-selection/resize checks against rebuilt main: PASS, no page exceptions.
+- Final main results are included in browser-results.json. A documentation-only follow-up records these results; the exact published origin/main SHA is reported in the completion response.
 
 ## Remaining issues
 

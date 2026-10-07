@@ -840,5 +840,178 @@
       "labels": 3
     },
     "pass": true
+  },
+  "finalMain": {
+    "featureSha": "a46a22f87d2ca9b45fabec87df25301fb50d1132",
+    "mergeSha": "e98bb0dd2a550b2bb1f40abe031dd4ef0d24a7dd",
+    "sourceIdenticalToVerifiedFeature": true,
+    "checks": {
+      "lint": "PASS",
+      "format": "PASS",
+      "typecheck": "PASS",
+      "build": "PASS",
+      "composeConfig": "PASS",
+      "composeBuildAndStart": "PASS",
+      "postgres": "healthy",
+      "api": "healthy",
+      "web": "healthy",
+      "health": "ok",
+      "database": "connected"
+    },
+    "interaction": {
+      "browser": "154.0.8037.98",
+      "checks": [
+        {
+          "name": "initial labels do not overlap",
+          "pass": true,
+          "detail": {
+            "visible": 7,
+            "collisions": []
+          }
+        },
+        {
+          "name": "mouse drag pans",
+          "pass": true,
+          "detail": {
+            "before": {
+              "x": 555.6666870117188,
+              "y": 518.2083740234375
+            },
+            "after": {
+              "x": 667.6666870117188,
+              "y": 568.2083740234375
+            }
+          }
+        },
+        {
+          "name": "mouse wheel zoom",
+          "pass": true,
+          "detail": {
+            "before": 13,
+            "after": 14
+          }
+        },
+        {
+          "name": "zoom in control",
+          "pass": true,
+          "detail": {
+            "before": 14,
+            "after": 15
+          }
+        },
+        {
+          "name": "zoom out control",
+          "pass": true,
+          "detail": {
+            "before": 15,
+            "after": 14
+          }
+        },
+        {
+          "name": "double-click zoom",
+          "pass": true,
+          "detail": {
+            "before": 14,
+            "after": 15
+          }
+        },
+        {
+          "name": "keyboard arrow pans",
+          "pass": true,
+          "detail": {
+            "before": {
+              "x": 2205.666748046875,
+              "y": 419.2083435058594
+            },
+            "after": {
+              "x": 2125.666748046875,
+              "y": 419.2083435058594
+            }
+          }
+        },
+        {
+          "name": "keyboard plus zoom",
+          "pass": true,
+          "detail": {
+            "before": 15,
+            "after": 16
+          }
+        },
+        {
+          "name": "store 1 directory and popup",
+          "pass": true,
+          "detail": {
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 1\nул. Айни 16б\nОткрыть на карте ↗\n×",
+            "link": {
+              "href": "https://www.openstreetmap.org/?mlat=38.562512&mlon=68.791511#map=17/38.562512/68.791511",
+              "rel": "noopener noreferrer"
+            },
+            "inside": true
+          }
+        },
+        {
+          "name": "store 5 directory and popup",
+          "pass": true,
+          "detail": {
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 5\nпр. Рудаки 66\nОткрыть на карте ↗\n×",
+            "link": {
+              "href": "https://www.openstreetmap.org/?mlat=38.579079&mlon=68.78781#map=17/38.579079/68.78781",
+              "rel": "noopener noreferrer"
+            },
+            "inside": true
+          }
+        },
+        {
+          "name": "store 8 directory and popup",
+          "pass": true,
+          "detail": {
+            "text": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 8\nул. С. Носира 25\nОткрыть на карте ↗\n×",
+            "link": {
+              "href": "https://www.openstreetmap.org/?mlat=38.594824&mlon=68.782061#map=17/38.594824/68.782061",
+              "rel": "noopener noreferrer"
+            },
+            "inside": true
+          }
+        },
+        {
+          "name": "same store reopens closed popup",
+          "pass": true
+        },
+        {
+          "name": "marker synchronizes directory",
+          "pass": true
+        },
+        {
+          "name": "language change preserves selection and popup",
+          "pass": true,
+          "detail": "SUPERMARKET · ДУШАНБЕ\nПайкар 8\nул. С. Носира 25\nOpen on map ↗\n×"
+        },
+        {
+          "name": "map copy translated",
+          "pass": true
+        },
+        {
+          "name": "page scroll outside map",
+          "pass": true
+        },
+        {
+          "name": "no browser exceptions",
+          "pass": true,
+          "detail": []
+        }
+      ]
+    },
+    "accessibility": {
+      "focusReveal": true,
+      "hoverReveal": true,
+      "markerSelectsDifferentDirectoryEntry": true,
+      "popup": "СУПЕРМАРКЕТ · ДУШАНБЕ\nПайкар 2\nул. Бухоро 27\nОткрыть на карте ↗\n×",
+      "resized": {
+        "width": 347,
+        "active": 1,
+        "labels": 3
+      },
+      "pass": true
+    }
   }
 }
