@@ -327,6 +327,26 @@ export function CuratedShopping({ compact = false }: { compact?: boolean }) {
   );
 }
 
+export function ShoppingDiscovery() {
+  const { t } = usePresentation();
+  return (
+    <section className={styles.discovery} aria-label={t("Мои покупки")}>
+      <div>
+        <h2>{t("Мои покупки")}</h2>
+        <p>{t("Повторяйте прошлые заказы и сохраняйте любимые наборы.")}</p>
+      </div>
+      <div className={styles.discoveryLinks}>
+        <Link href="/my-shopping#history" className="text-link">
+          {t("История заказов")}
+        </Link>
+        <Link href="/my-shopping#templates" className="button secondary">
+          {t("Мои шаблоны")}
+        </Link>
+      </div>
+    </section>
+  );
+}
+
 export function MyShopping() {
   const { t } = usePresentation();
   const { templates, orderIds } = useShoppingStorage();

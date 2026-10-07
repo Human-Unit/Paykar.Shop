@@ -66,7 +66,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Углеводы", value: "≈ 9,3 г" },
       { label: "Клетчатка", value: "≈ 2,8 г" },
     ],
-    features: ["Витамин C: ≈ 53 мг/100 г", "Низкая калорийность", "Яркий цитрусовый вкус"],
+    features: [
+      "Витамин C: ≈ 53 мг/100 г",
+      "Низкая калорийность",
+      "Яркий цитрусовый вкус",
+    ],
   },
   carrots: {
     description:
@@ -78,7 +82,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Углеводы", value: "≈ 9,6 г" },
       { label: "Клетчатка", value: "≈ 2,8 г" },
     ],
-    features: ["Витамин A: ≈ 835 мкг RAE/100 г", "Калий: ≈ 320 мг/100 г", "Источник клетчатки"],
+    features: [
+      "Витамин A: ≈ 835 мкг RAE/100 г",
+      "Калий: ≈ 320 мг/100 г",
+      "Источник клетчатки",
+    ],
   },
   potatoes: {
     description:
@@ -91,7 +99,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Углеводы", value: "≈ 17,5 г" },
       { label: "Клетчатка", value: "≈ 2,2 г" },
     ],
-    features: ["Калий: ≈ 425 мг/100 г", "Витамин C: ≈ 20 мг/100 г", "Подходит для варки, запекания и пюре"],
+    features: [
+      "Калий: ≈ 425 мг/100 г",
+      "Витамин C: ≈ 20 мг/100 г",
+      "Подходит для варки, запекания и пюре",
+    ],
   },
   cucumbers: {
     description:
@@ -116,7 +128,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Жиры", value: "≈ 3,2 г" },
       { label: "Углеводы", value: "≈ 4,7 г" },
     ],
-    features: ["Кальций: обычно около 120 мг/100 мл", "Источник белка", "Подходит для напитков, каш и выпечки"],
+    features: [
+      "Кальций: обычно около 120 мг/100 мл",
+      "Источник белка",
+      "Подходит для напитков, каш и выпечки",
+    ],
     note: typicalFoodNote,
   },
   kefir: {
@@ -130,7 +146,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Жиры", value: "≈ 2,5 г" },
       { label: "Углеводы", value: "≈ 4 г" },
     ],
-    features: ["Кисломолочный продукт", "Источник белка и кальция", "Подходит как самостоятельный напиток"],
+    features: [
+      "Кисломолочный продукт",
+      "Источник белка и кальция",
+      "Подходит как самостоятельный напиток",
+    ],
     note: typicalFoodNote,
   },
   yogurt: {
@@ -144,7 +164,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Жиры", value: "≈ 3,3 г" },
       { label: "Углеводы", value: "≈ 4,7 г" },
     ],
-    features: ["Источник белка и кальция", "Удобная база для завтрака", "Хорошо сочетается с фруктами и мёдом"],
+    features: [
+      "Источник белка и кальция",
+      "Удобная база для завтрака",
+      "Хорошо сочетается с фруктами и мёдом",
+    ],
     note: typicalFoodNote,
   },
   "sour-cream": {
@@ -158,7 +182,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Жиры", value: "≈ 20 г" },
       { label: "Углеводы", value: "≈ 3–4 г" },
     ],
-    features: ["Сливочный вкус", "Подходит для соусов и выпечки", "Концентрированный молочный продукт"],
+    features: [
+      "Сливочный вкус",
+      "Подходит для соусов и выпечки",
+      "Концентрированный молочный продукт",
+    ],
     note: typicalFoodNote,
   },
   "cottage-cheese": {
@@ -172,7 +200,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Жиры", value: "≈ 5 г" },
       { label: "Углеводы", value: "≈ 3 г" },
     ],
-    features: ["Высокое содержание белка", "Источник кальция", "Подходит для сладких и несладких блюд"],
+    features: [
+      "Высокое содержание белка",
+      "Источник кальция",
+      "Подходит для сладких и несладких блюд",
+    ],
     note: typicalFoodNote,
   },
   butter: {
@@ -186,7 +218,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Жиры", value: "≈ 81 г" },
       { label: "Углеводы", value: "≈ 0,1 г" },
     ],
-    features: ["Содержит витамин A", "Высокая энергетическая ценность", "Выразительный сливочный вкус"],
+    features: [
+      "Содержит витамин A",
+      "Высокая энергетическая ценность",
+      "Выразительный сливочный вкус",
+    ],
     note: typicalFoodNote,
   },
   cheese: {
@@ -200,7 +236,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Жиры", value: "≈ 25–29 г" },
       { label: "Углеводы", value: "≈ 1–3 г" },
     ],
-    features: ["Богат белком", "Кальций часто 600–800 мг/100 г", "Хорошо плавится в горячих блюдах"],
+    features: [
+      "Богат белком",
+      "Кальций часто 600–800 мг/100 г",
+      "Хорошо плавится в горячих блюдах",
+    ],
     note: typicalFoodNote,
   },
   "wheat-bread": {
@@ -214,7 +254,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Углеводы", value: "≈ 49–50 г" },
       { label: "Клетчатка", value: "≈ 2,5–3 г" },
     ],
-    features: ["Универсален для бутербродов", "Источник углеводов", "Подходит к супам и горячим блюдам"],
+    features: [
+      "Универсален для бутербродов",
+      "Источник углеводов",
+      "Подходит к супам и горячим блюдам",
+    ],
     note: typicalFoodNote,
   },
   "rye-bread": {
@@ -228,7 +272,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Углеводы", value: "≈ 48 г" },
       { label: "Клетчатка", value: "≈ 5–6 г" },
     ],
-    features: ["Выраженный вкус", "Обычно больше клетчатки, чем в белом хлебе", "Хорошо сочетается с сыром и творогом"],
+    features: [
+      "Выраженный вкус",
+      "Обычно больше клетчатки, чем в белом хлебе",
+      "Хорошо сочетается с сыром и творогом",
+    ],
     note: typicalFoodNote,
   },
   flatbread: {
@@ -241,7 +289,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Белки", value: "≈ 8–9 г" },
       { label: "Углеводы", value: "≈ 54–58 г" },
     ],
-    features: ["Мягкая текстура", "Подходит к горячим блюдам", "Удобно делить на порции"],
+    features: [
+      "Мягкая текстура",
+      "Подходит к горячим блюдам",
+      "Удобно делить на порции",
+    ],
     note: typicalFoodNote,
   },
   baguette: {
@@ -254,7 +306,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Белки", value: "≈ 9 г" },
       { label: "Углеводы", value: "≈ 56–58 г" },
     ],
-    features: ["Хрустящая корочка", "Удобен для бутербродов", "Хорошая база для брускетт"],
+    features: [
+      "Хрустящая корочка",
+      "Удобен для бутербродов",
+      "Хорошая база для брускетт",
+    ],
     note: typicalFoodNote,
   },
   croissant: {
@@ -268,7 +324,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Жиры", value: "≈ 21 г" },
       { label: "Углеводы", value: "≈ 46 г" },
     ],
-    features: ["Слоёная текстура", "Подходит к кофе и чаю", "Энергетически плотная выпечка"],
+    features: [
+      "Слоёная текстура",
+      "Подходит к кофе и чаю",
+      "Энергетически плотная выпечка",
+    ],
     note: typicalFoodNote,
   },
   "raisin-bun": {
@@ -295,7 +355,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Жиры", value: "≈ 1 г" },
       { label: "Углеводы", value: "≈ 56–59 г" },
     ],
-    features: ["Тонкий и гибкий", "Подходит для рулетов", "Удобная база для быстрых блюд"],
+    features: [
+      "Тонкий и гибкий",
+      "Подходит для рулетов",
+      "Удобная база для быстрых блюд",
+    ],
     note: typicalFoodNote,
   },
   water: {
@@ -307,7 +371,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Калорийность", value: "0 ккал" },
       { label: "Сахара", value: "0 г" },
     ],
-    features: ["Без сахара", "Без калорий", "Минеральный состав зависит от источника"],
+    features: [
+      "Без сахара",
+      "Без калорий",
+      "Минеральный состав зависит от источника",
+    ],
   },
   "sparkling-water": {
     description:
@@ -318,7 +386,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Калорийность", value: "0 ккал" },
       { label: "Сахара", value: "0 г" },
     ],
-    features: ["Без сахара", "Без калорий", "Содержит растворённый углекислый газ"],
+    features: [
+      "Без сахара",
+      "Без калорий",
+      "Содержит растворённый углекислый газ",
+    ],
   },
   "apple-juice": {
     description:
@@ -330,7 +402,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Углеводы", value: "≈ 11,3 г" },
       { label: "Сахара", value: "≈ 9,5–10 г" },
     ],
-    features: ["Фруктовый вкус", "Содержит природные сахара фруктов", "Подавайте охлаждённым"],
+    features: [
+      "Фруктовый вкус",
+      "Содержит природные сахара фруктов",
+      "Подавайте охлаждённым",
+    ],
     note: typicalFoodNote,
   },
   "orange-juice": {
@@ -343,7 +419,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Углеводы", value: "≈ 10,4 г" },
       { label: "Сахара", value: "≈ 8,4 г" },
     ],
-    features: ["Витамин C часто около 40–50 мг/100 мл", "Цитрусовый вкус", "Подавайте охлаждённым"],
+    features: [
+      "Витамин C часто около 40–50 мг/100 мл",
+      "Цитрусовый вкус",
+      "Подавайте охлаждённым",
+    ],
     note: typicalFoodNote,
   },
   "black-tea": {
@@ -355,7 +435,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Калорийность", value: "≈ 0–2 ккал/100 мл" },
       { label: "Кофеин", value: "обычно ≈ 40–50 мг на чашку 200 мл" },
     ],
-    features: ["Содержит кофеин", "Насыщенный вкус", "Крепость зависит от времени заваривания"],
+    features: [
+      "Содержит кофеин",
+      "Насыщенный вкус",
+      "Крепость зависит от времени заваривания",
+    ],
   },
   "green-tea": {
     description:
@@ -377,7 +461,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Калорийность", value: "≈ 1–2 ккал/100 мл" },
       { label: "Кофеин", value: "обычно ≈ 80–100 мг на чашку 200 мл" },
     ],
-    features: ["Содержит кофеин", "Насыщенный аромат", "Крепость зависит от сорта и способа приготовления"],
+    features: [
+      "Содержит кофеин",
+      "Насыщенный аромат",
+      "Крепость зависит от сорта и способа приготовления",
+    ],
   },
   "milk-chocolate": {
     description:
@@ -390,7 +478,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Жиры", value: "≈ 29–31 г" },
       { label: "Сахара", value: "≈ 50–55 г" },
     ],
-    features: ["Содержит какао и молочные компоненты", "Высокая энергетическая ценность", "Подходит к чаю и кофе"],
+    features: [
+      "Содержит какао и молочные компоненты",
+      "Высокая энергетическая ценность",
+      "Подходит к чаю и кофе",
+    ],
     note: typicalFoodNote,
   },
   "dark-chocolate": {
@@ -404,7 +496,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Жиры", value: "≈ 35–45 г" },
       { label: "Углеводы", value: "≈ 40–55 г" },
     ],
-    features: ["Выраженный вкус какао", "Содержит какао-полифенолы", "Состав зависит от процента какао"],
+    features: [
+      "Выраженный вкус какао",
+      "Содержит какао-полифенолы",
+      "Состав зависит от процента какао",
+    ],
     note: typicalFoodNote,
   },
   "oat-cookies": {
@@ -418,7 +514,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Жиры", value: "≈ 16–20 г" },
       { label: "Углеводы", value: "≈ 65–70 г" },
     ],
-    features: ["Содержит овсяные ингредиенты", "Удобно к чаю", "Плотная сладкая выпечка"],
+    features: [
+      "Содержит овсяные ингредиенты",
+      "Удобно к чаю",
+      "Плотная сладкая выпечка",
+    ],
     note: typicalFoodNote,
   },
   wafers: {
@@ -432,7 +532,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Жиры", value: "≈ 25–30 г" },
       { label: "Углеводы", value: "≈ 60–65 г" },
     ],
-    features: ["Хрустящая текстура", "Высокая энергетическая ценность", "Подходит к чаю и кофе"],
+    features: [
+      "Хрустящая текстура",
+      "Высокая энергетическая ценность",
+      "Подходит к чаю и кофе",
+    ],
     note: typicalFoodNote,
   },
   marmalade: {
@@ -445,7 +549,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Углеводы", value: "≈ 75–80 г" },
       { label: "Жиры", value: "≈ 0 г" },
     ],
-    features: ["В основном углеводный десерт", "Обычно содержит сахар", "Мягкая текстура"],
+    features: [
+      "В основном углеводный десерт",
+      "Обычно содержит сахар",
+      "Мягкая текстура",
+    ],
     note: typicalFoodNote,
   },
   honey: {
@@ -459,7 +567,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Углеводы", value: "≈ 82 г" },
       { label: "Сахара", value: "≈ 82 г" },
     ],
-    features: ["Натурально сладкий продукт", "Небольшого количества обычно достаточно", "Не подходит детям младше 1 года"],
+    features: [
+      "Натурально сладкий продукт",
+      "Небольшого количества обычно достаточно",
+      "Не подходит детям младше 1 года",
+    ],
   },
   "dish-soap": {
     description:
@@ -467,9 +579,16 @@ export const productContent: Record<string, ProductContent> = {
     facts: [
       { label: "Объём", value: "500 мл" },
       { label: "Назначение", value: "Ручное мытьё посуды" },
-      { label: "Использование", value: "Небольшое количество на губку или в воду" },
+      {
+        label: "Использование",
+        value: "Небольшое количество на губку или в воду",
+      },
     ],
-    features: ["Для ежедневной уборки кухни", "Не является пищевым продуктом", "Беречь от попадания в глаза и хранить вдали от детей"],
+    features: [
+      "Для ежедневной уборки кухни",
+      "Не является пищевым продуктом",
+      "Беречь от попадания в глаза и хранить вдали от детей",
+    ],
   },
   "liquid-soap": {
     description:
@@ -477,9 +596,16 @@ export const productContent: Record<string, ProductContent> = {
     facts: [
       { label: "Объём", value: "300 мл" },
       { label: "Назначение", value: "Мытьё рук" },
-      { label: "Использование", value: "Нанести на влажные руки, вспенить, смыть" },
+      {
+        label: "Использование",
+        value: "Нанести на влажные руки, вспенить, смыть",
+      },
     ],
-    features: ["Удобный жидкий формат", "Для ежедневного использования", "Беречь от попадания в глаза"],
+    features: [
+      "Удобный жидкий формат",
+      "Для ежедневного использования",
+      "Беречь от попадания в глаза",
+    ],
   },
   napkins: {
     description:
@@ -499,7 +625,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Тип", value: "Бумажные полотенца" },
       { label: "Использование", value: "Для бытовой уборки и кухни" },
     ],
-    features: ["Одноразовый формат", "Удобно для кухни", "Впитываемость зависит от производителя"],
+    features: [
+      "Одноразовый формат",
+      "Удобно для кухни",
+      "Впитываемость зависит от производителя",
+    ],
   },
   sponges: {
     description:
@@ -509,7 +639,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Назначение", value: "Мытьё посуды и кухонных поверхностей" },
       { label: "Использование", value: "С моющим средством или водой" },
     ],
-    features: ["Набор из 5 штук", "Для регулярной замены", "На деликатных поверхностях сначала проверяйте незаметный участок"],
+    features: [
+      "Набор из 5 штук",
+      "Для регулярной замены",
+      "На деликатных поверхностях сначала проверяйте незаметный участок",
+    ],
   },
   "trash-bags": {
     description:
@@ -519,7 +653,11 @@ export const productContent: Record<string, ProductContent> = {
       { label: "Назначение", value: "Сбор бытового мусора" },
       { label: "Размер", value: "Не указан — сверяйте с упаковкой" },
     ],
-    features: ["Удобный запас для дома", "Одноразовый расходник", "Не заявляем объём или прочность без данных производителя"],
+    features: [
+      "Удобный запас для дома",
+      "Одноразовый расходник",
+      "Не заявляем объём или прочность без данных производителя",
+    ],
   },
 };
 

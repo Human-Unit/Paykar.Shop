@@ -58,8 +58,53 @@
   padding-bottom: 16px;
 }
 .tabs a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 14px;
+  border-radius: 10px;
   color: var(--brand-ink);
   font-weight: 650;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+.tabs a:hover {
+  background: var(--hover-surface);
+}
+.tabs a:focus-visible {
+  outline: 2px solid var(--brand-ink);
+  outline-offset: 3px;
+}
+.discovery {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--surface);
+}
+.discovery h2 {
+  margin: 0 0 6px;
+  font-size: 20px;
+  font-weight: 750;
+}
+.discovery p {
+  margin: 0;
+  color: var(--muted);
+}
+.discoveryLinks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.discoveryLinks a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 .grid {
   display: grid;

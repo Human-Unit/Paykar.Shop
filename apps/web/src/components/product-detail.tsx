@@ -144,12 +144,13 @@ export function ProductDetail({ slug }: { slug: string }) {
       <section className="product-description-panel">
         <SectionHeader eyebrow="Детали покупки" title="О товаре" />
         <p className="description">
-          {enriched?.description ??
-            t(
-              /демонстрацион|учебн/i.test(p.description)
-                ? "Указанная упаковка — одна единица в корзине."
-                : p.description,
-            )}
+          {enriched
+            ? t(enriched.description)
+            : t(
+                /демонстрацион|учебн/i.test(p.description)
+                  ? "Указанная упаковка — одна единица в корзине."
+                  : p.description,
+              )}
         </p>
         <dl className="product-facts">
           <div>
@@ -176,30 +177,30 @@ export function ProductDetail({ slug }: { slug: string }) {
             <div className="product-content-heading">
               <h3>
                 {enriched.basis
-                  ? `Пищевая ценность и параметры · ${enriched.basis}`
-                  : "Характеристики"}
+                  ? `${t("Пищевая ценность и параметры")} · ${t(enriched.basis)}`
+                  : t("Характеристики")}
               </h3>
             </div>
             <dl className="product-facts product-content-facts">
               {enriched.facts.map((fact) => (
                 <div key={`${fact.label}:${fact.value}`}>
-                  <dt>{fact.label}</dt>
-                  <dd>{fact.value}</dd>
+                  <dt>{t(fact.label)}</dt>
+                  <dd>{t(fact.value)}</dd>
                 </div>
               ))}
             </dl>
             {enriched.features.length > 0 && (
               <div className="product-content-features">
-                <h3>Почему стоит добавить</h3>
+                <h3>{t("Почему стоит добавить")}</h3>
                 <ul>
                   {enriched.features.map((feature) => (
-                    <li key={feature}>{feature}</li>
+                    <li key={feature}>{t(feature)}</li>
                   ))}
                 </ul>
               </div>
             )}
             {enriched.note && (
-              <p className="product-content-note">{enriched.note}</p>
+              <p className="product-content-note">{t(enriched.note)}</p>
             )}
           </div>
         )}

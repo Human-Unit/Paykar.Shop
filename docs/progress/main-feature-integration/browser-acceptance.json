@@ -1,0 +1,5020 @@
+{
+  "browser": "Chrome 154.0.8037.98 via Playwright",
+  "date": "2026-10-07",
+  "checks": {
+    "Nav": {
+      "discovery": "Мои покупки\n\nПовторяйте прошлые заказы и сохраняйте любимые наборы.\n\nИстория заказов\nМои шаблоны",
+      "focus": {
+        "outline": "solid",
+        "height": 45.333335876464844
+      },
+      "anchors": [
+        {
+          "action": "keyboard templates",
+          "url": "http://localhost:3000/my-shopping#templates",
+          "y": 309.97918701171875,
+          "header": 123.11458587646484,
+          "scrollY": 408.6666564941406
+        },
+        {
+          "action": "reload templates",
+          "url": "http://localhost:3000/my-shopping#templates",
+          "y": 309.97918701171875,
+          "header": 123.11458587646484,
+          "scrollY": 408.6666564941406
+        },
+        {
+          "action": "curated",
+          "url": "http://localhost:3000/my-shopping#curated",
+          "y": 309.97918701171875,
+          "header": 123.11458587646484,
+          "scrollY": 582.6666870117188
+        },
+        {
+          "action": "back templates",
+          "url": "http://localhost:3000/my-shopping#templates",
+          "y": 718.6458740234375,
+          "header": 151.11458587646484,
+          "scrollY": 0
+        },
+        {
+          "action": "forward curated",
+          "url": "http://localhost:3000/my-shopping#curated",
+          "y": 309.97918701171875,
+          "header": 123.11458587646484,
+          "scrollY": 582.6666870117188
+        },
+        {
+          "action": "history",
+          "url": "http://localhost:3000/my-shopping#history",
+          "y": 309.78125,
+          "header": 123.11458587646484,
+          "scrollY": 121.33333587646484
+        }
+      ],
+      "errors": [],
+      "pass": true
+    },
+    "Personal": {
+      "status": "PASS",
+      "checks": [
+        {
+          "name": "create template with quantity",
+          "pass": true
+        },
+        {
+          "name": "rename/edit and reload persistence",
+          "pass": true
+        },
+        {
+          "name": "add template to persistent guest cart",
+          "pass": true,
+          "cart": [
+            {
+              "product_id": 8,
+              "quantity": 3
+            }
+          ]
+        },
+        {
+          "name": "delete template and retain cart",
+          "pass": true
+        },
+        {
+          "name": "curated family details and add all",
+          "pass": true
+        }
+      ],
+      "errors": [],
+      "browser": "154.0.8037.98"
+    },
+    "Availability": {
+      "status": "PASS",
+      "checks": [
+        {
+          "name": "real unavailable/missing/stock-capped addition",
+          "pass": true,
+          "text": "Добавлено в корзину: 18. Перейти в корзину\n\nСейчас недоступно: 1\n\nБольше не продаётся: 1\n\nКоличество ограничено остатком: 1",
+          "cart": [
+            {
+              "product_id": 8,
+              "quantity": 19
+            }
+          ]
+        },
+        {
+          "name": "explicit removal of stale products",
+          "pass": true
+        },
+        {
+          "name": "503 preview preserves existing cart (injected failure)",
+          "pass": true
+        }
+      ],
+      "errors": []
+    },
+    "Repeat": {
+      "status": "PASS",
+      "orderId": "83643cfb-d126-4451-afec-777803c2f88b",
+      "currentPrice": "14.00",
+      "currentStock": "19.000",
+      "previewPrice": "14.00",
+      "cart": [
+        {
+          "product_id": 8,
+          "quantity": 1
+        }
+      ],
+      "historicalSnapshotUnchanged": true,
+      "saveFromOrder": true,
+      "confirmationReload": true,
+      "errors": []
+    },
+    "MatrixRu": {
+      "status": "PASS",
+      "results": [
+        {
+          "width": 320,
+          "language": "ru",
+          "theme": "dark",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 202,
+              "right": 246,
+              "y": 88,
+              "bottom": 132,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 250,
+              "right": 294,
+              "y": 88,
+              "bottom": 132,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".theme-button",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".burger-button",
+              "x": 250,
+              "right": 294,
+              "y": 34,
+              "bottom": 78,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "Мои покупки",
+              "height": 50,
+              "width": 252.6666717529297
+            },
+            {
+              "text": "История заказов",
+              "height": 44,
+              "width": 236.6666717529297
+            },
+            {
+              "text": "Мои шаблоны",
+              "height": 44,
+              "width": 236.6666717529297
+            },
+            {
+              "text": "Готовые наборы",
+              "height": 44,
+              "width": 236.6666717529297
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "История заказов",
+              "height": 45.333335876464844,
+              "right": 182.03125
+            },
+            {
+              "text": "Мои шаблоны",
+              "height": 45.333335876464844,
+              "right": 162.8125
+            },
+            {
+              "text": "Готовые наборы",
+              "height": 45.333335876464844,
+              "right": 180.125
+            }
+          ],
+          "anchor": {
+            "y": 254.0625,
+            "header": 66
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 320,
+          "language": "ru",
+          "theme": "light",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 202,
+              "right": 246,
+              "y": 88,
+              "bottom": 132,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 250,
+              "right": 294,
+              "y": 88,
+              "bottom": 132,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".theme-button",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".burger-button",
+              "x": 250,
+              "right": 294,
+              "y": 34,
+              "bottom": 78,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "Мои покупки",
+              "height": 50,
+              "width": 252.6666717529297
+            },
+            {
+              "text": "История заказов",
+              "height": 44,
+              "width": 236.6666717529297
+            },
+            {
+              "text": "Мои шаблоны",
+              "height": 44,
+              "width": 236.6666717529297
+            },
+            {
+              "text": "Готовые наборы",
+              "height": 44,
+              "width": 236.6666717529297
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "История заказов",
+              "height": 45.333335876464844,
+              "right": 182.03125
+            },
+            {
+              "text": "Мои шаблоны",
+              "height": 45.333335876464844,
+              "right": 162.8125
+            },
+            {
+              "text": "Готовые наборы",
+              "height": 45.333335876464844,
+              "right": 180.125
+            }
+          ],
+          "anchor": {
+            "y": 254.0625,
+            "header": 66
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 390,
+          "language": "ru",
+          "theme": "dark",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 272,
+              "right": 316,
+              "y": 89.55208587646484,
+              "bottom": 133.55208587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 320,
+              "right": 364,
+              "y": 89.55208587646484,
+              "bottom": 133.55208587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".theme-button",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".burger-button",
+              "x": 320,
+              "right": 364,
+              "y": 34.770835876464844,
+              "bottom": 78.77083587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "Мои покупки",
+              "height": 50,
+              "width": 318.66668701171875
+            },
+            {
+              "text": "История заказов",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Мои шаблоны",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Готовые наборы",
+              "height": 44,
+              "width": 302.66668701171875
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "История заказов",
+              "height": 45.333335876464844,
+              "right": 182.03125
+            },
+            {
+              "text": "Мои шаблоны",
+              "height": 45.333335876464844,
+              "right": 340.84375
+            },
+            {
+              "text": "Готовые наборы",
+              "height": 45.333335876464844,
+              "right": 180.125
+            }
+          ],
+          "anchor": {
+            "y": 254.28125,
+            "header": 67.55208587646484
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 390,
+          "language": "ru",
+          "theme": "light",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 272,
+              "right": 316,
+              "y": 89.55208587646484,
+              "bottom": 133.55208587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 320,
+              "right": 364,
+              "y": 89.55208587646484,
+              "bottom": 133.55208587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".theme-button",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".burger-button",
+              "x": 320,
+              "right": 364,
+              "y": 34.770835876464844,
+              "bottom": 78.77083587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "Мои покупки",
+              "height": 50,
+              "width": 318.66668701171875
+            },
+            {
+              "text": "История заказов",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Мои шаблоны",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Готовые наборы",
+              "height": 44,
+              "width": 302.66668701171875
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "История заказов",
+              "height": 45.333335876464844,
+              "right": 182.03125
+            },
+            {
+              "text": "Мои шаблоны",
+              "height": 45.333335876464844,
+              "right": 340.84375
+            },
+            {
+              "text": "Готовые наборы",
+              "height": 45.333335876464844,
+              "right": 180.125
+            }
+          ],
+          "anchor": {
+            "y": 254.28125,
+            "header": 67.55208587646484
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 768,
+          "language": "ru",
+          "theme": "dark",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 642,
+              "right": 686,
+              "y": 89.55208587646484,
+              "bottom": 133.55208587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 690,
+              "right": 734,
+              "y": 89.55208587646484,
+              "bottom": 133.55208587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".theme-button",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".burger-button",
+              "x": 690,
+              "right": 734,
+              "y": 34.770835876464844,
+              "bottom": 78.77083587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "Мои покупки",
+              "height": 50,
+              "width": 318.66668701171875
+            },
+            {
+              "text": "История заказов",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Мои шаблоны",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Готовые наборы",
+              "height": 44,
+              "width": 302.66668701171875
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "История заказов",
+              "height": 45.333335876464844,
+              "right": 190.03125
+            },
+            {
+              "text": "Мои шаблоны",
+              "height": 45.333335876464844,
+              "right": 348.84375
+            },
+            {
+              "text": "Готовые наборы",
+              "height": 45.333335876464844,
+              "right": 524.96875
+            }
+          ],
+          "anchor": {
+            "y": 254.0729217529297,
+            "header": 67.55208587646484
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 768,
+          "language": "ru",
+          "theme": "light",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 642,
+              "right": 686,
+              "y": 89.55208587646484,
+              "bottom": 133.55208587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 690,
+              "right": 734,
+              "y": 89.55208587646484,
+              "bottom": 133.55208587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".theme-button",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".burger-button",
+              "x": 690,
+              "right": 734,
+              "y": 34.770835876464844,
+              "bottom": 78.77083587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "Мои покупки",
+              "height": 50,
+              "width": 318.66668701171875
+            },
+            {
+              "text": "История заказов",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Мои шаблоны",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Готовые наборы",
+              "height": 44,
+              "width": 302.66668701171875
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "История заказов",
+              "height": 45.333335876464844,
+              "right": 190.03125
+            },
+            {
+              "text": "Мои шаблоны",
+              "height": 45.333335876464844,
+              "right": 348.84375
+            },
+            {
+              "text": "Готовые наборы",
+              "height": 45.333335876464844,
+              "right": 524.96875
+            }
+          ],
+          "anchor": {
+            "y": 254.0729217529297,
+            "header": 67.55208587646484
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 1024,
+          "language": "ru",
+          "theme": "dark",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 628.96875,
+              "right": 708.3020858764648,
+              "y": 38,
+              "bottom": 90,
+              "width": 79.33333587646484,
+              "height": 52,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 716.3021240234375,
+              "right": 803.6354598999023,
+              "y": 38,
+              "bottom": 90,
+              "width": 87.33333587646484,
+              "height": 52,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 819.6354370117188,
+              "right": 886.0000228881836,
+              "y": 42,
+              "bottom": 86,
+              "width": 66.36458587646484,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".theme-button",
+              "x": 894,
+              "right": 938,
+              "y": 42,
+              "bottom": 86,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".burger-button",
+              "x": 946,
+              "right": 990,
+              "y": 42,
+              "bottom": 86,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "Мои покупки",
+              "height": 50,
+              "width": 318.66668701171875
+            },
+            {
+              "text": "История заказов",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Мои шаблоны",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Готовые наборы",
+              "height": 44,
+              "width": 302.66668701171875
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "История заказов",
+              "height": 45.333335876464844,
+              "right": 190.03125
+            },
+            {
+              "text": "Мои шаблоны",
+              "height": 45.333335876464844,
+              "right": 348.84375
+            },
+            {
+              "text": "Готовые наборы",
+              "height": 45.333335876464844,
+              "right": 524.96875
+            }
+          ],
+          "anchor": {
+            "y": 309.8645935058594,
+            "header": 120.66667175292969
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 1024,
+          "language": "ru",
+          "theme": "light",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 628.96875,
+              "right": 708.3020858764648,
+              "y": 38,
+              "bottom": 90,
+              "width": 79.33333587646484,
+              "height": 52,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 716.3021240234375,
+              "right": 803.6354598999023,
+              "y": 38,
+              "bottom": 90,
+              "width": 87.33333587646484,
+              "height": 52,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 819.6354370117188,
+              "right": 886.0000228881836,
+              "y": 42,
+              "bottom": 86,
+              "width": 66.36458587646484,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".theme-button",
+              "x": 894,
+              "right": 938,
+              "y": 42,
+              "bottom": 86,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".burger-button",
+              "x": 946,
+              "right": 990,
+              "y": 42,
+              "bottom": 86,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "Мои покупки",
+              "height": 50,
+              "width": 318.66668701171875
+            },
+            {
+              "text": "История заказов",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Мои шаблоны",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Готовые наборы",
+              "height": 44,
+              "width": 302.66668701171875
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "История заказов",
+              "height": 45.333335876464844,
+              "right": 190.03125
+            },
+            {
+              "text": "Мои шаблоны",
+              "height": 45.333335876464844,
+              "right": 348.84375
+            },
+            {
+              "text": "Готовые наборы",
+              "height": 45.333335876464844,
+              "right": 524.96875
+            }
+          ],
+          "anchor": {
+            "y": 309.8645935058594,
+            "header": 120.66667175292969
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 1440,
+          "language": "ru",
+          "theme": "dark",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "dark"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 824.4166870117188,
+              "right": 1017.7500305175781,
+              "y": 39.21875,
+              "bottom": 91.21875,
+              "width": 193.33334350585938,
+              "height": 52,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 1025.75,
+              "right": 1188.6354217529297,
+              "y": 39.21875,
+              "bottom": 91.21875,
+              "width": 162.8854217529297,
+              "height": 52,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 1204.635498046875,
+              "right": 1271.0000839233398,
+              "y": 43.21875,
+              "bottom": 87.21875,
+              "width": 66.36458587646484,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".theme-button",
+              "x": 1279,
+              "right": 1323,
+              "y": 43.21875,
+              "bottom": 87.21875,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".burger-button",
+              "x": 1331,
+              "right": 1375,
+              "y": 43.21875,
+              "bottom": 87.21875,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "Мои покупки",
+              "height": 50,
+              "width": 318.66668701171875
+            },
+            {
+              "text": "История заказов",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Мои шаблоны",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Готовые наборы",
+              "height": 44,
+              "width": 302.66668701171875
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "История заказов",
+              "height": 45.333335876464844,
+              "right": 221.03125
+            },
+            {
+              "text": "Мои шаблоны",
+              "height": 45.333335876464844,
+              "right": 379.84375
+            },
+            {
+              "text": "Готовые наборы",
+              "height": 45.333335876464844,
+              "right": 555.96875
+            }
+          ],
+          "anchor": {
+            "y": 310.3125,
+            "header": 123.11458587646484
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 1440,
+          "language": "ru",
+          "theme": "light",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "ru",
+              "theme": "light"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 824.4166870117188,
+              "right": 1017.7500305175781,
+              "y": 39.21875,
+              "bottom": 91.21875,
+              "width": 193.33334350585938,
+              "height": 52,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 1025.75,
+              "right": 1188.6354217529297,
+              "y": 39.21875,
+              "bottom": 91.21875,
+              "width": 162.8854217529297,
+              "height": 52,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 1204.635498046875,
+              "right": 1271.0000839233398,
+              "y": 43.21875,
+              "bottom": 87.21875,
+              "width": 66.36458587646484,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".theme-button",
+              "x": 1279,
+              "right": 1323,
+              "y": 43.21875,
+              "bottom": 87.21875,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".burger-button",
+              "x": 1331,
+              "right": 1375,
+              "y": 43.21875,
+              "bottom": 87.21875,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "Мои покупки",
+              "height": 50,
+              "width": 318.66668701171875
+            },
+            {
+              "text": "История заказов",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Мои шаблоны",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Готовые наборы",
+              "height": 44,
+              "width": 302.66668701171875
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "История заказов",
+              "height": 45.333335876464844,
+              "right": 221.03125
+            },
+            {
+              "text": "Мои шаблоны",
+              "height": 45.333335876464844,
+              "right": 379.84375
+            },
+            {
+              "text": "Готовые наборы",
+              "height": 45.333335876464844,
+              "right": 555.96875
+            }
+          ],
+          "anchor": {
+            "y": 310.3125,
+            "header": 123.11458587646484
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        }
+      ]
+    },
+    "MatrixTj": {
+      "status": "PASS",
+      "results": [
+        {
+          "width": 320,
+          "language": "tj",
+          "theme": "dark",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 202,
+              "right": 246,
+              "y": 88,
+              "bottom": 132,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 250,
+              "right": 294,
+              "y": 88,
+              "bottom": 132,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".theme-button",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".burger-button",
+              "x": 250,
+              "right": 294,
+              "y": 34,
+              "bottom": 78,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "Харидҳои ман",
+              "height": 50,
+              "width": 252.6666717529297
+            },
+            {
+              "text": "Таърихи фармоишҳо",
+              "height": 44,
+              "width": 236.6666717529297
+            },
+            {
+              "text": "Қолабҳои ман",
+              "height": 44,
+              "width": 236.6666717529297
+            },
+            {
+              "text": "Маҷмуаҳои тайёр",
+              "height": 44,
+              "width": 236.6666717529297
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "Таърихи фармоишҳо",
+              "height": 45.333335876464844,
+              "right": 218.98959350585938
+            },
+            {
+              "text": "Қолабҳои ман",
+              "height": 45.333335876464844,
+              "right": 163.4166717529297
+            },
+            {
+              "text": "Маҷмуаҳои тайёр",
+              "height": 45.333335876464844,
+              "right": 193.9791717529297
+            }
+          ],
+          "anchor": {
+            "y": 254.0625,
+            "header": 66
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 320,
+          "language": "tj",
+          "theme": "light",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 202,
+              "right": 246,
+              "y": 88,
+              "bottom": 132,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 250,
+              "right": 294,
+              "y": 88,
+              "bottom": 132,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".theme-button",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".burger-button",
+              "x": 250,
+              "right": 294,
+              "y": 34,
+              "bottom": 78,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "Харидҳои ман",
+              "height": 50,
+              "width": 252.6666717529297
+            },
+            {
+              "text": "Таърихи фармоишҳо",
+              "height": 44,
+              "width": 236.6666717529297
+            },
+            {
+              "text": "Қолабҳои ман",
+              "height": 44,
+              "width": 236.6666717529297
+            },
+            {
+              "text": "Маҷмуаҳои тайёр",
+              "height": 44,
+              "width": 236.6666717529297
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "Таърихи фармоишҳо",
+              "height": 45.333335876464844,
+              "right": 218.98959350585938
+            },
+            {
+              "text": "Қолабҳои ман",
+              "height": 45.333335876464844,
+              "right": 163.4166717529297
+            },
+            {
+              "text": "Маҷмуаҳои тайёр",
+              "height": 45.333335876464844,
+              "right": 193.9791717529297
+            }
+          ],
+          "anchor": {
+            "y": 254.0625,
+            "header": 66
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 390,
+          "language": "tj",
+          "theme": "dark",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 272,
+              "right": 316,
+              "y": 89.55208587646484,
+              "bottom": 133.55208587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 320,
+              "right": 364,
+              "y": 89.55208587646484,
+              "bottom": 133.55208587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".theme-button",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".burger-button",
+              "x": 320,
+              "right": 364,
+              "y": 34.770835876464844,
+              "bottom": 78.77083587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "Харидҳои ман",
+              "height": 50,
+              "width": 318.66668701171875
+            },
+            {
+              "text": "Таърихи фармоишҳо",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Қолабҳои ман",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Маҷмуаҳои тайёр",
+              "height": 44,
+              "width": 302.66668701171875
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "Таърихи фармоишҳо",
+              "height": 45.333335876464844,
+              "right": 218.98959350585938
+            },
+            {
+              "text": "Қолабҳои ман",
+              "height": 45.333335876464844,
+              "right": 163.4166717529297
+            },
+            {
+              "text": "Маҷмуаҳои тайёр",
+              "height": 45.333335876464844,
+              "right": 353.3958435058594
+            }
+          ],
+          "anchor": {
+            "y": 254.28125,
+            "header": 67.55208587646484
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 390,
+          "language": "tj",
+          "theme": "light",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 272,
+              "right": 316,
+              "y": 89.55208587646484,
+              "bottom": 133.55208587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 320,
+              "right": 364,
+              "y": 89.55208587646484,
+              "bottom": 133.55208587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".theme-button",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".burger-button",
+              "x": 320,
+              "right": 364,
+              "y": 34.770835876464844,
+              "bottom": 78.77083587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "Харидҳои ман",
+              "height": 50,
+              "width": 318.66668701171875
+            },
+            {
+              "text": "Таърихи фармоишҳо",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Қолабҳои ман",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Маҷмуаҳои тайёр",
+              "height": 44,
+              "width": 302.66668701171875
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "Таърихи фармоишҳо",
+              "height": 45.333335876464844,
+              "right": 218.98959350585938
+            },
+            {
+              "text": "Қолабҳои ман",
+              "height": 45.333335876464844,
+              "right": 163.4166717529297
+            },
+            {
+              "text": "Маҷмуаҳои тайёр",
+              "height": 45.333335876464844,
+              "right": 353.3958435058594
+            }
+          ],
+          "anchor": {
+            "y": 254.28125,
+            "header": 67.55208587646484
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 768,
+          "language": "tj",
+          "theme": "dark",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 642,
+              "right": 686,
+              "y": 89.55208587646484,
+              "bottom": 133.55208587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 690,
+              "right": 734,
+              "y": 89.55208587646484,
+              "bottom": 133.55208587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".theme-button",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".burger-button",
+              "x": 690,
+              "right": 734,
+              "y": 34.770835876464844,
+              "bottom": 78.77083587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "Харидҳои ман",
+              "height": 50,
+              "width": 318.66668701171875
+            },
+            {
+              "text": "Таърихи фармоишҳо",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Қолабҳои ман",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Маҷмуаҳои тайёр",
+              "height": 44,
+              "width": 302.66668701171875
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "Таърихи фармоишҳо",
+              "height": 45.333335876464844,
+              "right": 226.98959350585938
+            },
+            {
+              "text": "Қолабҳои ман",
+              "height": 45.333335876464844,
+              "right": 386.40626525878906
+            },
+            {
+              "text": "Маҷмуаҳои тайёр",
+              "height": 45.333335876464844,
+              "right": 576.3854217529297
+            }
+          ],
+          "anchor": {
+            "y": 254.0729217529297,
+            "header": 67.55208587646484
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 768,
+          "language": "tj",
+          "theme": "light",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 642,
+              "right": 686,
+              "y": 89.55208587646484,
+              "bottom": 133.55208587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 690,
+              "right": 734,
+              "y": 89.55208587646484,
+              "bottom": 133.55208587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".theme-button",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".burger-button",
+              "x": 690,
+              "right": 734,
+              "y": 34.770835876464844,
+              "bottom": 78.77083587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "Харидҳои ман",
+              "height": 50,
+              "width": 318.66668701171875
+            },
+            {
+              "text": "Таърихи фармоишҳо",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Қолабҳои ман",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Маҷмуаҳои тайёр",
+              "height": 44,
+              "width": 302.66668701171875
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "Таърихи фармоишҳо",
+              "height": 45.333335876464844,
+              "right": 226.98959350585938
+            },
+            {
+              "text": "Қолабҳои ман",
+              "height": 45.333335876464844,
+              "right": 386.40626525878906
+            },
+            {
+              "text": "Маҷмуаҳои тайёр",
+              "height": 45.333335876464844,
+              "right": 576.3854217529297
+            }
+          ],
+          "anchor": {
+            "y": 254.0729217529297,
+            "header": 67.55208587646484
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 1024,
+          "language": "tj",
+          "theme": "dark",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 635.5208740234375,
+              "right": 714.8542098999023,
+              "y": 38,
+              "bottom": 90,
+              "width": 79.33333587646484,
+              "height": 52,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 722.8541870117188,
+              "right": 810.1875228881836,
+              "y": 38,
+              "bottom": 90,
+              "width": 87.33333587646484,
+              "height": 52,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 826.1875,
+              "right": 886,
+              "y": 42,
+              "bottom": 86,
+              "width": 59.8125,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".theme-button",
+              "x": 894,
+              "right": 938,
+              "y": 42,
+              "bottom": 86,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".burger-button",
+              "x": 946,
+              "right": 990,
+              "y": 42,
+              "bottom": 86,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "Харидҳои ман",
+              "height": 50,
+              "width": 318.66668701171875
+            },
+            {
+              "text": "Таърихи фармоишҳо",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Қолабҳои ман",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Маҷмуаҳои тайёр",
+              "height": 44,
+              "width": 302.66668701171875
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "Таърихи фармоишҳо",
+              "height": 45.333335876464844,
+              "right": 226.98959350585938
+            },
+            {
+              "text": "Қолабҳои ман",
+              "height": 45.333335876464844,
+              "right": 386.40626525878906
+            },
+            {
+              "text": "Маҷмуаҳои тайёр",
+              "height": 45.333335876464844,
+              "right": 576.3854217529297
+            }
+          ],
+          "anchor": {
+            "y": 309.8645935058594,
+            "header": 120.66667175292969
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 1024,
+          "language": "tj",
+          "theme": "light",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 635.5208740234375,
+              "right": 714.8542098999023,
+              "y": 38,
+              "bottom": 90,
+              "width": 79.33333587646484,
+              "height": 52,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 722.8541870117188,
+              "right": 810.1875228881836,
+              "y": 38,
+              "bottom": 90,
+              "width": 87.33333587646484,
+              "height": 52,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 826.1875,
+              "right": 886,
+              "y": 42,
+              "bottom": 86,
+              "width": 59.8125,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".theme-button",
+              "x": 894,
+              "right": 938,
+              "y": 42,
+              "bottom": 86,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".burger-button",
+              "x": 946,
+              "right": 990,
+              "y": 42,
+              "bottom": 86,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "Харидҳои ман",
+              "height": 50,
+              "width": 318.66668701171875
+            },
+            {
+              "text": "Таърихи фармоишҳо",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Қолабҳои ман",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Маҷмуаҳои тайёр",
+              "height": 44,
+              "width": 302.66668701171875
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "Таърихи фармоишҳо",
+              "height": 45.333335876464844,
+              "right": 226.98959350585938
+            },
+            {
+              "text": "Қолабҳои ман",
+              "height": 45.333335876464844,
+              "right": 386.40626525878906
+            },
+            {
+              "text": "Маҷмуаҳои тайёр",
+              "height": 45.333335876464844,
+              "right": 576.3854217529297
+            }
+          ],
+          "anchor": {
+            "y": 309.8645935058594,
+            "header": 120.66667175292969
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 1440,
+          "language": "tj",
+          "theme": "dark",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "dark"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 850.0416870117188,
+              "right": 1043.3750305175781,
+              "y": 39.21875,
+              "bottom": 91.21875,
+              "width": 193.33334350585938,
+              "height": 52,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 1051.375,
+              "right": 1195.1875,
+              "y": 39.21875,
+              "bottom": 91.21875,
+              "width": 143.8125,
+              "height": 52,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 1211.1875,
+              "right": 1271,
+              "y": 43.21875,
+              "bottom": 87.21875,
+              "width": 59.8125,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".theme-button",
+              "x": 1279,
+              "right": 1323,
+              "y": 43.21875,
+              "bottom": 87.21875,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".burger-button",
+              "x": 1331,
+              "right": 1375,
+              "y": 43.21875,
+              "bottom": 87.21875,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "Харидҳои ман",
+              "height": 50,
+              "width": 318.66668701171875
+            },
+            {
+              "text": "Таърихи фармоишҳо",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Қолабҳои ман",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Маҷмуаҳои тайёр",
+              "height": 44,
+              "width": 302.66668701171875
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "Таърихи фармоишҳо",
+              "height": 45.333335876464844,
+              "right": 257.9895935058594
+            },
+            {
+              "text": "Қолабҳои ман",
+              "height": 45.333335876464844,
+              "right": 417.40626525878906
+            },
+            {
+              "text": "Маҷмуаҳои тайёр",
+              "height": 45.333335876464844,
+              "right": 607.3854217529297
+            }
+          ],
+          "anchor": {
+            "y": 310.3125,
+            "header": 123.11458587646484
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 1440,
+          "language": "tj",
+          "theme": "light",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "tg",
+              "theme": "light"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 850.0416870117188,
+              "right": 1043.3750305175781,
+              "y": 39.21875,
+              "bottom": 91.21875,
+              "width": 193.33334350585938,
+              "height": 52,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 1051.375,
+              "right": 1195.1875,
+              "y": 39.21875,
+              "bottom": 91.21875,
+              "width": 143.8125,
+              "height": 52,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 1211.1875,
+              "right": 1271,
+              "y": 43.21875,
+              "bottom": 87.21875,
+              "width": 59.8125,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".theme-button",
+              "x": 1279,
+              "right": 1323,
+              "y": 43.21875,
+              "bottom": 87.21875,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".burger-button",
+              "x": 1331,
+              "right": 1375,
+              "y": 43.21875,
+              "bottom": 87.21875,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "Харидҳои ман",
+              "height": 50,
+              "width": 318.66668701171875
+            },
+            {
+              "text": "Таърихи фармоишҳо",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Қолабҳои ман",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Маҷмуаҳои тайёр",
+              "height": 44,
+              "width": 302.66668701171875
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "Таърихи фармоишҳо",
+              "height": 45.333335876464844,
+              "right": 257.9895935058594
+            },
+            {
+              "text": "Қолабҳои ман",
+              "height": 45.333335876464844,
+              "right": 417.40626525878906
+            },
+            {
+              "text": "Маҷмуаҳои тайёр",
+              "height": 45.333335876464844,
+              "right": 607.3854217529297
+            }
+          ],
+          "anchor": {
+            "y": 310.3125,
+            "header": 123.11458587646484
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        }
+      ]
+    },
+    "MatrixEn": {
+      "status": "PASS",
+      "results": [
+        {
+          "width": 320,
+          "language": "en",
+          "theme": "dark",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 202,
+              "right": 246,
+              "y": 88,
+              "bottom": 132,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 250,
+              "right": 294,
+              "y": 88,
+              "bottom": 132,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".theme-button",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".burger-button",
+              "x": 250,
+              "right": 294,
+              "y": 34,
+              "bottom": 78,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "My shopping",
+              "height": 50,
+              "width": 252.6666717529297
+            },
+            {
+              "text": "Order history",
+              "height": 44,
+              "width": 236.6666717529297
+            },
+            {
+              "text": "My templates",
+              "height": 44,
+              "width": 236.6666717529297
+            },
+            {
+              "text": "Ready-made baskets",
+              "height": 44,
+              "width": 236.6666717529297
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "Order history",
+              "height": 45.333335876464844,
+              "right": 151.02084350585938
+            },
+            {
+              "text": "My templates",
+              "height": 45.333335876464844,
+              "right": 153.3854217529297
+            },
+            {
+              "text": "Ready-made baskets",
+              "height": 45.333335876464844,
+              "right": 208.71875
+            }
+          ],
+          "anchor": {
+            "y": 254.0625,
+            "header": 66
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 320,
+          "language": "en",
+          "theme": "light",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 202,
+              "right": 246,
+              "y": 88,
+              "bottom": 132,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 250,
+              "right": 294,
+              "y": 88,
+              "bottom": 132,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".theme-button",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".burger-button",
+              "x": 250,
+              "right": 294,
+              "y": 34,
+              "bottom": 78,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "My shopping",
+              "height": 50,
+              "width": 252.6666717529297
+            },
+            {
+              "text": "Order history",
+              "height": 44,
+              "width": 236.6666717529297
+            },
+            {
+              "text": "My templates",
+              "height": 44,
+              "width": 236.6666717529297
+            },
+            {
+              "text": "Ready-made baskets",
+              "height": 44,
+              "width": 236.6666717529297
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "Order history",
+              "height": 45.333335876464844,
+              "right": 151.02084350585938
+            },
+            {
+              "text": "My templates",
+              "height": 45.333335876464844,
+              "right": 153.3854217529297
+            },
+            {
+              "text": "Ready-made baskets",
+              "height": 45.333335876464844,
+              "right": 208.71875
+            }
+          ],
+          "anchor": {
+            "y": 254.0625,
+            "header": 66
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 390,
+          "language": "en",
+          "theme": "dark",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 272,
+              "right": 316,
+              "y": 89.55208587646484,
+              "bottom": 133.55208587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 320,
+              "right": 364,
+              "y": 89.55208587646484,
+              "bottom": 133.55208587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".theme-button",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".burger-button",
+              "x": 320,
+              "right": 364,
+              "y": 34.770835876464844,
+              "bottom": 78.77083587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "My shopping",
+              "height": 50,
+              "width": 318.66668701171875
+            },
+            {
+              "text": "Order history",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "My templates",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Ready-made baskets",
+              "height": 44,
+              "width": 302.66668701171875
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "Order history",
+              "height": 45.333335876464844,
+              "right": 151.02084350585938
+            },
+            {
+              "text": "My templates",
+              "height": 45.333335876464844,
+              "right": 300.40626525878906
+            },
+            {
+              "text": "Ready-made baskets",
+              "height": 45.333335876464844,
+              "right": 208.71875
+            }
+          ],
+          "anchor": {
+            "y": 254.28125,
+            "header": 67.55208587646484
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 390,
+          "language": "en",
+          "theme": "light",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 272,
+              "right": 316,
+              "y": 89.55208587646484,
+              "bottom": 133.55208587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 320,
+              "right": 364,
+              "y": 89.55208587646484,
+              "bottom": 133.55208587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".theme-button",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".burger-button",
+              "x": 320,
+              "right": 364,
+              "y": 34.770835876464844,
+              "bottom": 78.77083587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "My shopping",
+              "height": 50,
+              "width": 318.66668701171875
+            },
+            {
+              "text": "Order history",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "My templates",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Ready-made baskets",
+              "height": 44,
+              "width": 302.66668701171875
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "Order history",
+              "height": 45.333335876464844,
+              "right": 151.02084350585938
+            },
+            {
+              "text": "My templates",
+              "height": 45.333335876464844,
+              "right": 300.40626525878906
+            },
+            {
+              "text": "Ready-made baskets",
+              "height": 45.333335876464844,
+              "right": 208.71875
+            }
+          ],
+          "anchor": {
+            "y": 254.28125,
+            "header": 67.55208587646484
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 768,
+          "language": "en",
+          "theme": "dark",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 642,
+              "right": 686,
+              "y": 89.55208587646484,
+              "bottom": 133.55208587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 690,
+              "right": 734,
+              "y": 89.55208587646484,
+              "bottom": 133.55208587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".theme-button",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".burger-button",
+              "x": 690,
+              "right": 734,
+              "y": 34.770835876464844,
+              "bottom": 78.77083587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "My shopping",
+              "height": 50,
+              "width": 318.66668701171875
+            },
+            {
+              "text": "Order history",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "My templates",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Ready-made baskets",
+              "height": 44,
+              "width": 302.66668701171875
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "Order history",
+              "height": 45.333335876464844,
+              "right": 159.02084350585938
+            },
+            {
+              "text": "My templates",
+              "height": 45.333335876464844,
+              "right": 308.40626525878906
+            },
+            {
+              "text": "Ready-made baskets",
+              "height": 45.333335876464844,
+              "right": 513.125
+            }
+          ],
+          "anchor": {
+            "y": 254.0729217529297,
+            "header": 67.55208587646484
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 768,
+          "language": "en",
+          "theme": "light",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 642,
+              "right": 686,
+              "y": 89.55208587646484,
+              "bottom": 133.55208587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 690,
+              "right": 734,
+              "y": 89.55208587646484,
+              "bottom": 133.55208587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".theme-button",
+              "x": 0,
+              "right": 0,
+              "y": 0,
+              "bottom": 0,
+              "width": 0,
+              "height": 0,
+              "visible": false
+            },
+            {
+              "sel": ".burger-button",
+              "x": 690,
+              "right": 734,
+              "y": 34.770835876464844,
+              "bottom": 78.77083587646484,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "My shopping",
+              "height": 50,
+              "width": 318.66668701171875
+            },
+            {
+              "text": "Order history",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "My templates",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Ready-made baskets",
+              "height": 44,
+              "width": 302.66668701171875
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "Order history",
+              "height": 45.333335876464844,
+              "right": 159.02084350585938
+            },
+            {
+              "text": "My templates",
+              "height": 45.333335876464844,
+              "right": 308.40626525878906
+            },
+            {
+              "text": "Ready-made baskets",
+              "height": 45.333335876464844,
+              "right": 513.125
+            }
+          ],
+          "anchor": {
+            "y": 254.0729217529297,
+            "header": 67.55208587646484
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 1024,
+          "language": "en",
+          "theme": "dark",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 629.4791870117188,
+              "right": 708.8125228881836,
+              "y": 38,
+              "bottom": 90,
+              "width": 79.33333587646484,
+              "height": 52,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 716.8125,
+              "right": 804.1458358764648,
+              "y": 38,
+              "bottom": 90,
+              "width": 87.33333587646484,
+              "height": 52,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 820.1458740234375,
+              "right": 886.0000457763672,
+              "y": 42,
+              "bottom": 86,
+              "width": 65.85417175292969,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".theme-button",
+              "x": 894,
+              "right": 938,
+              "y": 42,
+              "bottom": 86,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".burger-button",
+              "x": 946,
+              "right": 990,
+              "y": 42,
+              "bottom": 86,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "My shopping",
+              "height": 50,
+              "width": 318.66668701171875
+            },
+            {
+              "text": "Order history",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "My templates",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Ready-made baskets",
+              "height": 44,
+              "width": 302.66668701171875
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "Order history",
+              "height": 45.333335876464844,
+              "right": 159.02084350585938
+            },
+            {
+              "text": "My templates",
+              "height": 45.333335876464844,
+              "right": 308.40626525878906
+            },
+            {
+              "text": "Ready-made baskets",
+              "height": 45.333335876464844,
+              "right": 513.125
+            }
+          ],
+          "anchor": {
+            "y": 309.8645935058594,
+            "header": 120.66667175292969
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 1024,
+          "language": "en",
+          "theme": "light",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 629.4791870117188,
+              "right": 708.8125228881836,
+              "y": 38,
+              "bottom": 90,
+              "width": 79.33333587646484,
+              "height": 52,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 716.8125,
+              "right": 804.1458358764648,
+              "y": 38,
+              "bottom": 90,
+              "width": 87.33333587646484,
+              "height": 52,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 820.1458740234375,
+              "right": 886.0000457763672,
+              "y": 42,
+              "bottom": 86,
+              "width": 65.85417175292969,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".theme-button",
+              "x": 894,
+              "right": 938,
+              "y": 42,
+              "bottom": 86,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".burger-button",
+              "x": 946,
+              "right": 990,
+              "y": 42,
+              "bottom": 86,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "My shopping",
+              "height": 50,
+              "width": 318.66668701171875
+            },
+            {
+              "text": "Order history",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "My templates",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Ready-made baskets",
+              "height": 44,
+              "width": 302.66668701171875
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "Order history",
+              "height": 45.333335876464844,
+              "right": 159.02084350585938
+            },
+            {
+              "text": "My templates",
+              "height": 45.333335876464844,
+              "right": 308.40626525878906
+            },
+            {
+              "text": "Ready-made baskets",
+              "height": 45.333335876464844,
+              "right": 513.125
+            }
+          ],
+          "anchor": {
+            "y": 309.8645935058594,
+            "header": 120.66667175292969
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 1440,
+          "language": "en",
+          "theme": "dark",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "dark"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 858.6458740234375,
+              "right": 1051.9792175292969,
+              "y": 39.21875,
+              "bottom": 91.21875,
+              "width": 193.33334350585938,
+              "height": 52,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 1059.979248046875,
+              "right": 1189.1459197998047,
+              "y": 39.21875,
+              "bottom": 91.21875,
+              "width": 129.1666717529297,
+              "height": 52,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 1205.1458740234375,
+              "right": 1271.0000457763672,
+              "y": 43.21875,
+              "bottom": 87.21875,
+              "width": 65.85417175292969,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".theme-button",
+              "x": 1279,
+              "right": 1323,
+              "y": 43.21875,
+              "bottom": 87.21875,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".burger-button",
+              "x": 1331,
+              "right": 1375,
+              "y": 43.21875,
+              "bottom": 87.21875,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "My shopping",
+              "height": 50,
+              "width": 318.66668701171875
+            },
+            {
+              "text": "Order history",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "My templates",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Ready-made baskets",
+              "height": 44,
+              "width": 302.66668701171875
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "Order history",
+              "height": 45.333335876464844,
+              "right": 190.02084350585938
+            },
+            {
+              "text": "My templates",
+              "height": 45.333335876464844,
+              "right": 339.40626525878906
+            },
+            {
+              "text": "Ready-made baskets",
+              "height": 45.333335876464844,
+              "right": 544.125
+            }
+          ],
+          "anchor": {
+            "y": 310.3125,
+            "header": 123.11458587646484
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        },
+        {
+          "width": 1440,
+          "language": "en",
+          "theme": "light",
+          "pages": [
+            {
+              "route": "/",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/product/milk",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/product/dish-soap",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/curated-family",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            },
+            {
+              "route": "/my-shopping/templates/personal",
+              "overflow": -10,
+              "lang": "en",
+              "theme": "light"
+            }
+          ],
+          "errors": [],
+          "header": [
+            {
+              "sel": "a[href=\"/saved\"]",
+              "x": 858.6458740234375,
+              "right": 1051.9792175292969,
+              "y": 39.21875,
+              "bottom": 91.21875,
+              "width": 193.33334350585938,
+              "height": 52,
+              "visible": true
+            },
+            {
+              "sel": "a[href=\"/cart\"]",
+              "x": 1059.979248046875,
+              "right": 1189.1459197998047,
+              "y": 39.21875,
+              "bottom": 91.21875,
+              "width": 129.1666717529297,
+              "height": 52,
+              "visible": true
+            },
+            {
+              "sel": ".header-language",
+              "x": 1205.1458740234375,
+              "right": 1271.0000457763672,
+              "y": 43.21875,
+              "bottom": 87.21875,
+              "width": 65.85417175292969,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".theme-button",
+              "x": 1279,
+              "right": 1323,
+              "y": 43.21875,
+              "bottom": 87.21875,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            },
+            {
+              "sel": ".burger-button",
+              "x": 1331,
+              "right": 1375,
+              "y": 43.21875,
+              "bottom": 87.21875,
+              "width": 44,
+              "height": 44,
+              "visible": true
+            }
+          ],
+          "menu": [
+            {
+              "text": "My shopping",
+              "height": 50,
+              "width": 318.66668701171875
+            },
+            {
+              "text": "Order history",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "My templates",
+              "height": 44,
+              "width": 302.66668701171875
+            },
+            {
+              "text": "Ready-made baskets",
+              "height": 44,
+              "width": 302.66668701171875
+            }
+          ],
+          "menuOverflow": 0,
+          "tabs": [
+            {
+              "text": "Order history",
+              "height": 45.333335876464844,
+              "right": 190.02084350585938
+            },
+            {
+              "text": "My templates",
+              "height": 45.333335876464844,
+              "right": 339.40626525878906
+            },
+            {
+              "text": "Ready-made baskets",
+              "height": 45.333335876464844,
+              "right": 544.125
+            }
+          ],
+          "anchor": {
+            "y": 310.3125,
+            "header": 123.11458587646484
+          },
+          "milk": {
+            "factCount": 5,
+            "hasNutrition": true,
+            "hasRussianInEnglish": false
+          },
+          "dish-soap": {
+            "factCount": 3,
+            "hasNutrition": false,
+            "hasRussianInEnglish": false
+          },
+          "pass": true
+        }
+      ]
+    },
+    "Motion": {
+      "wave": [
+        {
+          "theme": "light",
+          "wave": "light",
+          "animations": [
+            {
+              "name": "paykar-theme-wave",
+              "frames": [
+                "polygon(0px 0px, 100% 0px, 100% 0.5%, 90% 2.1%, 78% 0.7%, 64% 2.6%, 50% 1.1%, 36% 2.9%, 22% 0.9%, 10% 2.3%, 0px 0.8%)",
+                "polygon(0px 0px, 100% 0px, 100% 100.5%, 90% 102.1%, 78% 100.7%, 64% 102.6%, 50% 101.1%, 36% 102.9%, 22% 100.9%, 10% 102.3%, 0px 100.8%)"
+              ],
+              "duration": 650
+            }
+          ]
+        },
+        {
+          "theme": "dark",
+          "wave": "dark",
+          "animations": [
+            {
+              "name": "paykar-theme-wave",
+              "frames": [
+                "polygon(0px 0px, 100% 0px, 100% 0.5%, 90% 2.1%, 78% 0.7%, 64% 2.6%, 50% 1.1%, 36% 2.9%, 22% 0.9%, 10% 2.3%, 0px 0.8%)",
+                "polygon(0px 0px, 100% 0px, 100% 100.5%, 90% 102.1%, 78% 100.7%, 64% 102.6%, 50% 101.1%, 36% 102.9%, 22% 100.9%, 10% 102.3%, 0px 100.8%)"
+              ],
+              "duration": 650
+            }
+          ]
+        }
+      ],
+      "scrolled": {
+        "before": 1600,
+        "after": 1600,
+        "stable": true
+      },
+      "rapid": {
+        "theme": "dark",
+        "persisted": "dark"
+      },
+      "phone": {
+        "stages": [
+          "Заказ принят",
+          "Собираем заказ",
+          "Курьер в пути",
+          "Заказ доставлен"
+        ],
+        "noReplay": true
+      },
+      "reduced": {
+        "theme": "light",
+        "wave": null,
+        "activeAnimations": 0,
+        "stage": "Заказ доставлен"
+      },
+      "focus": {
+        "visible": true,
+        "outline": "solid",
+        "width": "2px"
+      },
+      "errors": [],
+      "directProviderRequests": [],
+      "status": "PASS"
+    },
+    "Mobile": {
+      "status": "PASS",
+      "results": [
+        {
+          "width": 320,
+          "lang": "tg",
+          "theme": "light",
+          "hash": "#templates",
+          "pref": {
+            "language": "tj",
+            "theme": "light"
+          },
+          "y": 244.0625,
+          "header": 66,
+          "errors": [],
+          "pass": true
+        },
+        {
+          "width": 390,
+          "lang": "tg",
+          "theme": "light",
+          "hash": "#templates",
+          "pref": {
+            "language": "tj",
+            "theme": "light"
+          },
+          "y": 244.28125,
+          "header": 67.55208587646484,
+          "errors": [],
+          "pass": true
+        },
+        {
+          "width": 768,
+          "lang": "tg",
+          "theme": "light",
+          "hash": "#templates",
+          "pref": {
+            "language": "tj",
+            "theme": "light"
+          },
+          "y": 244.0729217529297,
+          "header": 67.55208587646484,
+          "errors": [],
+          "pass": true
+        }
+      ]
+    },
+    "Smoke": {
+      "status": "PASS",
+      "checks": [
+        "keyboard search",
+        "saved reload",
+        "cart +/- persistence",
+        "filters via dialog category price stock",
+        "sorting and reload",
+        "manual pairings"
+      ],
+      "filters": "http://localhost:3000/catalog?category=dairy&min_price=10&max_price=25&in_stock=true&sort=price_desc",
+      "names": [
+        "Масло сливочное, 180 г",
+        "Творог 5%, 250 г",
+        "Сметана 20%, 300 г",
+        "Молоко 3,2%, 1 л"
+      ],
+      "errors": []
+    },
+    "Products": {
+      "status": "PASS",
+      "results": [
+        {
+          "language": "ru",
+          "slug": "apples-red",
+          "facts": 6,
+          "features": 3,
+          "nutrition": true,
+          "pass": true
+        },
+        {
+          "language": "ru",
+          "slug": "milk",
+          "facts": 5,
+          "features": 3,
+          "nutrition": true,
+          "pass": true
+        },
+        {
+          "language": "ru",
+          "slug": "wheat-bread",
+          "facts": 5,
+          "features": 3,
+          "nutrition": true,
+          "pass": true
+        },
+        {
+          "language": "ru",
+          "slug": "coffee",
+          "facts": 3,
+          "features": 3,
+          "nutrition": true,
+          "pass": true
+        },
+        {
+          "language": "ru",
+          "slug": "milk-chocolate",
+          "facts": 5,
+          "features": 3,
+          "nutrition": true,
+          "pass": true
+        },
+        {
+          "language": "ru",
+          "slug": "dish-soap",
+          "facts": 3,
+          "features": 3,
+          "nutrition": false,
+          "pass": true
+        },
+        {
+          "language": "tj",
+          "slug": "apples-red",
+          "facts": 6,
+          "features": 3,
+          "nutrition": true,
+          "pass": true
+        },
+        {
+          "language": "tj",
+          "slug": "milk",
+          "facts": 5,
+          "features": 3,
+          "nutrition": true,
+          "pass": true
+        },
+        {
+          "language": "tj",
+          "slug": "wheat-bread",
+          "facts": 5,
+          "features": 3,
+          "nutrition": true,
+          "pass": true
+        },
+        {
+          "language": "tj",
+          "slug": "coffee",
+          "facts": 3,
+          "features": 3,
+          "nutrition": true,
+          "pass": true
+        },
+        {
+          "language": "tj",
+          "slug": "milk-chocolate",
+          "facts": 5,
+          "features": 3,
+          "nutrition": true,
+          "pass": true
+        },
+        {
+          "language": "tj",
+          "slug": "dish-soap",
+          "facts": 3,
+          "features": 3,
+          "nutrition": false,
+          "pass": true
+        },
+        {
+          "language": "en",
+          "slug": "apples-red",
+          "facts": 6,
+          "features": 3,
+          "nutrition": true,
+          "pass": true
+        },
+        {
+          "language": "en",
+          "slug": "milk",
+          "facts": 5,
+          "features": 3,
+          "nutrition": true,
+          "pass": true
+        },
+        {
+          "language": "en",
+          "slug": "wheat-bread",
+          "facts": 5,
+          "features": 3,
+          "nutrition": true,
+          "pass": true
+        },
+        {
+          "language": "en",
+          "slug": "coffee",
+          "facts": 3,
+          "features": 3,
+          "nutrition": true,
+          "pass": true
+        },
+        {
+          "language": "en",
+          "slug": "milk-chocolate",
+          "facts": 5,
+          "features": 3,
+          "nutrition": true,
+          "pass": true
+        },
+        {
+          "language": "en",
+          "slug": "dish-soap",
+          "facts": 3,
+          "features": 3,
+          "nutrition": false,
+          "pass": true
+        }
+      ]
+    },
+    "Checkout": {
+      "status": "PASS",
+      "checks": [
+        {
+          "name": "real ORS quote and route drawn",
+          "pass": true,
+          "distance": 2887,
+          "duration": 273,
+          "delivery": "20.00",
+          "coordinates": 51
+        },
+        {
+          "name": "failed creation preserves cart (injected 503)",
+          "pass": true
+        }
+      ],
+      "quote": {
+        "distance": 2887,
+        "duration": 273,
+        "delivery": "20.00",
+        "latitude": 38.575,
+        "longitude": 68.78,
+        "coordinates": 51
+      },
+      "failedCart": [
+        {
+          "product_id": 8,
+          "quantity": 1
+        }
+      ],
+      "staleQuoteInvalidated": true,
+      "directORS": [],
+      "errors": [],
+      "noNewOrderCreated": true
+    },
+    "PhoneMobile": {
+      "status": "PASS",
+      "width": 390,
+      "language": "tj",
+      "stages": [
+        "Фармоиш қабул шуд",
+        "Фармоишро омода мекунем",
+        "Расонанда дар роҳ аст",
+        "Фармоиш расонда шуд"
+      ],
+      "noReplay": true,
+      "errors": []
+    }
+  },
+  "summary": {
+    "status": "PASS",
+    "matrixCases": 30,
+    "matrixPageRenders": 180,
+    "headerOverlap": false,
+    "productLanguageCases": 18,
+    "privateKeyAssetScan": {
+      "localJsAssets": 36,
+      "servedJsAssets": 16,
+      "matches": 0
+    },
+    "databaseHashesBefore": "orders|14|6784ac5ee0fb808ec92cd6a93305e65f\nitems|14|2f472caf5d6d08c19145d0a009176787\nstock|40|4578b75af39f0af26e32c103d538834d",
+    "databaseAfterMatchesBefore": true
+  }
+}

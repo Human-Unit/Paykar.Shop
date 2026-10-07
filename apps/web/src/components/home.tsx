@@ -26,7 +26,7 @@ import { SectionHeader, StepFlow, CTASection } from "./page-patterns";
 import { ArticleCard } from "./article-card";
 import { HomeStoreNetwork } from "./home-store-network";
 import { OrderShowcase } from "./order-showcase";
-import { CuratedShopping } from "./my-shopping";
+import { CuratedShopping, ShoppingDiscovery } from "./my-shopping";
 export function Home() {
   const { t } = usePresentation();
   const grid = useReveal({ rise: 14 });
@@ -140,6 +140,7 @@ export function Home() {
           />
         )}
       </section>
+      <ShoppingDiscovery />
       <OrderShowcase />
       <CuratedShopping compact />
       {connections.data?.items.length ? (
