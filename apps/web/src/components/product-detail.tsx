@@ -2,11 +2,11 @@
 import { usePresentation } from "@/context/presentation";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Category, ProductPage, Product, useResource } from "@/lib/api";
+import { Category, Product, useResource } from "@/lib/api";
 import { cents } from "@/lib/format";
 import { AddButton, ProductCard, ProductImage } from "./product-card";
 import { Breadcrumbs } from "./breadcrumbs";
-import { Empty, Failure, Loading } from "./states";
+import { Failure, Loading } from "./states";
 import {
   CheckCircle2,
   Package,
@@ -15,6 +15,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { SectionHeader } from "./page-patterns";
+
 export function ProductDetail({ slug }: { slug: string }) {
   const { t, money } = usePresentation();
   const resource = useResource<Product>(
@@ -24,27 +25,29 @@ export function ProductDetail({ slug }: { slug: string }) {
   const p = resource.data;
   const category = categories.data?.find((c) => c.id === p?.category_id);
   const parent = categories.data?.find((c) => c.id === category?.parent_id);
-  const related = useResource<ProductPage>(
-    category
-      ? `/products?category=${encodeURIComponent(category.slug)}&in_stock=true&page_size=6`
+  const complementary = useResource<Product[]>(
+    p
+      ? `/products/${encodeURIComponent(p.slug)}/connections?relation_type=complementary&limit=4`
       : null,
   );
-  const alternatives =
-    related.data?.items.filter((item) => item.id !== p?.id).slice(0, 4) ?? [];
+  const substitutes = useResource<Product[]>(
+    p && Number(p.stock_quantity) < 1
+      ? `/products/${encodeURIComponent(p.slug)}/connections?relation_type=substitute&limit=4`
+      : null,
+  );
+
   if (resource.loading) return <Loading kind="product" />;
   if (resource.error?.status === 404) notFound();
   if (resource.error)
     return <Failure error={resource.error} retry={resource.retry} />;
   if (!p) return null;
+
   return (
     <div className="polish-page product-page">
       <Breadcrumbs
         items={[
           { label: t("Главная"), href: "/" },
-          {
-            label: t("Каталог"),
-            href: "/catalog",
-          },
+          { label: t("Каталог"), href: "/catalog" },
           ...(parent
             ? [{ label: t(parent.name), href: `/catalog/${parent.slug}` }]
             : []),
@@ -152,33 +155,39 @@ export function ProductDetail({ slug }: { slug: string }) {
           )}
         </dl>
       </section>
-      {category && (related.loading || alternatives.length > 0) && (
+
+      {substitutes.loading && <Loading kind="grid" />}
+      {substitutes.data && substitutes.data.length > 0 && (
         <section className="related-products">
-          <SectionHeader
-            eyebrow="Дополните корзину"
-            title="В этом разделе"
-            action={{ href: `/catalog/${category.slug}`, label: category.name }}
-          />
-          {related.loading ? (
-            <Loading kind="grid" />
-          ) : (
-            <div className="product-grid">
-              {alternatives.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          )}
+          <SectionHeader eyebrow="Нет в наличии" title="Можно заменить" />
+          <div className="product-grid">
+            {substitutes.data.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
         </section>
       )}
-      {category && related.data && alternatives.length === 0 && (
-        <Empty
-          compact
-          icon={Package}
-          title={t("В этом разделе")}
-          text={t("Другие товары в этом разделе пока не представлены.")}
-        />
+      {substitutes.error && (
+        <Failure error={substitutes.error} retry={substitutes.retry} />
       )}
-      {related.error && <Failure error={related.error} retry={related.retry} />}
+
+      {complementary.loading && <Loading kind="grid" />}
+      {complementary.data && complementary.data.length > 0 && (
+        <section className="related-products">
+          <SectionHeader
+            eyebrow="Дополните покупку"
+            title="Хорошо подходит к этому"
+          />
+          <div className="product-grid">
+            {complementary.data.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </section>
+      )}
+      {complementary.error && (
+        <Failure error={complementary.error} retry={complementary.retry} />
+      )}
     </div>
   );
 }
