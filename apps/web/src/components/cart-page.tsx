@@ -10,14 +10,21 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { useCart } from "@/context/cart";
+import { Product, useResource } from "@/lib/api";
 import { cents } from "@/lib/format";
-import { ProductImage } from "./product-card";
+import { ProductCard, ProductImage } from "./product-card";
 import { Empty, Failure, Loading } from "./states";
 import { Breadcrumbs } from "./breadcrumbs";
-import { PageIntro } from "./page-patterns";
+import { PageIntro, SectionHeader } from "./page-patterns";
+
 export function CartPage() {
   const { t, money } = usePresentation();
   const cart = useCart();
+  const cartIds = cart.items.map((item) => item.product_id).join(",");
+  const assistance = useResource<Product[]>(
+    cartIds ? `/products/cart-assistance?ids=${encodeURIComponent(cartIds)}&limit=4` : null,
+  );
+
   if (!cart.items.length)
     return (
       <Empty
@@ -27,6 +34,7 @@ export function CartPage() {
     );
   if (cart.loading) return <Loading kind="cart" label="Проверяем товары…" />;
   if (cart.error) return <Failure error={cart.error} retry={cart.retry} />;
+
   const subtotal = cart.items.reduce((sum, item) => {
     const p = cart.products.find((p) => p.id === item.product_id);
     return sum + (p ? cents(p.price) * item.quantity : 0);
@@ -39,6 +47,7 @@ export function CartPage() {
       Number(product.stock_quantity) < item.quantity
     );
   });
+
   return (
     <div className="polish-page cart-page">
       <Breadcrumbs
@@ -170,6 +179,24 @@ export function CartPage() {
           </Link>
         </aside>
       </div>
+
+      {assistance.loading && <Loading kind="grid" />}
+      {assistance.data && assistance.data.length > 0 && (
+        <section className="related-products">
+          <SectionHeader
+            eyebrow="Дополните покупку"
+            title="Можно добавить к покупке"
+          />
+          <div className="product-grid">
+            {assistance.data.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </section>
+      )}
+      {assistance.error && (
+        <Failure error={assistance.error} retry={assistance.retry} />
+      )}
     </div>
   );
 }
