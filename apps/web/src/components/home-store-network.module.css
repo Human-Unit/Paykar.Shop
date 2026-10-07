@@ -283,7 +283,6 @@
   align-items: center;
   width: 154px !important;
   height: 48px !important;
-  margin: 0 !important;
   border: 0;
   background: transparent;
   color: var(--ink);
@@ -306,9 +305,6 @@
   border-radius: 50% 50% 50% 8px;
   color: var(--on-accent);
   background: var(--paykar-green);
-  font-size: 13px;
-  font-weight: 850;
-  line-height: 1;
   box-shadow:
     0 8px 22px rgb(0 0 0 / 30%),
     0 0 0 5px color-mix(in srgb, var(--paykar-green) 14%, transparent);
@@ -318,26 +314,11 @@
     transform 180ms ease;
 }
 
-.map :global(.paykar-network-pin)::first-letter {
-  transform: rotate(45deg);
-}
-
-.map :global(.paykar-network-pin) {
-  text-indent: 0;
-}
-
-.map :global(.paykar-network-pin)::before {
-  content: "П";
-  transform: rotate(45deg);
-}
-
-.map :global(.paykar-network-pin) {
-  font-size: 0;
-}
-
-.map :global(.paykar-network-pin)::before {
+.map :global(.paykar-network-pin > span) {
   font-size: 13px;
   font-weight: 850;
+  line-height: 1;
+  transform: rotate(45deg);
 }
 
 .map :global(.paykar-network-label) {
