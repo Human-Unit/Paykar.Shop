@@ -61,7 +61,7 @@ export function HomeStoreNetwork() {
       <SectionHeader
         eyebrow="Адрес и карта"
         title="Магазины"
-        text="Найдите магазин и откройте его расположение на карте."
+        text="Выберите Пайкар — на карте сразу увидите название и адрес магазина."
       />
 
       <div className={styles.layout}>
@@ -75,7 +75,7 @@ export function HomeStoreNetwork() {
             <Store size={18} />
             <span>
               <strong>{storeLocations.length}</strong>
-              <small>{t("Магазины")}</small>
+              <small>{t("Магазины")} · Душанбе</small>
             </span>
           </div>
         </m.div>
@@ -91,7 +91,9 @@ export function HomeStoreNetwork() {
             </span>
             <div>
               <strong>{t("Магазины")}</strong>
-              <small>{storeLocations.length}</small>
+              <small>
+                {storeLocations.length} · Душанбе
+              </small>
             </div>
           </div>
 
@@ -117,13 +119,16 @@ export function HomeStoreNetwork() {
                     aria-label={`${t("Показать на карте")}: ${store.name}, ${store.address}`}
                     onClick={() => setSelectedStoreId(store.id)}
                   >
-                    <span className={styles.number} aria-hidden="true">
-                      {String(store.id).padStart(2, "0")}
+                    <span className={styles.storeMarker} aria-hidden="true">
+                      <Store size={17} />
                     </span>
                     <span className={styles.storeCopy}>
                       <strong>{store.name}</strong>
                       <span>
-                        <MapPin size={13} aria-hidden="true" /> {store.address}
+                        <MapPin size={13} aria-hidden="true" />
+                        <span>
+                          {store.city} · {store.address}
+                        </span>
                       </span>
                     </span>
                   </button>
