@@ -15,7 +15,7 @@ Implementation and rendered acceptance cover the current Diyor storefront. This 
 - The screen is explicitly a demo: `DEMO-001`, black tea 15.00, oat cookies 12.00, flower honey 32.00; subtotal 59.00, example delivery 20.00, total 79.00 TJS. These are snapshots from `db/seed/products.json`, not live cart prices or a live delivery quote. Existing thumbnails, translations, icons, and money formatter are reused. The showcase does not read customer/order records, call an API, submit an order, or mutate the cart.
 - Added RU/TJ/EN showcase copy. All demo text switches with the existing preference system.
 - Reduced motion renders reveals fully visible with no transforms, disables pointer lighting and phone tilt, and removes selected surface transitions. Coarse/touch pointers receive a static phone and no pointer-following effects; no orientation/gyro access.
-- With reduced motion enabled the timeline stays at its initial accepted state; the automatic stage sequence is skipped.
+- With reduced motion enabled the timeline shows a stable final delivered state; the automatic stage sequence is skipped. See the order-journey follow-up below for current verification.
 - Decorative phone subtree is `aria-hidden` with no focusable controls. Visible adjacent copy explains guest shopping, delivery before confirmation, and payment on receipt. The catalog CTA remains keyboard accessible with its focus outline.
 
 ## Commands actually executed
@@ -102,7 +102,7 @@ The original motion layer had no remaining blocker. In-app Browser connection re
 
 ### Order timeline follow-up — 2026-10-07
 
-Added the one-time four-stage order animation described above, with RU/TJ/EN labels, an updating status icon, and a progressively completed route line. The static reduced-motion presentation remains unchanged. Frontend lint, formatting, typecheck, and production build passed for this follow-up; browser acceptance for the timeline is pending. The Playwright matrix above predates this change and is not evidence for the new sequence.
+The four-stage sequence now has stage-specific icons/subtitles, smoothly filling connectors, and a stable delivered state for reduced motion, including preference changes during playback. Frontend lint, formatting, typecheck, production build, and standalone Chrome acceptance passed. Current timing, viewport/language/theme checks, timer cleanup, and screenshots are documented in [order-journey-animation.md](order-journey-animation.md). The original Playwright matrix above predates this sequence; use the new report as evidence for the timeline. The in-app Codex Browser remains unavailable.
 
 ## Files changed for this task
 
