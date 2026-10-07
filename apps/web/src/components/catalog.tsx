@@ -13,11 +13,13 @@ import { ProductCard } from "./product-card";
 import { Empty, Failure, Loading } from "./states";
 import styles from "./catalog-discovery.module.css";
 
-function cleanPrice(value: string | null) {
+type PriceBound = "min" | "max";
+
+function cleanPrice(value: string | null, bound: PriceBound) {
   if (!value) return "";
-  const normalized = value.trim();
-  const amount = Number(normalized);
-  return Number.isFinite(amount) && amount >= 0 ? normalized : "";
+  const amount = Number(value.trim());
+  if (!Number.isFinite(amount) || amount < 0) return "";
+  return String(bound === "min" ? Math.floor(amount) : Math.ceil(amount));
 }
 
 export function Catalog({ slug }: { slug?: string }) {
@@ -74,8 +76,8 @@ export function Catalog({ slug }: { slug?: string }) {
     : "name";
   const inStock = params.get("in_stock") === "true";
   const onSale = params.get("on_sale") === "true";
-  const minPrice = cleanPrice(params.get("min_price"));
-  const maxPrice = cleanPrice(params.get("max_price"));
+  const minPrice = cleanPrice(params.get("min_price"), "min");
+  const maxPrice = cleanPrice(params.get("max_price"), "max");
   const page = Math.max(1, Number.parseInt(params.get("page") || "1") || 1);
   const invalidRange =
     minPrice !== "" && maxPrice !== "" && Number(minPrice) > Number(maxPrice);
@@ -116,8 +118,8 @@ export function Catalog({ slug }: { slug?: string }) {
     const next = new URLSearchParams();
     const search = String(data.get("q") || "").trim();
     const nextSort = String(data.get("sort") || "name");
-    const nextMin = String(data.get("min_price") || "").trim();
-    const nextMax = String(data.get("max_price") || "").trim();
+    const nextMin = cleanPrice(String(data.get("min_price") || ""), "min");
+    const nextMax = cleanPrice(String(data.get("max_price") || ""), "max");
     const maxInput = form.elements.namedItem("max_price") as HTMLInputElement | null;
 
     maxInput?.setCustomValidity("");
@@ -197,8 +199,8 @@ export function Catalog({ slug }: { slug?: string }) {
               name="min_price"
               type="number"
               min="0"
-              step="0.01"
-              inputMode="decimal"
+              step="1"
+              inputMode="numeric"
               defaultValue={minPrice}
               placeholder="0"
             />
@@ -210,8 +212,8 @@ export function Catalog({ slug }: { slug?: string }) {
               name="max_price"
               type="number"
               min="0"
-              step="0.01"
-              inputMode="decimal"
+              step="1"
+              inputMode="numeric"
               defaultValue={maxPrice}
               placeholder="∞"
             />
