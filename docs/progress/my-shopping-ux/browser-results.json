@@ -1,0 +1,1079 @@
+{
+  "browser": "Chromium 154.0.8037.98",
+  "baseline": "518d6541762110c70c2b6161292b403997dd9fbe",
+  "scenarios": {
+    "scenarios": [
+      {
+        "name": "fresh",
+        "checks": [
+          {
+            "name": "one homepage action",
+            "pass": true
+          },
+          {
+            "name": "positive counts only",
+            "pass": true,
+            "detail": {
+              "counts": []
+            }
+          },
+          {
+            "name": "correct data counts",
+            "pass": true
+          },
+          {
+            "name": "discovery before phone",
+            "pass": true
+          },
+          {
+            "name": "history conditional",
+            "pass": true
+          },
+          {
+            "name": "templates conditional",
+            "pass": true
+          },
+          {
+            "name": "curated starter content",
+            "pass": true,
+            "detail": {
+              "cards": 5
+            }
+          },
+          {
+            "name": "no empty personal messages",
+            "pass": true
+          },
+          {
+            "name": "no redundant section navigation",
+            "pass": true
+          },
+          {
+            "name": "contextual create action",
+            "pass": true
+          },
+          {
+            "name": "no page overflow",
+            "pass": true,
+            "detail": {
+              "overflow": 0,
+              "starterGap": 28
+            }
+          },
+          {
+            "name": "curated content follows intro closely",
+            "pass": true
+          },
+          {
+            "name": "deep link history",
+            "pass": true
+          },
+          {
+            "name": "deep link templates",
+            "pass": true
+          },
+          {
+            "name": "deep link curated",
+            "pass": true
+          },
+          {
+            "name": "no page exceptions",
+            "pass": true,
+            "detail": []
+          }
+        ],
+        "pass": true
+      },
+      {
+        "name": "history-only",
+        "checks": [
+          {
+            "name": "one homepage action",
+            "pass": true
+          },
+          {
+            "name": "positive counts only",
+            "pass": true,
+            "detail": {
+              "counts": ["1 заказ"]
+            }
+          },
+          {
+            "name": "correct data counts",
+            "pass": true
+          },
+          {
+            "name": "discovery before phone",
+            "pass": true
+          },
+          {
+            "name": "history conditional",
+            "pass": true
+          },
+          {
+            "name": "templates conditional",
+            "pass": true
+          },
+          {
+            "name": "curated starter content",
+            "pass": true,
+            "detail": {
+              "cards": 5
+            }
+          },
+          {
+            "name": "no empty personal messages",
+            "pass": true
+          },
+          {
+            "name": "no redundant section navigation",
+            "pass": true
+          },
+          {
+            "name": "contextual create action",
+            "pass": true
+          },
+          {
+            "name": "existing real order loaded",
+            "pass": true
+          },
+          {
+            "name": "no page overflow",
+            "pass": true,
+            "detail": {
+              "overflow": 0,
+              "starterGap": 304.3229064941406
+            }
+          },
+          {
+            "name": "no page exceptions",
+            "pass": true,
+            "detail": []
+          }
+        ],
+        "pass": true
+      },
+      {
+        "name": "templates-only",
+        "checks": [
+          {
+            "name": "one homepage action",
+            "pass": true
+          },
+          {
+            "name": "positive counts only",
+            "pass": true,
+            "detail": {
+              "counts": ["1 шаблон"]
+            }
+          },
+          {
+            "name": "correct data counts",
+            "pass": true
+          },
+          {
+            "name": "discovery before phone",
+            "pass": true
+          },
+          {
+            "name": "history conditional",
+            "pass": true
+          },
+          {
+            "name": "templates conditional",
+            "pass": true
+          },
+          {
+            "name": "curated starter content",
+            "pass": true,
+            "detail": {
+              "cards": 5
+            }
+          },
+          {
+            "name": "no empty personal messages",
+            "pass": true
+          },
+          {
+            "name": "no redundant section navigation",
+            "pass": true
+          },
+          {
+            "name": "contextual create action",
+            "pass": true
+          },
+          {
+            "name": "real UI-created template loaded",
+            "pass": true
+          },
+          {
+            "name": "no page overflow",
+            "pass": true,
+            "detail": {
+              "overflow": 0,
+              "starterGap": 322.1250305175781
+            }
+          },
+          {
+            "name": "no page exceptions",
+            "pass": true,
+            "detail": []
+          }
+        ],
+        "pass": true
+      },
+      {
+        "name": "both",
+        "checks": [
+          {
+            "name": "one homepage action",
+            "pass": true
+          },
+          {
+            "name": "positive counts only",
+            "pass": true,
+            "detail": {
+              "counts": ["1 заказ · 1 шаблон"]
+            }
+          },
+          {
+            "name": "correct data counts",
+            "pass": true
+          },
+          {
+            "name": "discovery before phone",
+            "pass": true
+          },
+          {
+            "name": "history conditional",
+            "pass": true
+          },
+          {
+            "name": "templates conditional",
+            "pass": true
+          },
+          {
+            "name": "curated starter content",
+            "pass": true,
+            "detail": {
+              "cards": 5
+            }
+          },
+          {
+            "name": "no empty personal messages",
+            "pass": true
+          },
+          {
+            "name": "no redundant section navigation",
+            "pass": true
+          },
+          {
+            "name": "contextual create action",
+            "pass": true
+          },
+          {
+            "name": "existing real order loaded",
+            "pass": true
+          },
+          {
+            "name": "real UI-created template loaded",
+            "pass": true
+          },
+          {
+            "name": "no page overflow",
+            "pass": true,
+            "detail": {
+              "overflow": 0,
+              "starterGap": 598.4479064941406
+            }
+          },
+          {
+            "name": "no page exceptions",
+            "pass": true,
+            "detail": []
+          }
+        ],
+        "pass": true
+      }
+    ],
+    "pass": true,
+    "browser": "154.0.8037.98",
+    "fixture": "Existing persisted test order; personal templates created through actual UI in isolated contexts."
+  },
+  "responsive": {
+    "pass": true,
+    "cases": [
+      {
+        "width": 320,
+        "language": "ru",
+        "theme": "dark",
+        "pass": true,
+        "homepage": {
+          "height": 237.33334350585938,
+          "overflow": 0,
+          "actionInside": true,
+          "stacked": true,
+          "counts": null
+        },
+        "shopping": {
+          "overflow": 0,
+          "gap": 28.000015258789062,
+          "cardTop": 573.3958740234375,
+          "history": false,
+          "templates": false,
+          "lang": "ru",
+          "theme": "dark",
+          "title": "Мои покупки"
+        }
+      },
+      {
+        "width": 390,
+        "language": "ru",
+        "theme": "dark",
+        "pass": true,
+        "homepage": {
+          "height": 237.33334350585938,
+          "overflow": 0,
+          "actionInside": true,
+          "stacked": true,
+          "counts": null
+        },
+        "shopping": {
+          "overflow": 0,
+          "gap": 27.999984741210938,
+          "cardTop": 574.9479370117188,
+          "history": false,
+          "templates": false,
+          "lang": "ru",
+          "theme": "dark",
+          "title": "Мои покупки"
+        }
+      },
+      {
+        "width": 768,
+        "language": "ru",
+        "theme": "dark",
+        "pass": true,
+        "homepage": {
+          "height": 189.33334350585938,
+          "overflow": 0,
+          "actionInside": true,
+          "stacked": true,
+          "counts": null
+        },
+        "shopping": {
+          "overflow": 0,
+          "gap": 27.999984741210938,
+          "cardTop": 518.0729370117188,
+          "history": false,
+          "templates": false,
+          "lang": "ru",
+          "theme": "dark",
+          "title": "Мои покупки"
+        }
+      },
+      {
+        "width": 1440,
+        "language": "ru",
+        "theme": "dark",
+        "pass": true,
+        "homepage": {
+          "height": 101.33333587646484,
+          "overflow": 0,
+          "actionInside": true,
+          "stacked": false,
+          "counts": null
+        },
+        "shopping": {
+          "overflow": 0,
+          "gap": 28,
+          "cardTop": 534.3125,
+          "history": false,
+          "templates": false,
+          "lang": "ru",
+          "theme": "dark",
+          "title": "Мои покупки"
+        }
+      },
+      {
+        "width": 320,
+        "language": "ru",
+        "theme": "light",
+        "pass": true,
+        "homepage": {
+          "height": 237.33334350585938,
+          "overflow": 0,
+          "actionInside": true,
+          "stacked": true,
+          "counts": null
+        },
+        "shopping": {
+          "overflow": 0,
+          "gap": 28.000015258789062,
+          "cardTop": 573.3958740234375,
+          "history": false,
+          "templates": false,
+          "lang": "ru",
+          "theme": "light",
+          "title": "Мои покупки"
+        }
+      },
+      {
+        "width": 390,
+        "language": "ru",
+        "theme": "light",
+        "pass": true,
+        "homepage": {
+          "height": 237.33334350585938,
+          "overflow": 0,
+          "actionInside": true,
+          "stacked": true,
+          "counts": null
+        },
+        "shopping": {
+          "overflow": 0,
+          "gap": 27.999984741210938,
+          "cardTop": 574.9479370117188,
+          "history": false,
+          "templates": false,
+          "lang": "ru",
+          "theme": "light",
+          "title": "Мои покупки"
+        }
+      },
+      {
+        "width": 768,
+        "language": "ru",
+        "theme": "light",
+        "pass": true,
+        "homepage": {
+          "height": 189.33334350585938,
+          "overflow": 0,
+          "actionInside": true,
+          "stacked": true,
+          "counts": null
+        },
+        "shopping": {
+          "overflow": 0,
+          "gap": 27.999984741210938,
+          "cardTop": 518.0729370117188,
+          "history": false,
+          "templates": false,
+          "lang": "ru",
+          "theme": "light",
+          "title": "Мои покупки"
+        }
+      },
+      {
+        "width": 1440,
+        "language": "ru",
+        "theme": "light",
+        "pass": true,
+        "homepage": {
+          "height": 101.33333587646484,
+          "overflow": 0,
+          "actionInside": true,
+          "stacked": false,
+          "counts": null
+        },
+        "shopping": {
+          "overflow": 0,
+          "gap": 28,
+          "cardTop": 534.3125,
+          "history": false,
+          "templates": false,
+          "lang": "ru",
+          "theme": "light",
+          "title": "Мои покупки"
+        }
+      },
+      {
+        "width": 320,
+        "language": "tj",
+        "theme": "dark",
+        "pass": true,
+        "homepage": {
+          "height": 276.16668701171875,
+          "overflow": 0,
+          "actionInside": true,
+          "stacked": true,
+          "counts": null
+        },
+        "shopping": {
+          "overflow": 0,
+          "gap": 28.000015258789062,
+          "cardTop": 621.3958740234375,
+          "history": false,
+          "templates": false,
+          "lang": "tg",
+          "theme": "dark",
+          "title": "Харидҳои ман"
+        }
+      },
+      {
+        "width": 390,
+        "language": "tj",
+        "theme": "dark",
+        "pass": true,
+        "homepage": {
+          "height": 237.33334350585938,
+          "overflow": 0,
+          "actionInside": true,
+          "stacked": true,
+          "counts": null
+        },
+        "shopping": {
+          "overflow": 0,
+          "gap": 27.999984741210938,
+          "cardTop": 574.9479370117188,
+          "history": false,
+          "templates": false,
+          "lang": "tg",
+          "theme": "dark",
+          "title": "Харидҳои ман"
+        }
+      },
+      {
+        "width": 768,
+        "language": "tj",
+        "theme": "dark",
+        "pass": true,
+        "homepage": {
+          "height": 189.33334350585938,
+          "overflow": 0,
+          "actionInside": true,
+          "stacked": true,
+          "counts": null
+        },
+        "shopping": {
+          "overflow": 0,
+          "gap": 27.999984741210938,
+          "cardTop": 518.0729370117188,
+          "history": false,
+          "templates": false,
+          "lang": "tg",
+          "theme": "dark",
+          "title": "Харидҳои ман"
+        }
+      },
+      {
+        "width": 1440,
+        "language": "tj",
+        "theme": "dark",
+        "pass": true,
+        "homepage": {
+          "height": 101.33333587646484,
+          "overflow": 0,
+          "actionInside": true,
+          "stacked": false,
+          "counts": null
+        },
+        "shopping": {
+          "overflow": 0,
+          "gap": 28,
+          "cardTop": 544.3125,
+          "history": false,
+          "templates": false,
+          "lang": "tg",
+          "theme": "dark",
+          "title": "Харидҳои ман"
+        }
+      },
+      {
+        "width": 320,
+        "language": "tj",
+        "theme": "light",
+        "pass": true,
+        "homepage": {
+          "height": 276.16668701171875,
+          "overflow": 0,
+          "actionInside": true,
+          "stacked": true,
+          "counts": null
+        },
+        "shopping": {
+          "overflow": 0,
+          "gap": 28.000015258789062,
+          "cardTop": 621.3958740234375,
+          "history": false,
+          "templates": false,
+          "lang": "tg",
+          "theme": "light",
+          "title": "Харидҳои ман"
+        }
+      },
+      {
+        "width": 390,
+        "language": "tj",
+        "theme": "light",
+        "pass": true,
+        "homepage": {
+          "height": 237.33334350585938,
+          "overflow": 0,
+          "actionInside": true,
+          "stacked": true,
+          "counts": null
+        },
+        "shopping": {
+          "overflow": 0,
+          "gap": 27.999984741210938,
+          "cardTop": 574.9479370117188,
+          "history": false,
+          "templates": false,
+          "lang": "tg",
+          "theme": "light",
+          "title": "Харидҳои ман"
+        }
+      },
+      {
+        "width": 768,
+        "language": "tj",
+        "theme": "light",
+        "pass": true,
+        "homepage": {
+          "height": 189.33334350585938,
+          "overflow": 0,
+          "actionInside": true,
+          "stacked": true,
+          "counts": null
+        },
+        "shopping": {
+          "overflow": 0,
+          "gap": 27.999984741210938,
+          "cardTop": 518.0729370117188,
+          "history": false,
+          "templates": false,
+          "lang": "tg",
+          "theme": "light",
+          "title": "Харидҳои ман"
+        }
+      },
+      {
+        "width": 1440,
+        "language": "tj",
+        "theme": "light",
+        "pass": true,
+        "homepage": {
+          "height": 101.33333587646484,
+          "overflow": 0,
+          "actionInside": true,
+          "stacked": false,
+          "counts": null
+        },
+        "shopping": {
+          "overflow": 0,
+          "gap": 28,
+          "cardTop": 534.3125,
+          "history": false,
+          "templates": false,
+          "lang": "tg",
+          "theme": "light",
+          "title": "Харидҳои ман"
+        }
+      },
+      {
+        "width": 320,
+        "language": "en",
+        "theme": "dark",
+        "pass": true,
+        "homepage": {
+          "height": 213.33334350585938,
+          "overflow": 0,
+          "actionInside": true,
+          "stacked": true,
+          "counts": null
+        },
+        "shopping": {
+          "overflow": 0,
+          "gap": 28.000015258789062,
+          "cardTop": 549.3958740234375,
+          "history": false,
+          "templates": false,
+          "lang": "en",
+          "theme": "dark",
+          "title": "My shopping"
+        }
+      },
+      {
+        "width": 390,
+        "language": "en",
+        "theme": "dark",
+        "pass": true,
+        "homepage": {
+          "height": 189.33334350585938,
+          "overflow": 0,
+          "actionInside": true,
+          "stacked": true,
+          "counts": null
+        },
+        "shopping": {
+          "overflow": 0,
+          "gap": 27.999984741210938,
+          "cardTop": 526.9479370117188,
+          "history": false,
+          "templates": false,
+          "lang": "en",
+          "theme": "dark",
+          "title": "My shopping"
+        }
+      },
+      {
+        "width": 768,
+        "language": "en",
+        "theme": "dark",
+        "pass": true,
+        "homepage": {
+          "height": 165.33334350585938,
+          "overflow": 0,
+          "actionInside": true,
+          "stacked": true,
+          "counts": null
+        },
+        "shopping": {
+          "overflow": 0,
+          "gap": 27.999984741210938,
+          "cardTop": 518.0729370117188,
+          "history": false,
+          "templates": false,
+          "lang": "en",
+          "theme": "dark",
+          "title": "My shopping"
+        }
+      },
+      {
+        "width": 1440,
+        "language": "en",
+        "theme": "dark",
+        "pass": true,
+        "homepage": {
+          "height": 101.33333587646484,
+          "overflow": 0,
+          "actionInside": true,
+          "stacked": false,
+          "counts": null
+        },
+        "shopping": {
+          "overflow": 0,
+          "gap": 28,
+          "cardTop": 534.3125,
+          "history": false,
+          "templates": false,
+          "lang": "en",
+          "theme": "dark",
+          "title": "My shopping"
+        }
+      },
+      {
+        "width": 320,
+        "language": "en",
+        "theme": "light",
+        "pass": true,
+        "homepage": {
+          "height": 213.33334350585938,
+          "overflow": 0,
+          "actionInside": true,
+          "stacked": true,
+          "counts": null
+        },
+        "shopping": {
+          "overflow": 0,
+          "gap": 28.000015258789062,
+          "cardTop": 549.3958740234375,
+          "history": false,
+          "templates": false,
+          "lang": "en",
+          "theme": "light",
+          "title": "My shopping"
+        }
+      },
+      {
+        "width": 390,
+        "language": "en",
+        "theme": "light",
+        "pass": true,
+        "homepage": {
+          "height": 189.33334350585938,
+          "overflow": 0,
+          "actionInside": true,
+          "stacked": true,
+          "counts": null
+        },
+        "shopping": {
+          "overflow": 0,
+          "gap": 27.999984741210938,
+          "cardTop": 526.9479370117188,
+          "history": false,
+          "templates": false,
+          "lang": "en",
+          "theme": "light",
+          "title": "My shopping"
+        }
+      },
+      {
+        "width": 768,
+        "language": "en",
+        "theme": "light",
+        "pass": true,
+        "homepage": {
+          "height": 165.33334350585938,
+          "overflow": 0,
+          "actionInside": true,
+          "stacked": true,
+          "counts": null
+        },
+        "shopping": {
+          "overflow": 0,
+          "gap": 27.999984741210938,
+          "cardTop": 518.0729370117188,
+          "history": false,
+          "templates": false,
+          "lang": "en",
+          "theme": "light",
+          "title": "My shopping"
+        }
+      },
+      {
+        "width": 1440,
+        "language": "en",
+        "theme": "light",
+        "pass": true,
+        "homepage": {
+          "height": 101.33333587646484,
+          "overflow": 0,
+          "actionInside": true,
+          "stacked": false,
+          "counts": null
+        },
+        "shopping": {
+          "overflow": 0,
+          "gap": 28,
+          "cardTop": 534.3125,
+          "history": false,
+          "templates": false,
+          "lang": "en",
+          "theme": "light",
+          "title": "My shopping"
+        }
+      }
+    ]
+  },
+  "actions": {
+    "checks": [
+      {
+        "name": "repeat checks live stock and adds cart",
+        "pass": true,
+        "detail": {
+          "lines": 1,
+          "previewRequests": 1
+        }
+      },
+      {
+        "name": "saving order reveals templates without reload",
+        "pass": true
+      },
+      {
+        "name": "personal editing and stock/price preview",
+        "pass": true,
+        "detail": {
+          "previewRequests": 3
+        }
+      },
+      {
+        "name": "personal bulk add retained",
+        "pass": true
+      },
+      {
+        "name": "curated bulk add retained",
+        "pass": true
+      },
+      {
+        "name": "cart and templates persist after reload",
+        "pass": true
+      },
+      {
+        "name": "Russian plural counts",
+        "pass": true,
+        "detail": {
+          "counts": "3 заказа · 2 шаблона"
+        }
+      },
+      {
+        "name": "localized counts English",
+        "pass": true,
+        "detail": {
+          "counts": "3 orders · 2 templates"
+        }
+      },
+      {
+        "name": "localized counts Тоҷикӣ",
+        "pass": true,
+        "detail": {
+          "counts": "3 фармоиш · 2 қолаб"
+        }
+      },
+      {
+        "name": "discovery updates live when personal data clears",
+        "pass": true
+      },
+      {
+        "name": "no page exceptions",
+        "pass": true,
+        "detail": []
+      }
+    ],
+    "pass": true,
+    "api": "Real existing order and shopping preview endpoints; no mocked responses in this suite."
+  },
+  "errors": {
+    "cases": [
+      {
+        "name": "curated-api-error",
+        "checks": [
+          {
+            "name": "curated failure is visible",
+            "pass": true
+          },
+          {
+            "name": "retry remains available",
+            "pass": true
+          },
+          {
+            "name": "create action remains available",
+            "pass": true
+          },
+          {
+            "name": "no horizontal overflow",
+            "pass": true
+          },
+          {
+            "name": "no unhandled browser exception",
+            "pass": true
+          }
+        ],
+        "pass": true
+      },
+      {
+        "name": "missing-history-order",
+        "checks": [
+          {
+            "name": "history remains visible with a failed order",
+            "pass": true
+          },
+          {
+            "name": "curated content remains useful",
+            "pass": true
+          },
+          {
+            "name": "no horizontal overflow",
+            "pass": true
+          },
+          {
+            "name": "no unhandled browser exception",
+            "pass": true
+          }
+        ],
+        "pass": true
+      },
+      {
+        "name": "preview-error",
+        "checks": [
+          {
+            "name": "failed current-stock preview is visible",
+            "pass": true
+          },
+          {
+            "name": "failed bulk add communicates error",
+            "pass": true
+          },
+          {
+            "name": "failed add preserves cart",
+            "pass": true
+          },
+          {
+            "name": "no horizontal overflow",
+            "pass": true
+          },
+          {
+            "name": "no unhandled browser exception",
+            "pass": true
+          }
+        ],
+        "pass": true
+      },
+      {
+        "name": "storage-write-failure",
+        "checks": [
+          {
+            "name": "storage failure warning is visible",
+            "pass": true
+          },
+          {
+            "name": "failed persistence is not claimed as saved",
+            "pass": true
+          },
+          {
+            "name": "no horizontal overflow",
+            "pass": true
+          },
+          {
+            "name": "no unhandled browser exception",
+            "pass": true
+          }
+        ],
+        "pass": true
+      }
+    ],
+    "pass": true,
+    "simulation": "Curated API and preview 503 responses and storage quota are intentionally simulated; missing order uses real 404."
+  },
+  "fullDataResponsive": {
+    "cases": [
+      {
+        "width": 320,
+        "overflow": 0,
+        "counts": {
+          "history": 1,
+          "templates": 1,
+          "curated": 5
+        },
+        "pass": true
+      },
+      {
+        "width": 390,
+        "overflow": 0,
+        "counts": {
+          "history": 1,
+          "templates": 1,
+          "curated": 5
+        },
+        "pass": true
+      },
+      {
+        "width": 768,
+        "overflow": 0,
+        "counts": {
+          "history": 1,
+          "templates": 1,
+          "curated": 5
+        },
+        "pass": true
+      },
+      {
+        "hash": "history",
+        "top": 254.20834350585938,
+        "pass": true
+      },
+      {
+        "hash": "templates",
+        "top": 253.86459350585938,
+        "pass": true
+      },
+      {
+        "hash": "curated",
+        "top": 253.98959350585938,
+        "pass": true
+      }
+    ],
+    "pass": true
+  }
+}

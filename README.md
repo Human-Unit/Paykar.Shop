@@ -484,9 +484,11 @@ Key reports:
 
 ## Repeat shopping and reusable baskets
 
-Open `/my-shopping` from the burger menu for order history, personal templates and manually curated Paykar baskets. Save the current cart or a confirmed order as a template; edit its name/products/quantities and add available items together. Repeat operations check current catalog prices and stock and preserve the original order.
+Open `/my-shopping` directly from the compact **My Shopping** homepage block or the burger menu. Personal history and templates appear when data exists; new shoppers see curated Paykar baskets and a create-template action. Save the current cart or a confirmed order as a template; edit its name/products/quantities and add available items together. Repeat operations check current catalog prices and stock and preserve the original order.
 
-The menu links directly to history, personal templates and curated baskets. A compact homepage My Shopping block also opens history or templates. Section links support keyboard navigation and reloadable anchors below the sticky header. Combined feature integration and browser evidence: [integration report](docs/progress/main-feature-integration.md).
+Follow the reusable [design principles](docs/design-principles.md): never show emptiness without purpose. Keep errors and important system states visible.
+
+The menu links directly to history, personal templates and curated baskets. The compact homepage My Shopping block opens the overview. Section links support keyboard navigation and reloadable anchors below the sticky header. Combined feature integration and browser evidence: [integration report](docs/progress/main-feature-integration.md).
 
 Guest history contains only order UUID references created or opened in this browser. Personal templates use versioned localStorage (up to 20 templates, 48 lines each); clearing storage removes local templates/references, not PostgreSQL orders. There is no account or cross-device synchronization.
 

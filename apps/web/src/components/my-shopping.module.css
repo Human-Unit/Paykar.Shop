@@ -39,10 +39,12 @@
   margin-block: 32px;
   scroll-margin-top: 170px;
 }
+.page > .section {
+  margin-block: 28px;
+}
 .sectionHeading,
 .actions,
-.meta,
-.tabs {
+.meta {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -52,28 +54,16 @@
   justify-content: space-between;
   margin-bottom: 12px;
 }
-.tabs {
-  margin-block: 24px;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 16px;
+.intro {
+  max-width: 72ch;
 }
-.tabs a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 10px 14px;
-  border-radius: 10px;
-  color: var(--brand-ink);
-  font-weight: 650;
-  background: var(--surface);
-  border: 1px solid var(--line);
+.intro > :global(.button) {
+  margin-top: 16px;
 }
-.tabs a:hover {
-  background: var(--hover-surface);
-}
-.tabs a:focus-visible {
-  outline: 2px solid var(--brand-ink);
-  outline-offset: 3px;
+.help {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
 }
 .discovery {
   display: flex;
@@ -91,20 +81,22 @@
   font-size: 20px;
   font-weight: 750;
 }
+.discoveryCopy {
+  flex: 1 1 360px;
+  min-width: 0;
+}
 .discovery p {
   margin: 0;
   color: var(--muted);
 }
-.discoveryLinks {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px;
+.discovery .discoveryCounts {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 600;
 }
-.discoveryLinks a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
+.discovery > :global(.button) {
+  flex: 0 0 auto;
+  max-width: 100%;
 }
 .grid {
   display: grid;
@@ -265,6 +257,16 @@
 @media (max-width: 1024px) {
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 768px) {
+  .discovery {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .discoveryCopy {
+    flex-basis: auto;
   }
 }
 @media (max-width: 600px) {

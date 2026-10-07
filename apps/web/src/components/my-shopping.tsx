@@ -311,7 +311,7 @@ export function CuratedShopping({ compact = false }: { compact?: boolean }) {
           </Link>
         )}
       </div>
-      <p>{t("Наборы товаров, вручную подобранные Пайкар.")}</p>
+      <p>{t("Быстрый способ собрать привычную корзину.")}</p>
       {resource.loading && <Loading />}
       {resource.error && (
         <Failure error={resource.error} retry={resource.retry} />
@@ -328,21 +328,44 @@ export function CuratedShopping({ compact = false }: { compact?: boolean }) {
 }
 
 export function ShoppingDiscovery() {
-  const { t } = usePresentation();
+  const { t, locale } = usePresentation();
+  const { templates, orderIds } = useShoppingStorage();
+  const hasPersonalContent = orderIds.length > 0 || templates.length > 0;
+  const countLabel = (
+    count: number,
+    one: string,
+    few: string,
+    many: string,
+  ) => {
+    const plural = new Intl.PluralRules(locale).select(count);
+    return `${count} ${t(plural === "one" ? one : plural === "few" ? few : many)}`;
+  };
+  const counts = [
+    orderIds.length > 0
+      ? countLabel(orderIds.length, "заказ", "заказа", "заказов")
+      : null,
+    templates.length > 0
+      ? countLabel(templates.length, "шаблон", "шаблона", "шаблонов")
+      : null,
+  ].filter(Boolean);
   return (
     <section className={styles.discovery} aria-label={t("Мои покупки")}>
-      <div>
+      <div className={styles.discoveryCopy}>
         <h2>{t("Мои покупки")}</h2>
-        <p>{t("Повторяйте прошлые заказы и сохраняйте любимые наборы.")}</p>
+        <p>
+          {t(
+            hasPersonalContent
+              ? "Ваши сохранённые покупки всегда под рукой."
+              : "Повторяйте прошлые заказы, сохраняйте любимые наборы и собирайте привычную корзину быстрее.",
+          )}
+        </p>
+        {counts.length > 0 && (
+          <p className={styles.discoveryCounts}>{counts.join(" · ")}</p>
+        )}
       </div>
-      <div className={styles.discoveryLinks}>
-        <Link href="/my-shopping#history" className="text-link">
-          {t("История заказов")}
-        </Link>
-        <Link href="/my-shopping#templates" className="button secondary">
-          {t("Мои шаблоны")}
-        </Link>
-      </div>
+      <Link href="/my-shopping" className="button">
+        {t("Открыть мои покупки")}
+      </Link>
     </section>
   );
 }
@@ -350,61 +373,76 @@ export function ShoppingDiscovery() {
 export function MyShopping() {
   const { t } = usePresentation();
   const { templates, orderIds } = useShoppingStorage();
+  const hasHistory = orderIds.length > 0;
+  const hasTemplates = templates.length > 0;
   return (
     <div className={"polish-page " + styles.page}>
       <Breadcrumbs
         items={[{ label: "Главная", href: "/" }, { label: "Мои покупки" }]}
       />
-      <h1>{t("Мои покупки")}</h1>
-      <p>
-        {t(
-          "Заказы и личные шаблоны доступны в этом браузере. Цены и наличие проверяются заново.",
-        )}
-      </p>
-      <nav className={styles.tabs} aria-label={t("Мои покупки")}>
-        <a href="#history">{t("История заказов")}</a>
-        <a href="#templates">{t("Мои шаблоны")}</a>
-        <a href="#curated">{t("Готовые наборы")}</a>
-      </nav>
-      <section id="history" className={styles.section}>
-        <h2>{t("История заказов")}</h2>
-        {!orderIds.length && <p>{t("У вас пока нет заказов.")}</p>}
-        <div className={styles.history}>
-          {orderIds.map((id) => (
-            <HistoryOrder key={id} id={id} />
-          ))}
-        </div>
-      </section>
-      <section id="templates" className={styles.section}>
-        <div className={styles.sectionHeading}>
-          <h2>{t("Мои шаблоны")}</h2>
+      <div className={styles.intro}>
+        <h1>{t("Мои покупки")}</h1>
+        <p>
+          {t(
+            "Покупайте привычное быстрее — повторяйте прошлые заказы, сохраняйте свои наборы и используйте готовые подборки.",
+          )}
+        </p>
+        {!hasTemplates && (
           <Link className="button secondary" href="/my-shopping/templates/new">
-            {t("Создать шаблон")}
+            {t("Создать свой шаблон")}
           </Link>
-        </div>
-        {!templates.length && (
-          <p>{t("У вас пока нет сохранённых шаблонов.")}</p>
         )}
-        <div className={styles.grid}>
-          {templates.map((template) => (
-            <article className={styles.card} key={template.id}>
-              <h3>{template.name}</h3>
-              <p>
-                {t("Позиций:")} {template.items.length}
-              </p>
-              <div className={styles.actions}>
-                <AddShoppingItems items={template.items} />
-                <Link
-                  className="text-link"
-                  href={`/my-shopping/templates/${template.id}`}
-                >
-                  {t("Редактировать")}
-                </Link>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
+      </div>
+      {hasHistory && (
+        <section id="history" className={styles.section}>
+          <h2>{t("История заказов")}</h2>
+          <p className={styles.help}>
+            {t(
+              "Актуальные цены и наличие проверим перед добавлением в корзину.",
+            )}
+          </p>
+          <div className={styles.history}>
+            {orderIds.map((id) => (
+              <HistoryOrder key={id} id={id} />
+            ))}
+          </div>
+        </section>
+      )}
+      {hasTemplates && (
+        <section id="templates" className={styles.section}>
+          <div className={styles.sectionHeading}>
+            <h2>{t("Мои шаблоны")}</h2>
+            <Link
+              className="button secondary"
+              href="/my-shopping/templates/new"
+            >
+              {t("Создать шаблон")}
+            </Link>
+          </div>
+          <p className={styles.help}>
+            {t("Ваши шаблоны сохраняются в этом браузере.")}
+          </p>
+          <div className={styles.grid}>
+            {templates.map((template) => (
+              <article className={styles.card} key={template.id}>
+                <h3>{template.name}</h3>
+                <p>
+                  {t("Позиций:")} {template.items.length}
+                </p>
+                <div className={styles.actions}>
+                  <AddShoppingItems items={template.items} />
+                  <Link
+                    className="text-link"
+                    href={`/my-shopping/templates/${template.id}`}
+                  >
+                    {t("Редактировать")}
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
       <CuratedShopping />
     </div>
   );
