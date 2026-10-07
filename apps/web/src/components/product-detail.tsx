@@ -10,6 +10,7 @@ import {
   useResource,
 } from "@/lib/api";
 import { cents } from "@/lib/format";
+import { getProductContent } from "@/lib/product-content";
 import {
   AddButton,
   ProductCard,
@@ -53,6 +54,7 @@ export function ProductDetail({ slug }: { slug: string }) {
   if (!p) return null;
   const discount = discountPercent(p);
   const available = Number(p.stock_quantity) >= 1;
+  const enriched = getProductContent(p.slug);
   return (
     <div className="polish-page product-page">
       <Breadcrumbs
@@ -142,11 +144,12 @@ export function ProductDetail({ slug }: { slug: string }) {
       <section className="product-description-panel">
         <SectionHeader eyebrow="Детали покупки" title="О товаре" />
         <p className="description">
-          {t(
-            /демонстрацион|учебн/i.test(p.description)
-              ? "Указанная упаковка — одна единица в корзине."
-              : p.description,
-          )}
+          {enriched?.description ??
+            t(
+              /демонстрацион|учебн/i.test(p.description)
+                ? "Указанная упаковка — одна единица в корзине."
+                : p.description,
+            )}
         </p>
         <dl className="product-facts">
           <div>
@@ -168,6 +171,38 @@ export function ProductDetail({ slug }: { slug: string }) {
             </div>
           )}
         </dl>
+        {enriched && (
+          <div className="product-content-extra">
+            <div className="product-content-heading">
+              <h3>
+                {enriched.basis
+                  ? `Пищевая ценность и параметры · ${enriched.basis}`
+                  : "Характеристики"}
+              </h3>
+            </div>
+            <dl className="product-facts product-content-facts">
+              {enriched.facts.map((fact) => (
+                <div key={`${fact.label}:${fact.value}`}>
+                  <dt>{fact.label}</dt>
+                  <dd>{fact.value}</dd>
+                </div>
+              ))}
+            </dl>
+            {enriched.features.length > 0 && (
+              <div className="product-content-features">
+                <h3>Почему стоит добавить</h3>
+                <ul>
+                  {enriched.features.map((feature) => (
+                    <li key={feature}>{feature}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {enriched.note && (
+              <p className="product-content-note">{enriched.note}</p>
+            )}
+          </div>
+        )}
       </section>
       {(connections.loading || Boolean(connections.data?.items.length)) && (
         <section className="related-products">
