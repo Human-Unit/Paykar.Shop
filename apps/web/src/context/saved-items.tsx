@@ -35,7 +35,13 @@ function parse(raw: string): number[] {
     const seen = new Set<number>();
     const ids: number[] = [];
     for (const item of value) {
-      if (!Number.isInteger(item) || item <= 0 || seen.has(item)) continue;
+      if (
+        typeof item !== "number" ||
+        !Number.isSafeInteger(item) ||
+        item <= 0 ||
+        seen.has(item)
+      )
+        continue;
       seen.add(item);
       ids.push(item);
       if (ids.length >= 48) break;
