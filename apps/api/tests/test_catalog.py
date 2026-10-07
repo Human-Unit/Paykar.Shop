@@ -11,7 +11,7 @@ from sqlalchemy.pool import NullPool
 from app.core.config import Settings
 from app.core.database import get_session
 from app.main import create_app
-from app.models import Category, Product
+from app.models import Category, Product, ProductConnection
 
 pytestmark = pytest.mark.integration
 
@@ -48,6 +48,40 @@ async def client():
                         is_active=active,
                     )
                 )
+            await session.flush()
+
+            apple = await session.scalar(select(Product).where(Product.slug == "test-apple"))
+            banana = await session.scalar(select(Product).where(Product.slug == "test-banana"))
+            hidden = await session.scalar(select(Product).where(Product.slug == "test-hidden"))
+            assert apple is not None and banana is not None and hidden is not None
+            session.add_all(
+                [
+                    ProductConnection(
+                        source_product_id=banana.id,
+                        target_product_id=apple.id,
+                        relation_type="complementary",
+                        position=0,
+                    ),
+                    ProductConnection(
+                        source_product_id=apple.id,
+                        target_product_id=banana.id,
+                        relation_type="complementary",
+                        position=0,
+                    ),
+                    ProductConnection(
+                        source_product_id=apple.id,
+                        target_product_id=hidden.id,
+                        relation_type="complementary",
+                        position=1,
+                    ),
+                    ProductConnection(
+                        source_product_id=banana.id,
+                        target_product_id=apple.id,
+                        relation_type="substitute",
+                        position=0,
+                    ),
+                ]
+            )
             await session.flush()
 
             async def override():
@@ -164,3 +198,44 @@ async def test_price_filters_and_composition(client):
         )
     ).status_code == 422
     assert (await client.get("/api/v1/products", params={"min_price": "-1"})).status_code == 422
+
+
+async def test_curated_connections_respect_availability(client):
+    response = await client.get("/api/v1/products/test-banana/connections")
+    assert response.status_code == 200
+    assert [item["slug"] for item in response.json()] == ["test-apple"]
+
+    response = await client.get("/api/v1/products/test-apple/connections")
+    assert response.status_code == 200
+    assert response.json() == []
+
+    substitute = await client.get(
+        "/api/v1/products/test-banana/connections",
+        params={"relation_type": "substitute"},
+    )
+    assert [item["slug"] for item in substitute.json()] == ["test-apple"]
+    assert (await client.get("/api/v1/products/missing/connections")).status_code == 404
+
+
+async def test_cart_assistance_is_curated_deduplicated_and_excludes_cart(client):
+    products = (await client.get("/api/v1/products")).json()["items"]
+    ids = {item["slug"]: item["id"] for item in products}
+
+    result = (
+        await client.get(
+            "/api/v1/products/cart-assistance",
+            params={"ids": str(ids["test-banana"]), "limit": 4},
+        )
+    ).json()
+    assert [item["slug"] for item in result] == ["test-apple"]
+
+    result = (
+        await client.get(
+            "/api/v1/products/cart-assistance",
+            params={"ids": f"{ids['test-banana']},{ids['test-apple']}"},
+        )
+    ).json()
+    assert result == []
+    assert (
+        await client.get("/api/v1/products/cart-assistance", params={"ids": "bad"})
+    ).status_code == 422
