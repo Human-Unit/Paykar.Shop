@@ -17,6 +17,7 @@ import {
   useResource,
 } from "@/lib/api";
 import { cents } from "@/lib/format";
+import { rememberOrder } from "@/lib/shopping-storage";
 import { Empty } from "./states";
 import { SandboxCard, validSandbox, type SandboxFields } from "./sandbox-card";
 import {
@@ -231,6 +232,7 @@ export function Checkout() {
         order = result.order;
       } else order = await api<Order>("/orders", undefined, request);
       cart.clear();
+      rememberOrder(order.id);
       router.push(`/order/${order.id}`);
     } catch (error) {
       setError(

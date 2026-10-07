@@ -481,3 +481,15 @@ Key reports:
 **Built as a three-day technical assignment, then iteratively hardened for UX, routing, payments, accessibility and verification.**
 
 </div>
+
+## Repeat shopping and reusable baskets
+
+Open `/my-shopping` from the burger menu for order history, personal templates and manually curated Paykar baskets. Save the current cart or a confirmed order as a template; edit its name/products/quantities and add available items together. Repeat operations check current catalog prices and stock and preserve the original order.
+
+Guest history contains only order UUID references created or opened in this browser. Personal templates use versioned localStorage (up to 20 templates, 48 lines each); clearing storage removes local templates/references, not PostgreSQL orders. There is no account or cross-device synchronization.
+
+Curated definitions live in `db/seed/shopping_templates.json`. Run the existing seed command after startup (`docker compose exec api python /seed/seed.py`); it rejects unknown product slugs and is idempotent. The API resolves slugs to current database products. No new migration is required.
+
+New endpoints: `POST /api/v1/shopping/preview`, `GET /api/v1/shopping/templates`, and `GET /api/v1/shopping/templates/{template_id}`. Existing order endpoints are unchanged; there is no public order-history enumeration API.
+
+Frontend logic tests: `cd apps/web` then `npm run test:shopping`. Use the existing dedicated `*_test` database for backend tests. Full implementation, actual commands, real checkout evidence and browser checks: [repeat-shopping report](docs/progress/repeat-orders-and-templates.md).

@@ -67,7 +67,11 @@ type SavedItems = {
 
 const Context = createContext<SavedItems | null>(null);
 
-export function SavedItemsProvider({ children }: { children: React.ReactNode }) {
+export function SavedItemsProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const raw = useSyncExternalStore(subscribe, snapshot, () => emptySnapshot);
   const ids = useMemo(() => parse(raw), [raw]);
   const value = useMemo<SavedItems>(

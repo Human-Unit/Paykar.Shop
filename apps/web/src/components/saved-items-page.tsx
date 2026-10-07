@@ -71,7 +71,7 @@ export function SavedItemsPage() {
 
       {staleIds.length > 0 && (
         <p className="message" role="status">
-          {t("Некоторые сохранённые товары больше недоступны.")} {" "}
+          {t("Некоторые сохранённые товары больше недоступны.")}{" "}
           <button
             type="button"
             className="text-link"

@@ -1,0 +1,149 @@
+[
+  {
+    "slug": "family",
+    "name": "Семья",
+    "description": "Продукты на каждый день для дома",
+    "items": [
+      {
+        "product_slug": "wheat-bread",
+        "quantity": 2
+      },
+      {
+        "product_slug": "milk",
+        "quantity": 2
+      },
+      {
+        "product_slug": "potatoes",
+        "quantity": 1
+      },
+      {
+        "product_slug": "apples-red",
+        "quantity": 1
+      },
+      {
+        "product_slug": "black-tea",
+        "quantity": 1
+      },
+      {
+        "product_slug": "napkins",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "slug": "breakfast",
+    "name": "Завтрак",
+    "description": "Всё для спокойного утра",
+    "items": [
+      {
+        "product_slug": "wheat-bread",
+        "quantity": 1
+      },
+      {
+        "product_slug": "butter",
+        "quantity": 1
+      },
+      {
+        "product_slug": "cheese",
+        "quantity": 1
+      },
+      {
+        "product_slug": "milk",
+        "quantity": 1
+      },
+      {
+        "product_slug": "coffee",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "slug": "fresh",
+    "name": "Овощи и фрукты",
+    "description": "Свежие продукты к вашему столу",
+    "items": [
+      {
+        "product_slug": "carrots",
+        "quantity": 1
+      },
+      {
+        "product_slug": "cucumbers",
+        "quantity": 1
+      },
+      {
+        "product_slug": "apples-red",
+        "quantity": 2
+      },
+      {
+        "product_slug": "bananas",
+        "quantity": 1
+      },
+      {
+        "product_slug": "yogurt",
+        "quantity": 2
+      },
+      {
+        "product_slug": "water",
+        "quantity": 2
+      }
+    ]
+  },
+  {
+    "slug": "guests",
+    "name": "Для гостей",
+    "description": "Напитки и угощения для встречи",
+    "items": [
+      {
+        "product_slug": "apple-juice",
+        "quantity": 2
+      },
+      {
+        "product_slug": "black-tea",
+        "quantity": 1
+      },
+      {
+        "product_slug": "oat-cookies",
+        "quantity": 2
+      },
+      {
+        "product_slug": "milk-chocolate",
+        "quantity": 1
+      },
+      {
+        "product_slug": "wafers",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "slug": "weekly",
+    "name": "На неделю",
+    "description": "Базовые покупки для дома",
+    "items": [
+      {
+        "product_slug": "milk",
+        "quantity": 2
+      },
+      {
+        "product_slug": "rye-bread",
+        "quantity": 2
+      },
+      {
+        "product_slug": "potatoes",
+        "quantity": 2
+      },
+      {
+        "product_slug": "cheese",
+        "quantity": 1
+      },
+      {
+        "product_slug": "dish-soap",
+        "quantity": 1
+      },
+      {
+        "product_slug": "trash-bags",
+        "quantity": 1
+      }
+    ]
+  }
+]

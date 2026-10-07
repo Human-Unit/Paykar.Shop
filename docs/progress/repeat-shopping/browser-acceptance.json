@@ -1,0 +1,1611 @@
+{
+  "verified": "2026-10-07",
+  "browser": "Chrome 154.0.8037.98",
+  "surface": "standalone Playwright",
+  "in_app_browser": "unavailable, no connected browser",
+  "origin": "http://localhost:3000",
+  "status": "PASS",
+  "shoppingPersonal": {
+    "status": "PASS",
+    "checks": [
+      {
+        "name": "create template with quantity",
+        "pass": true
+      },
+      {
+        "name": "rename/edit and reload persistence",
+        "pass": true
+      },
+      {
+        "name": "add template to persistent guest cart",
+        "pass": true,
+        "cart": [
+          {
+            "product_id": 8,
+            "quantity": 3
+          }
+        ]
+      },
+      {
+        "name": "delete template and retain cart",
+        "pass": true
+      },
+      {
+        "name": "curated family details and add all",
+        "pass": true
+      }
+    ],
+    "errors": [],
+    "browser": "154.0.8037.98"
+  },
+  "shoppingAvailability": {
+    "status": "PASS",
+    "checks": [
+      {
+        "name": "real unavailable/missing/stock-capped addition",
+        "pass": true,
+        "text": "Добавлено в корзину: 18. Перейти в корзину\n\nСейчас недоступно: 1\n\nБольше не продаётся: 1\n\nКоличество ограничено остатком: 1",
+        "cart": [
+          {
+            "product_id": 8,
+            "quantity": 19
+          }
+        ]
+      },
+      {
+        "name": "explicit removal of stale products",
+        "pass": true
+      },
+      {
+        "name": "503 preview preserves existing cart (injected failure)",
+        "pass": true
+      }
+    ],
+    "errors": []
+  },
+  "shoppingMatrix": {
+    "status": "PASS",
+    "cases": [
+      {
+        "language": "ru",
+        "theme": "dark",
+        "width": 320,
+        "pass": true,
+        "metrics": {
+          "width": 310,
+          "scroll": 310,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 202,
+              "right": 246
+            },
+            {
+              "label": "/cart",
+              "left": 250,
+              "right": 294
+            },
+            {
+              "label": "burger-button",
+              "left": 250,
+              "right": 294
+            }
+          ],
+          "lang": "ru",
+          "theme": "dark"
+        }
+      },
+      {
+        "language": "ru",
+        "theme": "dark",
+        "width": 390,
+        "pass": true,
+        "metrics": {
+          "width": 380,
+          "scroll": 380,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 272,
+              "right": 316
+            },
+            {
+              "label": "/cart",
+              "left": 320,
+              "right": 364
+            },
+            {
+              "label": "burger-button",
+              "left": 320,
+              "right": 364
+            }
+          ],
+          "lang": "ru",
+          "theme": "dark"
+        }
+      },
+      {
+        "language": "ru",
+        "theme": "dark",
+        "width": 768,
+        "pass": true,
+        "metrics": {
+          "width": 758,
+          "scroll": 758,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 642,
+              "right": 686
+            },
+            {
+              "label": "/cart",
+              "left": 690,
+              "right": 734
+            },
+            {
+              "label": "burger-button",
+              "left": 690,
+              "right": 734
+            }
+          ],
+          "lang": "ru",
+          "theme": "dark"
+        }
+      },
+      {
+        "language": "ru",
+        "theme": "dark",
+        "width": 1024,
+        "pass": true,
+        "metrics": {
+          "width": 1014,
+          "scroll": 1014,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 658.96875,
+              "right": 708.3020858764648
+            },
+            {
+              "label": "/cart",
+              "left": 716.3021240234375,
+              "right": 803.6354598999023
+            },
+            {
+              "label": "header-language",
+              "left": 819.6354370117188,
+              "right": 886.0000228881836
+            },
+            {
+              "label": "header-preference-button theme-button",
+              "left": 894,
+              "right": 938
+            },
+            {
+              "label": "burger-button",
+              "left": 946,
+              "right": 990
+            }
+          ],
+          "lang": "ru",
+          "theme": "dark"
+        }
+      },
+      {
+        "language": "ru",
+        "theme": "dark",
+        "width": 1440,
+        "pass": true,
+        "metrics": {
+          "width": 1430,
+          "scroll": 1430,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 854.4166870117188,
+              "right": 1017.7500305175781
+            },
+            {
+              "label": "/cart",
+              "left": 1025.75,
+              "right": 1188.6354217529297
+            },
+            {
+              "label": "header-language",
+              "left": 1204.635498046875,
+              "right": 1271.0000839233398
+            },
+            {
+              "label": "header-preference-button theme-button",
+              "left": 1279,
+              "right": 1323
+            },
+            {
+              "label": "burger-button",
+              "left": 1331,
+              "right": 1375
+            }
+          ],
+          "lang": "ru",
+          "theme": "dark"
+        }
+      },
+      {
+        "language": "ru",
+        "theme": "light",
+        "width": 320,
+        "pass": true,
+        "metrics": {
+          "width": 310,
+          "scroll": 310,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 202,
+              "right": 246
+            },
+            {
+              "label": "/cart",
+              "left": 250,
+              "right": 294
+            },
+            {
+              "label": "burger-button",
+              "left": 250,
+              "right": 294
+            }
+          ],
+          "lang": "ru",
+          "theme": "light"
+        }
+      },
+      {
+        "language": "ru",
+        "theme": "light",
+        "width": 390,
+        "pass": true,
+        "metrics": {
+          "width": 380,
+          "scroll": 380,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 272,
+              "right": 316
+            },
+            {
+              "label": "/cart",
+              "left": 320,
+              "right": 364
+            },
+            {
+              "label": "burger-button",
+              "left": 320,
+              "right": 364
+            }
+          ],
+          "lang": "ru",
+          "theme": "light"
+        }
+      },
+      {
+        "language": "ru",
+        "theme": "light",
+        "width": 768,
+        "pass": true,
+        "metrics": {
+          "width": 758,
+          "scroll": 758,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 642,
+              "right": 686
+            },
+            {
+              "label": "/cart",
+              "left": 690,
+              "right": 734
+            },
+            {
+              "label": "burger-button",
+              "left": 690,
+              "right": 734
+            }
+          ],
+          "lang": "ru",
+          "theme": "light"
+        }
+      },
+      {
+        "language": "ru",
+        "theme": "light",
+        "width": 1024,
+        "pass": true,
+        "metrics": {
+          "width": 1014,
+          "scroll": 1014,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 658.96875,
+              "right": 708.3020858764648
+            },
+            {
+              "label": "/cart",
+              "left": 716.3021240234375,
+              "right": 803.6354598999023
+            },
+            {
+              "label": "header-language",
+              "left": 819.6354370117188,
+              "right": 886.0000228881836
+            },
+            {
+              "label": "header-preference-button theme-button",
+              "left": 894,
+              "right": 938
+            },
+            {
+              "label": "burger-button",
+              "left": 946,
+              "right": 990
+            }
+          ],
+          "lang": "ru",
+          "theme": "light"
+        }
+      },
+      {
+        "language": "ru",
+        "theme": "light",
+        "width": 1440,
+        "pass": true,
+        "metrics": {
+          "width": 1430,
+          "scroll": 1430,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 854.4166870117188,
+              "right": 1017.7500305175781
+            },
+            {
+              "label": "/cart",
+              "left": 1025.75,
+              "right": 1188.6354217529297
+            },
+            {
+              "label": "header-language",
+              "left": 1204.635498046875,
+              "right": 1271.0000839233398
+            },
+            {
+              "label": "header-preference-button theme-button",
+              "left": 1279,
+              "right": 1323
+            },
+            {
+              "label": "burger-button",
+              "left": 1331,
+              "right": 1375
+            }
+          ],
+          "lang": "ru",
+          "theme": "light"
+        }
+      },
+      {
+        "language": "tj",
+        "theme": "dark",
+        "width": 320,
+        "pass": true,
+        "metrics": {
+          "width": 310,
+          "scroll": 310,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 202,
+              "right": 246
+            },
+            {
+              "label": "/cart",
+              "left": 250,
+              "right": 294
+            },
+            {
+              "label": "burger-button",
+              "left": 250,
+              "right": 294
+            }
+          ],
+          "lang": "tg",
+          "theme": "dark"
+        }
+      },
+      {
+        "language": "tj",
+        "theme": "dark",
+        "width": 390,
+        "pass": true,
+        "metrics": {
+          "width": 380,
+          "scroll": 380,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 272,
+              "right": 316
+            },
+            {
+              "label": "/cart",
+              "left": 320,
+              "right": 364
+            },
+            {
+              "label": "burger-button",
+              "left": 320,
+              "right": 364
+            }
+          ],
+          "lang": "tg",
+          "theme": "dark"
+        }
+      },
+      {
+        "language": "tj",
+        "theme": "dark",
+        "width": 768,
+        "pass": true,
+        "metrics": {
+          "width": 758,
+          "scroll": 758,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 642,
+              "right": 686
+            },
+            {
+              "label": "/cart",
+              "left": 690,
+              "right": 734
+            },
+            {
+              "label": "burger-button",
+              "left": 690,
+              "right": 734
+            }
+          ],
+          "lang": "tg",
+          "theme": "dark"
+        }
+      },
+      {
+        "language": "tj",
+        "theme": "dark",
+        "width": 1024,
+        "pass": true,
+        "metrics": {
+          "width": 1014,
+          "scroll": 1014,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 665.5208740234375,
+              "right": 714.8542098999023
+            },
+            {
+              "label": "/cart",
+              "left": 722.8541870117188,
+              "right": 810.1875228881836
+            },
+            {
+              "label": "header-language",
+              "left": 826.1875,
+              "right": 886
+            },
+            {
+              "label": "header-preference-button theme-button",
+              "left": 894,
+              "right": 938
+            },
+            {
+              "label": "burger-button",
+              "left": 946,
+              "right": 990
+            }
+          ],
+          "lang": "tg",
+          "theme": "dark"
+        }
+      },
+      {
+        "language": "tj",
+        "theme": "dark",
+        "width": 1440,
+        "pass": true,
+        "metrics": {
+          "width": 1430,
+          "scroll": 1430,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 880.0416870117188,
+              "right": 1043.3750305175781
+            },
+            {
+              "label": "/cart",
+              "left": 1051.375,
+              "right": 1195.1875
+            },
+            {
+              "label": "header-language",
+              "left": 1211.1875,
+              "right": 1271
+            },
+            {
+              "label": "header-preference-button theme-button",
+              "left": 1279,
+              "right": 1323
+            },
+            {
+              "label": "burger-button",
+              "left": 1331,
+              "right": 1375
+            }
+          ],
+          "lang": "tg",
+          "theme": "dark"
+        }
+      },
+      {
+        "language": "tj",
+        "theme": "light",
+        "width": 320,
+        "pass": true,
+        "metrics": {
+          "width": 310,
+          "scroll": 310,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 202,
+              "right": 246
+            },
+            {
+              "label": "/cart",
+              "left": 250,
+              "right": 294
+            },
+            {
+              "label": "burger-button",
+              "left": 250,
+              "right": 294
+            }
+          ],
+          "lang": "tg",
+          "theme": "light"
+        }
+      },
+      {
+        "language": "tj",
+        "theme": "light",
+        "width": 390,
+        "pass": true,
+        "metrics": {
+          "width": 380,
+          "scroll": 380,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 272,
+              "right": 316
+            },
+            {
+              "label": "/cart",
+              "left": 320,
+              "right": 364
+            },
+            {
+              "label": "burger-button",
+              "left": 320,
+              "right": 364
+            }
+          ],
+          "lang": "tg",
+          "theme": "light"
+        }
+      },
+      {
+        "language": "tj",
+        "theme": "light",
+        "width": 768,
+        "pass": true,
+        "metrics": {
+          "width": 758,
+          "scroll": 758,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 642,
+              "right": 686
+            },
+            {
+              "label": "/cart",
+              "left": 690,
+              "right": 734
+            },
+            {
+              "label": "burger-button",
+              "left": 690,
+              "right": 734
+            }
+          ],
+          "lang": "tg",
+          "theme": "light"
+        }
+      },
+      {
+        "language": "tj",
+        "theme": "light",
+        "width": 1024,
+        "pass": true,
+        "metrics": {
+          "width": 1014,
+          "scroll": 1014,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 665.5208740234375,
+              "right": 714.8542098999023
+            },
+            {
+              "label": "/cart",
+              "left": 722.8541870117188,
+              "right": 810.1875228881836
+            },
+            {
+              "label": "header-language",
+              "left": 826.1875,
+              "right": 886
+            },
+            {
+              "label": "header-preference-button theme-button",
+              "left": 894,
+              "right": 938
+            },
+            {
+              "label": "burger-button",
+              "left": 946,
+              "right": 990
+            }
+          ],
+          "lang": "tg",
+          "theme": "light"
+        }
+      },
+      {
+        "language": "tj",
+        "theme": "light",
+        "width": 1440,
+        "pass": true,
+        "metrics": {
+          "width": 1430,
+          "scroll": 1430,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 880.0416870117188,
+              "right": 1043.3750305175781
+            },
+            {
+              "label": "/cart",
+              "left": 1051.375,
+              "right": 1195.1875
+            },
+            {
+              "label": "header-language",
+              "left": 1211.1875,
+              "right": 1271
+            },
+            {
+              "label": "header-preference-button theme-button",
+              "left": 1279,
+              "right": 1323
+            },
+            {
+              "label": "burger-button",
+              "left": 1331,
+              "right": 1375
+            }
+          ],
+          "lang": "tg",
+          "theme": "light"
+        }
+      },
+      {
+        "language": "en",
+        "theme": "dark",
+        "width": 320,
+        "pass": true,
+        "metrics": {
+          "width": 310,
+          "scroll": 310,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 202,
+              "right": 246
+            },
+            {
+              "label": "/cart",
+              "left": 250,
+              "right": 294
+            },
+            {
+              "label": "burger-button",
+              "left": 250,
+              "right": 294
+            }
+          ],
+          "lang": "en",
+          "theme": "dark"
+        }
+      },
+      {
+        "language": "en",
+        "theme": "dark",
+        "width": 390,
+        "pass": true,
+        "metrics": {
+          "width": 380,
+          "scroll": 380,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 272,
+              "right": 316
+            },
+            {
+              "label": "/cart",
+              "left": 320,
+              "right": 364
+            },
+            {
+              "label": "burger-button",
+              "left": 320,
+              "right": 364
+            }
+          ],
+          "lang": "en",
+          "theme": "dark"
+        }
+      },
+      {
+        "language": "en",
+        "theme": "dark",
+        "width": 768,
+        "pass": true,
+        "metrics": {
+          "width": 758,
+          "scroll": 758,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 642,
+              "right": 686
+            },
+            {
+              "label": "/cart",
+              "left": 690,
+              "right": 734
+            },
+            {
+              "label": "burger-button",
+              "left": 690,
+              "right": 734
+            }
+          ],
+          "lang": "en",
+          "theme": "dark"
+        }
+      },
+      {
+        "language": "en",
+        "theme": "dark",
+        "width": 1024,
+        "pass": true,
+        "metrics": {
+          "width": 1014,
+          "scroll": 1014,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 659.4791870117188,
+              "right": 708.8125228881836
+            },
+            {
+              "label": "/cart",
+              "left": 716.8125,
+              "right": 804.1458358764648
+            },
+            {
+              "label": "header-language",
+              "left": 820.1458740234375,
+              "right": 886.0000457763672
+            },
+            {
+              "label": "header-preference-button theme-button",
+              "left": 894,
+              "right": 938
+            },
+            {
+              "label": "burger-button",
+              "left": 946,
+              "right": 990
+            }
+          ],
+          "lang": "en",
+          "theme": "dark"
+        }
+      },
+      {
+        "language": "en",
+        "theme": "dark",
+        "width": 1440,
+        "pass": true,
+        "metrics": {
+          "width": 1430,
+          "scroll": 1430,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 888.6458740234375,
+              "right": 1051.9792175292969
+            },
+            {
+              "label": "/cart",
+              "left": 1059.979248046875,
+              "right": 1189.1459197998047
+            },
+            {
+              "label": "header-language",
+              "left": 1205.1458740234375,
+              "right": 1271.0000457763672
+            },
+            {
+              "label": "header-preference-button theme-button",
+              "left": 1279,
+              "right": 1323
+            },
+            {
+              "label": "burger-button",
+              "left": 1331,
+              "right": 1375
+            }
+          ],
+          "lang": "en",
+          "theme": "dark"
+        }
+      },
+      {
+        "language": "en",
+        "theme": "light",
+        "width": 320,
+        "pass": true,
+        "metrics": {
+          "width": 310,
+          "scroll": 310,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 202,
+              "right": 246
+            },
+            {
+              "label": "/cart",
+              "left": 250,
+              "right": 294
+            },
+            {
+              "label": "burger-button",
+              "left": 250,
+              "right": 294
+            }
+          ],
+          "lang": "en",
+          "theme": "light"
+        }
+      },
+      {
+        "language": "en",
+        "theme": "light",
+        "width": 390,
+        "pass": true,
+        "metrics": {
+          "width": 380,
+          "scroll": 380,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 272,
+              "right": 316
+            },
+            {
+              "label": "/cart",
+              "left": 320,
+              "right": 364
+            },
+            {
+              "label": "burger-button",
+              "left": 320,
+              "right": 364
+            }
+          ],
+          "lang": "en",
+          "theme": "light"
+        }
+      },
+      {
+        "language": "en",
+        "theme": "light",
+        "width": 768,
+        "pass": true,
+        "metrics": {
+          "width": 758,
+          "scroll": 758,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 642,
+              "right": 686
+            },
+            {
+              "label": "/cart",
+              "left": 690,
+              "right": 734
+            },
+            {
+              "label": "burger-button",
+              "left": 690,
+              "right": 734
+            }
+          ],
+          "lang": "en",
+          "theme": "light"
+        }
+      },
+      {
+        "language": "en",
+        "theme": "light",
+        "width": 1024,
+        "pass": true,
+        "metrics": {
+          "width": 1014,
+          "scroll": 1014,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 659.4791870117188,
+              "right": 708.8125228881836
+            },
+            {
+              "label": "/cart",
+              "left": 716.8125,
+              "right": 804.1458358764648
+            },
+            {
+              "label": "header-language",
+              "left": 820.1458740234375,
+              "right": 886.0000457763672
+            },
+            {
+              "label": "header-preference-button theme-button",
+              "left": 894,
+              "right": 938
+            },
+            {
+              "label": "burger-button",
+              "left": 946,
+              "right": 990
+            }
+          ],
+          "lang": "en",
+          "theme": "light"
+        }
+      },
+      {
+        "language": "en",
+        "theme": "light",
+        "width": 1440,
+        "pass": true,
+        "metrics": {
+          "width": 1430,
+          "scroll": 1430,
+          "savedCartOverlap": false,
+          "searchOverlap": false,
+          "utilities": [
+            {
+              "label": "/saved",
+              "left": 888.6458740234375,
+              "right": 1051.9792175292969
+            },
+            {
+              "label": "/cart",
+              "left": 1059.979248046875,
+              "right": 1189.1459197998047
+            },
+            {
+              "label": "header-language",
+              "left": 1205.1458740234375,
+              "right": 1271.0000457763672
+            },
+            {
+              "label": "header-preference-button theme-button",
+              "left": 1279,
+              "right": 1323
+            },
+            {
+              "label": "burger-button",
+              "left": 1331,
+              "right": 1375
+            }
+          ],
+          "lang": "en",
+          "theme": "light"
+        }
+      }
+    ],
+    "errors": []
+  },
+  "shoppingDetails": {
+    "status": "PASS",
+    "cases": [
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "ru",
+        "theme": "dark",
+        "width": 320,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "ru",
+        "theme": "dark",
+        "width": 390,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "ru",
+        "theme": "dark",
+        "width": 768,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "ru",
+        "theme": "dark",
+        "width": 1024,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "ru",
+        "theme": "dark",
+        "width": 1440,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "ru",
+        "theme": "dark",
+        "width": 320,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "ru",
+        "theme": "dark",
+        "width": 390,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "ru",
+        "theme": "dark",
+        "width": 768,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "ru",
+        "theme": "dark",
+        "width": 1024,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "ru",
+        "theme": "dark",
+        "width": 1440,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "ru",
+        "theme": "light",
+        "width": 320,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "ru",
+        "theme": "light",
+        "width": 390,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "ru",
+        "theme": "light",
+        "width": 768,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "ru",
+        "theme": "light",
+        "width": 1024,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "ru",
+        "theme": "light",
+        "width": 1440,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "ru",
+        "theme": "light",
+        "width": 320,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "ru",
+        "theme": "light",
+        "width": 390,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "ru",
+        "theme": "light",
+        "width": 768,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "ru",
+        "theme": "light",
+        "width": 1024,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "ru",
+        "theme": "light",
+        "width": 1440,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "tj",
+        "theme": "dark",
+        "width": 320,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "tj",
+        "theme": "dark",
+        "width": 390,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "tj",
+        "theme": "dark",
+        "width": 768,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "tj",
+        "theme": "dark",
+        "width": 1024,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "tj",
+        "theme": "dark",
+        "width": 1440,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "tj",
+        "theme": "dark",
+        "width": 320,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "tj",
+        "theme": "dark",
+        "width": 390,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "tj",
+        "theme": "dark",
+        "width": 768,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "tj",
+        "theme": "dark",
+        "width": 1024,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "tj",
+        "theme": "dark",
+        "width": 1440,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "tj",
+        "theme": "light",
+        "width": 320,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "tj",
+        "theme": "light",
+        "width": 390,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "tj",
+        "theme": "light",
+        "width": 768,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "tj",
+        "theme": "light",
+        "width": 1024,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "tj",
+        "theme": "light",
+        "width": 1440,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "tj",
+        "theme": "light",
+        "width": 320,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "tj",
+        "theme": "light",
+        "width": 390,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "tj",
+        "theme": "light",
+        "width": 768,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "tj",
+        "theme": "light",
+        "width": 1024,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "tj",
+        "theme": "light",
+        "width": 1440,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "en",
+        "theme": "dark",
+        "width": 320,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "en",
+        "theme": "dark",
+        "width": 390,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "en",
+        "theme": "dark",
+        "width": 768,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "en",
+        "theme": "dark",
+        "width": 1024,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "en",
+        "theme": "dark",
+        "width": 1440,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "en",
+        "theme": "dark",
+        "width": 320,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "en",
+        "theme": "dark",
+        "width": 390,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "en",
+        "theme": "dark",
+        "width": 768,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "en",
+        "theme": "dark",
+        "width": 1024,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "en",
+        "theme": "dark",
+        "width": 1440,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "en",
+        "theme": "light",
+        "width": 320,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "en",
+        "theme": "light",
+        "width": 390,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "en",
+        "theme": "light",
+        "width": 768,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "en",
+        "theme": "light",
+        "width": 1024,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/12345678-1234-1234-1234-123456789014",
+        "language": "en",
+        "theme": "light",
+        "width": 1440,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "en",
+        "theme": "light",
+        "width": 320,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "en",
+        "theme": "light",
+        "width": 390,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "en",
+        "theme": "light",
+        "width": 768,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "en",
+        "theme": "light",
+        "width": 1024,
+        "pass": true
+      },
+      {
+        "path": "/my-shopping/templates/curated-family",
+        "language": "en",
+        "theme": "light",
+        "width": 1440,
+        "pass": true
+      }
+    ],
+    "errors": []
+  },
+  "shoppingCheckout": {
+    "status": "PASS",
+    "orderId": "83643cfb-d126-4451-afec-777803c2f88b",
+    "total": "34.00",
+    "checks": [
+      {
+        "name": "real ORS quote and route drawn",
+        "pass": true,
+        "distance": 2887,
+        "duration": 273,
+        "delivery": "20.00",
+        "coordinates": 51
+      },
+      {
+        "name": "failed creation preserves cart (injected 503)",
+        "pass": true
+      },
+      {
+        "name": "real guest order created, cart cleared, UUID remembered",
+        "pass": true
+      },
+      {
+        "name": "confirmation reload and save actual order as template",
+        "pass": true
+      },
+      {
+        "name": "repeat real DB order from history without changing snapshot",
+        "pass": true
+      }
+    ],
+    "errors": [],
+    "directORS": []
+  },
+  "shoppingControls": {
+    "status": "PASS",
+    "checks": [
+      "mobile language switch",
+      "mobile theme switch",
+      "preferences reload persistence",
+      "shopping navigation",
+      "keyboard Enter/Escape and focus return"
+    ],
+    "persisted": {
+      "language": "en",
+      "theme": "light"
+    },
+    "errors": []
+  },
+  "shoppingStorageFallback": {"status":"PASS","checks":["quota failure shows localized persistence warning","template remains usable for this tab after client navigation"]},
+  "credentialScan": {"configured": true, "productionJSFiles": 35, "secretMatches": 0},
+  "shoppingSmoke": {
+    "status": "PASS",
+    "checks": [
+      "homepage curated discovery renders",
+      "keyboard search to product",
+      "save product from catalog and reload",
+      "cart increment/decrement and persistence",
+      "catalog combined category/stock/sort query",
+      "manual product connections render"
+    ],
+    "catalogProducts": 6,
+    "errors": []
+  }
+}

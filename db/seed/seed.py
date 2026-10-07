@@ -19,6 +19,7 @@ from sqlalchemy.ext.asyncio import async_sessionmaker  # noqa: E402
 from app.core.config import Settings  # noqa: E402
 from app.core.database import make_engine  # noqa: E402
 from app.models import Category, Product, ProductConnection  # noqa: E402
+from app.services.shopping_service import load_curated, validate_curated  # noqa: E402
 
 
 async def seed():
@@ -76,12 +77,14 @@ async def seed():
                     )
                 )
             counts = {
+                "shopping_templates": len(load_curated()),
                 "categories": await session.scalar(select(func.count()).select_from(Category)),
                 "products": await session.scalar(select(func.count()).select_from(Product)),
                 "product_connections": await session.scalar(
                     select(func.count()).select_from(ProductConnection)
                 ),
             }
+            validate_curated(load_curated(), set(await session.scalars(select(Product.slug))))
         print(json.dumps(counts))
     finally:
         await engine.dispose()
