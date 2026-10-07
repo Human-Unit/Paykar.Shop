@@ -5,6 +5,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useRef,
   useSyncExternalStore,
 } from "react";
 import translations from "@/lib/translations.json";
@@ -71,6 +72,12 @@ function save(next: Preferences) {
   }
   window.dispatchEvent(new Event(changed));
 }
+
+type ViewTransitionLike = { finished: Promise<unknown> };
+type TransitionDocument = Document & {
+  startViewTransition?: (update: () => void) => ViewTransitionLike;
+};
+
 type Presentation = Preferences & {
   setLanguage: (language: Language) => void;
   setTheme: (theme: Theme) => void;
@@ -92,6 +99,7 @@ export function PresentationProvider({
   );
   const preferences = parse(raw);
   const { language, theme } = preferences;
+  const themeTransitioning = useRef(false);
   const t = useCallback(
     (source: string | undefined) => {
       if (!source) return "";
@@ -116,6 +124,45 @@ export function PresentationProvider({
   );
   const locale =
     language === "tj" ? "tg-TJ" : language === "en" ? "en-US" : "ru-RU";
+  const setTheme = useCallback(
+    (next: Theme) => {
+      if (next === theme || themeTransitioning.current) return;
+      const persist = () => save({ language, theme: next });
+      const root = document.documentElement;
+      const reduce = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      const transitionDocument = document as TransitionDocument;
+
+      if (
+        reduce ||
+        typeof transitionDocument.startViewTransition !== "function"
+      ) {
+        root.dataset.theme = next;
+        persist();
+        return;
+      }
+
+      themeTransitioning.current = true;
+      root.dataset.themeWave = next;
+      try {
+        const transition = transitionDocument.startViewTransition(() => {
+          root.dataset.theme = next;
+          persist();
+        });
+        void transition.finished.finally(() => {
+          delete root.dataset.themeWave;
+          themeTransitioning.current = false;
+        });
+      } catch {
+        delete root.dataset.themeWave;
+        themeTransitioning.current = false;
+        root.dataset.theme = next;
+        persist();
+      }
+    },
+    [language, theme],
+  );
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     // Resolve a legacy preference once, retaining its language and storage key.
@@ -140,7 +187,7 @@ export function PresentationProvider({
     t,
     locale,
     setLanguage: (next) => save({ ...preferences, language: next }),
-    setTheme: (next) => save({ ...preferences, theme: next }),
+    setTheme,
     money: (value) =>
       language === "ru"
         ? russianMoney(value)
