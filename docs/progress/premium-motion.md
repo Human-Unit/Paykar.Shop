@@ -10,11 +10,12 @@ Implementation and rendered acceptance cover the current Diyor storefront. This 
 - Hero, bento, categories, editorial/service blocks receive restrained green surface reactions. The illumination uses `#00a82d`: dark edge/ambient alpha 18%/10%, light 12%/6%. Product cards use weaker shadows, a 2px lift, and image scale 1.015. Selected larger surfaces lift 3px. Micro interactions remain around 180–220ms; surface transitions 220–260ms. Quantity press scales to .97 without duplicating the count animation.
 - Local pointer lighting on the hero and phone stage updates CSS custom properties through requestAnimationFrame. No global pointer listener or pointer-driven React state. Pointer exit/cancel clears tracking.
 - New homepage section follows early product discovery and precedes curated connections. The phone is HTML/CSS/React: inset screen, dark metal rim, speaker/camera, restrained reflection, and soft shadow. Perspective 1000px; spring stiffness 130, damping 22, mass .8. Pointer targets are clamped to ±5° X / ±7° Y, depth 12px, scale 1.01; they return to rest on exit.
-- Phone entrance runs once over .62 seconds (opacity, 30px rise, 6° Y rotation, .96 scale). No idle float or looping status animation was added.
+- Phone entrance runs once over .62 seconds (opacity, 30px rise, 6° Y rotation, .96 scale). The order timeline now plays once after the phone enters view: accepted → preparing → courier on the way → delivered. Each step updates the status card and progress markers; it holds on delivery and does not loop.
 - Product/category discovery renders immediately; product-card scroll reveals and staggering were removed. Existing card actions and quantity behavior are retained.
 - The screen is explicitly a demo: `DEMO-001`, black tea 15.00, oat cookies 12.00, flower honey 32.00; subtotal 59.00, example delivery 20.00, total 79.00 TJS. These are snapshots from `db/seed/products.json`, not live cart prices or a live delivery quote. Existing thumbnails, translations, icons, and money formatter are reused. The showcase does not read customer/order records, call an API, submit an order, or mutate the cart.
 - Added RU/TJ/EN showcase copy. All demo text switches with the existing preference system.
 - Reduced motion renders reveals fully visible with no transforms, disables pointer lighting and phone tilt, and removes selected surface transitions. Coarse/touch pointers receive a static phone and no pointer-following effects; no orientation/gyro access.
+- With reduced motion enabled the timeline stays at its initial accepted state; the automatic stage sequence is skipped.
 - Decorative phone subtree is `aria-hidden` with no focusable controls. Visible adjacent copy explains guest shopping, delivery before confirmation, and payment on receipt. The catalog CTA remains keyboard accessible with its focus outline.
 
 ## Commands actually executed
@@ -49,25 +50,25 @@ The in-app Codex Browser connection was unavailable (`No browser available`, bro
 
 Machine-readable observations: [browser-acceptance.json](premium-motion/browser-acceptance.json).
 
-| Check | Result |
-| --- | --- |
-| Normal motion: widths 320, 390, 768, 1024, 1440, 1920 × RU/TJ/EN × light/dark | PASS, 36 combinations |
-| Reduced motion: same width/language/theme matrix | PASS, 36 combinations |
-| Touch/coarse pointer at 320, 390, 768, 1024 | PASS, no tilt, tracked glow, clipped phone content, or horizontal overflow |
-| Phone readability / section containment / screen text | PASS |
-| Desktop spring tilt, bounds, and return to rest | PASS |
-| Hero pointer light follows local coordinates | PASS |
-| Settled hero/category/product hover measurements | PASS, lifts 3/3/2px and image scale 1.015 |
-| First phone entrance and later section revisit | PASS, settles visible, entrance runs once |
-| Reduced motion fully visible static entrance/phone | PASS, computed transforms none, light layer hidden |
-| Decorative subtree and catalog CTA keyboard focus | PASS, no focusables inside hidden phone; visible 2px outline on CTA |
-| Theme switching / reload persistence | PASS |
-| Keyboard language selection / persistence / html lang=tg | PASS |
-| Add to cart / increase / decrease / reload | PASS |
-| Search suggestions / keyboard selection | PASS |
-| Catalog sort with retained in_stock URL parameter | PASS |
-| Mobile menu / Escape | PASS |
-| Captured browser console/page/hydration errors | None |
+| Check                                                                         | Result                                                                     |
+| ----------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| Normal motion: widths 320, 390, 768, 1024, 1440, 1920 × RU/TJ/EN × light/dark | PASS, 36 combinations                                                      |
+| Reduced motion: same width/language/theme matrix                              | PASS, 36 combinations                                                      |
+| Touch/coarse pointer at 320, 390, 768, 1024                                   | PASS, no tilt, tracked glow, clipped phone content, or horizontal overflow |
+| Phone readability / section containment / screen text                         | PASS                                                                       |
+| Desktop spring tilt, bounds, and return to rest                               | PASS                                                                       |
+| Hero pointer light follows local coordinates                                  | PASS                                                                       |
+| Settled hero/category/product hover measurements                              | PASS, lifts 3/3/2px and image scale 1.015                                  |
+| First phone entrance and later section revisit                                | PASS, settles visible, entrance runs once                                  |
+| Reduced motion fully visible static entrance/phone                            | PASS, computed transforms none, light layer hidden                         |
+| Decorative subtree and catalog CTA keyboard focus                             | PASS, no focusables inside hidden phone; visible 2px outline on CTA        |
+| Theme switching / reload persistence                                          | PASS                                                                       |
+| Keyboard language selection / persistence / html lang=tg                      | PASS                                                                       |
+| Add to cart / increase / decrease / reload                                    | PASS                                                                       |
+| Search suggestions / keyboard selection                                       | PASS                                                                       |
+| Catalog sort with retained in_stock URL parameter                             | PASS                                                                       |
+| Mobile menu / Escape                                                          | PASS                                                                       |
+| Captured browser console/page/hydration errors                                | None                                                                       |
 
 Shopping smoke checks ran in a temporary isolated browser context, closed afterward. The existing browser cart was not modified. The main test tab was restored to the homepage, RU/light, normal motion, 1440px.
 
@@ -97,7 +98,11 @@ The `touch-*` captures center the complete phone between the existing sticky hea
 
 Initial browser harness probes needed three corrections: asynchronous spring/transition values require numeric tolerances or waiting for exact completion; progress connector pseudo-elements intentionally extend into the next cell and must not be treated as overflowing text; a product locator filtered by an add button stops matching after that button changes into quantity controls. Final reruns passed after correcting the probes. These were test-harness failures, not unresolved application failures. A preliminary source search also used an absent header filename; the actual shell/preferences components were inspected.
 
-No remaining motion blocker. In-app Browser connection remains unavailable; actual Chrome acceptance was completed using Playwright. Full checkout/order persistence, live ORS, and payment regression were not rerun for this presentation-only change and are not claimed here. Backend tests were not run because no backend files changed.
+The original motion layer had no remaining blocker. In-app Browser connection remains unavailable; actual Chrome acceptance for that layer was completed using Playwright. Full checkout/order persistence, live ORS, and payment regression were not rerun for this presentation-only work and are not claimed here. Backend tests were not run because no backend files changed.
+
+### Order timeline follow-up — 2026-10-07
+
+Added the one-time four-stage order animation described above, with RU/TJ/EN labels, an updating status icon, and a progressively completed route line. The static reduced-motion presentation remains unchanged. Frontend lint, formatting, typecheck, and production build passed for this follow-up; browser acceptance for the timeline is pending. The Playwright matrix above predates this change and is not evidence for the new sequence.
 
 ## Files changed for this task
 
@@ -107,8 +112,8 @@ No remaining motion blocker. In-app Browser connection remains unavailable; actu
 - `apps/web/src/components/product-card.tsx`
 - `apps/web/src/components/order-showcase.tsx` (new)
 - `apps/web/src/styles/premium-motion.css` (new)
-- `apps/web/src/app/globals.css`
 - `apps/web/src/lib/translations.json`
+- `apps/web/src/app/globals.css`
 - This report, `premium-motion/browser-acceptance.json`, and screenshots.
 
 Pre-existing favicon changes in `apps/web/src/app/layout.tsx` and `apps/web/public/icon.png` were preserved and are separate from this motion task. No backend, database, dependency manifest, or lockfile changes.

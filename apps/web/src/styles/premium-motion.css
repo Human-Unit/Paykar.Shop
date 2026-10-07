@@ -394,6 +394,9 @@
   font-size: 12px;
   font-weight: 700;
 }
+.phone-status-copy {
+  min-width: 0;
+}
 .phone-delivery-status small {
   margin-top: 3px;
   color: var(--muted);
@@ -410,6 +413,7 @@
   flex: 1;
   color: var(--muted);
   text-align: center;
+  transition: color 220ms ease;
 }
 .phone-progress > span:not(:last-child)::after {
   content: "";
@@ -419,8 +423,14 @@
   width: calc(100% - 14px);
   height: 1px;
   background: var(--green-line);
+  transition: background-color 320ms ease;
+}
+.phone-progress [data-complete]::after {
+  background: var(--paykar-green);
 }
 .phone-progress i {
+  position: relative;
+  z-index: 1;
   display: grid;
   place-items: center;
   width: 18px;
@@ -429,13 +439,26 @@
   border-radius: 50%;
   background: var(--green-soft);
   color: var(--brand-ink);
+  transition:
+    background-color 320ms ease,
+    color 320ms ease,
+    scale 320ms ease;
+}
+.phone-progress [data-complete] i {
+  background: var(--green-line);
+}
+.phone-progress [data-current] {
+  color: var(--brand-ink);
 }
 .phone-progress [data-current] i {
   background: var(--paykar-green);
   color: var(--on-accent);
+  scale: 1.1;
 }
 .phone-progress small {
+  display: block;
   font-size: 9px;
+  line-height: 1.2;
 }
 .phone-reflection {
   position: absolute;
@@ -522,6 +545,11 @@
   .product-card .image-wrap .product-image,
   .category-tile .category-tile-media img,
   .editorial-image img {
+    transition: none;
+  }
+  .phone-progress > span,
+  .phone-progress > span::after,
+  .phone-progress i {
     transition: none;
   }
 }

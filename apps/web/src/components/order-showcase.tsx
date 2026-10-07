@@ -2,12 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, type PointerEvent } from "react";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { useReducedMotion, useSpring } from "framer-motion";
 import {
   ArrowRight,
   Check,
   CheckCircle2,
+  PackageCheck,
   Route,
   ShoppingBasket,
   Truck,
@@ -45,6 +46,25 @@ const demoSubtotal = demoProducts.reduce(
   0,
 );
 const spring = { stiffness: 130, damping: 22, mass: 0.8 };
+const orderStages = [
+  { label: "Принят", status: "Заказ принят", detail: "Оплата при получении" },
+  {
+    label: "Собираем",
+    status: "Собираем заказ",
+    detail: "Готовим покупки к отправке",
+  },
+  {
+    label: "В пути",
+    status: "Курьер в пути",
+    detail: "Оплата при получении",
+  },
+  {
+    label: "Доставлен",
+    status: "Заказ доставлен",
+    detail: "Спасибо за покупку",
+  },
+] as const;
+const stageIcons = [Check, ShoppingBasket, Truck, PackageCheck];
 
 function OrderPhone() {
   const { t, money } = usePresentation();
@@ -55,6 +75,49 @@ function OrderPhone() {
   const depth = useSpring(0, spring);
   const scale = useSpring(1, spring);
   const entrance = useReveal({ rise: 30, scale: 0.96, duration: 0.62 });
+  const stageNode = useRef<HTMLDivElement>(null);
+  const stageIndex = useRef(0);
+  const sequenceStarted = useRef(false);
+  const sequenceFinished = useRef(false);
+  const [currentStage, setCurrentStage] = useState(0);
+
+  useEffect(() => {
+    const node = stageNode.current;
+    if (!node || reduce) return;
+    let cancelled = false;
+    let timer: number | undefined;
+
+    const advance = () => {
+      timer = window.setTimeout(() => {
+        if (cancelled) return;
+        const next = Math.min(stageIndex.current + 1, orderStages.length - 1);
+        stageIndex.current = next;
+        setCurrentStage(next);
+        if (next === orderStages.length - 1) {
+          sequenceFinished.current = true;
+          return;
+        }
+        advance();
+      }, 1400);
+    };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || sequenceStarted.current) return;
+        sequenceStarted.current = true;
+        observer.disconnect();
+        advance();
+      },
+      { threshold: 0.35 },
+    );
+    observer.observe(node);
+
+    return () => {
+      cancelled = true;
+      observer.disconnect();
+      if (timer !== undefined) window.clearTimeout(timer);
+      if (!sequenceFinished.current) sequenceStarted.current = false;
+    };
+  }, [reduce]);
 
   useEffect(() => {
     if (!reduce) return;
@@ -95,6 +158,7 @@ function OrderPhone() {
 
   return (
     <div
+      ref={stageNode}
       className="phone-stage pointer-surface"
       onPointerMove={move}
       onPointerLeave={(event) => {
@@ -169,19 +233,43 @@ function OrderPhone() {
               </p>
             </div>
             <div className="phone-delivery-status">
-              <Truck size={20} />
-              <div>
-                <strong>{t("Курьер в пути")}</strong>
-                <small>{t("Оплата при получении")}</small>
-              </div>
+              {(() => {
+                const StatusIcon = stageIcons[currentStage];
+                const stage = orderStages[currentStage];
+                return (
+                  <>
+                    <StatusIcon size={20} />
+                    <m.div
+                      key={currentStage}
+                      className="phone-status-copy"
+                      initial={reduce ? false : { opacity: 0, y: 4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: reduce ? 0 : 0.24 }}
+                    >
+                      <strong>{t(stage.status)}</strong>
+                      <small>{t(stage.detail)}</small>
+                    </m.div>
+                  </>
+                );
+              })()}
             </div>
             <div className="phone-progress">
-              {["Принят", "Собираем", "В пути"].map((label, index) => (
-                <span key={label} data-current={index === 2 || undefined}>
-                  <i>{index < 2 ? <Check size={10} /> : <Truck size={10} />}</i>
-                  <small>{t(label)}</small>
-                </span>
-              ))}
+              {orderStages.map(({ label }, index) => {
+                const StepIcon =
+                  index < currentStage ? Check : stageIcons[index];
+                return (
+                  <span
+                    key={label}
+                    data-current={index === currentStage || undefined}
+                    data-complete={index < currentStage || undefined}
+                  >
+                    <i>
+                      <StepIcon size={10} />
+                    </i>
+                    <small>{t(label)}</small>
+                  </span>
+                );
+              })}
             </div>
           </div>
           <span className="phone-reflection" />
