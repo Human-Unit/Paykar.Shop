@@ -1,0 +1,59 @@
+/* Theme changes use the browser View Transition API when available. The new
+   theme snapshot is revealed from the top of the viewport with a restrained
+   wave edge; unsupported browsers fall back to an immediate theme switch. */
+html[data-theme-wave]::view-transition-group(root),
+html[data-theme-wave]::view-transition-old(root),
+html[data-theme-wave]::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html[data-theme-wave]::view-transition-old(root) {
+  z-index: 1;
+}
+
+html[data-theme-wave]::view-transition-new(root) {
+  z-index: 2;
+  animation: paykar-theme-wave 650ms var(--ease-out) both;
+}
+
+@keyframes paykar-theme-wave {
+  from {
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% 0.5%,
+      90% 2.1%,
+      78% 0.7%,
+      64% 2.6%,
+      50% 1.1%,
+      36% 2.9%,
+      22% 0.9%,
+      10% 2.3%,
+      0 0.8%
+    );
+  }
+  to {
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% 100.5%,
+      90% 102.1%,
+      78% 100.7%,
+      64% 102.6%,
+      50% 101.1%,
+      36% 102.9%,
+      22% 100.9%,
+      10% 102.3%,
+      0 100.8%
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme-wave]::view-transition-group(root),
+  html[data-theme-wave]::view-transition-old(root),
+  html[data-theme-wave]::view-transition-new(root) {
+    animation-duration: 0.001ms !important;
+  }
+}
