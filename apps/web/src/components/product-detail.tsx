@@ -1,5 +1,6 @@
 "use client";
 import { usePresentation } from "@/context/presentation";
+import { useSavedItems } from "@/context/saved-items";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Category, Product, useResource } from "@/lib/api";
@@ -13,11 +14,13 @@ import {
   Route,
   CreditCard,
   ArrowRight,
+  Heart,
 } from "lucide-react";
 import { SectionHeader } from "./page-patterns";
 
 export function ProductDetail({ slug }: { slug: string }) {
   const { t, money } = usePresentation();
+  const saved = useSavedItems();
   const resource = useResource<Product>(
     `/products/${encodeURIComponent(slug)}`,
   );
@@ -41,6 +44,8 @@ export function ProductDetail({ slug }: { slug: string }) {
   if (resource.error)
     return <Failure error={resource.error} retry={resource.retry} />;
   if (!p) return null;
+
+  const isSaved = saved.has(p.id);
 
   return (
     <div className="polish-page product-page">
@@ -96,6 +101,19 @@ export function ProductDetail({ slug }: { slug: string }) {
                 : t("Нет в наличии")}
             </p>
             <AddButton product={p} />
+            <button
+              type="button"
+              className="text-link"
+              aria-pressed={isSaved}
+              onClick={() => saved.toggle(p.id)}
+            >
+              <Heart
+                size={18}
+                fill={isSaved ? "currentColor" : "none"}
+                aria-hidden="true"
+              />{" "}
+              {t(isSaved ? "Убрать из сохранённых" : "Сохранить товар")}
+            </button>
           </div>
           <div className="detail-note">
             {t(
