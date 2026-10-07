@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { api, useResource, type Order, type ProductPage } from "@/lib/api";
-import { useCart } from "@/context/cart";
+import { useResource, type Order, type ProductPage } from "@/lib/api";
 import { usePresentation } from "@/context/presentation";
 import { cents } from "@/lib/format";
 import {
@@ -12,7 +11,6 @@ import {
   useShoppingStorage,
 } from "@/lib/shopping-storage";
 import {
-  type AddSummary,
   type CuratedTemplate,
   type ShoppingItem,
   type ShoppingPreview,
@@ -20,184 +18,21 @@ import {
 } from "@/lib/shopping";
 import { Breadcrumbs } from "./breadcrumbs";
 import { Failure, Loading } from "./states";
-import { ProductImage } from "./product-card";
+import { ArrowRight, Plus } from "lucide-react";
+import {
+  AddShoppingItems,
+  SaveShoppingTemplate,
+  orderItems,
+  storageWarning,
+} from "./shopping-actions";
+export { AddShoppingItems, SaveShoppingTemplate } from "./shopping-actions";
+import {
+  HistoryOrder,
+  PersonalTemplateCard,
+  CuratedTemplateCard,
+} from "./shopping-workspace-cards";
+import { useShoppingPreview } from "@/lib/use-shopping-preview";
 import styles from "./my-shopping.module.css";
-
-const statuses: Record<string, string> = {
-  pending: "Получен",
-  confirmed: "Подтверждён",
-  delivering: "В пути",
-  completed: "Доставлен",
-  cancelled: "Отменён",
-};
-const orderItems = (order: Order): ShoppingItem[] =>
-  order.items.map((i) => ({
-    product_id: i.product_id,
-    quantity: Number(i.quantity),
-    name: i.product_name,
-  }));
-const storageWarning =
-  "Хранилище недоступно: шаблоны сохранятся только до закрытия страницы.";
-
-export function AddShoppingItems({
-  items,
-  label = "Добавить всё в корзину",
-}: {
-  items: ShoppingItem[];
-  label?: string;
-}) {
-  const { t } = usePresentation();
-  const cart = useCart();
-  const [busy, setBusy] = useState(false);
-  const [summary, setSummary] = useState<AddSummary>();
-  const [error, setError] = useState("");
-  const add = async () => {
-    setBusy(true);
-    setSummary(undefined);
-    setError("");
-    try {
-      const valid = items.filter((i) => i.product_id > 0);
-      const preview = valid.length
-        ? await api<ShoppingPreview>("/shopping/preview", undefined, {
-            items: valid.map(({ product_id, quantity }) => ({
-              product_id,
-              quantity,
-            })),
-          })
-        : { items: [] };
-      const result = cart.addMany(preview.items);
-      result.missing += items.length - valid.length;
-      setSummary(result);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Не удалось добавить товары.");
-    } finally {
-      setBusy(false);
-    }
-  };
-  return (
-    <div className={styles.actionResult}>
-      <button
-        type="button"
-        className="button"
-        onClick={add}
-        disabled={busy || !items.length}
-      >
-        {t(busy ? "Добавляем…" : label)}
-      </button>
-      <div role="status">
-        {error && <p className="message">{t(error)}</p>}
-        {summary && (
-          <>
-            <p>
-              {t("Добавлено в корзину:")} {summary.added}.{" "}
-              <Link className="text-link" href="/cart">
-                {t("Перейти в корзину")}
-              </Link>
-            </p>
-            {summary.unavailable > 0 && (
-              <p>
-                {t("Сейчас недоступно:")} {summary.unavailable}
-              </p>
-            )}
-            {summary.missing > 0 && (
-              <p>
-                {t("Больше не продаётся:")} {summary.missing}
-              </p>
-            )}
-            {summary.adjusted > 0 && (
-              <p>
-                {t("Количество ограничено остатком:")} {summary.adjusted}
-              </p>
-            )}
-            {summary.full > 0 && (
-              <p>{t("В корзине может быть до 48 разных товаров.")}</p>
-            )}
-          </>
-        )}
-      </div>
-    </div>
-  );
-}
-
-export function SaveShoppingTemplate({
-  items,
-  label = "Сохранить как шаблон",
-}: {
-  items: ShoppingItem[];
-  label?: string;
-}) {
-  const { t } = usePresentation();
-  const [open, setOpen] = useState(false);
-  const [name, setName] = useState("");
-  const [message, setMessage] = useState("");
-  return (
-    <div className={styles.saveAction}>
-      {!open && (
-        <button
-          type="button"
-          className="button secondary"
-          onClick={() => {
-            setOpen(true);
-            setMessage("");
-          }}
-        >
-          {t(label)}
-        </button>
-      )}
-      {open && (
-        <form
-          className={styles.inlineForm}
-          onSubmit={(e) => {
-            e.preventDefault();
-            try {
-              const result = saveShoppingTemplate(name, items);
-              setOpen(false);
-              setName("");
-              setMessage(
-                result.persisted ? "Шаблон сохранён." : storageWarning,
-              );
-            } catch (error) {
-              setMessage(
-                error instanceof Error
-                  ? error.message
-                  : "Не удалось сохранить шаблон.",
-              );
-            }
-          }}
-        >
-          <label>
-            {t("Название шаблона")}
-            <input
-              required
-              maxLength={80}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder={t("Моя неделя")}
-            />
-          </label>
-          <button className="button" type="submit">
-            {t("Сохранить")}
-          </button>
-          <button
-            className="button secondary"
-            type="button"
-            onClick={() => setOpen(false)}
-          >
-            {t("Отмена")}
-          </button>
-        </form>
-      )}
-      {message && (
-        <p role="status">
-          {t(message)}{" "}
-          <Link href="/my-shopping#templates" className="text-link">
-            {t("Мои шаблоны")}
-          </Link>
-        </p>
-      )}
-    </div>
-  );
-}
 
 export function OrderShoppingActions({ order }: { order: Order }) {
   const { t } = usePresentation();
@@ -213,88 +48,6 @@ export function OrderShoppingActions({ order }: { order: Order }) {
         {t("Мои покупки")}
       </Link>
     </section>
-  );
-}
-
-function HistoryOrder({ id }: { id: string }) {
-  const { t, money, locale } = usePresentation();
-  const resource = useResource<Order>(`/orders/${encodeURIComponent(id)}`);
-  if (resource.loading) return <Loading label="Загружаем заказ…" />;
-  if (resource.error)
-    return (
-      <article className={styles.card}>
-        <p>
-          {t("Заказ недоступен:")} {id.slice(0, 8)}
-        </p>
-        <Failure error={resource.error} retry={resource.retry} />
-      </article>
-    );
-  const order = resource.data;
-  if (!order) return null;
-  return (
-    <article className={styles.card}>
-      <h3>
-        {t("Заказ ")} #{order.id.slice(0, 8)}
-      </h3>
-      <div className={styles.meta}>
-        <time dateTime={order.created_at}>
-          {new Date(order.created_at).toLocaleDateString(locale)}
-        </time>
-        <strong>{money(cents(order.total))}</strong>
-        <span>
-          {t("Позиций:")} {order.items.length}
-        </span>
-        <span>{t(statuses[order.status] || order.status)}</span>
-      </div>
-      <div className={styles.actions}>
-        <AddShoppingItems items={orderItems(order)} label="Повторить заказ" />
-        <SaveShoppingTemplate items={orderItems(order)} />
-        <Link href={`/order/${order.id}`} className="text-link">
-          {t("Посмотреть заказ")}
-        </Link>
-      </div>
-    </article>
-  );
-}
-
-function TemplateCard({ template }: { template: CuratedTemplate }) {
-  const { t } = usePresentation();
-  const items = template.items.map((row) => ({
-    product_id: row.product_id,
-    quantity: row.requested_quantity,
-  }));
-  return (
-    <article className={styles.card}>
-      <h3>
-        <Link href={`/my-shopping/templates/curated-${template.id}`}>
-          {t(template.name)}
-        </Link>
-      </h3>
-      <p>{t(template.description)}</p>
-      <p>
-        {t("Позиций:")} {template.items.length}
-      </p>
-      <div className={styles.preview}>
-        {template.items
-          .slice(0, 4)
-          .map((row, index) =>
-            row.product ? (
-              <ProductImage key={row.product_id} product={row.product} />
-            ) : (
-              <span key={index}>{t("Больше не продаётся")}</span>
-            ),
-          )}
-      </div>
-      <div className={styles.actions}>
-        <Link
-          className="text-link"
-          href={`/my-shopping/templates/curated-${template.id}`}
-        >
-          {t("Посмотреть")}
-        </Link>
-        <AddShoppingItems items={items} label="Добавить всё" />
-      </div>
-    </article>
   );
 }
 
@@ -319,10 +72,22 @@ export function CuratedShopping({ compact = false }: { compact?: boolean }) {
       <div className={styles.grid}>
         {(compact ? resource.data?.slice(0, 3) : resource.data)?.map(
           (template) => (
-            <TemplateCard key={template.id} template={template} />
+            <CuratedTemplateCard key={template.id} template={template} />
           ),
         )}
       </div>
+      {resource.data && resource.data.length > 0 && (
+        <p className={styles.help}>
+          {t(
+            "Оценка доступных товаров без доставки. Итог проверяется при оформлении.",
+          )}
+        </p>
+      )}
+      {resource.data?.length === 0 && (
+        <Link className="text-link" href="/catalog">
+          {t("Перейти в каталог")} <ArrowRight size={16} aria-hidden="true" />
+        </Link>
+      )}
     </section>
   );
 }
@@ -375,8 +140,9 @@ export function MyShopping() {
   const { templates, orderIds } = useShoppingStorage();
   const hasHistory = orderIds.length > 0;
   const hasTemplates = templates.length > 0;
+  const [showOlderOrders, setShowOlderOrders] = useState(false);
   return (
-    <div className={"polish-page " + styles.page}>
+    <div className={"polish-page " + styles.page + " " + styles.workspace}>
       <Breadcrumbs
         items={[{ label: "Главная", href: "/" }, { label: "Мои покупки" }]}
       />
@@ -384,28 +150,50 @@ export function MyShopping() {
         <h1>{t("Мои покупки")}</h1>
         <p>
           {t(
-            "Покупайте привычное быстрее — повторяйте прошлые заказы, сохраняйте свои наборы и используйте готовые подборки.",
+            "Повторяйте привычные покупки, сохраняйте любимые наборы и собирайте корзину за пару кликов.",
           )}
         </p>
         {!hasTemplates && (
-          <Link className="button secondary" href="/my-shopping/templates/new">
+          <Link
+            className={hasHistory ? "button secondary" : "button"}
+            href="/my-shopping/templates/new"
+          >
+            <Plus size={18} aria-hidden="true" />
             {t("Создать свой шаблон")}
           </Link>
         )}
       </div>
       {hasHistory && (
         <section id="history" className={styles.section}>
-          <h2>{t("История заказов")}</h2>
+          <h2>{t("Последний заказ")}</h2>
           <p className={styles.help}>
             {t(
               "Актуальные цены и наличие проверим перед добавлением в корзину.",
             )}
           </p>
-          <div className={styles.history}>
-            {orderIds.map((id) => (
-              <HistoryOrder key={id} id={id} />
-            ))}
-          </div>
+          <HistoryOrder id={orderIds[0]} />
+          {orderIds.length > 1 && (
+            <div className={styles.recentOrders}>
+              <button
+                type="button"
+                className="text-link"
+                aria-expanded={showOlderOrders}
+                aria-controls="recent-orders"
+                onClick={() => setShowOlderOrders((value) => !value)}
+              >
+                {t(showOlderOrders ? "Скрыть заказы" : "Все заказы")}
+                <ArrowRight size={16} aria-hidden="true" />
+              </button>
+              {showOlderOrders && (
+                <div id="recent-orders" className={styles.history}>
+                  <h3>{t("Недавние заказы")}</h3>
+                  {orderIds.slice(1).map((id) => (
+                    <HistoryOrder key={id} id={id} compact />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </section>
       )}
       {hasTemplates && (
@@ -416,7 +204,8 @@ export function MyShopping() {
               className="button secondary"
               href="/my-shopping/templates/new"
             >
-              {t("Создать шаблон")}
+              <Plus size={17} aria-hidden="true" />
+              {t("Создать")}
             </Link>
           </div>
           <p className={styles.help}>
@@ -424,21 +213,7 @@ export function MyShopping() {
           </p>
           <div className={styles.grid}>
             {templates.map((template) => (
-              <article className={styles.card} key={template.id}>
-                <h3>{template.name}</h3>
-                <p>
-                  {t("Позиций:")} {template.items.length}
-                </p>
-                <div className={styles.actions}>
-                  <AddShoppingItems items={template.items} />
-                  <Link
-                    className="text-link"
-                    href={`/my-shopping/templates/${template.id}`}
-                  >
-                    {t("Редактировать")}
-                  </Link>
-                </div>
-              </article>
+              <PersonalTemplateCard key={template.id} template={template} />
             ))}
           </div>
         </section>
@@ -446,41 +221,6 @@ export function MyShopping() {
       <CuratedShopping />
     </div>
   );
-}
-
-function usePreview(items: ShoppingItem[]) {
-  const key = JSON.stringify(
-    items.map(({ product_id, quantity }) => ({ product_id, quantity })),
-  );
-  const [attempt, setAttempt] = useState(0);
-  const requestKey = key + attempt;
-  const [result, setResult] = useState<{
-    key: string;
-    data?: ShoppingPreview;
-    error?: Error;
-  }>();
-  useEffect(() => {
-    const parsed: ShoppingItem[] = JSON.parse(key);
-    if (!parsed.length) return;
-    const controller = new AbortController();
-    api<ShoppingPreview>("/shopping/preview", controller.signal, {
-      items: parsed,
-    }).then(
-      (data) => {
-        if (!controller.signal.aborted) setResult({ key: requestKey, data });
-      },
-      (error) => {
-        if (!controller.signal.aborted) setResult({ key: requestKey, error });
-      },
-    );
-    return () => controller.abort();
-  }, [key, requestKey]);
-  return {
-    data: result?.key === requestKey ? result.data : undefined,
-    error: result?.key === requestKey ? result.error : undefined,
-    loading: items.length > 0 && result?.key !== requestKey,
-    retry: () => setAttempt((v) => v + 1),
-  };
 }
 
 function ItemPreview({
@@ -566,7 +306,7 @@ function PersonalEditor({
   const products = useResource<ProductPage>(
     `/products?page_size=48&q=${encodeURIComponent(query)}`,
   );
-  const preview = usePreview(items);
+  const preview = useShoppingPreview(items);
   const [message, setMessage] = useState("");
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [savedId, setSavedId] = useState(template?.id);

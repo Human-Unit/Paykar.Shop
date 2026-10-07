@@ -1,0 +1,1079 @@
+{
+  "date": "2026-10-07",
+  "baseline": "5275238a892bf722459573be87f5d841cf6a4dbf",
+  "frontend": "http://localhost:3000",
+  "navigation": [
+    {
+      "name": "four direct primary destinations",
+      "pass": true
+    },
+    {
+      "name": "no information hover panels",
+      "pass": true
+    },
+    {
+      "name": "Catalog keyboard opens and moves focus",
+      "pass": true
+    },
+    {
+      "name": "Catalog Escape restores focus",
+      "pass": true
+    },
+    {
+      "name": "Catalog outside click closes",
+      "pass": true
+    },
+    {
+      "name": "drawer groups and Saved access",
+      "pass": true
+    },
+    {
+      "name": "drawer restores trigger focus",
+      "pass": true
+    },
+    {
+      "name": "active navigation /catalog",
+      "pass": true
+    },
+    {
+      "name": "active navigation /catalog/drinks",
+      "pass": true
+    },
+    {
+      "name": "active navigation /product/black-tea",
+      "pass": true
+    },
+    {
+      "name": "active navigation /my-shopping",
+      "pass": true
+    },
+    {
+      "name": "active navigation /my-shopping/templates/new",
+      "pass": true
+    },
+    {
+      "name": "active navigation /promotions",
+      "pass": true
+    },
+    {
+      "name": "active navigation /stores",
+      "pass": true
+    },
+    {
+      "name": "four mobile shopping tabs",
+      "pass": true
+    },
+    {
+      "name": "mobile My Shopping navigates",
+      "pass": true
+    },
+    {
+      "name": "Catalog touch navigates without overlay",
+      "pass": true
+    },
+    {
+      "name": "no page exceptions",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "promoAndRecommendationScenarios": [
+    {
+      "name": "loading does not block categories/everyday products",
+      "pass": true
+    },
+    {
+      "name": "promo skeleton stays inside section",
+      "pass": true
+    },
+    {
+      "name": "error does not block categories/everyday products",
+      "pass": true
+    },
+    {
+      "name": "promo error visible and isolated",
+      "pass": true
+    },
+    {
+      "name": "promo retry recovers",
+      "pass": true
+    },
+    {
+      "name": "empty does not block categories/everyday products",
+      "pass": true
+    },
+    {
+      "name": "successful empty homepage promos hidden",
+      "pass": true
+    },
+    {
+      "name": "empty dedicated promos retain useful Catalog action",
+      "pass": true
+    },
+    {
+      "name": "category IDs deduped and limited after exclusions",
+      "pass": true,
+      "detail": [
+        "/product/oranges",
+        "/product/baguette",
+        "/product/bananas",
+        "/product/raisin-bun",
+        "/product/sparkling-water"
+      ]
+    },
+    {
+      "name": "fully excluded secondary recommendations hidden",
+      "pass": true
+    },
+    {
+      "name": "category request failure stays visible",
+      "pass": true
+    },
+    {
+      "name": "connected request failure stays visible",
+      "pass": true
+    }
+  ],
+  "responsive": [
+    {
+      "language": "ru",
+      "theme": "dark",
+      "width": 320,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": [],
+      "clippedMobileLabels": [],
+      "lang": "ru",
+      "actualTheme": "dark",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "ru",
+      "theme": "dark",
+      "width": 390,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": [],
+      "clippedMobileLabels": [],
+      "lang": "ru",
+      "actualTheme": "dark",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "ru",
+      "theme": "dark",
+      "width": 768,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": [],
+      "clippedMobileLabels": [],
+      "lang": "ru",
+      "actualTheme": "dark",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "ru",
+      "theme": "dark",
+      "width": 1024,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": ["/catalog", "/my-shopping", "/promotions", "/stores"],
+      "clippedMobileLabels": [],
+      "lang": "ru",
+      "actualTheme": "dark",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "ru",
+      "theme": "dark",
+      "width": 1440,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": ["/catalog", "/my-shopping", "/promotions", "/stores"],
+      "clippedMobileLabels": [],
+      "lang": "ru",
+      "actualTheme": "dark",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "ru",
+      "theme": "light",
+      "width": 320,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": [],
+      "clippedMobileLabels": [],
+      "lang": "ru",
+      "actualTheme": "light",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "ru",
+      "theme": "light",
+      "width": 390,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": [],
+      "clippedMobileLabels": [],
+      "lang": "ru",
+      "actualTheme": "light",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "ru",
+      "theme": "light",
+      "width": 768,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": [],
+      "clippedMobileLabels": [],
+      "lang": "ru",
+      "actualTheme": "light",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "ru",
+      "theme": "light",
+      "width": 1024,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": ["/catalog", "/my-shopping", "/promotions", "/stores"],
+      "clippedMobileLabels": [],
+      "lang": "ru",
+      "actualTheme": "light",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "ru",
+      "theme": "light",
+      "width": 1440,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": ["/catalog", "/my-shopping", "/promotions", "/stores"],
+      "clippedMobileLabels": [],
+      "lang": "ru",
+      "actualTheme": "light",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "tj",
+      "theme": "dark",
+      "width": 320,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": [],
+      "clippedMobileLabels": [],
+      "lang": "tg",
+      "actualTheme": "dark",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "tj",
+      "theme": "dark",
+      "width": 390,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": [],
+      "clippedMobileLabels": [],
+      "lang": "tg",
+      "actualTheme": "dark",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "tj",
+      "theme": "dark",
+      "width": 768,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": [],
+      "clippedMobileLabels": [],
+      "lang": "tg",
+      "actualTheme": "dark",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "tj",
+      "theme": "dark",
+      "width": 1024,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": ["/catalog", "/my-shopping", "/promotions", "/stores"],
+      "clippedMobileLabels": [],
+      "lang": "tg",
+      "actualTheme": "dark",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "tj",
+      "theme": "dark",
+      "width": 1440,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": ["/catalog", "/my-shopping", "/promotions", "/stores"],
+      "clippedMobileLabels": [],
+      "lang": "tg",
+      "actualTheme": "dark",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "tj",
+      "theme": "light",
+      "width": 320,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": [],
+      "clippedMobileLabels": [],
+      "lang": "tg",
+      "actualTheme": "light",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "tj",
+      "theme": "light",
+      "width": 390,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": [],
+      "clippedMobileLabels": [],
+      "lang": "tg",
+      "actualTheme": "light",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "tj",
+      "theme": "light",
+      "width": 768,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": [],
+      "clippedMobileLabels": [],
+      "lang": "tg",
+      "actualTheme": "light",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "tj",
+      "theme": "light",
+      "width": 1024,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": ["/catalog", "/my-shopping", "/promotions", "/stores"],
+      "clippedMobileLabels": [],
+      "lang": "tg",
+      "actualTheme": "light",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "tj",
+      "theme": "light",
+      "width": 1440,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": ["/catalog", "/my-shopping", "/promotions", "/stores"],
+      "clippedMobileLabels": [],
+      "lang": "tg",
+      "actualTheme": "light",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 320,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": [],
+      "clippedMobileLabels": [],
+      "lang": "en",
+      "actualTheme": "dark",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 390,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": [],
+      "clippedMobileLabels": [],
+      "lang": "en",
+      "actualTheme": "dark",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 768,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": [],
+      "clippedMobileLabels": [],
+      "lang": "en",
+      "actualTheme": "dark",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 1024,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": ["/catalog", "/my-shopping", "/promotions", "/stores"],
+      "clippedMobileLabels": [],
+      "lang": "en",
+      "actualTheme": "dark",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "width": 1440,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": ["/catalog", "/my-shopping", "/promotions", "/stores"],
+      "clippedMobileLabels": [],
+      "lang": "en",
+      "actualTheme": "dark",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 320,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": [],
+      "clippedMobileLabels": [],
+      "lang": "en",
+      "actualTheme": "light",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 390,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": [],
+      "clippedMobileLabels": [],
+      "lang": "en",
+      "actualTheme": "light",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 768,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": [],
+      "clippedMobileLabels": [],
+      "lang": "en",
+      "actualTheme": "light",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 1024,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": ["/catalog", "/my-shopping", "/promotions", "/stores"],
+      "clippedMobileLabels": [],
+      "lang": "en",
+      "actualTheme": "light",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    },
+    {
+      "language": "en",
+      "theme": "light",
+      "width": 1440,
+      "pass": true,
+      "overflow": false,
+      "visiblePrimary": ["/catalog", "/my-shopping", "/promotions", "/stores"],
+      "clippedMobileLabels": [],
+      "lang": "en",
+      "actualTheme": "light",
+      "sections": 8,
+      "sectionOrder": [0, 1, 2, 3, 4, 5, 6, 7],
+      "errors": []
+    }
+  ],
+  "informationalRoutes": [
+    {
+      "route": "how-to-buy",
+      "width": 1440,
+      "pass": true,
+      "overflow": false,
+      "h1": 1,
+      "faq": 0,
+      "steps": 6,
+      "deliverySteps": 0,
+      "miniJourney": 0,
+      "cta": 1,
+      "map": 0,
+      "promoJump": 0,
+      "errors": []
+    },
+    {
+      "route": "delivery",
+      "width": 1440,
+      "pass": true,
+      "overflow": false,
+      "h1": 1,
+      "faq": 5,
+      "steps": 0,
+      "deliverySteps": 3,
+      "miniJourney": 0,
+      "cta": 0,
+      "map": 0,
+      "promoJump": 0,
+      "errors": []
+    },
+    {
+      "route": "payment",
+      "width": 1440,
+      "pass": true,
+      "overflow": false,
+      "h1": 1,
+      "faq": 0,
+      "steps": 4,
+      "deliverySteps": 0,
+      "miniJourney": 0,
+      "cta": 0,
+      "map": 0,
+      "promoJump": 0,
+      "errors": []
+    },
+    {
+      "route": "returns",
+      "width": 1440,
+      "pass": true,
+      "overflow": false,
+      "h1": 1,
+      "faq": 0,
+      "steps": 4,
+      "deliverySteps": 0,
+      "miniJourney": 0,
+      "cta": 1,
+      "map": 0,
+      "promoJump": 0,
+      "errors": []
+    },
+    {
+      "route": "about",
+      "width": 1440,
+      "pass": true,
+      "overflow": false,
+      "h1": 1,
+      "faq": 0,
+      "steps": 0,
+      "deliverySteps": 0,
+      "miniJourney": 0,
+      "cta": 0,
+      "map": 0,
+      "promoJump": 0,
+      "errors": []
+    },
+    {
+      "route": "contacts",
+      "width": 1440,
+      "pass": true,
+      "overflow": false,
+      "h1": 1,
+      "faq": 0,
+      "steps": 0,
+      "deliverySteps": 0,
+      "miniJourney": 0,
+      "cta": 0,
+      "map": 1,
+      "promoJump": 0,
+      "errors": []
+    },
+    {
+      "route": "stores",
+      "width": 1440,
+      "pass": true,
+      "overflow": false,
+      "h1": 1,
+      "faq": 0,
+      "steps": 0,
+      "deliverySteps": 0,
+      "miniJourney": 0,
+      "cta": 0,
+      "map": 1,
+      "promoJump": 0,
+      "errors": []
+    },
+    {
+      "route": "promotions",
+      "width": 1440,
+      "pass": true,
+      "overflow": false,
+      "h1": 1,
+      "faq": 0,
+      "steps": 0,
+      "deliverySteps": 0,
+      "miniJourney": 0,
+      "cta": 0,
+      "map": 0,
+      "promoJump": 0,
+      "errors": []
+    },
+    {
+      "route": "how-to-buy",
+      "width": 390,
+      "pass": true,
+      "overflow": false,
+      "h1": 1,
+      "faq": 0,
+      "steps": 6,
+      "deliverySteps": 0,
+      "miniJourney": 0,
+      "cta": 1,
+      "map": 0,
+      "promoJump": 0,
+      "errors": []
+    },
+    {
+      "route": "delivery",
+      "width": 390,
+      "pass": true,
+      "overflow": false,
+      "h1": 1,
+      "faq": 5,
+      "steps": 0,
+      "deliverySteps": 3,
+      "miniJourney": 0,
+      "cta": 0,
+      "map": 0,
+      "promoJump": 0,
+      "errors": []
+    },
+    {
+      "route": "payment",
+      "width": 390,
+      "pass": true,
+      "overflow": false,
+      "h1": 1,
+      "faq": 0,
+      "steps": 4,
+      "deliverySteps": 0,
+      "miniJourney": 0,
+      "cta": 0,
+      "map": 0,
+      "promoJump": 0,
+      "errors": []
+    },
+    {
+      "route": "returns",
+      "width": 390,
+      "pass": true,
+      "overflow": false,
+      "h1": 1,
+      "faq": 0,
+      "steps": 4,
+      "deliverySteps": 0,
+      "miniJourney": 0,
+      "cta": 1,
+      "map": 0,
+      "promoJump": 0,
+      "errors": []
+    },
+    {
+      "route": "about",
+      "width": 390,
+      "pass": true,
+      "overflow": false,
+      "h1": 1,
+      "faq": 0,
+      "steps": 0,
+      "deliverySteps": 0,
+      "miniJourney": 0,
+      "cta": 0,
+      "map": 0,
+      "promoJump": 0,
+      "errors": []
+    },
+    {
+      "route": "contacts",
+      "width": 390,
+      "pass": true,
+      "overflow": false,
+      "h1": 1,
+      "faq": 0,
+      "steps": 0,
+      "deliverySteps": 0,
+      "miniJourney": 0,
+      "cta": 0,
+      "map": 1,
+      "promoJump": 0,
+      "errors": []
+    },
+    {
+      "route": "stores",
+      "width": 390,
+      "pass": true,
+      "overflow": false,
+      "h1": 1,
+      "faq": 0,
+      "steps": 0,
+      "deliverySteps": 0,
+      "miniJourney": 0,
+      "cta": 0,
+      "map": 1,
+      "promoJump": 0,
+      "errors": []
+    },
+    {
+      "route": "promotions",
+      "width": 390,
+      "pass": true,
+      "overflow": false,
+      "h1": 1,
+      "faq": 0,
+      "steps": 0,
+      "deliverySteps": 0,
+      "miniJourney": 0,
+      "cta": 0,
+      "map": 0,
+      "promoJump": 0,
+      "errors": []
+    }
+  ],
+  "shopping": [
+    {
+      "name": "fresh conditional personal sections",
+      "pass": true
+    },
+    {
+      "name": "fresh useful curated content",
+      "pass": true
+    },
+    {
+      "name": "fresh contextual creation action",
+      "pass": true
+    },
+    {
+      "name": "fresh no overflow",
+      "pass": true
+    },
+    {
+      "name": "history-only conditional personal sections",
+      "pass": true
+    },
+    {
+      "name": "history-only useful curated content",
+      "pass": true
+    },
+    {
+      "name": "history-only contextual creation action",
+      "pass": true
+    },
+    {
+      "name": "history-only no overflow",
+      "pass": true
+    },
+    {
+      "name": "templates-only conditional personal sections",
+      "pass": true
+    },
+    {
+      "name": "templates-only useful curated content",
+      "pass": true
+    },
+    {
+      "name": "templates-only contextual creation action",
+      "pass": true
+    },
+    {
+      "name": "templates-only no overflow",
+      "pass": true
+    },
+    {
+      "name": "both conditional personal sections",
+      "pass": true
+    },
+    {
+      "name": "both useful curated content",
+      "pass": true
+    },
+    {
+      "name": "both contextual creation action",
+      "pass": true
+    },
+    {
+      "name": "both no overflow",
+      "pass": true
+    },
+    {
+      "name": "repeat order uses real preview and adds to cart",
+      "pass": true
+    },
+    {
+      "name": "save order updates templates immediately",
+      "pass": true
+    },
+    {
+      "name": "template edits survive reload",
+      "pass": true
+    },
+    {
+      "name": "personal template bulk add succeeds",
+      "pass": true
+    },
+    {
+      "name": "curated bulk add succeeds",
+      "pass": true
+    },
+    {
+      "name": "cart persists reload",
+      "pass": true
+    },
+    {
+      "name": "deep link history",
+      "pass": true
+    },
+    {
+      "name": "deep link templates",
+      "pass": true
+    },
+    {
+      "name": "deep link curated",
+      "pass": true
+    },
+    {
+      "name": "failed bulk add retains cart",
+      "pass": true
+    }
+  ],
+  "commerce": [
+    {
+      "name": "filtered catalog to product to cart",
+      "pass": true
+    },
+    {
+      "name": "real backend delivery quote",
+      "pass": true,
+      "detail": {
+        "status": 200,
+        "distance": 2887,
+        "duration": 273,
+        "price": "20.00",
+        "geometry": "FeatureCollection"
+      }
+    },
+    {
+      "name": "no browser request to routing provider",
+      "pass": true
+    },
+    {
+      "name": "checkout bottom bar stays hidden",
+      "pass": true
+    },
+    {
+      "name": "intercepted checkout failure preserves cart",
+      "pass": true
+    },
+    {
+      "name": "failed checkout cart persists reload",
+      "pass": true
+    },
+    {
+      "name": "existing persisted confirmation opens",
+      "pass": true
+    },
+    {
+      "name": "existing confirmation survives reload",
+      "pass": true
+    },
+    {
+      "name": "no persistent order created",
+      "pass": true
+    },
+    {
+      "name": "no browser page errors",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "preferencesAndMotion": [
+    {
+      "name": "search keyboard selects suggestion",
+      "pass": true
+    },
+    {
+      "name": "search Enter opens product",
+      "pass": true
+    },
+    {
+      "name": "header switches en",
+      "pass": true
+    },
+    {
+      "name": "header switches tg",
+      "pass": true
+    },
+    {
+      "name": "language and theme persist after reload",
+      "pass": true
+    },
+    {
+      "name": "phone order journey still reaches delivered",
+      "pass": true
+    },
+    {
+      "name": "reduced motion uses final phone state",
+      "pass": true
+    },
+    {
+      "name": "mobile drawer preferences remain persistent",
+      "pass": true
+    }
+  ],
+  "protectedFiles": [
+    {
+      "path": "apps/web/src/components/store-map.tsx",
+      "unchanged": true,
+      "sha256": "d2689caca93e2a0a77c9d0aa02fa5cd19db25d1573bdfb11727ea581f2c5f683"
+    },
+    {
+      "path": "apps/web/src/components/store-network-map.tsx",
+      "unchanged": true,
+      "sha256": "fdd808153d96b718fa7f24c0c75346ede15e4ebbccdc0263e11463e66ea4d034"
+    },
+    {
+      "path": "apps/web/src/components/home-store-network.tsx",
+      "unchanged": true,
+      "sha256": "a714d572428c75fdc2d8b9f30b8225081c7ab9ed438781e382425f0723ded647"
+    },
+    {
+      "path": "apps/web/src/components/home-store-network.module.css",
+      "unchanged": true,
+      "sha256": "ad2e717a50b325521949a4e447d6bc4fd92476075579e829e416470c858c3bde"
+    },
+    {
+      "path": "apps/web/src/lib/store-locations.ts",
+      "unchanged": true,
+      "sha256": "e63af935b9a5b68cb1b203912b37d6de01b4a7ea7cf618dcc3374652e27d886d"
+    },
+    {
+      "path": "apps/web/src/components/order-showcase.tsx",
+      "unchanged": true,
+      "sha256": "616b71df15a62a43470e0eae989fca4c2e430a84b03effe4e25feb8304ba9204"
+    },
+    {
+      "path": "apps/web/src/components/my-shopping.tsx",
+      "unchanged": true,
+      "sha256": "3e3645b55b9b2c214e00526028a209d916e307adf9810abfe73ba6ed959c0259"
+    },
+    {
+      "path": "apps/web/src/components/my-shopping.module.css",
+      "unchanged": true,
+      "sha256": "19a88cbbfc7e507b5bebdcb8cc3da5a30379dbebc2ee3ff7a4f597a4427be364"
+    },
+    {
+      "path": "apps/web/src/components/checkout.tsx",
+      "unchanged": true,
+      "sha256": "de70eef9820e629b761a1fbe92381d960cd1423e0885e220e57ded5d331c2f95"
+    },
+    {
+      "path": "apps/web/src/context/presentation.tsx",
+      "unchanged": true,
+      "sha256": "c4f372e3409ded4fa0c090d166ff1fae0e0b4baea215eaac0ee91a5f8e9b29f1"
+    },
+    {
+      "path": "apps/web/src/lib/product-content.ts",
+      "unchanged": true,
+      "sha256": "943509b723e32d09a52337aabb2209b7a2baa90f8caa9fe7967e16697f694a8e"
+    },
+    {
+      "path": "apps/web/src/styles/motion.css",
+      "unchanged": true,
+      "sha256": "af7325bf0c853270132ff7432568b01e6e0257c986d4f68dc5250fd29ed90069"
+    },
+    {
+      "path": "apps/web/src/styles/tokens.css",
+      "unchanged": true,
+      "sha256": "204fd825177d52317383cff041e21f0feb68a35cfc65f9139bd3f8a4822a3e8a"
+    },
+    {
+      "path": "apps/web/src/styles/checkout.css",
+      "unchanged": true,
+      "sha256": "a4d7af2a74e5db6cf5203ae00d9c83019e5777921c235e2ec33800eca77090d7"
+    },
+    {
+      "path": "apps/web/src/styles/shop.css",
+      "unchanged": true,
+      "sha256": "b14ca247264a9834a61f44bae1d4af6e19535ad8ff6f2b63a288d38de0a3c39e"
+    }
+  ],
+  "notes": [
+    "Normal navigation, shopping previews, product data, persisted confirmation and delivery quote use real APIs.",
+    "Promo loading/empty/503, recommendation overlap/empty/503, bulk-add preview 503 and order submission 503 are intercepted browser scenarios.",
+    "Order POST was intercepted; no new order was persisted. Existing test order UUIDs and customer information are excluded from this evidence.",
+    "Templates were created through the actual editor and reused only in isolated browser contexts."
+  ],
+  "contactsCorrection": {
+    "status": "PASS",
+    "evidence": "contacts-correction-results.json",
+    "supersedes": "Initial informationalRoutes Contacts map expectations; original results and screenshots retained as before-correction evidence."
+  }
+}

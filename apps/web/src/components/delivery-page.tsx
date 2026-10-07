@@ -7,13 +7,10 @@ import {
   ChevronDown,
   Clock3,
   MapPin,
-  ReceiptText,
   Route,
   ShieldCheck,
-  ShoppingBasket,
   Store,
   Truck,
-  UserRound,
   Wallet,
 } from "lucide-react";
 import { usePresentation } from "@/context/presentation";
@@ -47,16 +44,6 @@ const benefits = [
 
 const steps = [
   {
-    icon: ShoppingBasket,
-    title: "Соберите корзину",
-    text: "Выберите продукты и нужное количество в каталоге.",
-  },
-  {
-    icon: UserRound,
-    title: "Укажите данные",
-    text: "Добавьте имя, телефон и полный адрес без регистрации.",
-  },
-  {
     icon: MapPin,
     title: "Отметьте точку",
     text: "Выберите место на карте или введите координаты.",
@@ -70,11 +57,6 @@ const steps = [
     icon: CheckCircle2,
     title: "Подтвердите заказ",
     text: "Выберите способ оплаты и проверьте итоговую сумму.",
-  },
-  {
-    icon: ReceiptText,
-    title: "Сохраните подтверждение",
-    text: "Номер и состав заказа останутся доступны по ссылке.",
   },
 ];
 
@@ -224,7 +206,7 @@ export function DeliveryPage() {
         <m.div {...sectionReveal} className="delivery-section-heading">
           <span className="eyebrow">{t("От корзины до подтверждения")}</span>
           <h2 id="delivery-process-title">{t("Как работает доставка?")}</h2>
-          <p>{t("Шесть простых шагов — без лишних вопросов.")}</p>
+          <p>{t("Три шага — от точки на карте до подтверждения.")}</p>
         </m.div>
         <m.ol {...sectionReveal} className="delivery-steps">
           {steps.map(({ icon: Icon, title, text }, index) => (

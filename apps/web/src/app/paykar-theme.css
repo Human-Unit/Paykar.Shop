@@ -2060,76 +2060,10 @@ select {
   flex-wrap: nowrap;
   gap: 16px;
 }
-.info-nav-item {
-  position: relative;
-  flex-shrink: 0;
-}
-.info-nav-trigger {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  padding: 0;
-  gap: 4px;
-  white-space: nowrap;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--header-muted);
-}
 .info-nav-link {
   color: var(--header-muted);
   font-size: 12px;
   font-weight: 500;
-}
-.info-nav-trigger:hover,
-.info-nav-trigger[aria-expanded="true"] {
-  color: var(--paykar-green);
-}
-.info-nav-panel {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: min(320px, calc(100vw - 32px));
-  padding: 20px;
-  background: var(--elevated-surface);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  box-shadow: 0 8px 24px rgb(0 0 0 / 24%);
-  color: var(--ink);
-  font-size: 13px;
-  line-height: 1.6;
-  white-space: normal;
-  z-index: 1200;
-}
-.info-nav-panel[hidden] {
-  display: none !important;
-}
-.info-nav-item[data-open="false"] .info-nav-panel {
-  display: none !important;
-  pointer-events: none;
-}
-.info-nav-item:nth-last-child(-n + 4) .info-nav-panel {
-  left: auto;
-  right: 0;
-}
-.info-nav-panel > strong {
-  display: block;
-  font-size: 14px;
-  margin-bottom: 12px;
-  color: var(--green);
-}
-.info-nav-panel p,
-.info-steps {
-  color: var(--muted);
-  overflow-wrap: anywhere;
-}
-.info-steps {
-  list-style: decimal;
-  padding-left: 20px;
-  margin: 0;
-}
-.info-steps li + li {
-  margin-top: 8px;
 }
 .navigation-drawer {
   inset: 16px var(--page-gutter) 16px auto;
@@ -2245,8 +2179,7 @@ select {
   color: var(--green);
   background: var(--hover-surface);
 }
-.navigation-drawer details > p,
-.navigation-drawer .info-steps {
+.navigation-drawer details > p {
   margin: 8px 12px 16px;
   color: var(--muted);
   font-size: 13px;
@@ -2330,22 +2263,13 @@ select {
   margin-bottom: 0;
 }
 @media (max-width: 1100px) {
-  .main-navigation .nav-row > :nth-child(n + 7) {
-    display: none;
-  }
 }
 @media (max-width: 850px) {
-  .main-navigation .nav-row > :nth-child(n + 5):not(.info-nav-link) {
-    display: none;
-  }
   .catalog-heading {
     grid-template-columns: minmax(0, 1fr);
   }
 }
 @media (max-width: 640px) {
-  .main-navigation .nav-row .info-nav-item {
-    display: none;
-  }
   .main-navigation .nav-row {
     justify-content: space-between;
   }

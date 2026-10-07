@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { House, LayoutGrid, Percent, ShoppingBasket } from "lucide-react";
+import { mobileNavigation, isNavigationActive } from "@/lib/navigation";
 import { usePresentation } from "@/context/presentation";
 import { useCart } from "@/context/cart";
 
@@ -12,52 +12,35 @@ export function MobileTabBar() {
   const { t } = usePresentation();
   const cart = useCart();
   const path = usePathname();
-  const tabs = [
-    { href: "/", label: "Главная", icon: House, active: path === "/" },
-    {
-      href: "/catalog",
-      label: "Каталог",
-      icon: LayoutGrid,
-      active: path.startsWith("/catalog") || path.startsWith("/product"),
-    },
-    {
-      href: "/promotions",
-      label: "Акции",
-      icon: Percent,
-      active: path === "/promotions",
-    },
-    {
-      href: "/cart",
-      label: "Корзина",
-      icon: ShoppingBasket,
-      active: path.startsWith("/cart"),
-      count: cart.count,
-    },
-  ];
   return (
     <nav className="tabbar" aria-label={t("Нижняя навигация")}>
-      {tabs.map(({ href, label, icon: Icon, active, count }) => (
-        <Link
-          key={href}
-          href={href}
-          aria-current={active ? "page" : undefined}
-          aria-label={
-            count === undefined
-              ? undefined
-              : t("Корзина, ") + count + t(" товаров")
-          }
-        >
-          <span className="tabbar-icon">
-            <Icon size={22} aria-hidden="true" />
-            {!!count && (
-              <span className="tabbar-badge" key={count}>
-                {count}
-              </span>
-            )}
-          </span>
-          <span>{t(label)}</span>
-        </Link>
-      ))}
+      {mobileNavigation.map((item) => {
+        const { href, label, icon: Icon } = item;
+        const active = isNavigationActive(item, path);
+        const count = item.id === "cart" ? cart.count : undefined;
+        return (
+          <Link
+            key={href}
+            href={href}
+            aria-current={active ? "page" : undefined}
+            aria-label={
+              count === undefined
+                ? undefined
+                : t("Корзина, ") + count + t(" товаров")
+            }
+          >
+            <span className="tabbar-icon">
+              <Icon size={22} aria-hidden="true" />
+              {!!count && (
+                <span className="tabbar-badge" key={count}>
+                  {count}
+                </span>
+              )}
+            </span>
+            <span>{t(label)}</span>
+          </Link>
+        );
+      })}
     </nav>
   );
 }

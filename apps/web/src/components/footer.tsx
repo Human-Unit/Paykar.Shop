@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useSyncExternalStore } from "react";
 import { Brand } from "./brand";
 import { usePresentation } from "@/context/presentation";
-import { informationNavigation } from "@/lib/navigation";
+import { navigationGroups, destinations } from "@/lib/navigation";
 import { useResource, type DeliveryConfig } from "@/lib/api";
 
 function subscribe(callback: () => void) {
@@ -11,11 +11,6 @@ function subscribe(callback: () => void) {
   query.addEventListener("change", callback);
   return () => query.removeEventListener("change", callback);
 }
-const groups = [
-  { title: "Каталог", ids: ["promotions"], catalog: true },
-  { title: "Покупателям", ids: ["buy", "payment", "delivery", "returns"] },
-  { title: "Компания", ids: ["about", "blog", "brands", "stores"] },
-];
 export function Footer() {
   const { t } = usePresentation();
   const config = useResource<DeliveryConfig>("/delivery/config");
@@ -24,7 +19,7 @@ export function Footer() {
     () => window.matchMedia("(max-width: 640px)").matches,
     () => false,
   );
-  const contact = informationNavigation.find((item) => item.id === "contacts")!;
+  const contact = destinations.contacts;
   return (
     <footer className="footer store-footer">
       <div className="container store-footer-grid">
@@ -32,7 +27,7 @@ export function Footer() {
           <Brand />
           <p>{t("Знакомый магазин. Удобный выбор.")}</p>
         </div>
-        {groups.map((group) => (
+        {navigationGroups.map((group) => (
           <details key={group.title} className="footer-group" open={!mobile}>
             <summary
               tabIndex={mobile ? 0 : -1}
@@ -43,17 +38,11 @@ export function Footer() {
               {t(group.title)}
             </summary>
             <nav aria-label={t(group.title)}>
-              {group.catalog && <Link href="/catalog">{t("Все товары")}</Link>}
-              {group.ids.map((id) => {
-                const item = informationNavigation.find(
-                  (entry) => entry.id === id,
-                )!;
-                return (
-                  <Link key={id} href={item.href}>
-                    {t(item.label)}
-                  </Link>
-                );
-              })}
+              {group.items.map((item) => (
+                <Link key={item.id} href={item.href}>
+                  {t(item.label)}
+                </Link>
+              ))}
             </nav>
           </details>
         ))}

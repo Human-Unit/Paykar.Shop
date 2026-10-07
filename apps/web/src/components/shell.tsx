@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Suspense, useEffect, useRef } from "react";
 import { storePages, articles } from "@/lib/store-content";
+import { destinations } from "@/lib/navigation";
 import { Heart, Info, MapPin, ShoppingBasket } from "lucide-react";
 import { SearchBox } from "./search-box";
 import { useCart } from "@/context/cart";
@@ -122,24 +123,26 @@ export function Shell({ children }: { children: React.ReactNode }) {
             </Suspense>
             <div className="header-actions">
               <Link
-                href="/saved"
+                href={destinations.saved.href}
                 className={`cart-link ${styles.headerSavedLink}`}
                 aria-label={t("Сохранённые товары, ") + saved.count}
               >
                 <Heart size={22} aria-hidden="true" />
-                <span className="cart-label">{t("Сохранённые")}</span>
+                <span className="cart-label">
+                  {t(destinations.saved.label)}
+                </span>
                 {saved.count > 0 && (
                   <span className={styles.savedCount}>{saved.count}</span>
                 )}
               </Link>
               <Link
-                href="/cart"
+                href={destinations.cart.href}
                 className="cart-link"
                 data-empty={cart.count === 0}
                 aria-label={t("Корзина, ") + cart.count + t(" товаров")}
               >
                 <ShoppingBasket size={22} aria-hidden="true" />
-                <span className="cart-label">{t("Корзина")}</span>
+                <span className="cart-label">{t(destinations.cart.label)}</span>
                 {/* Keyed by value so the badge replays its pop on every change. */}
                 <span
                   className="cart-count"

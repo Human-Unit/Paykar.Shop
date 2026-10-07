@@ -10,6 +10,7 @@ import {
   useResource,
 } from "@/lib/api";
 import { cents } from "@/lib/format";
+import { categoryRecommendations } from "@/lib/product-recommendations";
 import { getProductContent } from "@/lib/product-content";
 import {
   AddButton,
@@ -18,7 +19,7 @@ import {
   discountPercent,
 } from "./product-card";
 import { Breadcrumbs } from "./breadcrumbs";
-import { Empty, Failure, Loading } from "./states";
+import { Failure, Loading } from "./states";
 import {
   CheckCircle2,
   Package,
@@ -41,12 +42,16 @@ export function ProductDetail({ slug }: { slug: string }) {
       ? `/products?category=${encodeURIComponent(category.slug)}&in_stock=true&page_size=6`
       : null,
   );
-  // One spare so the row stays full at every column count.
-  const alternatives =
-    related.data?.items.filter((item) => item.id !== p?.id).slice(0, 5) ?? [];
   const connections = useResource<ProductConnectionList>(
     `/products/${encodeURIComponent(slug)}/connections`,
   );
+  const alternatives = p
+    ? categoryRecommendations(
+        p.id,
+        connections.data?.items ?? [],
+        related.data?.items ?? [],
+      )
+    : [];
   if (resource.loading) return <Loading kind="product" />;
   if (resource.error?.status === 404) notFound();
   if (resource.error)
@@ -226,36 +231,33 @@ export function ProductDetail({ slug }: { slug: string }) {
       {connections.error && (
         <Failure error={connections.error} retry={connections.retry} />
       )}
-      {category && (related.loading || alternatives.length > 0) && (
-        <section className="related-products">
-          <SectionHeader
-            eyebrow="Дополните корзину"
-            title="В этом разделе"
-            action={{ href: `/catalog/${category.slug}`, label: category.name }}
-          />
-          {related.loading ? (
-            <Loading kind="grid" />
-          ) : (
-            <div className="product-grid one-row">
-              {alternatives.map((product, index) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  revealIndex={index}
-                />
-              ))}
-            </div>
-          )}
-        </section>
-      )}
-      {category && related.data && alternatives.length === 0 && (
-        <Empty
-          compact
-          icon={Package}
-          title={t("В этом разделе")}
-          text={t("Другие товары в этом разделе пока не представлены.")}
-        />
-      )}
+      {category &&
+        (related.loading ||
+          (!connections.loading && alternatives.length > 0)) && (
+          <section className="related-products">
+            <SectionHeader
+              eyebrow="Дополните корзину"
+              title="В этом разделе"
+              action={{
+                href: `/catalog/${category.slug}`,
+                label: category.name,
+              }}
+            />
+            {related.loading ? (
+              <Loading kind="grid" />
+            ) : (
+              <div className="product-grid one-row">
+                {alternatives.map((product, index) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    revealIndex={index}
+                  />
+                ))}
+              </div>
+            )}
+          </section>
+        )}
       {related.error && <Failure error={related.error} retry={related.retry} />}
     </div>
   );

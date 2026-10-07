@@ -11,7 +11,9 @@
     "test:catalog": "node --test tests/catalog-query.test.mjs",
     "test:shopping": "node --test tests/shopping.test.mjs",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "test:navigation": "node --test tests/navigation.test.mjs",
+    "test:recommendations": "node --test tests/product-recommendations.test.mjs"
   },
   "dependencies": {
     "framer-motion": "^14.0.0",

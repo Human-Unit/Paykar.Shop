@@ -135,13 +135,13 @@ export const storePages: StorePage[] = [
   {
     slug: "contacts",
     title: "Контакты",
-    description: "Адрес магазина и расположение на карте.",
+    description: "Свяжитесь с магазином по вопросам товаров и заказов.",
     sections: [],
   },
   {
     slug: "stores",
     title: "Магазины",
-    description: "Найдите магазин и откройте его расположение на карте.",
+    description: "Адрес магазина и расположение на карте.",
     sections: [],
   },
 ];

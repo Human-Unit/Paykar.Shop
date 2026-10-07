@@ -2,107 +2,18 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  useCallback,
-  useEffect,
-  useId,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
-import { ChevronDown, Grid2X2, Menu, X, ShoppingBag } from "lucide-react";
+import { useCallback, useId, useLayoutEffect, useRef, useState } from "react";
+import { Menu, X } from "lucide-react";
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { usePresentation } from "@/context/presentation";
 import { Brand } from "@/components/brand";
-import { informationNavigation, type InformationEntry } from "@/lib/navigation";
+import {
+  primaryNavigation,
+  navigationGroups,
+  isNavigationActive,
+} from "@/lib/navigation";
 import { CatalogMegaMenu } from "./catalog-mega-menu";
 import { LanguageSelector, Preferences } from "./preferences";
-
-function InformationContent({ content }: { content: string[] }) {
-  const { t } = usePresentation();
-  return content.length > 1 ? (
-    <ol className="info-steps">
-      {content.map((line) => (
-        <li key={line}>{t(line)}</li>
-      ))}
-    </ol>
-  ) : (
-    <p>{t(content[0])}</p>
-  );
-}
-
-function InfoNavMenu({
-  label,
-  content,
-  href,
-  open,
-  onOpen,
-  onClose,
-  current,
-}: InformationEntry & {
-  open: boolean;
-  onOpen: () => void;
-  onClose: () => void;
-  current: boolean;
-}) {
-  const { t } = usePresentation();
-  const root = useRef<HTMLDivElement>(null);
-  const trigger = useRef<HTMLAnchorElement>(null);
-  const panelId = useId();
-  useEffect(() => {
-    if (!open) return;
-    const outside = (event: PointerEvent) => {
-      if (event.target instanceof Node && !root.current?.contains(event.target))
-        onClose();
-    };
-    document.addEventListener("pointerdown", outside);
-    return () => document.removeEventListener("pointerdown", outside);
-  }, [open, onClose]);
-  return (
-    <div
-      ref={root}
-      className="info-nav-item"
-      data-open={open}
-      onMouseEnter={onOpen}
-      onMouseLeave={() => {
-        if (!root.current?.contains(document.activeElement)) onClose();
-      }}
-      onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) onClose();
-      }}
-      onKeyDown={(event) => {
-        if (event.key === "Escape") {
-          event.preventDefault();
-          onClose();
-          trigger.current?.focus();
-        }
-      }}
-    >
-      <Link
-        href={href}
-        ref={trigger}
-        className="info-nav-trigger"
-        aria-expanded={open}
-        aria-controls={panelId}
-        aria-current={current ? "page" : undefined}
-        onFocus={onOpen}
-        onClick={onClose}
-      >
-        {t(label)} <ChevronDown size={12} aria-hidden="true" />
-      </Link>
-      <div
-        id={panelId}
-        className="info-nav-panel"
-        hidden={!open}
-        aria-hidden={!open}
-        inert={!open}
-      >
-        <strong>{t(label)}</strong>
-        <InformationContent content={content} />
-      </div>
-    </div>
-  );
-}
 
 export function MainNavigation() {
   const { t, language } = usePresentation();
@@ -110,7 +21,6 @@ export function MainNavigation() {
   const row = useRef<HTMLDivElement>(null);
   // Labels differ in length by language, so links that do not fit are hidden
   // from the end rather than at fixed widths. The menu button lists them all.
-  // Items in the right half open their panel leftwards to stay on screen.
   useLayoutEffect(() => {
     const node = row.current;
     if (!node) return;
@@ -123,11 +33,6 @@ export function MainNavigation() {
         index -= 1
       )
         items[index].dataset.overflow = "true";
-      for (const item of items)
-        item.dataset.align =
-          item.offsetLeft + item.offsetWidth / 2 > node.clientWidth / 2
-            ? "end"
-            : "start";
     };
     fit();
     const observer = new ResizeObserver(fit);
@@ -153,33 +58,16 @@ export function MainNavigation() {
           onOpen={() => setActiveMenu({ id: "catalog", path })}
           onClose={closeCatalog}
         />
-        {informationNavigation
-          .filter((item) => item.desktop !== false || item.id === "stores")
-          .map((item) =>
-            item.content.length ? (
-              <InfoNavMenu
-                key={item.id}
-                {...item}
-                current={path === item.href || path.startsWith(`${item.href}/`)}
-                open={activeMenu?.id === item.id && activeMenu.path === path}
-                onOpen={() => setActiveMenu({ id: item.id, path })}
-                onClose={() =>
-                  setActiveMenu((current) =>
-                    current?.id === item.id ? null : current,
-                  )
-                }
-              />
-            ) : (
-              <Link
-                key={item.id}
-                className="info-nav-link"
-                href={item.href}
-                aria-current={path === item.href ? "page" : undefined}
-              >
-                {t(item.label)}
-              </Link>
-            ),
-          )}
+        {primaryNavigation.slice(1).map((item) => (
+          <Link
+            key={item.id}
+            className="info-nav-link"
+            href={item.href}
+            aria-current={isNavigationActive(item, path) ? "page" : undefined}
+          >
+            {t(item.label)}
+          </Link>
+        ))}
       </div>
     </nav>
   );
@@ -187,6 +75,7 @@ export function MainNavigation() {
 
 export function BurgerMenu() {
   const { t } = usePresentation();
+  const path = usePathname();
   const reduce = useReducedMotion();
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
@@ -271,36 +160,27 @@ export function BurgerMenu() {
             <LanguageSelector />
             <Preferences />
           </div>
-          <section className="drawer-shopping" aria-label={t("Мои покупки")}>
-            <Link
-              className="drawer-shopping-title"
-              href="/my-shopping"
-              onClick={close}
+          {navigationGroups.map((group) => (
+            <section
+              className="drawer-group"
+              key={group.title}
+              aria-label={t(group.title)}
             >
-              <ShoppingBag size={18} aria-hidden="true" />
-              <span>{t("Мои покупки")}</span>
-            </Link>
-            <div className="drawer-shopping-links">
-              <Link href="/my-shopping#history" onClick={close}>
-                {t("История заказов")}
-              </Link>
-              <Link href="/my-shopping#templates" onClick={close}>
-                {t("Мои шаблоны")}
-              </Link>
-              <Link href="/my-shopping#curated" onClick={close}>
-                {t("Готовые наборы")}
-              </Link>
-            </div>
-          </section>
-          <Link href="/catalog" prefetch={false} onClick={close}>
-            <Grid2X2 size={18} aria-hidden="true" />
-            <span>{t("Каталог")}</span>
-          </Link>
-          {informationNavigation.map((item) => (
-            <Link key={item.id} href={item.href} onClick={close}>
-              <item.icon size={18} aria-hidden="true" />
-              <span>{t(item.label)}</span>
-            </Link>
+              <h3>{t(group.title)}</h3>
+              {group.items.map((item) => (
+                <Link
+                  key={item.id}
+                  href={item.href}
+                  onClick={close}
+                  aria-current={
+                    isNavigationActive(item, path) ? "page" : undefined
+                  }
+                >
+                  <item.icon size={18} aria-hidden="true" />
+                  <span>{t(item.label)}</span>
+                </Link>
+              ))}
+            </section>
           ))}
         </nav>
       </dialog>

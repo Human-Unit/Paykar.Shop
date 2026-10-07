@@ -15,6 +15,7 @@ import { createPortal } from "react-dom";
 import { useReducedMotion } from "framer-motion";
 import { ArrowRight, ArrowUpRight, ChevronDown, Grid2X2 } from "lucide-react";
 import { usePresentation } from "@/context/presentation";
+import { destinations, isNavigationActive } from "@/lib/navigation";
 import { useResource, type Category } from "@/lib/api";
 import {
   catalogGroupLinks,
@@ -138,6 +139,7 @@ export function CatalogMegaMenu({
   onClose: () => void;
 }) {
   const { t } = usePresentation();
+  const path = usePathname();
   const desktop = useSyncExternalStore(
     subscribeDesktop,
     desktopSnapshot,
@@ -322,6 +324,9 @@ export function CatalogMegaMenu({
           href="/catalog"
           prefetch={false}
           className="button catalog-button catalog-mega-trigger"
+          aria-current={
+            isNavigationActive(destinations.catalog, path) ? "page" : undefined
+          }
           aria-expanded={visible}
           aria-controls={panelId}
           onFocus={reveal}

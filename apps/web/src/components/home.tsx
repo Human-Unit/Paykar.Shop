@@ -3,30 +3,18 @@ import { usePresentation } from "@/context/presentation";
 import { m, useReveal } from "./motion-primitives";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowUpRight,
-  ShoppingBasket,
-  Route,
-  CheckCircle2,
-  MapPin,
-} from "lucide-react";
-import { cents } from "@/lib/format";
-import {
-  Category,
-  ProductPage,
-  ProductConnectionList,
-  useResource,
-} from "@/lib/api";
+import { ArrowUpRight } from "lucide-react";
+import { Category, ProductPage, useResource } from "@/lib/api";
 import { ProductCard } from "./product-card";
 import { Empty, Failure, Loading } from "./states";
 import { HomeHero } from "./home-hero";
 import { categoryImages } from "@/lib/category-presentation";
-import { articles, storePages } from "@/lib/store-content";
-import { SectionHeader, StepFlow, CTASection } from "./page-patterns";
+import { articles } from "@/lib/store-content";
+import { SectionHeader } from "./page-patterns";
 import { ArticleCard } from "./article-card";
 import { HomeStoreNetwork } from "./home-store-network";
 import { OrderShowcase } from "./order-showcase";
-import { CuratedShopping, ShoppingDiscovery } from "./my-shopping";
+import { ShoppingDiscovery } from "./my-shopping";
 export function Home() {
   const { t } = usePresentation();
   const grid = useReveal({ rise: 14 });
@@ -34,14 +22,10 @@ export function Home() {
   const products = useResource<ProductPage>(
     "/products?page_size=48&in_stock=true",
   );
-  const connections = useResource<ProductConnectionList>(
-    "/products/black-tea/connections",
+  const sales = useResource<ProductPage>(
+    "/products?on_sale=true&in_stock=true&page_size=5",
   );
-  // The grids hide what does not fill a row, so fetch one row's worth extra.
-  const discounts =
-    products.data?.items
-      .filter((p) => p.old_price && cents(p.old_price) > cents(p.price))
-      .slice(0, 5) ?? [];
+  const discounts = sales.data?.items ?? [];
   const everyday =
     products.data?.items
       .filter((p) => !discounts.some((d) => d.id === p.id))
@@ -49,6 +33,29 @@ export function Home() {
   return (
     <div className="polish-page home-page">
       <HomeHero />
+      {(sales.loading || sales.error || discounts.length > 0) && (
+        <section id="promotions" className="discount-section">
+          <SectionHeader
+            eyebrow="МЕНЬШЕ ЦЕНА — ТОТ ЖЕ ВЫБОР"
+            title="Акции"
+            action={{ href: "/promotions", label: "Все акции" }}
+          />
+          {sales.loading && <Loading kind="grid" />}
+          {sales.error && <Failure error={sales.error} retry={sales.retry} />}
+          {discounts.length > 0 && (
+            <div className="product-grid one-row">
+              {discounts.map((p, index) => (
+                <ProductCard key={p.id} product={p} revealIndex={index} />
+              ))}
+            </div>
+          )}
+          {discounts.length > 0 && (
+            <p className="section-note">
+              {t("Скидки относительно прежних цен.")}
+            </p>
+          )}
+        </section>
+      )}
       <section>
         <SectionHeader
           eyebrow="Свежий выбор на каждый день"
@@ -99,23 +106,7 @@ export function Home() {
           />
         )}
       </section>
-      {discounts.length > 0 && (
-        <section id="promotions" className="discount-section">
-          <SectionHeader
-            eyebrow="МЕНЬШЕ ЦЕНА — ТОТ ЖЕ ВЫБОР"
-            title="Акции"
-            action={{ href: "/promotions", label: "Все акции" }}
-          />
-          <div className="product-grid one-row">
-            {discounts.map((p, index) => (
-              <ProductCard key={p.id} product={p} revealIndex={index} />
-            ))}
-          </div>
-          <p className="section-note">
-            {t("Скидки относительно прежних цен.")}
-          </p>
-        </section>
-      )}
+
       <section>
         <SectionHeader
           eyebrow="Продукты на каждый день"
@@ -142,51 +133,6 @@ export function Home() {
       </section>
       <ShoppingDiscovery />
       <OrderShowcase />
-      <CuratedShopping compact />
-      {connections.data?.items.length ? (
-        <section className="home-connections">
-          <SectionHeader
-            title="Хорошо подходит к этому"
-            text="Чёрный чай"
-            action={{ href: "/product/black-tea", label: "К товару" }}
-          />
-          <div className="product-grid">
-            {connections.data.items.map((product, index) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                revealIndex={index}
-              />
-            ))}
-          </div>
-        </section>
-      ) : null}
-      {connections.error && (
-        <Failure error={connections.error} retry={connections.retry} />
-      )}
-      <section className="home-shopping-flow">
-        <SectionHeader
-          eyebrow="ПРОСТО ПОКУПКИ"
-          title="Покупки в вашем темпе"
-          text="Без регистрации. Всё заранее."
-          action={{ href: "/how-to-buy", label: "Как купить" }}
-        />
-        <StepFlow
-          steps={[
-            { ...storePages[0].sections[0], icon: ShoppingBasket },
-            { ...storePages[0].sections[3], icon: MapPin },
-            { ...storePages[0].sections[5], icon: CheckCircle2 },
-          ]}
-        />
-      </section>
-      <CTASection
-        eyebrow="Сначала маршрут. Потом заказ."
-        title="Доставка с Пайкар"
-        text="Выберите адрес и узнайте маршрут, время в пути и стоимость до подтверждения заказа."
-        href="/delivery"
-        label="Как работает доставка"
-        icon={Route}
-      />
       <HomeStoreNetwork />
       <section>
         <SectionHeader

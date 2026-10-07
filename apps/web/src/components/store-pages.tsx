@@ -35,7 +35,6 @@ import {
   SectionHeader,
   StepFlow,
   CTASection,
-  FAQSection,
 } from "./page-patterns";
 import { ArticleCard, articlePresentation } from "./article-card";
 import {
@@ -128,6 +127,23 @@ function BlogCards() {
     </>
   );
 }
+function ContactAddress() {
+  const { t } = usePresentation();
+  const config = useResource<DeliveryConfig>("/delivery/config");
+  if (config.loading) return <Loading label="Загружаем адрес…" />;
+  if (config.error)
+    return <Failure error={config.error} retry={config.retry} />;
+  if (!config.data) return null;
+  return (
+    <section className="information-panel">
+      <h2>{t("Адрес магазина")}</h2>
+      <p className="location-address">
+        <MapPin size={20} aria-hidden="true" />
+        {t(config.data.store_address)}
+      </p>
+    </section>
+  );
+}
 function StoreLocation() {
   const { t } = usePresentation();
   const config = useResource<DeliveryConfig>("/delivery/config");
@@ -202,44 +218,6 @@ export function PublicPage({ page }: { page: StorePage }) {
     stores: Store,
   };
   const Icon = pageIcons[page.slug as keyof typeof pageIcons] ?? ShoppingBasket;
-  const questions =
-    page.slug === "payment"
-      ? [
-          {
-            question: "Списываются ли деньги в тестовой оплате?",
-            answer: page.sections[1].text,
-          },
-          {
-            question: "Что делать, если оплата не прошла?",
-            answer: page.sections[2].text,
-          },
-        ]
-      : page.slug === "returns"
-        ? [
-            {
-              question: "Какая информация понадобится?",
-              answer:
-                "Сохраните номер заказа и сведения о товаре. Опишите, что произошло, и по возможности сохраните упаковку.",
-            },
-            {
-              question: "Как согласовать возврат?",
-              answer: page.sections[3].text,
-            },
-          ]
-        : page.slug === "how-to-buy"
-          ? [
-              {
-                question: "Нужна ли регистрация?",
-                answer:
-                  "Введите имя, телефон и полный адрес. Регистрация не требуется.",
-              },
-              {
-                question: "Можно ли изменить корзину?",
-                answer:
-                  "Выберите количество. В корзине можно изменить состав покупки и проверить наличие.",
-              },
-            ]
-          : [];
   const visual =
     page.slug === "payment" ? (
       <PaymentIllustration />
@@ -256,22 +234,6 @@ export function PublicPage({ page }: { page: StorePage }) {
           <Leaf size={20} aria-hidden="true" />
           {t("Продукты на каждый день")}
         </span>
-      </div>
-    ) : page.slug === "how-to-buy" ? (
-      <div className="shopping-story-visual" aria-hidden="true">
-        {[
-          { icon: Search, title: "Каталог" },
-          { icon: ShoppingBasket, title: "Ваша корзина" },
-          { icon: CheckCircle2, title: "Спасибо! Заказ получен" },
-        ].map(({ icon: StepIcon, title }, index) => (
-          <div key={title}>
-            <span className="flow-number">
-              {String(index + 1).padStart(2, "0")}
-            </span>
-            <StepIcon size={24} />
-            <strong>{t(title)}</strong>
-          </div>
-        ))}
       </div>
     ) : page.slug === "returns" ? (
       <ReturnsIllustration />
@@ -291,17 +253,12 @@ export function PublicPage({ page }: { page: StorePage }) {
         ))}
       </div>
     ) : undefined;
-  const introAction = ["contacts", "stores"].includes(page.slug)
-    ? undefined
-    : page.slug === "returns"
-      ? undefined
-      : page.slug === "payment"
-        ? { href: "/checkout", label: "Перейти к оформлению" }
-        : page.slug === "promotions"
-          ? { href: "#promotions-products", label: "Выбрать продукты" }
-          : ["how-to-buy", "about", "brands"].includes(page.slug)
-            ? { href: "/catalog", label: "Перейти в каталог" }
-            : undefined;
+  const introAction =
+    page.slug === "payment"
+      ? { href: "/checkout", label: "Перейти к оформлению" }
+      : ["about", "brands"].includes(page.slug)
+        ? { href: "/catalog", label: "Перейти в каталог" }
+        : undefined;
   return (
     <div className={`polish-page public-page page-${page.slug}`}>
       <Breadcrumbs
@@ -445,7 +402,18 @@ export function PublicPage({ page }: { page: StorePage }) {
         </section>
       )}
       {page.slug === "blog" && <BlogCards />}
-      {["contacts", "stores"].includes(page.slug) && <StoreLocation />}
+      {page.slug === "contacts" && (
+        <section className="information-panel">
+          <h2>{t("Вопросы о покупке")}</h2>
+          <p>
+            {t(
+              "Подготовьте номер заказа и название товара. Обсудите вопрос с сотрудниками магазина по указанному адресу.",
+            )}
+          </p>
+        </section>
+      )}
+      {page.slug === "contacts" && <ContactAddress />}
+      {page.slug === "stores" && <StoreLocation />}
       {["contacts", "stores"].includes(page.slug) && (
         <div className="location-help">
           <Link href="/delivery">
@@ -464,7 +432,7 @@ export function PublicPage({ page }: { page: StorePage }) {
             <Store size={22} aria-hidden="true" />
             <span>
               <strong>
-                {t(page.slug === "contacts" ? "Магазины" : "Контакты")}
+                {t(page.slug === "contacts" ? "Найти магазин" : "Контакты")}
               </strong>
               <small>{t("Адрес и карта")}</small>
             </span>
@@ -472,8 +440,7 @@ export function PublicPage({ page }: { page: StorePage }) {
           </Link>
         </div>
       )}
-      {!!questions.length && <FAQSection questions={questions} />}
-      {["how-to-buy", "returns", "about"].includes(page.slug) && (
+      {["how-to-buy", "returns"].includes(page.slug) && (
         <CTASection
           eyebrow={
             page.slug === "returns" ? "Поможем разобраться" : "ПРОСТО ПОКУПКИ"

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, Check, Store, Truck } from "lucide-react";
+import { ArrowUpRight, Check, Percent, Store, Truck } from "lucide-react";
 import { usePresentation } from "@/context/presentation";
 import { useResource, type DeliveryConfig } from "@/lib/api";
 import { cents } from "@/lib/format";
@@ -14,9 +14,6 @@ import {
   usePointerLight,
   useReveal,
 } from "./motion-primitives";
-
-// The same curve draws the dashed line and carries the moving dot.
-const routePath = "M10 58C46 58 44 16 86 16s52 38 96 12";
 
 export function HomeHero() {
   const { t, money } = usePresentation();
@@ -132,44 +129,27 @@ export function HomeHero() {
       </div>
       <MotionLink
         {...routeCard}
-        href="/delivery"
+        href="/promotions"
         className="bento-card bento-route"
       >
         <span className="bento-top">
-          <span className="eyebrow">{t("ДОСТАВКА")}</span>
-          <svg
-            className="bento-route-art"
-            viewBox="0 0 192 72"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path className="route-track" d={routePath} />
-            <path className="route-line" d={routePath} />
-            <circle className="route-stop" cx="10" cy="58" r="5" />
-            <circle className="route-stop" cx="182" cy="28" r="5" />
-            <circle
-              className="route-runner"
-              r="5"
-              style={{ offsetPath: `path("${routePath}")` }}
-            />
-          </svg>
+          <span className="eyebrow">{t("Акции")}</span>
+          <Percent size={28} aria-hidden="true" />
         </span>
-        <h2>
-          {t("Весь маршрут.")} {t("До заказа.")}
-        </h2>
-        <p>{t("Расстояние, время и стоимость на одной карте.")}</p>
+        <h2>{t("Акции на каждый день")}</h2>
+        <p>{t("Выберите выгодные предложения.")}</p>
         <span className="promo-action">
-          {t("Как работает доставка")}
+          {t("Все акции")}
           <ArrowUpRight size={18} aria-hidden="true" />
         </span>
       </MotionLink>
       <MotionLink
         {...shopCard}
-        href="/catalog"
+        href="/my-shopping"
         className="bento-card bento-shop"
       >
         <span className="bento-top">
-          <span className="eyebrow">{t("ПРОСТО ПОКУПКИ")}</span>
+          <span className="eyebrow">{t("Мои покупки")}</span>
           <span className="bento-stack" aria-hidden="true">
             {["produce", "bakery", "dairy"].map((image) => (
               <span key={image}>
@@ -184,11 +164,10 @@ export function HomeHero() {
             ))}
           </span>
         </span>
-        <h2>
-          {t("Без регистрации.")} {t("В вашем темпе.")}
-        </h2>
+        <h2>{t("Ваши привычные покупки.")}</h2>
+        <p>{t("Шаблоны и прошлые заказы — в одном месте.")}</p>
         <span className="promo-action">
-          {t("Собрать корзину ")}
+          {t("Открыть мои покупки")}
           <ArrowUpRight size={18} aria-hidden="true" />
         </span>
       </MotionLink>
