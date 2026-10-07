@@ -67,7 +67,7 @@ export default function StoreNetworkMap({
       const icon = L.divIcon({
         className: "paykar-network-marker",
         html: [
-          '<span class="paykar-network-pin" aria-hidden="true">П</span>',
+          '<span class="paykar-network-pin" aria-hidden="true"><span>П</span></span>',
           '<span class="paykar-network-label">',
           `<strong>${escapeMarkup(store.name)}</strong>`,
           `<small>${escapeMarkup(store.shortAddress)}</small>`,
