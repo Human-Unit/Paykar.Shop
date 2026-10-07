@@ -1,0 +1,43 @@
+.product-content-extra {
+  display: grid;
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.product-content-heading h3,
+.product-content-features h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 750;
+}
+
+.product-content-facts {
+  margin-top: 0;
+}
+
+.product-content-features {
+  display: grid;
+  gap: 10px;
+}
+
+.product-content-features ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.product-content-features li {
+  line-height: 1.5;
+}
+
+.product-content-note {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line, rgba(127, 127, 127, 0.22));
+  border-radius: 14px;
+  background: var(--surface-soft, rgba(127, 127, 127, 0.06));
+  font-size: 0.88rem;
+  line-height: 1.5;
+  opacity: 0.82;
+}
