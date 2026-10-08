@@ -14,6 +14,25 @@ const keys = [
   "page",
 ];
 
+type PriceBound = "min" | "max";
+
+function wholeSomPrice(value: string | null, bound: PriceBound) {
+  if (!value) return "";
+  const amount = Number(value.trim());
+  if (!Number.isFinite(amount) || amount < 0 || amount > 9999999999.99)
+    return "";
+  return String(bound === "min" ? Math.floor(amount) : Math.ceil(amount));
+}
+
+function normalizePriceBounds(params: URLSearchParams) {
+  const min = wholeSomPrice(params.get("min_price"), "min");
+  const max = wholeSomPrice(params.get("max_price"), "max");
+  if (min) params.set("min_price", min);
+  else params.delete("min_price");
+  if (max) params.set("max_price", max);
+  else params.delete("max_price");
+}
+
 export function catalogParameters(source: URLSearchParams, slug?: string) {
   const result = new URLSearchParams();
   for (const key of keys) {
@@ -33,6 +52,7 @@ export function catalogParameters(source: URLSearchParams, slug?: string) {
     Number(page) < 2
   )
     result.delete("page");
+  normalizePriceBounds(result);
   normalizeSale(result);
   return result;
 }
@@ -67,6 +87,7 @@ export function catalogFilterChanges(
     !Object.hasOwn(changes, "min_discount")
   )
     result.delete("min_discount");
+  normalizePriceBounds(result);
   normalizeSale(result);
   return result;
 }
@@ -129,10 +150,7 @@ export function catalogPriceError(params: URLSearchParams) {
   const min = params.get("min_price") || "";
   const max = params.get("max_price") || "";
   for (const value of [min, max]) {
-    if (
-      value &&
-      (!/^\d+(?:\.\d{1,2})?$/.test(value) || Number(value) > 9999999999.99)
-    )
+    if (value && (!/^\d+$/.test(value) || Number(value) > 9999999999))
       return "invalid_price";
   }
   return min && max && Number(min) > Number(max) ? "reversed_price" : null;

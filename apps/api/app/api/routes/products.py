@@ -1,4 +1,4 @@
-from decimal import Decimal
+from decimal import ROUND_HALF_UP, Decimal
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, HTTPException, Query
@@ -106,12 +106,18 @@ async def products(
             )
         ).one()
         maximum, *rest = stats
-        breaks = sorted({value for value in rest[:3] if value is not None and value < maximum})
+        breaks = sorted(
+            {
+                value.quantize(Decimal("1"), rounding=ROUND_HALF_UP)
+                for value in rest[:3]
+                if value is not None and value < maximum
+            }
+        )
         presets = []
         lower = None
         for boundary in breaks:
             presets.append(PricePreset(min_price=lower, max_price=boundary))
-            lower = boundary + Decimal("0.01")
+            lower = boundary
         if breaks:
             presets.append(PricePreset(min_price=lower))
         facets = CatalogFacets(
