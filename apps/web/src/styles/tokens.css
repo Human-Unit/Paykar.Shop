@@ -11,6 +11,14 @@
   --radius-xl: 32px;
   --radius-pill: 999px;
 
+  /* Opt-in shopping presentation: do not retime or resize protected consumers. */
+  --shopping-section-gap: 64px;
+  --shopping-page-title: 40px;
+  --shopping-section-title: 28px;
+  --shopping-card-radius: 18px;
+  --shopping-panel-radius: 24px;
+  --shopping-control-radius: 12px;
+
   /* Layout */
   --page-max-width: 1320px;
   --page-gutter: 32px;
@@ -172,4 +180,17 @@ p {
 }
 .polish-page > :last-child {
   margin-bottom: 0;
+}
+
+@media (max-width: 1100px) {
+  :root {
+    --shopping-section-gap: 48px;
+  }
+}
+@media (max-width: 640px) {
+  :root {
+    --shopping-section-gap: 40px;
+    --shopping-page-title: 28px;
+    --shopping-section-title: 24px;
+  }
 }

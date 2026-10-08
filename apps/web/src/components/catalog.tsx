@@ -177,7 +177,7 @@ export function Catalog({ slug }: { slug?: string }) {
   const total = products.data?.total;
   const pages = Math.max(1, Math.ceil((total ?? 0) / pageSize));
   return (
-    <div className="polish-page catalog-page">
+    <div className="polish-page catalog-page shopping-page">
       <Breadcrumbs
         items={[
           { label: t("Главная"), href: "/" },
@@ -187,7 +187,7 @@ export function Catalog({ slug }: { slug?: string }) {
             : []),
         ]}
       />
-      <header className="catalog-head">
+      <header className="catalog-head commerce-heading">
         <div className="page-title">
           <h1>{t(category?.name) || t("Каталог товаров")}</h1>
           <p>
@@ -322,7 +322,6 @@ export function Catalog({ slug }: { slug?: string }) {
               <span>{t("Со скидкой")}</span>
             </label>
             <CatalogFilterDialog
-              key={paramsKey}
               params={params}
               categories={allCategories}
               facets={products.data?.facets}

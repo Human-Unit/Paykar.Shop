@@ -12,29 +12,30 @@
 /* The photograph has its own green backdrop, so the card stays a dark brand
    block in both themes and fades into it from the left. */
 .hero-card {
+  --hero-backdrop: var(--on-accent);
   position: relative;
   isolation: isolate;
   grid-row: 1 / -1;
   display: flex;
   align-items: center;
   min-width: 0;
-  min-height: 468px;
+  min-height: 452px;
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--paykar-green) 34%, transparent);
   border-radius: var(--radius-xl);
   background:
     radial-gradient(
-      ellipse at 76% 55%,
-      color-mix(in srgb, var(--paykar-green) 18%, transparent),
-      transparent 65%
+      ellipse at 88% 60%,
+      color-mix(in srgb, var(--paykar-green) 28%, transparent),
+      transparent 60%
     ),
     linear-gradient(
-      110deg,
-      #0b0b0b 35%,
-      color-mix(in srgb, var(--paykar-green) 80%, #0b0b0b)
+      100deg,
+      var(--hero-backdrop) 38%,
+      color-mix(in srgb, var(--paykar-green) 74%, var(--hero-backdrop))
     );
   color: #f5f5f5;
-  box-shadow: 0 44px 80px -52px var(--green-glow);
+  box-shadow: var(--card-shadow);
 }
 .hero-card::after {
   content: "";
@@ -43,21 +44,21 @@
   inset: 0;
   background: linear-gradient(
     90deg,
-    #0b0b0b 24%,
-    rgb(11 11 11 / 88%) 40%,
-    rgb(11 11 11 / 55%) 52%,
-    rgb(11 11 11 / 15%) 67%,
-    transparent 78%
+    var(--hero-backdrop) 24%,
+    color-mix(in srgb, var(--hero-backdrop) 92%, transparent) 42%,
+    color-mix(in srgb, var(--hero-backdrop) 65%, transparent) 54%,
+    color-mix(in srgb, var(--hero-backdrop) 12%, transparent) 68%,
+    transparent 80%
   );
   pointer-events: none;
 }
 .hero-image {
   position: absolute;
   z-index: -2;
-  inset: 0 0 0 auto;
+  inset: 16px 16px 16px auto;
   width: auto;
-  max-width: 100%;
-  height: 100%;
+  max-width: calc(100% - 32px);
+  height: calc(100% - 32px);
   object-fit: contain;
   object-position: right center;
   -webkit-mask-image: linear-gradient(90deg, transparent, black 22%);
@@ -66,8 +67,8 @@
 .hero-body {
   position: relative;
   z-index: 1;
-  width: min(60%, 640px);
-  padding: 48px 0 48px 48px;
+  width: min(64%, 640px);
+  padding: 36px 0 36px 40px;
 }
 .hero-eyebrow {
   display: inline-flex;
@@ -101,13 +102,18 @@
   animation: pulse-ring 2.2s var(--ease-out) infinite;
 }
 .hero-body h1 {
-  margin: 20px 0;
+  margin: 18px 0;
   color: #fff;
-  font-size: clamp(38px, 4.2vw, 60px);
+  font-size: clamp(32px, 3.7vw, 54px);
   font-weight: 800;
-  line-height: 1.02;
+  line-height: 1.05;
   letter-spacing: -0.035em;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  text-wrap: balance;
+}
+.hero-body h1:lang(tg),
+.hero-body h1:lang(en) {
+  font-size: clamp(30px, 3vw, 44px);
 }
 .hero-body h1 em {
   background: linear-gradient(
@@ -126,42 +132,40 @@
   color: rgb(255 255 255 / 80%);
   font-size: 17px;
   font-weight: 500;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 30px;
+  align-items: center;
+  gap: 8px 18px;
+  margin-top: 24px;
 }
 .hero-actions .button.large {
   padding-inline: 22px;
 }
-.hero-card .button.ghost {
-  border-color: rgb(255 255 255 / 24%);
-  background: rgb(255 255 255 / 8%);
-  color: #f5f5f5;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+.hero-delivery-link {
+  max-width: 100%;
+  color: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
 }
-.hero-card .button.ghost:not(:disabled):hover {
-  border-color: rgb(255 255 255 / 46%);
-  background: rgb(255 255 255 / 15%);
-  color: #fff;
-  box-shadow: none;
+.hero-delivery-link:hover {
+  color: color-mix(in srgb, var(--paykar-green), white 62%);
 }
-.hero-card .button:focus-visible {
-  outline-color: #fff;
+.hero-card a:focus-visible {
+  outline-color: color-mix(in srgb, var(--paykar-green), white 75%);
 }
 .hero-facts {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 24px;
-  margin: 28px 0 0;
+  gap: 8px 18px;
+  margin: 20px 0 0;
   padding: 0;
   list-style: none;
   color: rgb(255 255 255 / 76%);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
 }
 .hero-facts li {
@@ -176,6 +180,9 @@
   border-radius: 50%;
   background: color-mix(in srgb, var(--paykar-green) 30%, transparent);
   color: color-mix(in srgb, var(--paykar-green), white 55%);
+}
+.hero-chips {
+  pointer-events: none;
 }
 .hero-chip {
   position: absolute;
@@ -194,12 +201,12 @@
   animation: float-soft 6.5s ease-in-out infinite;
 }
 .hero-chip-fee {
-  top: 8%;
-  right: 26%;
+  right: 28px;
+  bottom: 112px;
 }
 .hero-chip-stores {
-  right: 5%;
-  bottom: 13%;
+  right: 28px;
+  bottom: 32px;
   animation-delay: -3.2s;
 }
 .hero-chip-icon {
@@ -235,7 +242,7 @@
   align-items: flex-start;
   gap: 10px;
   min-width: 0;
-  padding: 24px 26px 22px;
+  padding: 24px;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
@@ -254,7 +261,7 @@
   background:
     radial-gradient(
       ellipse 90% 80% at 100% 0%,
-      color-mix(in srgb, var(--paykar-green) 20%, transparent),
+      color-mix(in srgb, var(--paykar-green) 9%, transparent),
       transparent 70%
     ),
     var(--surface);
@@ -265,13 +272,13 @@
   justify-content: space-between;
   gap: 16px;
   width: 100%;
-  min-height: 56px;
+  min-height: 36px;
   margin-bottom: 4px;
 }
 .bento-card h2 {
   margin: 0;
-  font-size: clamp(20px, 1.75vw, 25px);
-  font-weight: 800;
+  font-size: clamp(18px, 1.5vw, 22px);
+  font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.022em;
   overflow-wrap: anywhere;
@@ -338,8 +345,8 @@
 .bento-stack > span {
   isolation: isolate;
   display: block;
-  width: 52px;
-  height: 52px;
+  width: 36px;
+  height: 36px;
   margin-left: -14px;
   overflow: hidden;
   border: 2px solid var(--surface);
@@ -672,16 +679,15 @@
 }
 
 @media (max-width: 1100px) {
-  .home-bento {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    grid-template-rows: auto;
-  }
-  .hero-card {
-    grid-column: 1 / -1;
-    grid-row: auto;
-  }
   .hero-body {
-    padding: 40px 16px 40px 36px;
+    padding: 32px 0 32px 28px;
+  }
+  .bento-card {
+    padding: 20px;
+  }
+  .bento-top {
+    flex-wrap: wrap;
+    gap: 12px;
   }
   .category-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -692,37 +698,48 @@
     padding: 36px;
   }
 }
+@media (max-width: 960px) {
+  .home-bento {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto;
+  }
+  .hero-card {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+}
 @media (max-width: 768px) {
   .hero-card {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     align-items: stretch;
     min-height: 0;
-    background: #0b0b0b;
+    background: var(--hero-backdrop);
   }
   .hero-card::after {
     display: none;
   }
   .hero-body {
     width: 100%;
-    padding: 32px 28px 8px;
+    padding: 28px 28px 8px;
   }
   .hero-image {
     position: relative;
     inset: auto;
     z-index: 0;
     grid-row: 2;
-    width: 100%;
-    height: 260px;
-    object-fit: cover;
-    object-position: 76% center;
+    width: calc(100% - 32px);
+    height: 300px;
+    margin: 8px 16px 16px;
+    object-fit: contain;
+    object-position: right center;
     -webkit-mask-image: linear-gradient(180deg, transparent, black 34%);
     mask-image: linear-gradient(180deg, transparent, black 34%);
   }
   .hero-chip-fee {
     top: auto;
     right: auto;
-    bottom: 132px;
+    bottom: 150px;
     left: 20px;
   }
   .hero-chip-stores {
@@ -739,27 +756,36 @@
     gap: 12px;
   }
   .hero-body {
-    padding: 28px 22px 4px;
+    padding: 24px 20px 4px;
   }
-  .hero-body h1 {
+  .hero-body h1,
+  .hero-body h1:lang(tg),
+  .hero-body h1:lang(en) {
     margin-block: 16px;
-    font-size: clamp(30px, 9.2vw, 42px);
+    font-size: clamp(28px, 8.2vw, 42px);
   }
   .hero-body > p {
     font-size: 16px;
   }
   .hero-actions {
-    margin-top: 24px;
+    align-items: stretch;
+    gap: 6px;
+    margin-top: 20px;
   }
   .hero-actions .button {
     flex: 1 1 100%;
   }
+  .hero-delivery-link {
+    justify-content: center;
+    width: 100%;
+  }
   .hero-facts {
-    margin-top: 22px;
-    gap: 8px 18px;
+    margin-top: 14px;
+    gap: 8px 14px;
   }
   .hero-image {
-    height: 220px;
+    height: auto;
+    max-height: 260px;
   }
   .hero-chip {
     padding: 8px 14px 8px 8px;
@@ -770,7 +796,7 @@
     height: 36px;
   }
   .hero-chip-fee {
-    bottom: 112px;
+    bottom: 84px;
     left: 14px;
   }
   .hero-chip-stores {

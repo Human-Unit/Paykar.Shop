@@ -51,9 +51,9 @@
   padding: 8px;
   overflow: visible;
   border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
+  border-radius: var(--shopping-card-radius);
   background: var(--surface);
-  box-shadow: var(--card-shadow);
+  box-shadow: none;
   transition:
     border-color var(--dur-2) ease,
     box-shadow var(--dur-3) ease,
@@ -62,7 +62,7 @@
 .product-card:hover,
 .product-card:focus-within {
   border-color: var(--green-line);
-  box-shadow: var(--card-shadow-hover);
+  box-shadow: var(--card-shadow);
 }
 .product-card .image-wrap {
   position: relative;
@@ -80,7 +80,7 @@
 }
 @media (hover: hover) {
   .product-card:hover .image-wrap .product-image {
-    scale: 1.08;
+    scale: 1.02;
   }
 }
 .badge {
@@ -384,4 +384,25 @@
     gap: 6px;
     font-size: 13px;
   }
+}
+
+/* Product cards opt into complete product images; cart and checkout are unchanged. */
+.product-card .image-wrap .product-image[data-image-kind="product"] {
+  object-fit: contain;
+  padding: 12px;
+}
+.product-image-note {
+  position: absolute;
+  inset-inline: 6px;
+  bottom: 6px;
+  width: fit-content;
+  max-width: calc(100% - 12px);
+  margin-inline: auto;
+  padding: 3px 6px;
+  border-radius: 6px;
+  color: #464c46;
+  background: rgb(255 255 255 / 92%);
+  font-size: 10px;
+  line-height: 1.4;
+  text-align: center;
 }

@@ -238,10 +238,10 @@
   padding-inline: 12px;
 }
 
-/* The workspace stays local to the overview; editor and confirmation keep
-   their existing presentation and action behavior. */
+/* Overview and template routes share the shopping presentation.
+   Confirmation and homepage discovery remain outside these scopes. */
 .workspace {
-  width: min(100%, 1280px);
+  width: 100%;
   margin-inline: auto;
 }
 .workspace h1,
@@ -303,7 +303,7 @@
 }
 .latestOrder {
   display: grid;
-  grid-template-columns: minmax(180px, 260px) minmax(0, 1fr);
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
   gap: 20px 28px;
   margin-top: 16px;
@@ -314,9 +314,12 @@
   grid-row: span 2;
 }
 .productPreview {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  display: flex;
   gap: 6px;
+}
+.productPreview .previewTile {
+  flex: 0 1 64px;
+  width: 64px;
 }
 .previewTile {
   position: relative;
@@ -434,11 +437,10 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: center;
   gap: 8px;
-  padding: 20px 0;
+  padding: 12px 0;
   margin-bottom: 16px;
-  min-height: 126px;
   border-radius: 12px;
-  background: var(--green-softer);
+  background: transparent;
 }
 .composition .previewTile {
   padding: 6px;
@@ -528,9 +530,6 @@
   .workspace .templateActions :global(.button) {
     width: 100%;
   }
-  .composition {
-    min-height: 116px;
-  }
 }
 @media (max-width: 1024px) {
   .grid {
@@ -560,5 +559,257 @@
   }
   .sectionHeading h2 {
     font-size: 24px;
+  }
+}
+
+/* Coherence adoption is local: no change to order confirmation or discovery. */
+.workspace > .section {
+  margin-top: var(--shopping-section-gap);
+}
+.workspace .intro + .section {
+  margin-top: 32px;
+}
+.workspace .intro p {
+  line-height: 1.55;
+}
+.workspace h2,
+.templatePage h2 {
+  font-size: var(--shopping-section-title);
+  line-height: 1.2;
+}
+.workspace .card {
+  border-radius: var(--shopping-card-radius);
+}
+.workspace .card h3 {
+  font-size: 18px;
+}
+.workspace .templateActions {
+  gap: 8px;
+  padding-top: 16px;
+}
+.workspace .sectionHeading :global(.button) {
+  min-height: 44px;
+}
+
+.templatePage :global(.commerce-heading) {
+  margin-bottom: 24px;
+}
+.editorWorkspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 32px;
+}
+.editorMain,
+.pickerSection {
+  min-width: 0;
+}
+.editorWorkspace .editor {
+  max-width: none;
+}
+.templatePage .editor > label {
+  max-width: none;
+}
+.templatePage .editor input,
+.templatePage input[type="search"] {
+  min-height: 48px;
+  font-size: 16px;
+  border-radius: var(--shopping-control-radius);
+}
+.templatePage .editor > label input {
+  max-width: 520px;
+}
+.templatePage .itemList {
+  margin-block: 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--shopping-card-radius);
+  padding-inline: 20px;
+  background: var(--surface);
+}
+.templatePage .itemList:empty {
+  display: none;
+}
+.templatePage .itemList li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 16px;
+  padding-block: 16px;
+}
+.templatePage .itemList li:last-child {
+  border-bottom: 0;
+}
+.templatePage .itemList li > div {
+  min-width: 0;
+}
+.templatePage .itemList :global(.product-identity-copy) > a,
+.templatePage .productPicker :global(.product-identity-copy) > a {
+  font-weight: 600;
+  line-height: 1.4;
+}
+.templatePage .itemList small {
+  font-size: 12px;
+}
+.templatePage .itemList label {
+  font-size: 12px;
+}
+.templatePage .itemList input {
+  width: 64px;
+}
+.templatePage .itemList :global(.button) {
+  min-height: 44px;
+  padding-inline: 12px;
+  font-size: 13px;
+  background: transparent;
+  box-shadow: none;
+}
+.pickerSection {
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--shopping-panel-radius);
+  background: var(--surface);
+}
+.pickerSection h2 {
+  margin: 0 0 20px;
+}
+.pickerSection > label {
+  display: grid;
+  gap: 8px;
+  font-size: 14px;
+}
+.pickerSection input[type="search"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line-strong);
+  background: var(--elevated-surface);
+  color: var(--ink);
+}
+.templatePage .productPicker {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  max-height: 560px;
+  padding: 0 4px 0 0;
+  border: 0;
+  border-radius: 0;
+  scrollbar-width: thin;
+}
+.templatePage .productPicker li {
+  padding-block: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.templatePage .productPicker li:last-child {
+  border-bottom: 0;
+}
+.templatePage .productPicker :global(.product-identity) {
+  flex: 1;
+}
+.templatePage .productPicker button {
+  min-height: 44px;
+  flex-shrink: 0;
+}
+.templatePage .estimate {
+  margin: 24px 0 8px;
+}
+.templatePage .estimate + p {
+  color: var(--muted);
+  font-size: 13px;
+  max-width: 65ch;
+}
+.editorSecondaryActions {
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+.editorSecondaryActions > div:first-child > :global(.button) {
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+  box-shadow: none;
+}
+.templatePage .templateContents {
+  max-width: 900px;
+  min-width: 0;
+}
+.curatedDetail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  align-items: start;
+  gap: 32px;
+  margin-top: 32px;
+}
+.curatedDetail .templateContents {
+  grid-column: 1;
+  grid-row: 1;
+}
+.templateSummary {
+  grid-column: 2;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--shopping-panel-radius);
+  background: var(--surface);
+}
+.templateSummary .estimate {
+  margin-top: 0;
+}
+.templateSummary .actionResult {
+  margin-top: 20px;
+}
+.templateSummary :global(.button) {
+  width: 100%;
+}
+.templateContents h2 {
+  margin: 0 0 20px;
+}
+.rowQuantity {
+  color: var(--muted);
+  font-size: 14px;
+}
+@media (max-width: 1100px) {
+  .curatedDetail {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    margin-top: 24px;
+  }
+  .curatedDetail .templateContents,
+  .templateSummary {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .editorWorkspace {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+  .templatePage .productPicker {
+    max-height: 400px;
+  }
+}
+@media (max-width: 640px) {
+  .workspace .intro + .section {
+    margin-top: 24px;
+  }
+  .templatePage .itemList {
+    padding-inline: 16px;
+  }
+  .templatePage .itemList li {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+  }
+  .templatePage .itemList :global(.product-identity) {
+    grid-column: 1 / -1;
+  }
+  .templatePage .itemList label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .templatePage .itemList label input {
+    margin: 0;
+  }
+  .pickerSection {
+    padding: 16px;
+  }
+  .templatePage .productPicker :global(.product-identity-copy) {
+    font-size: 14px;
+  }
+  .templatePage .productPicker button {
+    padding-inline: 10px;
   }
 }

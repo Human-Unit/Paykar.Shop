@@ -27,6 +27,15 @@ const producePhotos: Record<string, string> = {
   potatoes: "potatoes",
   cucumbers: "cucumbers",
 };
+// Category imagery is illustrative, not a photograph of an exact SKU.
+export function hasCategoryImage(product: Pick<Product, "slug" | "image_url">) {
+  const illustration = product.image_url.match(
+    /^\/images\/products\/(\w+)\.svg$/,
+  )?.[1];
+  return Boolean(
+    illustration && demoPhotos[illustration] && !producePhotos[product.slug],
+  );
+}
 export function ProductImage({
   product,
   large = false,
@@ -57,6 +66,7 @@ export function ProductImage({
       unoptimized
       loading={large ? "eager" : undefined}
       onError={() => setFailed(true)}
+      data-image-kind={hasCategoryImage(product) ? "category" : "product"}
       className="product-image"
     />
   );
@@ -161,6 +171,11 @@ export function ProductCard({
         aria-hidden="true"
       >
         <ProductImage product={product} />
+        {hasCategoryImage(product) && !soldOut && (
+          <span className="product-image-note">
+            {t("Иллюстрация категории")}
+          </span>
+        )}
         {discount > 0 && <span className="badge">−{discount}%</span>}
         {soldOut && <span className="stock-flag">{t("Нет в наличии")}</span>}
       </Link>

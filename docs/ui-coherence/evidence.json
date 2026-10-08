@@ -1,0 +1,2988 @@
+{
+  "date": "2026-10-07",
+  "scope": "Read-only visual/source audit, not implementation acceptance",
+  "baseURL": "http://localhost:3000",
+  "language": "ru",
+  "reducedMotion": "reduce",
+  "fixtures": "Isolated local storage; real API products; existing local template and existing persisted test orders; no order created",
+  "anchors": [
+    {
+      "name": "home",
+      "path": "/",
+      "width": 1440,
+      "theme": "dark",
+      "viewport": 1440,
+      "pageHeight": 5633,
+      "overflow": false,
+      "headings": [
+        {
+          "text": "Всё нужное —\nс доставкой",
+          "x": 95.66667175292969,
+          "y": 279.7395935058594,
+          "width": 546.4375,
+          "height": 111.875,
+          "font": "53.28px",
+          "weight": "800",
+          "color": "rgb(255, 255, 255)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Акции",
+          "x": 1017.3125,
+          "y": 208.8229217529297,
+          "width": 69.04167175292969,
+          "height": 25.916667938232422,
+          "font": "21.6px",
+          "weight": "700",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Мои покупки",
+          "x": 1017.3125,
+          "y": 444.82293701171875,
+          "width": 143.7291717529297,
+          "height": 25.916667938232422,
+          "font": "21.6px",
+          "weight": "700",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Акции",
+          "x": 91.66667175292969,
+          "y": 773.78125,
+          "width": 228.80209350585938,
+          "height": 40.3125,
+          "font": "36px",
+          "weight": "800",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Категории товаров",
+          "x": 55,
+          "y": 1409.5521240234375,
+          "width": 341,
+          "height": 40.3125,
+          "font": "36px",
+          "weight": "800",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Повседневные покупки",
+          "x": 55,
+          "y": 1821.40625,
+          "width": 427.96875,
+          "height": 40.3125,
+          "font": "36px",
+          "weight": "800",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Мои покупки",
+          "x": 75.66667175292969,
+          "y": 2794.697998046875,
+          "width": 1037.760498046875,
+          "height": 30,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "От корзины до двери.",
+          "x": 111.66667175292969,
+          "y": 3144.05224609375,
+          "width": 480,
+          "height": 108.85417175292969,
+          "font": "50.4px",
+          "weight": "850",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Заказ оформлен",
+          "x": 895,
+          "y": 3170.072998046875,
+          "width": 259.3333435058594,
+          "height": 26.25,
+          "font": "21px",
+          "weight": "800",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Магазины",
+          "x": 55,
+          "y": 3822.197998046875,
+          "width": 564.0833740234375,
+          "height": 40.3125,
+          "font": "36px",
+          "weight": "800",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Блог",
+          "x": 55,
+          "y": 4553.4375,
+          "width": 445.3333435058594,
+          "height": 40.3125,
+          "font": "36px",
+          "weight": "800",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Как собрать продукты на неделю",
+          "x": 79.66667175292969,
+          "y": 4930.80224609375,
+          "width": 352.82293701171875,
+          "height": 26.875,
+          "font": "21px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Как хранить овощи и фрукты",
+          "x": 526.3333740234375,
+          "y": 4930.80224609375,
+          "width": 312.0208435058594,
+          "height": 26.875,
+          "font": "21px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Как работает доставка Пайкар",
+          "x": 973,
+          "y": 4930.80224609375,
+          "width": 324.03125,
+          "height": 26.875,
+          "font": "21px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        }
+      ],
+      "greenButtons": 3,
+      "images": [
+        {
+          "src": "http://localhost:3000/images/paykar/bakery.webp",
+          "name": "Булочка с изюмом, 1 шт"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Йогурт натуральный, 200 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/carrots.webp",
+          "name": "Морковь, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/household.webp",
+          "name": "Пакеты для мусора, 20 шт"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/drinks.webp",
+          "name": "Сок апельсиновый, 1 л"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/oranges.webp",
+          "name": "Апельсины, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bakery.webp",
+          "name": "Багет, 250 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bananas.webp",
+          "name": "Бананы, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/sweets.webp",
+          "name": "Вафли, 200 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/drinks.webp",
+          "name": "Вода газированная, 1 л"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/drinks.webp",
+          "name": "Вода негазированная, 1 л"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/household.webp",
+          "name": "Губки для посуды, 5 шт"
+        }
+      ]
+    },
+    {
+      "name": "product",
+      "path": "/product/milk",
+      "width": 1440,
+      "theme": "dark",
+      "viewport": 1440,
+      "pageHeight": 2955,
+      "overflow": false,
+      "headings": [
+        {
+          "text": "Молоко 3,2%, 1 л",
+          "x": 781.4166870117188,
+          "y": 309.78125,
+          "width": 556.9166870117188,
+          "height": 46.645835876464844,
+          "font": "43.2px",
+          "weight": "800",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "О товаре",
+          "x": 91.66667175292969,
+          "y": 1030.604248046875,
+          "width": 158.5104217529297,
+          "height": 40.3125,
+          "font": "36px",
+          "weight": "800",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Пищевая ценность и параметры · на 100 мл, типичные значения",
+          "x": 91.66667175292969,
+          "y": 1306.416748046875,
+          "width": 731.3125,
+          "height": 24,
+          "font": "16px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Почему стоит добавить",
+          "x": 91.66667175292969,
+          "y": 1622.25,
+          "width": 731.3125,
+          "height": 24,
+          "font": "16px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "В этом разделе",
+          "x": 55,
+          "y": 1972.5,
+          "width": 271.875,
+          "height": 40.3125,
+          "font": "36px",
+          "weight": "800",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        }
+      ],
+      "greenButtons": 0,
+      "images": [
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Молоко 3,2%, 1 л"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Йогурт натуральный, 200 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Масло сливочное, 180 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Сметана 20%, 300 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Сыр полутвёрдый, 200 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Творог 5%, 250 г"
+        }
+      ]
+    },
+    {
+      "name": "shopping",
+      "path": "/my-shopping",
+      "width": 1440,
+      "theme": "dark",
+      "viewport": 1440,
+      "pageHeight": 2807,
+      "overflow": false,
+      "headings": [
+        {
+          "text": "Мои покупки",
+          "x": 75,
+          "y": 239.11459350585938,
+          "width": 640.6354370117188,
+          "height": 46,
+          "font": "40px",
+          "weight": "800",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Последний заказ",
+          "x": 75,
+          "y": 383.51043701171875,
+          "width": 1280,
+          "height": 31.197917938232422,
+          "font": "24px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Заказ #4570e344",
+          "x": 387.66668701171875,
+          "y": 492.16668701171875,
+          "width": 169.25,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Мои шаблоны",
+          "x": 75,
+          "y": 742.2291870117188,
+          "width": 178.8541717529297,
+          "height": 31.197917938232422,
+          "font": "24px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Моя неделя",
+          "x": 95.66667175292969,
+          "y": 996.2916870117188,
+          "width": 372,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Готовые наборы",
+          "x": 75,
+          "y": 1266.9583740234375,
+          "width": 205.65625,
+          "height": 31.197917938232422,
+          "font": "24px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Семья",
+          "x": 95.66667175292969,
+          "y": 1519.822998046875,
+          "width": 372,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Завтрак",
+          "x": 529,
+          "y": 1519.822998046875,
+          "width": 372,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Овощи и фрукты",
+          "x": 962.3333740234375,
+          "y": 1519.822998046875,
+          "width": 372,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Для гостей",
+          "x": 95.66667175292969,
+          "y": 2005.34375,
+          "width": 372,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "На неделю",
+          "x": 529,
+          "y": 2005.34375,
+          "width": 372,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        }
+      ],
+      "greenButtons": 7,
+      "images": [
+        {
+          "src": "http://localhost:3000/images/paykar/apples.webp",
+          "name": "Яблоки красные, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/oranges.webp",
+          "name": "Апельсины, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bakery.webp",
+          "name": "Багет, 250 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bananas.webp",
+          "name": "Бананы, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bakery.webp",
+          "name": "Булочка с изюмом, 1 шт"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bakery.webp",
+          "name": "Хлеб пшеничный, 400 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Молоко 3,2%, 1 л"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/potatoes.webp",
+          "name": "Картофель, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/apples.webp",
+          "name": "Яблоки красные, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bakery.webp",
+          "name": "Хлеб пшеничный, 400 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Масло сливочное, 180 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Сыр полутвёрдый, 200 г"
+        }
+      ]
+    },
+    {
+      "name": "home",
+      "path": "/",
+      "width": 1440,
+      "theme": "light",
+      "viewport": 1440,
+      "pageHeight": 5633,
+      "overflow": false,
+      "headings": [
+        {
+          "text": "Всё нужное —\nс доставкой",
+          "x": 95.66667175292969,
+          "y": 279.7395935058594,
+          "width": 546.4375,
+          "height": 111.875,
+          "font": "53.28px",
+          "weight": "800",
+          "color": "rgb(255, 255, 255)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Акции",
+          "x": 1017.3125,
+          "y": 208.8229217529297,
+          "width": 69.04167175292969,
+          "height": 25.916667938232422,
+          "font": "21.6px",
+          "weight": "700",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Мои покупки",
+          "x": 1017.3125,
+          "y": 444.82293701171875,
+          "width": 143.7291717529297,
+          "height": 25.916667938232422,
+          "font": "21.6px",
+          "weight": "700",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Акции",
+          "x": 91.66667175292969,
+          "y": 773.78125,
+          "width": 228.80209350585938,
+          "height": 40.3125,
+          "font": "36px",
+          "weight": "800",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Категории товаров",
+          "x": 55,
+          "y": 1409.5521240234375,
+          "width": 341,
+          "height": 40.3125,
+          "font": "36px",
+          "weight": "800",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Повседневные покупки",
+          "x": 55,
+          "y": 1821.40625,
+          "width": 427.96875,
+          "height": 40.3125,
+          "font": "36px",
+          "weight": "800",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Мои покупки",
+          "x": 75.66667175292969,
+          "y": 2794.697998046875,
+          "width": 1037.760498046875,
+          "height": 30,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "От корзины до двери.",
+          "x": 111.66667175292969,
+          "y": 3144.05224609375,
+          "width": 480,
+          "height": 108.85417175292969,
+          "font": "50.4px",
+          "weight": "850",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Заказ оформлен",
+          "x": 895,
+          "y": 3170.072998046875,
+          "width": 259.3333435058594,
+          "height": 26.25,
+          "font": "21px",
+          "weight": "800",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Магазины",
+          "x": 55,
+          "y": 3822.197998046875,
+          "width": 564.0833740234375,
+          "height": 40.3125,
+          "font": "36px",
+          "weight": "800",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Блог",
+          "x": 55,
+          "y": 4553.4375,
+          "width": 445.3333435058594,
+          "height": 40.3125,
+          "font": "36px",
+          "weight": "800",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Как собрать продукты на неделю",
+          "x": 79.66667175292969,
+          "y": 4930.80224609375,
+          "width": 352.82293701171875,
+          "height": 26.875,
+          "font": "21px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Как хранить овощи и фрукты",
+          "x": 526.3333740234375,
+          "y": 4930.80224609375,
+          "width": 312.0208435058594,
+          "height": 26.875,
+          "font": "21px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Как работает доставка Пайкар",
+          "x": 973,
+          "y": 4930.80224609375,
+          "width": 324.03125,
+          "height": 26.875,
+          "font": "21px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        }
+      ],
+      "greenButtons": 3,
+      "images": [
+        {
+          "src": "http://localhost:3000/images/paykar/bakery.webp",
+          "name": "Булочка с изюмом, 1 шт"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Йогурт натуральный, 200 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/carrots.webp",
+          "name": "Морковь, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/household.webp",
+          "name": "Пакеты для мусора, 20 шт"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/drinks.webp",
+          "name": "Сок апельсиновый, 1 л"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/oranges.webp",
+          "name": "Апельсины, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bakery.webp",
+          "name": "Багет, 250 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bananas.webp",
+          "name": "Бананы, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/sweets.webp",
+          "name": "Вафли, 200 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/drinks.webp",
+          "name": "Вода газированная, 1 л"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/drinks.webp",
+          "name": "Вода негазированная, 1 л"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/household.webp",
+          "name": "Губки для посуды, 5 шт"
+        }
+      ]
+    },
+    {
+      "name": "product",
+      "path": "/product/milk",
+      "width": 1440,
+      "theme": "light",
+      "viewport": 1440,
+      "pageHeight": 2955,
+      "overflow": false,
+      "headings": [
+        {
+          "text": "Молоко 3,2%, 1 л",
+          "x": 781.4166870117188,
+          "y": 309.78125,
+          "width": 556.9166870117188,
+          "height": 46.645835876464844,
+          "font": "43.2px",
+          "weight": "800",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "О товаре",
+          "x": 91.66667175292969,
+          "y": 1030.604248046875,
+          "width": 158.5104217529297,
+          "height": 40.3125,
+          "font": "36px",
+          "weight": "800",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Пищевая ценность и параметры · на 100 мл, типичные значения",
+          "x": 91.66667175292969,
+          "y": 1306.416748046875,
+          "width": 731.3125,
+          "height": 24,
+          "font": "16px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Почему стоит добавить",
+          "x": 91.66667175292969,
+          "y": 1622.25,
+          "width": 731.3125,
+          "height": 24,
+          "font": "16px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "В этом разделе",
+          "x": 55,
+          "y": 1972.5,
+          "width": 271.875,
+          "height": 40.3125,
+          "font": "36px",
+          "weight": "800",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        }
+      ],
+      "greenButtons": 0,
+      "images": [
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Молоко 3,2%, 1 л"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Йогурт натуральный, 200 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Масло сливочное, 180 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Сметана 20%, 300 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Сыр полутвёрдый, 200 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Творог 5%, 250 г"
+        }
+      ]
+    },
+    {
+      "name": "shopping",
+      "path": "/my-shopping",
+      "width": 1440,
+      "theme": "light",
+      "viewport": 1440,
+      "pageHeight": 2807,
+      "overflow": false,
+      "headings": [
+        {
+          "text": "Мои покупки",
+          "x": 75,
+          "y": 239.11459350585938,
+          "width": 640.6354370117188,
+          "height": 46,
+          "font": "40px",
+          "weight": "800",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Последний заказ",
+          "x": 75,
+          "y": 383.51043701171875,
+          "width": 1280,
+          "height": 31.197917938232422,
+          "font": "24px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Заказ #4570e344",
+          "x": 387.66668701171875,
+          "y": 492.16668701171875,
+          "width": 169.25,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Мои шаблоны",
+          "x": 75,
+          "y": 742.2291870117188,
+          "width": 178.8541717529297,
+          "height": 31.197917938232422,
+          "font": "24px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Моя неделя",
+          "x": 95.66667175292969,
+          "y": 996.2916870117188,
+          "width": 372,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Готовые наборы",
+          "x": 75,
+          "y": 1266.9583740234375,
+          "width": 205.65625,
+          "height": 31.197917938232422,
+          "font": "24px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Семья",
+          "x": 95.66667175292969,
+          "y": 1519.822998046875,
+          "width": 372,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Завтрак",
+          "x": 529,
+          "y": 1519.822998046875,
+          "width": 372,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Овощи и фрукты",
+          "x": 962.3333740234375,
+          "y": 1519.822998046875,
+          "width": 372,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Для гостей",
+          "x": 95.66667175292969,
+          "y": 2005.34375,
+          "width": 372,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "На неделю",
+          "x": 529,
+          "y": 2005.34375,
+          "width": 372,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        }
+      ],
+      "greenButtons": 7,
+      "images": [
+        {
+          "src": "http://localhost:3000/images/paykar/apples.webp",
+          "name": "Яблоки красные, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/oranges.webp",
+          "name": "Апельсины, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bakery.webp",
+          "name": "Багет, 250 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bananas.webp",
+          "name": "Бананы, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bakery.webp",
+          "name": "Булочка с изюмом, 1 шт"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bakery.webp",
+          "name": "Хлеб пшеничный, 400 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Молоко 3,2%, 1 л"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/potatoes.webp",
+          "name": "Картофель, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/apples.webp",
+          "name": "Яблоки красные, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bakery.webp",
+          "name": "Хлеб пшеничный, 400 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Масло сливочное, 180 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Сыр полутвёрдый, 200 г"
+        }
+      ]
+    },
+    {
+      "name": "home",
+      "path": "/",
+      "width": 390,
+      "theme": "dark",
+      "viewport": 390,
+      "pageHeight": 9047,
+      "overflow": false,
+      "headings": [
+        {
+          "text": "Всё нужное —\nс доставкой",
+          "x": 36.66666793823242,
+          "y": 234.34375,
+          "width": 306.66668701171875,
+          "height": 67.14583587646484,
+          "font": "31.98px",
+          "weight": "800",
+          "color": "rgb(255, 255, 255)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Акции",
+          "x": 36.66666793823242,
+          "y": 831.7916870117188,
+          "width": 57.53125,
+          "height": 21.59375,
+          "font": "18px",
+          "weight": "700",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Мои покупки",
+          "x": 36.66666793823242,
+          "y": 992.4166870117188,
+          "width": 119.78125,
+          "height": 21.59375,
+          "font": "18px",
+          "weight": "700",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Акции",
+          "x": 24.666667938232422,
+          "y": 1256.4583740234375,
+          "width": 198.1666717529297,
+          "height": 29.11458396911621,
+          "font": "26px",
+          "weight": "800",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Категории товаров",
+          "x": 16,
+          "y": 2110.17724609375,
+          "width": 197.6041717529297,
+          "height": 58.22916793823242,
+          "font": "26px",
+          "weight": "800",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Повседневные покупки",
+          "x": 16,
+          "y": 2485.135498046875,
+          "width": 207.86459350585938,
+          "height": 58.22916793823242,
+          "font": "26px",
+          "weight": "800",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Мои покупки",
+          "x": 36.66666793823242,
+          "y": 3937.40625,
+          "width": 306.66668701171875,
+          "height": 30,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "От корзины до двери.",
+          "x": 32.66666793823242,
+          "y": 4248.23974609375,
+          "width": 314.66668701171875,
+          "height": 69.10417175292969,
+          "font": "32px",
+          "weight": "850",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Заказ оформлен",
+          "x": 55,
+          "y": 4851.9169921875,
+          "width": 270,
+          "height": 26.25,
+          "font": "21px",
+          "weight": "800",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Магазины",
+          "x": 16,
+          "y": 5475.3857421875,
+          "width": 348,
+          "height": 29.11458396911621,
+          "font": "26px",
+          "weight": "800",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Блог",
+          "x": 16,
+          "y": 6692.0625,
+          "width": 213.1979217529297,
+          "height": 29.11458396911621,
+          "font": "26px",
+          "weight": "800",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Как собрать продукты на неделю",
+          "x": 40.66666793823242,
+          "y": 7096.6357421875,
+          "width": 298.66668701171875,
+          "height": 53.75,
+          "font": "21px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Как хранить овощи и фрукты",
+          "x": 40.66666793823242,
+          "y": 7603.09375,
+          "width": 298.66668701171875,
+          "height": 53.75,
+          "font": "21px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Как работает доставка Пайкар",
+          "x": 40.66666793823242,
+          "y": 8109.55224609375,
+          "width": 298.66668701171875,
+          "height": 53.75,
+          "font": "21px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        }
+      ],
+      "greenButtons": 3,
+      "images": [
+        {
+          "src": "http://localhost:3000/images/paykar/bakery.webp",
+          "name": "Булочка с изюмом, 1 шт"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Йогурт натуральный, 200 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/carrots.webp",
+          "name": "Морковь, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/household.webp",
+          "name": "Пакеты для мусора, 20 шт"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/drinks.webp",
+          "name": "Сок апельсиновый, 1 л"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/oranges.webp",
+          "name": "Апельсины, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bakery.webp",
+          "name": "Багет, 250 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bananas.webp",
+          "name": "Бананы, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/sweets.webp",
+          "name": "Вафли, 200 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/drinks.webp",
+          "name": "Вода газированная, 1 л"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/drinks.webp",
+          "name": "Вода негазированная, 1 л"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/household.webp",
+          "name": "Губки для посуды, 5 шт"
+        }
+      ]
+    },
+    {
+      "name": "product",
+      "path": "/product/milk",
+      "width": 390,
+      "theme": "dark",
+      "viewport": 390,
+      "pageHeight": 3999,
+      "overflow": false,
+      "headings": [
+        {
+          "text": "Молоко 3,2%, 1 л",
+          "x": 36.66666793823242,
+          "y": 594.9271240234375,
+          "width": 306.66668701171875,
+          "height": 30.23958396911621,
+          "font": "28px",
+          "weight": "800",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "О товаре",
+          "x": 36.66666793823242,
+          "y": 1339.1771240234375,
+          "width": 306.66668701171875,
+          "height": 29.11458396911621,
+          "font": "26px",
+          "weight": "800",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Пищевая ценность и параметры · на 100 мл, типичные значения",
+          "x": 36.66666793823242,
+          "y": 1750.9583740234375,
+          "width": 306.66668701171875,
+          "height": 48,
+          "font": "16px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Почему стоит добавить",
+          "x": 36.66666793823242,
+          "y": 2090.791748046875,
+          "width": 306.66668701171875,
+          "height": 24,
+          "font": "16px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "В этом разделе",
+          "x": 16,
+          "y": 2548.45849609375,
+          "width": 143.23959350585938,
+          "height": 58.22916793823242,
+          "font": "26px",
+          "weight": "800",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        }
+      ],
+      "greenButtons": 0,
+      "images": [
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Молоко 3,2%, 1 л"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Йогурт натуральный, 200 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Масло сливочное, 180 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Сметана 20%, 300 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Сыр полутвёрдый, 200 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Творог 5%, 250 г"
+        }
+      ]
+    },
+    {
+      "name": "shopping",
+      "path": "/my-shopping",
+      "width": 390,
+      "theme": "dark",
+      "viewport": 390,
+      "pageHeight": 4512,
+      "overflow": false,
+      "headings": [
+        {
+          "text": "Мои покупки",
+          "x": 16,
+          "y": 221.55209350585938,
+          "width": 348,
+          "height": 32.19791793823242,
+          "font": "28px",
+          "weight": "800",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Последний заказ",
+          "x": 16,
+          "y": 379.34375,
+          "width": 348,
+          "height": 31.197917938232422,
+          "font": "24px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Заказ #4570e344",
+          "x": 32.66666793823242,
+          "y": 589.2916870117188,
+          "width": 169.25,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Мои шаблоны",
+          "x": 16,
+          "y": 936.9583740234375,
+          "width": 178.8541717529297,
+          "height": 31.197917938232422,
+          "font": "24px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Моя неделя",
+          "x": 32.66666793823242,
+          "y": 1180.416748046875,
+          "width": 314.66668701171875,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Готовые наборы",
+          "x": 16,
+          "y": 1447.0833740234375,
+          "width": 205.65625,
+          "height": 31.197917938232422,
+          "font": "24px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Семья",
+          "x": 32.66666793823242,
+          "y": 1708.947998046875,
+          "width": 314.66668701171875,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Завтрак",
+          "x": 32.66666793823242,
+          "y": 2138.67724609375,
+          "width": 314.66668701171875,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Овощи и фрукты",
+          "x": 32.66666793823242,
+          "y": 2568.40625,
+          "width": 314.66668701171875,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Для гостей",
+          "x": 32.66666793823242,
+          "y": 3055.71875,
+          "width": 314.66668701171875,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "На неделю",
+          "x": 32.66666793823242,
+          "y": 3485.447998046875,
+          "width": 314.66668701171875,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(245, 245, 245)",
+          "radius": "0px",
+          "padding": "0px"
+        }
+      ],
+      "greenButtons": 7,
+      "images": [
+        {
+          "src": "http://localhost:3000/images/paykar/apples.webp",
+          "name": "Яблоки красные, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/oranges.webp",
+          "name": "Апельсины, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bakery.webp",
+          "name": "Багет, 250 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bananas.webp",
+          "name": "Бананы, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bakery.webp",
+          "name": "Булочка с изюмом, 1 шт"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bakery.webp",
+          "name": "Хлеб пшеничный, 400 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Молоко 3,2%, 1 л"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/potatoes.webp",
+          "name": "Картофель, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/apples.webp",
+          "name": "Яблоки красные, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bakery.webp",
+          "name": "Хлеб пшеничный, 400 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Масло сливочное, 180 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Сыр полутвёрдый, 200 г"
+        }
+      ]
+    },
+    {
+      "name": "home",
+      "path": "/",
+      "width": 390,
+      "theme": "light",
+      "viewport": 390,
+      "pageHeight": 9047,
+      "overflow": false,
+      "headings": [
+        {
+          "text": "Всё нужное —\nс доставкой",
+          "x": 36.66666793823242,
+          "y": 234.34375,
+          "width": 306.66668701171875,
+          "height": 67.14583587646484,
+          "font": "31.98px",
+          "weight": "800",
+          "color": "rgb(255, 255, 255)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Акции",
+          "x": 36.66666793823242,
+          "y": 831.7916870117188,
+          "width": 57.53125,
+          "height": 21.59375,
+          "font": "18px",
+          "weight": "700",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Мои покупки",
+          "x": 36.66666793823242,
+          "y": 992.4166870117188,
+          "width": 119.78125,
+          "height": 21.59375,
+          "font": "18px",
+          "weight": "700",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Акции",
+          "x": 24.666667938232422,
+          "y": 1256.4583740234375,
+          "width": 198.1666717529297,
+          "height": 29.11458396911621,
+          "font": "26px",
+          "weight": "800",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Категории товаров",
+          "x": 16,
+          "y": 2110.17724609375,
+          "width": 197.6041717529297,
+          "height": 58.22916793823242,
+          "font": "26px",
+          "weight": "800",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Повседневные покупки",
+          "x": 16,
+          "y": 2485.135498046875,
+          "width": 207.86459350585938,
+          "height": 58.22916793823242,
+          "font": "26px",
+          "weight": "800",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Мои покупки",
+          "x": 36.66666793823242,
+          "y": 3937.40625,
+          "width": 306.66668701171875,
+          "height": 30,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "От корзины до двери.",
+          "x": 32.66666793823242,
+          "y": 4248.23974609375,
+          "width": 314.66668701171875,
+          "height": 69.10417175292969,
+          "font": "32px",
+          "weight": "850",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Заказ оформлен",
+          "x": 55,
+          "y": 4851.9169921875,
+          "width": 270,
+          "height": 26.25,
+          "font": "21px",
+          "weight": "800",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Магазины",
+          "x": 16,
+          "y": 5475.3857421875,
+          "width": 348,
+          "height": 29.11458396911621,
+          "font": "26px",
+          "weight": "800",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Блог",
+          "x": 16,
+          "y": 6692.0625,
+          "width": 213.1979217529297,
+          "height": 29.11458396911621,
+          "font": "26px",
+          "weight": "800",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Как собрать продукты на неделю",
+          "x": 40.66666793823242,
+          "y": 7096.6357421875,
+          "width": 298.66668701171875,
+          "height": 53.75,
+          "font": "21px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Как хранить овощи и фрукты",
+          "x": 40.66666793823242,
+          "y": 7603.09375,
+          "width": 298.66668701171875,
+          "height": 53.75,
+          "font": "21px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Как работает доставка Пайкар",
+          "x": 40.66666793823242,
+          "y": 8109.55224609375,
+          "width": 298.66668701171875,
+          "height": 53.75,
+          "font": "21px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        }
+      ],
+      "greenButtons": 3,
+      "images": [
+        {
+          "src": "http://localhost:3000/images/paykar/bakery.webp",
+          "name": "Булочка с изюмом, 1 шт"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Йогурт натуральный, 200 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/carrots.webp",
+          "name": "Морковь, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/household.webp",
+          "name": "Пакеты для мусора, 20 шт"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/drinks.webp",
+          "name": "Сок апельсиновый, 1 л"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/oranges.webp",
+          "name": "Апельсины, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bakery.webp",
+          "name": "Багет, 250 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bananas.webp",
+          "name": "Бананы, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/sweets.webp",
+          "name": "Вафли, 200 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/drinks.webp",
+          "name": "Вода газированная, 1 л"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/drinks.webp",
+          "name": "Вода негазированная, 1 л"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/household.webp",
+          "name": "Губки для посуды, 5 шт"
+        }
+      ]
+    },
+    {
+      "name": "product",
+      "path": "/product/milk",
+      "width": 390,
+      "theme": "light",
+      "viewport": 390,
+      "pageHeight": 3999,
+      "overflow": false,
+      "headings": [
+        {
+          "text": "Молоко 3,2%, 1 л",
+          "x": 36.66666793823242,
+          "y": 594.9271240234375,
+          "width": 306.66668701171875,
+          "height": 30.23958396911621,
+          "font": "28px",
+          "weight": "800",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "О товаре",
+          "x": 36.66666793823242,
+          "y": 1339.1771240234375,
+          "width": 306.66668701171875,
+          "height": 29.11458396911621,
+          "font": "26px",
+          "weight": "800",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Пищевая ценность и параметры · на 100 мл, типичные значения",
+          "x": 36.66666793823242,
+          "y": 1750.9583740234375,
+          "width": 306.66668701171875,
+          "height": 48,
+          "font": "16px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Почему стоит добавить",
+          "x": 36.66666793823242,
+          "y": 2090.791748046875,
+          "width": 306.66668701171875,
+          "height": 24,
+          "font": "16px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "В этом разделе",
+          "x": 16,
+          "y": 2548.45849609375,
+          "width": 143.23959350585938,
+          "height": 58.22916793823242,
+          "font": "26px",
+          "weight": "800",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        }
+      ],
+      "greenButtons": 0,
+      "images": [
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Молоко 3,2%, 1 л"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Йогурт натуральный, 200 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Масло сливочное, 180 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Сметана 20%, 300 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Сыр полутвёрдый, 200 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Творог 5%, 250 г"
+        }
+      ]
+    },
+    {
+      "name": "shopping",
+      "path": "/my-shopping",
+      "width": 390,
+      "theme": "light",
+      "viewport": 390,
+      "pageHeight": 4512,
+      "overflow": false,
+      "headings": [
+        {
+          "text": "Мои покупки",
+          "x": 16,
+          "y": 221.55209350585938,
+          "width": 348,
+          "height": 32.19791793823242,
+          "font": "28px",
+          "weight": "800",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Последний заказ",
+          "x": 16,
+          "y": 379.34375,
+          "width": 348,
+          "height": 31.197917938232422,
+          "font": "24px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Заказ #4570e344",
+          "x": 32.66666793823242,
+          "y": 589.2916870117188,
+          "width": 169.25,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Мои шаблоны",
+          "x": 16,
+          "y": 936.9583740234375,
+          "width": 178.8541717529297,
+          "height": 31.197917938232422,
+          "font": "24px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Моя неделя",
+          "x": 32.66666793823242,
+          "y": 1180.416748046875,
+          "width": 314.66668701171875,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Готовые наборы",
+          "x": 16,
+          "y": 1447.0833740234375,
+          "width": 205.65625,
+          "height": 31.197917938232422,
+          "font": "24px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Семья",
+          "x": 32.66666793823242,
+          "y": 1708.947998046875,
+          "width": 314.66668701171875,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Завтрак",
+          "x": 32.66666793823242,
+          "y": 2138.67724609375,
+          "width": 314.66668701171875,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Овощи и фрукты",
+          "x": 32.66666793823242,
+          "y": 2568.40625,
+          "width": 314.66668701171875,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "Для гостей",
+          "x": 32.66666793823242,
+          "y": 3055.71875,
+          "width": 314.66668701171875,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        },
+        {
+          "text": "На неделю",
+          "x": 32.66666793823242,
+          "y": 3485.447998046875,
+          "width": 314.66668701171875,
+          "height": 28,
+          "font": "20px",
+          "weight": "750",
+          "color": "rgb(24, 24, 24)",
+          "radius": "0px",
+          "padding": "0px"
+        }
+      ],
+      "greenButtons": 7,
+      "images": [
+        {
+          "src": "http://localhost:3000/images/paykar/apples.webp",
+          "name": "Яблоки красные, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/oranges.webp",
+          "name": "Апельсины, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bakery.webp",
+          "name": "Багет, 250 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bananas.webp",
+          "name": "Бананы, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bakery.webp",
+          "name": "Булочка с изюмом, 1 шт"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bakery.webp",
+          "name": "Хлеб пшеничный, 400 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Молоко 3,2%, 1 л"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/potatoes.webp",
+          "name": "Картофель, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/apples.webp",
+          "name": "Яблоки красные, 1 кг"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/bakery.webp",
+          "name": "Хлеб пшеничный, 400 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Масло сливочное, 180 г"
+        },
+        {
+          "src": "http://localhost:3000/images/paykar/dairy.webp",
+          "name": "Сыр полутвёрдый, 200 г"
+        }
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "name": "catalog",
+      "path": "/catalog"
+    },
+    {
+      "name": "category",
+      "path": "/catalog/dairy"
+    },
+    {
+      "name": "household",
+      "path": "/product/dish-soap"
+    },
+    {
+      "name": "saved",
+      "path": "/saved"
+    },
+    {
+      "name": "cart",
+      "path": "/cart"
+    },
+    {
+      "name": "checkout",
+      "path": "/checkout"
+    },
+    {
+      "name": "confirmation",
+      "path": "/order/[existing-test-id]"
+    },
+    {
+      "name": "template-new",
+      "path": "/my-shopping/templates/new"
+    },
+    {
+      "name": "template-edit",
+      "path": "/my-shopping/templates/[existing-local-id]"
+    },
+    {
+      "name": "template-curated",
+      "path": "/my-shopping/templates/curated-family"
+    },
+    {
+      "name": "promotions",
+      "path": "/promotions"
+    },
+    {
+      "name": "stores",
+      "path": "/stores"
+    },
+    {
+      "name": "how-to-buy",
+      "path": "/how-to-buy"
+    },
+    {
+      "name": "delivery",
+      "path": "/delivery"
+    },
+    {
+      "name": "payment",
+      "path": "/payment"
+    },
+    {
+      "name": "returns",
+      "path": "/returns"
+    },
+    {
+      "name": "about",
+      "path": "/about"
+    },
+    {
+      "name": "contacts",
+      "path": "/contacts"
+    },
+    {
+      "name": "brands",
+      "path": "/brands"
+    },
+    {
+      "name": "blog",
+      "path": "/blog"
+    },
+    {
+      "name": "weekly-shopping",
+      "path": "/blog/weekly-shopping"
+    },
+    {
+      "name": "fruit-and-vegetables",
+      "path": "/blog/fruit-and-vegetables"
+    },
+    {
+      "name": "delivery-guide",
+      "path": "/blog/delivery-guide"
+    },
+    {
+      "name": "checkout-checklist",
+      "path": "/blog/checkout-checklist"
+    },
+    {
+      "name": "not-found",
+      "path": "/audit-route-does-not-exist"
+    }
+  ],
+  "routeMeasurements": [
+    {
+      "name": "catalog",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-catalog-1440-dark.png",
+      "h1": "Каталог товаров",
+      "headings": [
+        "Категории",
+        "Фильтры"
+      ],
+      "height": 2250,
+      "overflow": false,
+      "maps": 0,
+      "firstProductY": 431.32293701171875
+    },
+    {
+      "name": "category",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-category-1440-dark.png",
+      "h1": "Молочные продукты",
+      "headings": [
+        "Категории",
+        "Фильтры"
+      ],
+      "height": 1820,
+      "overflow": false,
+      "maps": 0,
+      "firstProductY": 495.32293701171875
+    },
+    {
+      "name": "household",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-household-1440-dark.png",
+      "h1": "Средство для посуды, 500 мл",
+      "headings": [
+        "О товаре",
+        "Характеристики",
+        "Почему стоит добавить",
+        "В этом разделе"
+      ],
+      "height": 2814,
+      "overflow": false,
+      "maps": 0,
+      "firstProductY": 1899.541748046875
+    },
+    {
+      "name": "saved",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-saved-1440-dark.png",
+      "h1": "Сохранённые товары",
+      "headings": [],
+      "height": 1389,
+      "overflow": false,
+      "maps": 0,
+      "firstProductY": 473.26043701171875
+    },
+    {
+      "name": "cart",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-cart-1440-dark.png",
+      "h1": "Ваша корзина",
+      "headings": [
+        "Ваши покупки",
+        "Можно добавить к покупке"
+      ],
+      "height": 1928,
+      "overflow": false,
+      "maps": 0,
+      "firstProductY": 1013.40625
+    },
+    {
+      "name": "checkout",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-checkout-1440-dark.png",
+      "h1": "Оформление заказа",
+      "headings": [
+        "01Контактные данные",
+        "02Доставка",
+        "03Способ оплаты",
+        "04Ваш заказ"
+      ],
+      "height": 2636,
+      "overflow": false,
+      "maps": 1
+    },
+    {
+      "name": "confirmation",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-confirmation-1440-dark.png",
+      "h1": "Спасибо! Заказ получен",
+      "headings": [
+        "Заказ [redacted-existing-id]",
+        "Ваши покупки",
+        "Повторить позже?"
+      ],
+      "height": 2099,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "template-new",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-template-new-1440-dark.png",
+      "h1": "Создать шаблон",
+      "headings": [
+        "Добавить товары"
+      ],
+      "height": 1517,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "template-edit",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-template-edit-1440-dark.png",
+      "h1": "Моя неделя",
+      "headings": [
+        "Добавить товары"
+      ],
+      "height": 2369,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "template-curated",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-template-curated-1440-dark.png",
+      "h1": "Семья",
+      "headings": [],
+      "height": 1451,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "promotions",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-promotions-1440-dark.png",
+      "h1": "Акции",
+      "headings": [],
+      "height": 2033,
+      "overflow": false,
+      "maps": 0,
+      "firstProductY": 622.78125
+    },
+    {
+      "name": "stores",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-stores-1440-dark.png",
+      "h1": "Магазины",
+      "headings": [
+        "Адрес магазина"
+      ],
+      "height": 1541,
+      "overflow": false,
+      "maps": 1
+    },
+    {
+      "name": "how-to-buy",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-how-to-buy-1440-dark.png",
+      "h1": "Как купить",
+      "headings": [
+        "Ваш путь к покупке",
+        "Выберите товары",
+        "Добавьте в корзину",
+        "Укажите данные",
+        "Проверьте маршрут и стоимость",
+        "Выберите способ оплаты",
+        "Подтвердите заказ",
+        "Соберите корзину в вашем темпе"
+      ],
+      "height": 1947,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "delivery",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-delivery-1440-dark.png",
+      "h1": "Доставка",
+      "headings": [
+        "Маршрут на карте",
+        "Время в пути",
+        "Понятная стоимость",
+        "Всё под контролем",
+        "Как работает доставка?",
+        "Отметьте точку",
+        "Рассчитайте доставку",
+        "Подтвердите заказ",
+        "Точная стоимость для вашего адреса",
+        "Частые вопросы"
+      ],
+      "height": 2854,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "payment",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-payment-1440-dark.png",
+      "h1": "Оплата",
+      "headings": [
+        "Наличными при получении",
+        "Тестовая онлайн-оплата картой",
+        "Повторная попытка",
+        "Как проходит тестовая оплата",
+        "Выберите способ оплаты",
+        "Выберите сценарий",
+        "Подтвердите заказ",
+        "Сохраните подтверждение"
+      ],
+      "height": 2013,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "returns",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-returns-1440-dark.png",
+      "h1": "Возврат товара",
+      "headings": [
+        "Если возникла проблема",
+        "Сохраните товар и упаковку",
+        "Подготовьте сведения о заказе",
+        "Свяжитесь с магазином",
+        "Обсудите решение",
+        "Обсудите решение"
+      ],
+      "height": 1883,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "about",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-about-1440-dark.png",
+      "h1": "О нас",
+      "headings": [
+        "Покупки в вашем темпе",
+        "Понятное оформление",
+        "Продукты на каждый день",
+        "Маршрут до заказа"
+      ],
+      "height": 1554,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "contacts",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-contacts-1440-dark.png",
+      "h1": "Контакты",
+      "headings": [
+        "Вопросы о покупке",
+        "Адрес магазина"
+      ],
+      "height": 1457,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "brands",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-brands-1440-dark.png",
+      "h1": "Бренды",
+      "headings": [
+        "Информация о производителях"
+      ],
+      "height": 1209,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "blog",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-blog-1440-dark.png",
+      "h1": "Блог",
+      "headings": [
+        "Как собрать продукты на неделю",
+        "Как хранить овощи и фрукты",
+        "Как работает доставка Пайкар",
+        "Что проверить перед оформлением заказа"
+      ],
+      "height": 1805,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "weekly-shopping",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-weekly-shopping-1440-dark.png",
+      "h1": "Как собрать продукты на неделю",
+      "headings": [
+        "Начните со списка",
+        "Учитывайте количество",
+        "Проверьте корзину",
+        "Читайте также",
+        "Как хранить овощи и фрукты",
+        "Как работает доставка Пайкар",
+        "Что проверить перед оформлением заказа"
+      ],
+      "height": 2483,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "fruit-and-vegetables",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-fruit-and-vegetables-1440-dark.png",
+      "h1": "Как хранить овощи и фрукты",
+      "headings": [
+        "Читайте упаковку",
+        "Следите за состоянием",
+        "Планируйте расход",
+        "Читайте также",
+        "Как собрать продукты на неделю",
+        "Как работает доставка Пайкар",
+        "Что проверить перед оформлением заказа"
+      ],
+      "height": 2483,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "delivery-guide",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-delivery-guide-1440-dark.png",
+      "h1": "Как работает доставка Пайкар",
+      "headings": [
+        "Укажите место",
+        "Посмотрите расчёт",
+        "Подтвердите данные",
+        "Читайте также",
+        "Как собрать продукты на неделю",
+        "Как хранить овощи и фрукты",
+        "Что проверить перед оформлением заказа"
+      ],
+      "height": 2483,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "checkout-checklist",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-checkout-checklist-1440-dark.png",
+      "h1": "Что проверить перед оформлением заказа",
+      "headings": [
+        "Товары и контактные данные",
+        "Точка и итог",
+        "Сохраните подтверждение",
+        "Читайте также",
+        "Как собрать продукты на неделю",
+        "Как хранить овощи и фрукты",
+        "Как работает доставка Пайкар"
+      ],
+      "height": 2455,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "not-found",
+      "width": 1440,
+      "theme": "dark",
+      "evidence": "coherence-not-found-1440-dark.png",
+      "h1": "Страница не найдена",
+      "headings": [],
+      "height": 1284,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "catalog",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-catalog-390-light.png",
+      "h1": "Каталог товаров",
+      "headings": [
+        "Категории",
+        "Фильтры"
+      ],
+      "height": 3396,
+      "overflow": false,
+      "maps": 0,
+      "firstProductY": 624.0104370117188
+    },
+    {
+      "name": "category",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-category-390-light.png",
+      "h1": "Молочные продукты",
+      "headings": [
+        "Категории",
+        "Фильтры"
+      ],
+      "height": 2719,
+      "overflow": false,
+      "maps": 0,
+      "firstProductY": 688.0104370117188
+    },
+    {
+      "name": "household",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-household-390-light.png",
+      "h1": "Средство для посуды, 500 мл",
+      "headings": [
+        "О товаре",
+        "Характеристики",
+        "Почему стоит добавить",
+        "В этом разделе"
+      ],
+      "height": 3739,
+      "overflow": false,
+      "maps": 0,
+      "firstProductY": 2366.27099609375
+    },
+    {
+      "name": "saved",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-saved-390-light.png",
+      "h1": "Сохранённые товары",
+      "headings": [],
+      "height": 1881,
+      "overflow": false,
+      "maps": 0,
+      "firstProductY": 506.65625
+    },
+    {
+      "name": "cart",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-cart-390-light.png",
+      "h1": "Ваша корзина",
+      "headings": [
+        "Ваши покупки",
+        "Можно добавить к покупке"
+      ],
+      "height": 2911,
+      "overflow": false,
+      "maps": 0,
+      "firstProductY": 1539.010498046875
+    },
+    {
+      "name": "checkout",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-checkout-390-light.png",
+      "h1": "Оформление заказа",
+      "headings": [
+        "01Контактные данные",
+        "02Доставка",
+        "03Способ оплаты",
+        "04Ваш заказ"
+      ],
+      "height": 3873,
+      "overflow": false,
+      "maps": 1
+    },
+    {
+      "name": "confirmation",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-confirmation-390-light.png",
+      "h1": "Спасибо! Заказ получен",
+      "headings": [
+        "Заказ [redacted-existing-id]",
+        "Ваши покупки",
+        "Повторить позже?"
+      ],
+      "height": 2737,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "template-new",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-template-new-390-light.png",
+      "h1": "Создать шаблон",
+      "headings": [
+        "Добавить товары"
+      ],
+      "height": 1693,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "template-edit",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-template-edit-390-light.png",
+      "h1": "Моя неделя",
+      "headings": [
+        "Добавить товары"
+      ],
+      "height": 2833,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "template-curated",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-template-curated-390-light.png",
+      "h1": "Семья",
+      "headings": [],
+      "height": 1747,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "promotions",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-promotions-390-light.png",
+      "h1": "Акции",
+      "headings": [],
+      "height": 2700,
+      "overflow": false,
+      "maps": 0,
+      "firstProductY": 587.3229370117188
+    },
+    {
+      "name": "stores",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-stores-390-light.png",
+      "h1": "Магазины",
+      "headings": [
+        "Адрес магазина"
+      ],
+      "height": 2080,
+      "overflow": false,
+      "maps": 1
+    },
+    {
+      "name": "how-to-buy",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-how-to-buy-390-light.png",
+      "h1": "Как купить",
+      "headings": [
+        "Ваш путь к покупке",
+        "Выберите товары",
+        "Добавьте в корзину",
+        "Укажите данные",
+        "Проверьте маршрут и стоимость",
+        "Выберите способ оплаты",
+        "Подтвердите заказ",
+        "Соберите корзину в вашем темпе"
+      ],
+      "height": 2981,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "delivery",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-delivery-390-light.png",
+      "h1": "Доставка",
+      "headings": [
+        "Маршрут на карте",
+        "Время в пути",
+        "Понятная стоимость",
+        "Всё под контролем",
+        "Как работает доставка?",
+        "Отметьте точку",
+        "Рассчитайте доставку",
+        "Подтвердите заказ",
+        "Точная стоимость для вашего адреса",
+        "Частые вопросы"
+      ],
+      "height": 4135,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "payment",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-payment-390-light.png",
+      "h1": "Оплата",
+      "headings": [
+        "Наличными при получении",
+        "Тестовая онлайн-оплата картой",
+        "Повторная попытка",
+        "Как проходит тестовая оплата",
+        "Выберите способ оплаты",
+        "Выберите сценарий",
+        "Подтвердите заказ",
+        "Сохраните подтверждение"
+      ],
+      "height": 3369,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "returns",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-returns-390-light.png",
+      "h1": "Возврат товара",
+      "headings": [
+        "Если возникла проблема",
+        "Сохраните товар и упаковку",
+        "Подготовьте сведения о заказе",
+        "Свяжитесь с магазином",
+        "Обсудите решение",
+        "Обсудите решение"
+      ],
+      "height": 2783,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "about",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-about-390-light.png",
+      "h1": "О нас",
+      "headings": [
+        "Покупки в вашем темпе",
+        "Понятное оформление",
+        "Продукты на каждый день",
+        "Маршрут до заказа"
+      ],
+      "height": 2406,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "contacts",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-contacts-390-light.png",
+      "h1": "Контакты",
+      "headings": [
+        "Вопросы о покупке",
+        "Адрес магазина"
+      ],
+      "height": 1753,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "brands",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-brands-390-light.png",
+      "h1": "Бренды",
+      "headings": [
+        "Информация о производителях"
+      ],
+      "height": 1555,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "blog",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-blog-390-light.png",
+      "h1": "Блог",
+      "headings": [
+        "Как собрать продукты на неделю",
+        "Как хранить овощи и фрукты",
+        "Как работает доставка Пайкар",
+        "Что проверить перед оформлением заказа"
+      ],
+      "height": 3129,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "weekly-shopping",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-weekly-shopping-390-light.png",
+      "h1": "Как собрать продукты на неделю",
+      "headings": [
+        "Начните со списка",
+        "Учитывайте количество",
+        "Проверьте корзину",
+        "Читайте также",
+        "Как хранить овощи и фрукты",
+        "Как работает доставка Пайкар",
+        "Что проверить перед оформлением заказа"
+      ],
+      "height": 3774,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "fruit-and-vegetables",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-fruit-and-vegetables-390-light.png",
+      "h1": "Как хранить овощи и фрукты",
+      "headings": [
+        "Читайте упаковку",
+        "Следите за состоянием",
+        "Планируйте расход",
+        "Читайте также",
+        "Как собрать продукты на неделю",
+        "Как работает доставка Пайкар",
+        "Что проверить перед оформлением заказа"
+      ],
+      "height": 3774,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "delivery-guide",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-delivery-guide-390-light.png",
+      "h1": "Как работает доставка Пайкар",
+      "headings": [
+        "Укажите место",
+        "Посмотрите расчёт",
+        "Подтвердите данные",
+        "Читайте также",
+        "Как собрать продукты на неделю",
+        "Как хранить овощи и фрукты",
+        "Что проверить перед оформлением заказа"
+      ],
+      "height": 3774,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "checkout-checklist",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-checkout-checklist-390-light.png",
+      "h1": "Что проверить перед оформлением заказа",
+      "headings": [
+        "Товары и контактные данные",
+        "Точка и итог",
+        "Сохраните подтверждение",
+        "Читайте также",
+        "Как собрать продукты на неделю",
+        "Как хранить овощи и фрукты",
+        "Как работает доставка Пайкар"
+      ],
+      "height": 3777,
+      "overflow": false,
+      "maps": 0
+    },
+    {
+      "name": "not-found",
+      "width": 390,
+      "theme": "light",
+      "evidence": "coherence-not-found-390-light.png",
+      "h1": "Страница не найдена",
+      "headings": [],
+      "height": 1470,
+      "overflow": false,
+      "maps": 0
+    }
+  ]
+}

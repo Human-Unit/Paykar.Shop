@@ -37,6 +37,12 @@ export function CatalogFilterDialog({
   const [open, setOpen] = useState(false);
   const [draft, setDraft] = useState(() => new URLSearchParams(params));
   const [previewQuery, setPreviewQuery] = useState<string | null>(null);
+  const appliedQuery = params.toString();
+  useEffect(() => {
+    // URL changes close an open draft without replacing its focus-return target.
+    // The current URL is copied into draft whenever the shopper opens it again.
+    if (dialog.current?.open) dialog.current.close();
+  }, [appliedQuery]);
   const min = draft.get("min_price") || "";
   const max = draft.get("max_price") || "";
   const priceError = catalogPriceError(draft);

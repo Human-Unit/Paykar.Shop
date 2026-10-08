@@ -1,0 +1,1728 @@
+{
+  "date": "2026-10-07",
+  "baseCommit": "9b72b2a7a0abd1e03161bf7d6651816209e7a27c",
+  "runtime": "http://localhost:3000",
+  "browser": "Chromium 154.0.8037.98 via Playwright",
+  "api": "Real local API; no request interception; no order creation",
+  "matrix": {
+    "rows": [
+      {
+        "width": 320,
+        "language": "ru",
+        "theme": "dark",
+        "lang": "ru",
+        "themeApplied": "dark",
+        "heroHeight": 599.3541870117188,
+        "primaryText": "Перейти в каталог",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 2,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 759.3541870117188,
+        "nextSectionTop": 1172
+      },
+      {
+        "width": 320,
+        "language": "ru",
+        "theme": "light",
+        "lang": "ru",
+        "themeApplied": "light",
+        "heroHeight": 599.3541870117188,
+        "primaryText": "Перейти в каталог",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 2,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 759.3541870117188,
+        "nextSectionTop": 1172
+      },
+      {
+        "width": 320,
+        "language": "tj",
+        "theme": "dark",
+        "lang": "tg",
+        "themeApplied": "dark",
+        "heroHeight": 645.5416870117188,
+        "primaryText": "Ба феҳрист гузаред",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 3,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 805.5416870117188,
+        "nextSectionTop": 1218.1875
+      },
+      {
+        "width": 320,
+        "language": "tj",
+        "theme": "light",
+        "lang": "tg",
+        "themeApplied": "light",
+        "heroHeight": 645.5416870117188,
+        "primaryText": "Ба феҳрист гузаред",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 3,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 805.5416870117188,
+        "nextSectionTop": 1218.1875
+      },
+      {
+        "width": 320,
+        "language": "en",
+        "theme": "dark",
+        "lang": "en",
+        "themeApplied": "dark",
+        "heroHeight": 628.75,
+        "primaryText": "Go to catalog",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 3,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 788.75,
+        "nextSectionTop": 1179.697998046875
+      },
+      {
+        "width": 320,
+        "language": "en",
+        "theme": "light",
+        "lang": "en",
+        "themeApplied": "light",
+        "heroHeight": 628.75,
+        "primaryText": "Go to catalog",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 3,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 788.75,
+        "nextSectionTop": 1179.697998046875
+      },
+      {
+        "width": 390,
+        "language": "ru",
+        "theme": "dark",
+        "lang": "ru",
+        "themeApplied": "dark",
+        "heroHeight": 630.375,
+        "primaryText": "Перейти в каталог",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 2,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 791.9270935058594,
+        "nextSectionTop": 1182.875
+      },
+      {
+        "width": 390,
+        "language": "ru",
+        "theme": "light",
+        "lang": "ru",
+        "themeApplied": "light",
+        "heroHeight": 630.375,
+        "primaryText": "Перейти в каталог",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 2,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 791.9270935058594,
+        "nextSectionTop": 1182.875
+      },
+      {
+        "width": 390,
+        "language": "tj",
+        "theme": "dark",
+        "lang": "tg",
+        "themeApplied": "dark",
+        "heroHeight": 663.9479370117188,
+        "primaryText": "Ба феҳрист гузаред",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 3,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 825.5000305175781,
+        "nextSectionTop": 1216.447998046875
+      },
+      {
+        "width": 390,
+        "language": "tj",
+        "theme": "light",
+        "lang": "tg",
+        "themeApplied": "light",
+        "heroHeight": 663.9479370117188,
+        "primaryText": "Ба феҳрист гузаред",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 3,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 825.5000305175781,
+        "nextSectionTop": 1216.447998046875
+      },
+      {
+        "width": 390,
+        "language": "en",
+        "theme": "dark",
+        "lang": "en",
+        "themeApplied": "dark",
+        "heroHeight": 635.9479370117188,
+        "primaryText": "Go to catalog",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 3,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 797.5000305175781,
+        "nextSectionTop": 1166.75
+      },
+      {
+        "width": 390,
+        "language": "en",
+        "theme": "light",
+        "lang": "en",
+        "themeApplied": "light",
+        "heroHeight": 635.9479370117188,
+        "primaryText": "Go to catalog",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 3,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 797.5000305175781,
+        "nextSectionTop": 1166.75
+      },
+      {
+        "width": 768,
+        "language": "ru",
+        "theme": "dark",
+        "lang": "ru",
+        "themeApplied": "dark",
+        "heroHeight": 667.6458740234375,
+        "primaryText": "Перейти в каталог",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 2,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 841.1979675292969,
+        "nextSectionTop": 1092.9271240234375
+      },
+      {
+        "width": 768,
+        "language": "ru",
+        "theme": "light",
+        "lang": "ru",
+        "themeApplied": "light",
+        "heroHeight": 667.6458740234375,
+        "primaryText": "Перейти в каталог",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 2,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 841.1979675292969,
+        "nextSectionTop": 1092.9271240234375
+      },
+      {
+        "width": 768,
+        "language": "tj",
+        "theme": "dark",
+        "lang": "tg",
+        "themeApplied": "dark",
+        "heroHeight": 663.4583740234375,
+        "primaryText": "Ба феҳрист гузаред",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 2,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 837.0104675292969,
+        "nextSectionTop": 1088.7396240234375
+      },
+      {
+        "width": 768,
+        "language": "tj",
+        "theme": "light",
+        "lang": "tg",
+        "themeApplied": "light",
+        "heroHeight": 663.4583740234375,
+        "primaryText": "Ба феҳрист гузаред",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 2,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 837.0104675292969,
+        "nextSectionTop": 1088.7396240234375
+      },
+      {
+        "width": 768,
+        "language": "en",
+        "theme": "dark",
+        "lang": "en",
+        "themeApplied": "dark",
+        "heroHeight": 663.4583740234375,
+        "primaryText": "Go to catalog",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 2,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 837.0104675292969,
+        "nextSectionTop": 1067.041748046875
+      },
+      {
+        "width": 768,
+        "language": "en",
+        "theme": "light",
+        "lang": "en",
+        "themeApplied": "light",
+        "heroHeight": 663.4583740234375,
+        "primaryText": "Go to catalog",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 2,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 837.0104675292969,
+        "nextSectionTop": 1067.041748046875
+      },
+      {
+        "width": 1024,
+        "language": "ru",
+        "theme": "dark",
+        "lang": "ru",
+        "themeApplied": "dark",
+        "heroHeight": 452,
+        "primaryText": "Перейти в каталог",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 2,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 628.6666717529297,
+        "nextSectionTop": 688.6666870117188
+      },
+      {
+        "width": 1024,
+        "language": "ru",
+        "theme": "light",
+        "lang": "ru",
+        "themeApplied": "light",
+        "heroHeight": 452,
+        "primaryText": "Перейти в каталог",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 2,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 628.6666717529297,
+        "nextSectionTop": 688.6666870117188
+      },
+      {
+        "width": 1024,
+        "language": "tj",
+        "theme": "dark",
+        "lang": "tg",
+        "themeApplied": "dark",
+        "heroHeight": 452,
+        "primaryText": "Ба феҳрист гузаред",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 2,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 628.6666717529297,
+        "nextSectionTop": 688.6666870117188
+      },
+      {
+        "width": 1024,
+        "language": "tj",
+        "theme": "light",
+        "lang": "tg",
+        "themeApplied": "light",
+        "heroHeight": 452,
+        "primaryText": "Ба феҳрист гузаред",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 2,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 628.6666717529297,
+        "nextSectionTop": 688.6666870117188
+      },
+      {
+        "width": 1024,
+        "language": "en",
+        "theme": "dark",
+        "lang": "en",
+        "themeApplied": "dark",
+        "heroHeight": 452,
+        "primaryText": "Go to catalog",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 2,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 628.6666717529297,
+        "nextSectionTop": 688.6666870117188
+      },
+      {
+        "width": 1024,
+        "language": "en",
+        "theme": "light",
+        "lang": "en",
+        "themeApplied": "light",
+        "heroHeight": 452,
+        "primaryText": "Go to catalog",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 2,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 628.6666717529297,
+        "nextSectionTop": 688.6666870117188
+      },
+      {
+        "width": 1440,
+        "language": "ru",
+        "theme": "dark",
+        "lang": "ru",
+        "themeApplied": "dark",
+        "heroHeight": 452,
+        "primaryText": "Перейти в каталог",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 2,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 631.1145935058594,
+        "nextSectionTop": 703.1146240234375
+      },
+      {
+        "width": 1440,
+        "language": "ru",
+        "theme": "light",
+        "lang": "ru",
+        "themeApplied": "light",
+        "heroHeight": 452,
+        "primaryText": "Перейти в каталог",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 2,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 631.1145935058594,
+        "nextSectionTop": 703.1146240234375
+      },
+      {
+        "width": 1440,
+        "language": "tj",
+        "theme": "dark",
+        "lang": "tg",
+        "themeApplied": "dark",
+        "heroHeight": 452,
+        "primaryText": "Ба феҳрист гузаред",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 2,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 631.1145935058594,
+        "nextSectionTop": 703.1146240234375
+      },
+      {
+        "width": 1440,
+        "language": "tj",
+        "theme": "light",
+        "lang": "tg",
+        "themeApplied": "light",
+        "heroHeight": 452,
+        "primaryText": "Ба феҳрист гузаред",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 2,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 631.1145935058594,
+        "nextSectionTop": 703.1146240234375
+      },
+      {
+        "width": 1440,
+        "language": "en",
+        "theme": "dark",
+        "lang": "en",
+        "themeApplied": "dark",
+        "heroHeight": 452,
+        "primaryText": "Go to catalog",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 2,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 631.1145935058594,
+        "nextSectionTop": 703.1146240234375
+      },
+      {
+        "width": 1440,
+        "language": "en",
+        "theme": "light",
+        "lang": "en",
+        "themeApplied": "light",
+        "heroHeight": 452,
+        "primaryText": "Go to catalog",
+        "primaryAboveFold": true,
+        "primaryTouch": true,
+        "secondaryTouch": true,
+        "primaryBeforeCards": true,
+        "overflow": false,
+        "clipped": [],
+        "textBadgeCollisions": [],
+        "brokenImages": 0,
+        "heroLinks": [
+          "/catalog",
+          "/delivery",
+          "/promotions",
+          "/my-shopping"
+        ],
+        "imageInset": true,
+        "headlineLines": 2,
+        "primaryBackground": "rgb(0, 168, 45)",
+        "secondaryBackground": "rgba(0, 0, 0, 0)",
+        "badgeOverlapsActions": false,
+        "badgesOverlap": false,
+        "desktopSupportingColumn": true,
+        "heroBottom": 631.1145935058594,
+        "nextSectionTop": 703.1146240234375
+      }
+    ],
+    "errors": []
+  },
+  "links": {
+    "results": [
+      {
+        "width": 390,
+        "language": "ru",
+        "theme": "dark",
+        "path": "/catalog",
+        "arrived": "/catalog",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "color(srgb 0.75 0.914706 0.794118)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 390,
+        "language": "ru",
+        "theme": "dark",
+        "path": "/delivery",
+        "arrived": "/delivery",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "color(srgb 0.75 0.914706 0.794118)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 390,
+        "language": "ru",
+        "theme": "dark",
+        "path": "/promotions",
+        "arrived": "/promotions",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "rgb(0, 168, 45)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 390,
+        "language": "ru",
+        "theme": "dark",
+        "path": "/my-shopping",
+        "arrived": "/my-shopping",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "rgb(0, 168, 45)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 390,
+        "language": "ru",
+        "theme": "light",
+        "path": "/catalog",
+        "arrived": "/catalog",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "color(srgb 0.75 0.914706 0.794118)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 390,
+        "language": "ru",
+        "theme": "light",
+        "path": "/delivery",
+        "arrived": "/delivery",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "color(srgb 0.75 0.914706 0.794118)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 390,
+        "language": "ru",
+        "theme": "light",
+        "path": "/promotions",
+        "arrived": "/promotions",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "rgb(0, 168, 45)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 390,
+        "language": "ru",
+        "theme": "light",
+        "path": "/my-shopping",
+        "arrived": "/my-shopping",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "rgb(0, 168, 45)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 390,
+        "language": "tj",
+        "theme": "dark",
+        "path": "/catalog",
+        "arrived": "/catalog",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "color(srgb 0.75 0.914706 0.794118)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 390,
+        "language": "tj",
+        "theme": "dark",
+        "path": "/delivery",
+        "arrived": "/delivery",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "color(srgb 0.75 0.914706 0.794118)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 390,
+        "language": "tj",
+        "theme": "dark",
+        "path": "/promotions",
+        "arrived": "/promotions",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "rgb(0, 168, 45)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 390,
+        "language": "tj",
+        "theme": "dark",
+        "path": "/my-shopping",
+        "arrived": "/my-shopping",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "rgb(0, 168, 45)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 390,
+        "language": "tj",
+        "theme": "light",
+        "path": "/catalog",
+        "arrived": "/catalog",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "color(srgb 0.75 0.914706 0.794118)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 390,
+        "language": "tj",
+        "theme": "light",
+        "path": "/delivery",
+        "arrived": "/delivery",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "color(srgb 0.75 0.914706 0.794118)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 390,
+        "language": "tj",
+        "theme": "light",
+        "path": "/promotions",
+        "arrived": "/promotions",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "rgb(0, 168, 45)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 390,
+        "language": "tj",
+        "theme": "light",
+        "path": "/my-shopping",
+        "arrived": "/my-shopping",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "rgb(0, 168, 45)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 390,
+        "language": "en",
+        "theme": "dark",
+        "path": "/catalog",
+        "arrived": "/catalog",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "color(srgb 0.75 0.914706 0.794118)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 390,
+        "language": "en",
+        "theme": "dark",
+        "path": "/delivery",
+        "arrived": "/delivery",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "color(srgb 0.75 0.914706 0.794118)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 390,
+        "language": "en",
+        "theme": "dark",
+        "path": "/promotions",
+        "arrived": "/promotions",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "rgb(0, 168, 45)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 390,
+        "language": "en",
+        "theme": "dark",
+        "path": "/my-shopping",
+        "arrived": "/my-shopping",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "rgb(0, 168, 45)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 390,
+        "language": "en",
+        "theme": "light",
+        "path": "/catalog",
+        "arrived": "/catalog",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "color(srgb 0.75 0.914706 0.794118)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 390,
+        "language": "en",
+        "theme": "light",
+        "path": "/delivery",
+        "arrived": "/delivery",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "color(srgb 0.75 0.914706 0.794118)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 390,
+        "language": "en",
+        "theme": "light",
+        "path": "/promotions",
+        "arrived": "/promotions",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "rgb(0, 168, 45)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 390,
+        "language": "en",
+        "theme": "light",
+        "path": "/my-shopping",
+        "arrived": "/my-shopping",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "rgb(0, 168, 45)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 1440,
+        "language": "ru",
+        "theme": "dark",
+        "path": "/catalog",
+        "arrived": "/catalog",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "color(srgb 0.75 0.914706 0.794118)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 1440,
+        "language": "ru",
+        "theme": "dark",
+        "path": "/delivery",
+        "arrived": "/delivery",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "color(srgb 0.75 0.914706 0.794118)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 1440,
+        "language": "ru",
+        "theme": "dark",
+        "path": "/promotions",
+        "arrived": "/promotions",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "rgb(0, 168, 45)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 1440,
+        "language": "ru",
+        "theme": "dark",
+        "path": "/my-shopping",
+        "arrived": "/my-shopping",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "rgb(0, 168, 45)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 1440,
+        "language": "ru",
+        "theme": "light",
+        "path": "/catalog",
+        "arrived": "/catalog",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "color(srgb 0.75 0.914706 0.794118)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 1440,
+        "language": "ru",
+        "theme": "light",
+        "path": "/delivery",
+        "arrived": "/delivery",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "color(srgb 0.75 0.914706 0.794118)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 1440,
+        "language": "ru",
+        "theme": "light",
+        "path": "/promotions",
+        "arrived": "/promotions",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "rgb(0, 168, 45)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 1440,
+        "language": "ru",
+        "theme": "light",
+        "path": "/my-shopping",
+        "arrived": "/my-shopping",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "rgb(0, 168, 45)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 1440,
+        "language": "tj",
+        "theme": "dark",
+        "path": "/catalog",
+        "arrived": "/catalog",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "color(srgb 0.75 0.914706 0.794118)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 1440,
+        "language": "tj",
+        "theme": "dark",
+        "path": "/delivery",
+        "arrived": "/delivery",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "color(srgb 0.75 0.914706 0.794118)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 1440,
+        "language": "tj",
+        "theme": "dark",
+        "path": "/promotions",
+        "arrived": "/promotions",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "rgb(0, 168, 45)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 1440,
+        "language": "tj",
+        "theme": "dark",
+        "path": "/my-shopping",
+        "arrived": "/my-shopping",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "rgb(0, 168, 45)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 1440,
+        "language": "tj",
+        "theme": "light",
+        "path": "/catalog",
+        "arrived": "/catalog",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "color(srgb 0.75 0.914706 0.794118)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 1440,
+        "language": "tj",
+        "theme": "light",
+        "path": "/delivery",
+        "arrived": "/delivery",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "color(srgb 0.75 0.914706 0.794118)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 1440,
+        "language": "tj",
+        "theme": "light",
+        "path": "/promotions",
+        "arrived": "/promotions",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "rgb(0, 168, 45)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 1440,
+        "language": "tj",
+        "theme": "light",
+        "path": "/my-shopping",
+        "arrived": "/my-shopping",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "rgb(0, 168, 45)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 1440,
+        "language": "en",
+        "theme": "dark",
+        "path": "/catalog",
+        "arrived": "/catalog",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "color(srgb 0.75 0.914706 0.794118)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 1440,
+        "language": "en",
+        "theme": "dark",
+        "path": "/delivery",
+        "arrived": "/delivery",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "color(srgb 0.75 0.914706 0.794118)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 1440,
+        "language": "en",
+        "theme": "dark",
+        "path": "/promotions",
+        "arrived": "/promotions",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "rgb(0, 168, 45)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 1440,
+        "language": "en",
+        "theme": "dark",
+        "path": "/my-shopping",
+        "arrived": "/my-shopping",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "rgb(0, 168, 45)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 1440,
+        "language": "en",
+        "theme": "light",
+        "path": "/catalog",
+        "arrived": "/catalog",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "color(srgb 0.75 0.914706 0.794118)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 1440,
+        "language": "en",
+        "theme": "light",
+        "path": "/delivery",
+        "arrived": "/delivery",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "color(srgb 0.75 0.914706 0.794118)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 1440,
+        "language": "en",
+        "theme": "light",
+        "path": "/promotions",
+        "arrived": "/promotions",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "rgb(0, 168, 45)"
+        },
+        "preferencePreserved": true
+      },
+      {
+        "width": 1440,
+        "language": "en",
+        "theme": "light",
+        "path": "/my-shopping",
+        "arrived": "/my-shopping",
+        "focus": {
+          "visible": true,
+          "outline": "solid",
+          "width": "2px",
+          "color": "rgb(0, 168, 45)"
+        },
+        "preferencePreserved": true
+      }
+    ],
+    "errors": []
+  },
+  "motion": [
+    {
+      "reducedMotion": "reduce",
+      "chipAnimation": "float-soft",
+      "photoTransform": "none",
+      "photoOpacity": "1",
+      "eyebrowOpacity": "1",
+      "pulseAnimation": "pulse-ring",
+      "focusableDecorative": 0,
+      "hover": {
+        "opacity": "0",
+        "pointerEvents": "none"
+      }
+    },
+    {
+      "reducedMotion": "no-preference",
+      "chipAnimation": "float-soft",
+      "photoTransform": "none",
+      "photoOpacity": "1",
+      "eyebrowOpacity": "1",
+      "pulseAnimation": "pulse-ring",
+      "focusableDecorative": 0,
+      "hover": {
+        "opacity": "1",
+        "pointerEvents": "none"
+      }
+    }
+  ],
+  "motionDurations": [
+    {
+      "reducedMotion": "reduce",
+      "chipDuration": "1e-05s",
+      "chipIterations": "1",
+      "pulseDuration": "1e-05s",
+      "pulseIterations": "1",
+      "revealsVisible": true,
+      "photoTransform": "none",
+      "decorativePointerEvents": "none"
+    },
+    {
+      "reducedMotion": "no-preference",
+      "chipDuration": "6.5s",
+      "chipIterations": "infinite",
+      "pulseDuration": "2.2s",
+      "pulseIterations": "infinite",
+      "revealsVisible": true,
+      "photoTransform": "none",
+      "decorativePointerEvents": "none"
+    }
+  ],
+  "screenshots": [
+    "hero-before-1440-ru-dark.png",
+    "hero-1440-ru-dark.png",
+    "hero-1440-ru-light.png",
+    "hero-390-tj-dark.png",
+    "hero-390-en-light.png"
+  ],
+  "staticChecks": {
+    "lint": "PASS",
+    "formatCheck": "PASS",
+    "typecheck": "PASS",
+    "build": "PASS; 22 static pages",
+    "navigation": "4 passed",
+    "catalog": "13 passed",
+    "shopping": "6 passed",
+    "diffCheck": "PASS",
+    "dockerWebProductionBuild": "PASS"
+  },
+  "scope": {
+    "sourceFiles": [
+      "apps/web/src/components/home-hero.tsx",
+      "apps/web/src/styles/home.css",
+      "apps/web/src/lib/translations.json"
+    ],
+    "backendChanged": false,
+    "protectedComponentsChanged": false,
+    "committed": false,
+    "pushed": false
+  }
+}

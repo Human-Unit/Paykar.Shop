@@ -17,6 +17,7 @@ import {
   ProductCard,
   ProductImage,
   discountPercent,
+  hasCategoryImage,
 } from "./product-card";
 import { Breadcrumbs } from "./breadcrumbs";
 import { Failure, Loading } from "./states";
@@ -61,7 +62,7 @@ export function ProductDetail({ slug }: { slug: string }) {
   const available = Number(p.stock_quantity) >= 1;
   const enriched = getProductContent(p.slug);
   return (
-    <div className="polish-page product-page">
+    <div className="polish-page product-page shopping-page">
       <Breadcrumbs
         items={[
           { label: t("Главная"), href: "/" },
@@ -79,10 +80,7 @@ export function ProductDetail({ slug }: { slug: string }) {
         ]}
       />
       <div className="product-detail">
-        <div className="detail-image">
-          <ProductImage product={p} large />
-        </div>
-        <div className="detail-info">
+        <header className="detail-heading commerce-heading">
           <span className="eyebrow">
             <Package size={16} aria-hidden="true" />
             {category ? t(category.name) : t("Продукты на каждый день")}
@@ -92,6 +90,16 @@ export function ProductDetail({ slug }: { slug: string }) {
             {t("Артикул: ")}
             {p.sku.replace(/^DEMO-/, "")} · {t(p.unit)}
           </p>
+        </header>
+        <figure className="detail-image">
+          <ProductImage product={p} large />
+          {hasCategoryImage(p) && (
+            <figcaption className="detail-image-caption">
+              {t("Иллюстрация категории")}
+            </figcaption>
+          )}
+        </figure>
+        <div className="detail-info">
           <div className="detail-purchase">
             <div
               className="prices detail-price"
@@ -147,54 +155,19 @@ export function ProductDetail({ slug }: { slug: string }) {
         </div>
       </div>
       <section className="product-description-panel">
-        <SectionHeader eyebrow="Детали покупки" title="О товаре" />
-        <p className="description">
-          {enriched
-            ? t(enriched.description)
-            : t(
-                /демонстрацион|учебн/i.test(p.description)
-                  ? "Указанная упаковка — одна единица в корзине."
-                  : p.description,
-              )}
-        </p>
-        <dl className="product-facts">
-          <div>
-            <dt>{t("Артикул")}</dt>
-            <dd>{p.sku.replace(/^DEMO-/, "")}</dd>
-          </div>
-          <div>
-            <dt>{t("Единица продажи")}</dt>
-            <dd>{t(p.unit)}</dd>
-          </div>
-          {category && (
-            <div>
-              <dt>{t("Категория")}</dt>
-              <dd>
-                <Link href={`/catalog/${category.slug}`}>
-                  {t(category.name)}
-                </Link>
-              </dd>
-            </div>
-          )}
-        </dl>
-        {enriched && (
-          <div className="product-content-extra">
-            <div className="product-content-heading">
-              <h3>
-                {enriched.basis
-                  ? `${t("Пищевая ценность и параметры")} · ${t(enriched.basis)}`
-                  : t("Характеристики")}
-              </h3>
-            </div>
-            <dl className="product-facts product-content-facts">
-              {enriched.facts.map((fact) => (
-                <div key={`${fact.label}:${fact.value}`}>
-                  <dt>{t(fact.label)}</dt>
-                  <dd>{t(fact.value)}</dd>
-                </div>
-              ))}
-            </dl>
-            {enriched.features.length > 0 && (
+        <SectionHeader title="О товаре" />
+        <div className="product-information">
+          <div className="product-description">
+            <p className="description">
+              {enriched
+                ? t(enriched.description)
+                : t(
+                    /демонстрацион|учебн/i.test(p.description)
+                      ? "Указанная упаковка — одна единица в корзине."
+                      : p.description,
+                  )}
+            </p>
+            {enriched && enriched.features.length > 0 && (
               <div className="product-content-features">
                 <h3>{t("Почему стоит добавить")}</h3>
                 <ul>
@@ -204,11 +177,52 @@ export function ProductDetail({ slug }: { slug: string }) {
                 </ul>
               </div>
             )}
-            {enriched.note && (
+            {enriched?.note && (
               <p className="product-content-note">{t(enriched.note)}</p>
             )}
           </div>
-        )}
+          <div className="product-specifications">
+            <dl className="product-facts">
+              <div>
+                <dt>{t("Артикул")}</dt>
+                <dd>{p.sku.replace(/^DEMO-/, "")}</dd>
+              </div>
+              <div>
+                <dt>{t("Единица продажи")}</dt>
+                <dd>{t(p.unit)}</dd>
+              </div>
+              {category && (
+                <div>
+                  <dt>{t("Категория")}</dt>
+                  <dd>
+                    <Link href={`/catalog/${category.slug}`}>
+                      {t(category.name)}
+                    </Link>
+                  </dd>
+                </div>
+              )}
+            </dl>
+            {enriched && (
+              <div className="product-content-extra">
+                <div className="product-content-heading">
+                  <h3>
+                    {enriched.basis
+                      ? `${t("Пищевая ценность и параметры")} · ${t(enriched.basis)}`
+                      : t("Характеристики")}
+                  </h3>
+                </div>
+                <dl className="product-facts product-content-facts">
+                  {enriched.facts.map((fact) => (
+                    <div key={`${fact.label}:${fact.value}`}>
+                      <dt>{t(fact.label)}</dt>
+                      <dd>{t(fact.value)}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            )}
+          </div>
+        </div>
       </section>
       {(connections.loading || Boolean(connections.data?.items.length)) && (
         <section className="related-products">

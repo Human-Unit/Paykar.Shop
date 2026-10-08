@@ -1,0 +1,21 @@
+﻿{
+    "date":  "2026-10-08",
+    "baseline":  "../source-baseline.json",
+    "checked":  569,
+    "changed":  [
+                    "apps/web/src/components/catalog-filter-dialog.tsx",
+                    "apps/web/src/components/catalog.tsx",
+                    "apps/web/src/components/my-shopping.module.css",
+                    "apps/web/src/components/my-shopping.tsx",
+                    "apps/web/src/components/product-card.tsx",
+                    "apps/web/src/components/product-detail.tsx",
+                    "apps/web/src/lib/translations.json",
+                    "apps/web/src/styles/catalog.css",
+                    "apps/web/src/styles/components.css",
+                    "apps/web/src/styles/product-content.css",
+                    "apps/web/src/styles/shop.css",
+                    "apps/web/src/styles/tokens.css"
+                ],
+    "unchanged":  557,
+    "head":  "9b72b2a7a0abd1e03161bf7d6651816209e7a27c"
+}

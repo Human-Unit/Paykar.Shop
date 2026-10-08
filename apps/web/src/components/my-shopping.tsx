@@ -17,6 +17,7 @@ import {
   type ShoppingTemplate,
 } from "@/lib/shopping";
 import { Breadcrumbs } from "./breadcrumbs";
+import { ShoppingProductIdentity } from "./shopping-product-identity";
 import { Failure, Loading } from "./states";
 import { ArrowRight, Plus } from "lucide-react";
 import {
@@ -142,11 +143,15 @@ export function MyShopping() {
   const hasTemplates = templates.length > 0;
   const [showOlderOrders, setShowOlderOrders] = useState(false);
   return (
-    <div className={"polish-page " + styles.page + " " + styles.workspace}>
+    <div
+      className={
+        "polish-page shopping-page " + styles.page + " " + styles.workspace
+      }
+    >
       <Breadcrumbs
         items={[{ label: "Главная", href: "/" }, { label: "Мои покупки" }]}
       />
-      <div className={styles.intro}>
+      <div className={styles.intro + " commerce-heading"}>
         <h1>{t("Мои покупки")}</h1>
         <p>
           {t(
@@ -226,9 +231,13 @@ export function MyShopping() {
 function ItemPreview({
   items,
   sourceItems,
+  summaryOnly = false,
+  showSummary = true,
 }: {
   items: ShoppingPreview["items"];
   sourceItems: ShoppingItem[];
+  summaryOnly?: boolean;
+  showSummary?: boolean;
 }) {
   const { t, money } = usePresentation();
   const total = items.reduce(
@@ -241,53 +250,54 @@ function ItemPreview({
   );
   return (
     <>
-      <ul className={styles.itemList}>
-        {items.map((row, index) => (
-          <li key={row.product_id || index}>
-            <div>
-              {row.product ? (
-                <Link href={`/product/${row.product.slug}`}>
-                  {t(row.product.name)}
-                </Link>
-              ) : (
-                t(
-                  sourceItems.find((i) => i.product_id === row.product_id)
-                    ?.name || "Больше не продаётся",
-                )
-              )}
-              <small>
-                {t(
-                  row.availability === "missing"
-                    ? "Больше не продаётся"
-                    : row.availability === "unavailable"
-                      ? "Сейчас недоступно"
-                      : "В наличии",
+      {!summaryOnly && (
+        <ul className={styles.itemList}>
+          {items.map((row, index) => (
+            <li key={row.product_id || index}>
+              <ShoppingProductIdentity
+                product={row.product}
+                name={
+                  sourceItems.find((i) => i.product_id === row.product_id)?.name
+                }
+              >
+                <small>
+                  {t(
+                    row.availability === "missing"
+                      ? "Больше не продаётся"
+                      : row.availability === "unavailable"
+                        ? "Сейчас недоступно"
+                        : "В наличии",
+                  )}
+                </small>
+              </ShoppingProductIdentity>
+              <span className={styles.rowQuantity}>
+                {t("Количество:")} {row.requested_quantity}
+                {row.available_quantity < row.requested_quantity && (
+                  <>
+                    {" "}
+                    · {t("Доступно:")} {row.available_quantity}
+                  </>
                 )}
-              </small>
-            </div>
-            <span>
-              {t("Количество:")} {row.requested_quantity}
-              {row.available_quantity < row.requested_quantity && (
-                <>
-                  {" "}
-                  · {t("Доступно:")} {row.available_quantity}
-                </>
-              )}
-            </span>
-            <strong>
-              {row.product ? money(cents(row.product.price)) : "—"}
-            </strong>
-          </li>
-        ))}
-      </ul>
-      <p className={styles.estimate}>
-        {t("Стоимость сейчас:")} <strong>{money(total)}</strong>
-      </p>
-      <p>
-        {t(
-          "Оценка доступных товаров без доставки. Итог проверяется при оформлении.",
-        )}
-      </p>
+              </span>
+              <strong>
+                {row.product ? money(cents(row.product.price)) : "—"}
+              </strong>
+            </li>
+          ))}
+        </ul>
+      )}
+      {showSummary && (
+        <>
+          <p className={styles.estimate}>
+            {t("Стоимость сейчас:")} <strong>{money(total)}</strong>
+          </p>
+          <p>
+            {t(
+              "Оценка доступных товаров без доставки. Итог проверяется при оформлении.",
+            )}
+          </p>
+        </>
+      )}
     </>
   );
 }
@@ -299,7 +309,7 @@ function PersonalEditor({
   template?: ShoppingTemplate;
   onDeleted: (persisted: boolean) => void;
 }) {
-  const { t } = usePresentation();
+  const { t, money } = usePresentation();
   const [name, setName] = useState(template?.name || "");
   const [items, setItems] = useState<ShoppingItem[]>(template?.items || []);
   const [query, setQuery] = useState("");
@@ -311,111 +321,189 @@ function PersonalEditor({
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [savedId, setSavedId] = useState(template?.id);
   return (
-    <div>
-      <form
-        className={styles.editor}
-        onSubmit={(event) => {
-          event.preventDefault();
-          try {
-            const result = saveShoppingTemplate(name, items, savedId);
-            setSavedId(result.template.id);
-            setMessage(result.persisted ? "Шаблон сохранён." : storageWarning);
-          } catch (e) {
-            setMessage(
-              e instanceof Error ? e.message : "Не удалось сохранить шаблон.",
-            );
-          }
-        }}
-      >
-        <label>
-          {t("Название шаблона")}
-          <input
-            required
-            maxLength={80}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-        <ul className={styles.itemList}>
-          {items.map((item) => (
-            <li key={item.product_id}>
-              <span>
-                {t(
-                  preview.data?.items.find(
-                    (p) => p.product_id === item.product_id,
-                  )?.product?.name ||
-                    item.name ||
-                    "Больше не продаётся",
-                )}
-              </span>
-              <label>
-                {t("Количество")}
-                <input
-                  type="number"
-                  min={1}
-                  max={99}
-                  required
-                  value={item.quantity}
-                  onChange={(e) => {
-                    const quantity = Number(e.target.value);
-                    if (
-                      Number.isInteger(quantity) &&
-                      quantity >= 1 &&
-                      quantity <= 99
-                    )
+    <div className={styles.editorWorkspace}>
+      <div className={styles.editorMain}>
+        <form
+          className={styles.editor}
+          onSubmit={(event) => {
+            event.preventDefault();
+            try {
+              const result = saveShoppingTemplate(name, items, savedId);
+              setSavedId(result.template.id);
+              setMessage(
+                result.persisted ? "Шаблон сохранён." : storageWarning,
+              );
+            } catch (e) {
+              setMessage(
+                e instanceof Error ? e.message : "Не удалось сохранить шаблон.",
+              );
+            }
+          }}
+        >
+          <label>
+            {t("Название шаблона")}
+            <input
+              required
+              maxLength={80}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </label>
+          <ul className={styles.itemList}>
+            {items.map((item) => {
+              const row = preview.data?.items.find(
+                (entry) => entry.product_id === item.product_id,
+              );
+              const product =
+                row?.product ??
+                products.data?.items.find(
+                  (entry) => entry.id === item.product_id,
+                );
+              return (
+                <li key={item.product_id}>
+                  <ShoppingProductIdentity product={product} name={item.name}>
+                    {row?.product && (
+                      <small>
+                        {money(cents(row.product.price))} /{" "}
+                        {t(row.product.unit)}
+                      </small>
+                    )}
+                    {row && (
+                      <small>
+                        {t(
+                          row.availability === "missing"
+                            ? "Больше не продаётся"
+                            : row.availability === "unavailable"
+                              ? "Сейчас недоступно"
+                              : "В наличии",
+                        )}
+                        {row.available_quantity < item.quantity && (
+                          <>
+                            {" "}
+                            · {t("Доступно:")} {row.available_quantity}
+                          </>
+                        )}
+                      </small>
+                    )}
+                  </ShoppingProductIdentity>
+                  <label>
+                    {t("Количество")}
+                    <input
+                      type="number"
+                      min={1}
+                      max={99}
+                      required
+                      value={item.quantity}
+                      onChange={(e) => {
+                        const quantity = Number(e.target.value);
+                        if (
+                          Number.isInteger(quantity) &&
+                          quantity >= 1 &&
+                          quantity <= 99
+                        )
+                          setItems((current) =>
+                            current.map((row) =>
+                              row.product_id === item.product_id
+                                ? { ...row, quantity }
+                                : row,
+                            ),
+                          );
+                      }}
+                    />
+                  </label>
+                  <button
+                    type="button"
+                    className="button secondary"
+                    aria-label={t("Удалить: ") + t(item.name || "Товар")}
+                    onClick={() =>
                       setItems((current) =>
-                        current.map((row) =>
-                          row.product_id === item.product_id
-                            ? { ...row, quantity }
-                            : row,
+                        current.filter(
+                          (row) => row.product_id !== item.product_id,
                         ),
-                      );
-                  }}
-                />
-              </label>
+                      )
+                    }
+                  >
+                    {t("Удалить")}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+          <div className={styles.actions}>
+            <button type="submit" className="button" disabled={!items.length}>
+              {t("Сохранить")}
+            </button>
+            {preview.data?.items.some(
+              (row) => row.availability !== "available",
+            ) && (
               <button
-                type="button"
                 className="button secondary"
-                aria-label={t("Удалить: ") + t(item.name || "Товар")}
+                type="button"
                 onClick={() =>
                   setItems((current) =>
-                    current.filter((row) => row.product_id !== item.product_id),
+                    current.filter((item) =>
+                      preview.data?.items.some(
+                        (row) =>
+                          row.product_id === item.product_id &&
+                          row.availability === "available",
+                      ),
+                    ),
                   )
                 }
               >
-                {t("Удалить")}
+                {t("Удалить недоступные товары")}
               </button>
-            </li>
-          ))}
-        </ul>
-        <div className={styles.actions}>
-          <button type="submit" className="button" disabled={!items.length}>
-            {t("Сохранить")}
-          </button>
-          {preview.data?.items.some(
-            (row) => row.availability !== "available",
-          ) && (
-            <button
-              className="button secondary"
-              type="button"
-              onClick={() =>
-                setItems((current) =>
-                  current.filter((item) =>
-                    preview.data?.items.some(
-                      (row) =>
-                        row.product_id === item.product_id &&
-                        row.availability === "available",
-                    ),
-                  ),
-                )
-              }
-            >
-              {t("Удалить недоступные товары")}
-            </button>
-          )}
+            )}
+          </div>
+        </form>
+        {preview.loading && <Loading />}
+        {preview.error && (
+          <Failure error={preview.error} retry={preview.retry} />
+        )}
+        {preview.data && (
+          <ItemPreview
+            items={preview.data.items}
+            sourceItems={items}
+            summaryOnly
+          />
+        )}
+        <div className={styles.actions + " " + styles.editorSecondaryActions}>
+          <AddShoppingItems items={items} />
+          {savedId &&
+            (!deleteConfirm ? (
+              <button
+                className="button secondary"
+                type="button"
+                onClick={() => setDeleteConfirm(true)}
+              >
+                {t("Удалить шаблон")}
+              </button>
+            ) : (
+              <div>
+                <p>{t("Удалить этот шаблон?")}</p>
+                <button
+                  className="button secondary"
+                  type="button"
+                  onClick={() => {
+                    const persisted = deleteShoppingTemplate(savedId);
+                    onDeleted(persisted);
+                  }}
+                >
+                  {t("Подтвердить удаление")}
+                </button>
+                <button
+                  className="text-link"
+                  type="button"
+                  onClick={() => setDeleteConfirm(false)}
+                >
+                  {t("Отмена")}
+                </button>
+              </div>
+            ))}
         </div>
-      </form>
-      <section className={styles.section}>
+        <p role="status">{t(message)}</p>
+      </div>
+      <section className={styles.pickerSection}>
         <h2>{t("Добавить товары")}</h2>
         <label>
           {t("Поиск товаров")}
@@ -432,7 +520,7 @@ function PersonalEditor({
         <ul className={styles.productPicker}>
           {products.data?.items.map((product) => (
             <li key={product.id}>
-              <span>{t(product.name)}</span>
+              <ShoppingProductIdentity product={product} />
               <button
                 type="button"
                 className="button secondary"
@@ -454,46 +542,6 @@ function PersonalEditor({
         </ul>
         {products.data?.total === 0 && <p>{t("Товары не найдены.")}</p>}
       </section>
-      {preview.loading && <Loading />}
-      {preview.error && <Failure error={preview.error} retry={preview.retry} />}
-      {preview.data && (
-        <ItemPreview items={preview.data.items} sourceItems={items} />
-      )}
-      <div className={styles.actions}>
-        <AddShoppingItems items={items} />
-        {savedId &&
-          (!deleteConfirm ? (
-            <button
-              className="button secondary"
-              type="button"
-              onClick={() => setDeleteConfirm(true)}
-            >
-              {t("Удалить шаблон")}
-            </button>
-          ) : (
-            <div>
-              <p>{t("Удалить этот шаблон?")}</p>
-              <button
-                className="button secondary"
-                type="button"
-                onClick={() => {
-                  const persisted = deleteShoppingTemplate(savedId);
-                  onDeleted(persisted);
-                }}
-              >
-                {t("Подтвердить удаление")}
-              </button>
-              <button
-                className="text-link"
-                type="button"
-                onClick={() => setDeleteConfirm(false)}
-              >
-                {t("Отмена")}
-              </button>
-            </div>
-          ))}
-      </div>
-      <p role="status">{t(message)}</p>
     </div>
   );
 }
@@ -508,7 +556,11 @@ export function ShoppingTemplateDetail({ id }: { id: string }) {
   );
   const template = templates.find((row) => row.id === id);
   return (
-    <div className={"polish-page " + styles.page}>
+    <div
+      className={
+        "polish-page shopping-page " + styles.page + " " + styles.templatePage
+      }
+    >
       <Breadcrumbs
         items={[
           { label: "Главная", href: "/" },
@@ -516,13 +568,15 @@ export function ShoppingTemplateDetail({ id }: { id: string }) {
           { label: "Шаблон покупок" },
         ]}
       />
-      <h1>
-        {curated
-          ? t(resource.data?.name || "Готовый набор")
-          : id === "new"
-            ? t("Создать шаблон")
-            : template?.name || t("Мой шаблон")}
-      </h1>
+      <header className="commerce-heading">
+        <h1>
+          {curated
+            ? t(resource.data?.name || "Готовый набор")
+            : id === "new"
+              ? t("Создать шаблон")
+              : template?.name || t("Мой шаблон")}
+        </h1>
+      </header>
       {curated ? (
         <>
           {resource.loading && <Loading />}
@@ -532,13 +586,29 @@ export function ShoppingTemplateDetail({ id }: { id: string }) {
           {resource.data && (
             <>
               <p>{t(resource.data.description)}</p>
-              <ItemPreview items={resource.data.items} sourceItems={[]} />
-              <AddShoppingItems
-                items={resource.data.items.map((row) => ({
-                  product_id: row.product_id,
-                  quantity: row.requested_quantity,
-                }))}
-              />
+              <div className={styles.curatedDetail}>
+                <aside className={styles.templateSummary}>
+                  <ItemPreview
+                    items={resource.data.items}
+                    sourceItems={[]}
+                    summaryOnly
+                  />
+                  <AddShoppingItems
+                    items={resource.data.items.map((row) => ({
+                      product_id: row.product_id,
+                      quantity: row.requested_quantity,
+                    }))}
+                  />
+                </aside>
+                <section className={styles.templateContents}>
+                  <h2>{t("Состав набора")}</h2>
+                  <ItemPreview
+                    items={resource.data.items}
+                    sourceItems={[]}
+                    showSummary={false}
+                  />
+                </section>
+              </div>
             </>
           )}
         </>

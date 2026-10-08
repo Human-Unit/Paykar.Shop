@@ -2,7 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, Check, Percent, Store, Truck } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Check,
+  Percent,
+  Store,
+  Truck,
+} from "lucide-react";
 import { usePresentation } from "@/context/presentation";
 import { useResource, type DeliveryConfig } from "@/lib/api";
 import { cents } from "@/lib/format";
@@ -86,11 +93,12 @@ export function HomeHero() {
           </m.p>
           <m.div {...actions} className="hero-actions">
             <Link href="/catalog" className="button large">
-              {t("За покупками ")}
-              <ArrowUpRight size={20} aria-hidden="true" />
+              {t("Перейти в каталог")}
+              <ArrowRight size={20} aria-hidden="true" />
             </Link>
-            <Link href="/delivery" className="button ghost large">
+            <Link href="/delivery" className="text-link hero-delivery-link">
               {t("Как работает доставка")}
+              <ArrowRight size={16} aria-hidden="true" />
             </Link>
           </m.div>
           <m.ul {...facts} className="hero-facts">
@@ -132,12 +140,11 @@ export function HomeHero() {
         href="/promotions"
         className="bento-card bento-route"
       >
-        <span className="bento-top">
-          <span className="eyebrow">{t("Акции")}</span>
-          <Percent size={28} aria-hidden="true" />
-        </span>
-        <h2>{t("Акции на каждый день")}</h2>
-        <p>{t("Выберите выгодные предложения.")}</p>
+        <div className="bento-top">
+          <h2>{t("Акции")}</h2>
+          <Percent size={24} aria-hidden="true" />
+        </div>
+        <p>{t("Выгодные предложения на каждый день.")}</p>
         <span className="promo-action">
           {t("Все акции")}
           <ArrowUpRight size={18} aria-hidden="true" />
@@ -148,8 +155,8 @@ export function HomeHero() {
         href="/my-shopping"
         className="bento-card bento-shop"
       >
-        <span className="bento-top">
-          <span className="eyebrow">{t("Мои покупки")}</span>
+        <div className="bento-top">
+          <h2>{t("Мои покупки")}</h2>
           <span className="bento-stack" aria-hidden="true">
             {["produce", "bakery", "dairy"].map((image) => (
               <span key={image}>
@@ -163,11 +170,10 @@ export function HomeHero() {
               </span>
             ))}
           </span>
-        </span>
-        <h2>{t("Ваши привычные покупки.")}</h2>
-        <p>{t("Шаблоны и прошлые заказы — в одном месте.")}</p>
+        </div>
+        <p>{t("Повторить заказ или открыть сохранённый набор.")}</p>
         <span className="promo-action">
-          {t("Открыть мои покупки")}
+          {t("Открыть")}
           <ArrowUpRight size={18} aria-hidden="true" />
         </span>
       </MotionLink>

@@ -1,3 +1,27 @@
+.product-information {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 40px;
+  align-items: start;
+}
+.product-description,
+.product-specifications {
+  min-width: 0;
+}
+.product-description {
+  display: grid;
+  gap: 24px;
+}
+.product-information .product-facts > div {
+  padding: 10px 0;
+}
+.product-information .product-facts > div:first-child {
+  padding-top: 0;
+}
+.product-information .product-facts dd {
+  max-width: 60%;
+}
+
 .product-content-extra {
   display: grid;
   gap: 18px;
@@ -34,10 +58,14 @@
 .product-content-note {
   margin: 0;
   padding: 12px 14px;
-  border: 1px solid var(--line, rgba(127, 127, 127, 0.22));
-  border-radius: 14px;
-  background: var(--surface-soft, rgba(127, 127, 127, 0.06));
+  border-inline-start: 2px solid var(--line-strong);
   font-size: 0.88rem;
   line-height: 1.5;
-  opacity: 0.82;
+  color: var(--muted);
+}
+@media (max-width: 768px) {
+  .product-information {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
 }
