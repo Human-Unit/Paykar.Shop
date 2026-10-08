@@ -178,8 +178,13 @@ export function HomeHero({
         className="bento-card bento-route"
         aria-labelledby="home-promotions-title"
       >
+        <span className="bento-promo-ribbon" aria-hidden="true">
+          {t("АКЦИЯ")}
+        </span>
         <div className="bento-top">
-          <h2 id="home-promotions-title">{t("Акции")}</h2>
+          <h2 id="home-promotions-title" className="sr-only">
+            {t("Акции")}
+          </h2>
           <Percent size={24} aria-hidden="true" />
         </div>
         {promotions.length > 0 ? (
@@ -247,15 +252,6 @@ export function HomeHero({
       >
         <div className="bento-top">
           <h2 id="home-shopping-title">{t("Мои покупки")}</h2>
-          {personalTemplates.length > 0 ? (
-            <span className="bento-count">
-              {t("Сохранено шаблонов:")} {personalTemplates.length}
-            </span>
-          ) : curatedTemplates.length > 0 ? (
-            <span className="bento-count">
-              {t("Готовые наборы:")} {curatedTemplates.length}
-            </span>
-          ) : null}
         </div>
         <div className="bento-template-content">
           {templateCards.length > 0 ? (

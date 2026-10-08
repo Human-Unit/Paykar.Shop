@@ -1,7 +1,7 @@
 .carousel {
   position: relative;
   min-width: 0;
-  margin-top: 12px;
+  margin-top: 8px;
 }
 .orders {
   --carousel-card-width: 390px;
@@ -19,7 +19,7 @@
   min-width: 0;
   overflow-x: auto;
   overflow-y: hidden;
-  padding: 18px 4px 28px;
+  padding: 14px 4px 20px;
   scroll-snap-type: x mandatory;
   scroll-padding-inline: 4px;
   scrollbar-width: none;
@@ -43,6 +43,13 @@
 }
 .slide > article {
   height: 100%;
+}
+/* Center sparse personal collections; auto margins become zero on overflow. */
+.templates .slide:first-child {
+  margin-inline-start: auto;
+}
+.templates .slide:last-child {
+  margin-inline-end: auto;
 }
 .orders .slide {
   scroll-snap-align: center;
@@ -88,6 +95,31 @@
 .next {
   right: -14px;
 }
+@media (min-width: 1360px) {
+  .orders {
+    --carousel-card-width: 408px;
+    width: calc(100% + 40px);
+    max-width: 1160px;
+    margin-inline: -20px;
+  }
+  .orders .slide {
+    transform: scale(0.86);
+  }
+  .orders .slide[data-active],
+  .orders .slide:focus-within {
+    z-index: 1;
+    transform: scale(1.06);
+  }
+  .orders .arrows button {
+    top: calc(50% - 13px);
+  }
+  .orders .previous {
+    left: -55px;
+  }
+  .orders .next {
+    right: -55px;
+  }
+}
 .templates .arrows {
   display: flex;
   justify-content: flex-end;
@@ -101,12 +133,41 @@
   height: 36px;
   transform: none;
 }
+@media (min-width: 768px) {
+  .templates .arrows {
+    position: absolute;
+    inset: 0 0 32px;
+    display: block;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+  }
+  .templates .arrows button {
+    position: absolute;
+    top: 50%;
+    width: 42px;
+    height: 42px;
+    transform: translateY(-50%);
+    pointer-events: auto;
+  }
+  .templates .previous {
+    left: -22px;
+  }
+  .templates .next {
+    right: -22px;
+  }
+}
+@media (min-width: 1200px) {
+  .templates {
+    --carousel-card-width: 250px;
+  }
+}
 .dots {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 2px;
-  margin-top: -12px;
+  margin-top: -8px;
 }
 .dots button {
   display: grid;
@@ -133,17 +194,44 @@
 .carousel[data-single] .track {
   overflow-x: clip;
 }
+.carousel[data-static] .track {
+  scroll-snap-type: none;
+}
+.orders[data-single] {
+  width: 100%;
+  max-width: 430px;
+  margin-inline: auto;
+}
+.orders[data-single] .track {
+  padding: 12px 4px 16px;
+  margin-inline: 0;
+}
+.orders[data-single] .slide {
+  flex-basis: 100%;
+  opacity: 1;
+  transform: none;
+}
+.templates[data-sparse] {
+  --carousel-card-width: 300px;
+}
+.templates[data-single] {
+  --carousel-card-width: 320px;
+}
 @media (max-width: 640px) {
   .orders,
-  .templates {
+  .templates,
+  .templates[data-sparse] {
     --carousel-card-width: min(330px, calc(100vw - 72px));
   }
   .orders {
     margin-inline: calc(-1 * var(--page-gutter));
   }
+  .orders[data-single] {
+    margin-inline: auto;
+  }
   .track {
     gap: 14px;
-    padding-bottom: 22px;
+    padding-bottom: 16px;
   }
   .previous {
     left: -8px;
@@ -156,10 +244,45 @@
     height: 36px;
   }
   .orders .previous {
-    left: 8px;
+    left: 0;
   }
   .orders .next {
-    right: 8px;
+    right: 0;
+  }
+}
+@media (min-width: 821px) and (max-width: 1024px) {
+  .orders {
+    --carousel-card-width: 380px;
+  }
+  .templates {
+    --carousel-card-width: 280px;
+  }
+  .orders .track,
+  .templates .track {
+    gap: 18px;
+    margin-inline: 48px;
+  }
+  .templates[data-sparse] .track {
+    margin-inline: 4px;
+  }
+}
+@media (min-width: 641px) and (max-width: 820px) {
+  .orders {
+    --carousel-card-width: min(360px, calc(50vw - 24px));
+  }
+  .templates {
+    --carousel-card-width: 250px;
+  }
+  .orders .track,
+  .templates .track {
+    gap: 16px;
+    margin-inline: 48px;
+  }
+  .templates[data-sparse] {
+    --carousel-card-width: 280px;
+  }
+  .templates[data-sparse] .track {
+    margin-inline: 4px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

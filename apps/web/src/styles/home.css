@@ -270,6 +270,18 @@
     ),
     var(--surface);
 }
+.home-bento .bento-route,
+.home-bento .bento-shop {
+  padding-bottom: 16px;
+}
+.home-bento .bento-route {
+  overflow: hidden;
+}
+.home-bento .bento-route .bento-top {
+  position: relative;
+  z-index: 5;
+  justify-content: flex-end;
+}
 .bento-top {
   display: flex;
   align-items: center;
@@ -279,6 +291,9 @@
   min-height: 36px;
   margin-bottom: 4px;
 }
+.home-bento .bento-shop h2 {
+  font-size: clamp(24px, 2.2vw, 32px);
+}
 .bento-card h2 {
   margin: 0;
   font-size: clamp(18px, 1.5vw, 22px);
@@ -286,13 +301,6 @@
   line-height: 1.2;
   letter-spacing: -0.022em;
   overflow-wrap: anywhere;
-}
-.bento-count {
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 1.3;
-  text-align: right;
 }
 .bento-card p {
   margin: 0;
@@ -305,10 +313,15 @@
   align-items: center;
   gap: 8px;
   margin-top: auto;
-  padding-top: 6px;
+  padding-top: 8px;
   color: var(--brand-ink);
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 750;
+}
+.home-bento .bento-route .promo-action,
+.home-bento .bento-shop .promo-action {
+  margin-top: 0;
+  padding-top: 2px;
 }
 .bento-card .promo-action svg {
   transition:
@@ -348,6 +361,32 @@
   offset-rotate: 0deg;
   animation: route-travel 3.6s var(--ease-in-out) infinite alternate;
 }
+.bento-promo-ribbon {
+  position: absolute;
+  z-index: 4;
+  top: 10px;
+  left: -70%;
+  display: grid;
+  place-items: center;
+  width: 160%;
+  height: 50px;
+  border-block: 1px solid rgb(255 255 255 / 38%);
+  background: linear-gradient(180deg, #ff6262 0%, #ff0000 48%, #c90000 100%);
+  box-shadow:
+    0 4px 10px rgb(0 0 0 / 28%),
+    inset 0 1px 0 rgb(255 255 255 / 24%);
+  color: #fff;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-align: center;
+  text-shadow: 0 2px 4px rgb(0 0 0 / 45%);
+  transform: rotate(-45deg);
+  pointer-events: none;
+}
+/* Offers geometry belongs only to the offers rail. Three complete cards fit
+   its content box; the ribbon is an absolute, panel-clipped decoration. */
 .bento-promo-preview {
   display: flex;
   align-items: stretch;
@@ -355,25 +394,27 @@
   width: 100%;
   min-width: 0;
   margin: 0;
-  padding: 0 0 3px;
+  padding: 4px 0 6px;
   overflow-x: auto;
   list-style: none;
   overscroll-behavior-inline: contain;
-  scroll-padding-inline: 2px;
+  scroll-padding-inline: 0;
   scroll-snap-type: x mandatory;
-  scrollbar-color: var(--line-strong) transparent;
-  scrollbar-width: thin;
+  scrollbar-width: none;
+}
+.bento-promo-preview::-webkit-scrollbar {
+  display: none;
 }
 .bento-promo-preview > li {
-  flex: 0 0 104px;
+  flex: 0 0 calc((100% - 16px) / 3);
   min-width: 0;
   scroll-snap-align: start;
 }
 .bento-promo-item {
   position: relative;
   display: grid;
-  grid-template-rows: 48px minmax(24px, auto) auto;
-  gap: 3px;
+  grid-template-rows: auto minmax(36px, auto) auto;
+  gap: 5px;
   height: 100%;
   color: var(--ink);
   text-decoration: none;
@@ -381,16 +422,18 @@
 .bento-promo-image {
   position: relative;
   display: block;
-  height: 48px;
+  width: 100%;
+  aspect-ratio: 1;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 11px;
   background: var(--stage);
+  box-shadow: 0 3px 6px rgb(0 0 0 / 22%);
 }
 .bento-promo-image .product-image {
   width: 100%;
   height: 100%;
-  padding: 4px;
+  padding: 0;
   object-fit: contain;
   mix-blend-mode: multiply;
   transition: scale var(--dur-3) var(--ease-out);
@@ -400,47 +443,56 @@
 }
 .bento-promo-name {
   display: -webkit-box;
+  align-self: start;
   min-width: 0;
+  max-height: 2.5em;
   overflow: hidden;
   color: var(--ink);
-  font-size: 10px;
-  font-weight: 650;
-  line-height: 1.2;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.25;
   overflow-wrap: anywhere;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
 .bento-promo-price {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: 4px;
+  gap: 2px 6px;
   min-width: 0;
   white-space: nowrap;
 }
 .bento-promo-price strong {
   color: var(--brand-ink);
-  font-size: 10px;
+  font-size: 17px;
   font-weight: 800;
   line-height: 1.2;
 }
 .bento-promo-price del {
-  overflow: hidden;
   color: var(--muted);
-  font-size: 9px;
+  font-size: 12px;
   line-height: 1.2;
-  text-overflow: ellipsis;
 }
 .bento-promo-discount {
   position: absolute;
-  top: 4px;
-  right: 4px;
-  padding: 2px 5px;
+  z-index: 3;
+  top: 6px;
+  right: 6px;
+  display: grid;
+  place-items: center;
+  min-height: 22px;
+  padding: 3px 8px;
   border-radius: var(--radius-pill);
-  background: #d93542;
+  background: #ff0000;
   color: #fff;
-  font-size: 10px;
+  box-shadow: 0 2px 5px rgb(0 0 0 / 25%);
+  font-size: 11px;
   font-weight: 800;
-  line-height: 1.2;
+  line-height: 1.1;
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
 }
 .bento-promo-empty {
   display: flex;
@@ -451,12 +503,12 @@
   min-height: 88px;
 }
 .bento-promo-placeholder {
-  flex: 0 0 104px;
+  flex: 0 0 calc((100% - 16px) / 3);
   display: grid;
   align-content: end;
   gap: 5px;
-  height: 78px;
-  padding: 8px;
+  aspect-ratio: 1;
+  padding: 10px;
   border: 1px solid var(--line);
   border-radius: 11px;
   background:
@@ -479,24 +531,27 @@
   width: 100%;
   min-width: 0;
 }
+/* Shopping has its own rail/card sizing. Offer changes must not resize it. */
 .bento-template-preview {
   display: flex;
   align-items: stretch;
-  gap: 7px;
+  gap: 8px;
   min-width: 0;
   width: 100%;
   margin: 0;
-  padding: 0 0 3px;
+  padding: 4px 0 6px;
   overflow-x: auto;
   list-style: none;
   overscroll-behavior-inline: contain;
-  scroll-padding-inline: 2px;
+  scroll-padding-inline: 0;
   scroll-snap-type: x mandatory;
-  scrollbar-color: var(--line-strong) transparent;
-  scrollbar-width: thin;
+  scrollbar-width: none;
+}
+.bento-template-preview::-webkit-scrollbar {
+  display: none;
 }
 .bento-template-preview > li {
-  flex: 0 0 104px;
+  flex: 0 0 calc((100% - 16px) / 3);
   min-width: 0;
   scroll-snap-align: start;
 }
@@ -504,12 +559,14 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 5px;
+  gap: 6px;
   height: 100%;
-  padding: 6px;
+  min-width: 0;
+  padding: 4px;
   border: 1px solid var(--line);
-  border-radius: 12px;
-  background: color-mix(in srgb, var(--surface) 74%, var(--stage));
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: var(--card-shadow);
   color: var(--ink);
   text-decoration: none;
   transition:
@@ -524,18 +581,24 @@
   translate: 0 -2px;
 }
 .bento-template-photo {
+  position: relative;
+  z-index: 1;
   display: block;
+  flex-shrink: 0;
   width: 100%;
-  height: 48px;
+  aspect-ratio: 1;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 9px;
   background: var(--stage);
+  box-shadow:
+    0 4px 8px rgb(0 0 0 / 28%),
+    0 1px 2px rgb(0 0 0 / 18%);
 }
 .bento-template-photo .product-image {
   width: 100%;
   height: 100%;
-  padding: 4px;
+  padding: 0;
   object-fit: contain;
   mix-blend-mode: multiply;
 }
@@ -550,9 +613,9 @@
   display: -webkit-box;
   overflow: hidden;
   color: var(--ink);
-  font-size: 10px;
-  font-weight: 700;
-  line-height: 1.2;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.25;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
@@ -560,10 +623,10 @@
   display: -webkit-box;
   overflow: hidden;
   color: var(--muted);
-  font-size: 9px;
+  font-size: 13px;
   line-height: 1.2;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
 }
 .bento-template-state,
 .bento-promo-empty > p {
@@ -903,6 +966,17 @@
     padding: 36px;
   }
 }
+@media (min-width: 961px) and (max-width: 1199px) {
+  .bento-promo-preview > li {
+    flex-basis: calc((100% - 8px) / 2);
+  }
+  .bento-promo-placeholder {
+    flex-basis: calc((100% - 8px) / 2);
+  }
+  .bento-template-preview > li {
+    flex-basis: calc((100% - 8px) / 2);
+  }
+}
 @media (max-width: 960px) {
   .home-bento {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -1010,6 +1084,15 @@
   }
   .bento-card {
     padding: 20px;
+  }
+  .bento-promo-preview > li {
+    flex-basis: calc((100% - 8px) / 2);
+  }
+  .bento-promo-placeholder {
+    flex-basis: calc((100% - 8px) / 2);
+  }
+  .bento-template-preview > li {
+    flex-basis: calc((100% - 8px) / 2);
   }
   /* A full-bleed strip that scrolls sideways and snaps tile by tile. */
   .category-grid {

@@ -322,6 +322,11 @@ export function CuratedTemplateCard({
       <PreviewEstimate items={template.items} />
       <div className={styles.templateActions}>
         <AddShoppingItems items={items} label="Собрать корзину" />
+        <SaveShoppingTemplate
+          items={items}
+          templateName={t(template.name)}
+          icon={<FilePlus2 size={18} aria-hidden="true" />}
+        />
         <Link className="text-link" href={href}>
           {t("Посмотреть")} <ArrowRight size={16} aria-hidden="true" />
         </Link>

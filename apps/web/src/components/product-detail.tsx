@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 import { usePresentation } from "@/context/presentation";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -12,6 +13,7 @@ import {
 import { cents } from "@/lib/format";
 import { categoryRecommendations } from "@/lib/product-recommendations";
 import { getProductContent } from "@/lib/product-content";
+import { rememberViewedProduct } from "@/lib/recently-viewed";
 import {
   AddButton,
   ProductCard,
@@ -36,6 +38,10 @@ export function ProductDetail({ slug }: { slug: string }) {
   );
   const categories = useResource<Category[]>("/categories");
   const p = resource.data;
+  const viewedId = p?.id;
+  useEffect(() => {
+    if (viewedId !== undefined) rememberViewedProduct(viewedId);
+  }, [viewedId]);
   const category = categories.data?.find((c) => c.id === p?.category_id);
   const parent = categories.data?.find((c) => c.id === category?.parent_id);
   const related = useResource<ProductPage>(

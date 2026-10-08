@@ -1,0 +1,249 @@
+.page {
+  width: 100%;
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-bottom: 24px;
+}
+.page > :global(.page-intro) {
+  margin-block: 16px 24px;
+}
+.page h2 {
+  font-size: clamp(21px, 2vw, 27px);
+  line-height: 1.25;
+  font-weight: 750;
+}
+.savedSection,
+.section,
+.discovery {
+  min-width: 0;
+}
+.page > .section,
+.page > .discovery {
+  margin-bottom: 0;
+  margin-top: 32px;
+}
+.page > .savedSection {
+  margin-block: 0;
+}
+.sectionHeading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px 20px;
+}
+.sectionHeading > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  font-size: 14px;
+}
+.help {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.toolbar {
+  margin-bottom: 20px;
+}
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 20px;
+  font-size: 15px;
+  color: var(--muted);
+}
+.summary strong {
+  color: var(--ink);
+  font-weight: 750;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 16px;
+}
+.actions > div {
+  max-width: 100%;
+}
+.actions :global(.button),
+.templatePanel :global(.button),
+.empty :global(.button) {
+  min-height: 44px;
+  padding: 12px 16px;
+  font-size: 14px;
+  white-space: normal;
+  text-align: center;
+}
+.clear {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 4px;
+  color: var(--muted);
+}
+.page .savedGrid:global(.product-grid) {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.page .supportGrid:global(.product-grid) {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+.empty,
+.templatePanel {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  padding: 24px;
+  border: 1px solid var(--green-line);
+  border-radius: 22px;
+  background: linear-gradient(
+    115deg,
+    color-mix(in srgb, var(--brand-ink) 5%, var(--surface)),
+    var(--surface)
+  );
+}
+.empty p,
+.templatePanel p {
+  max-width: 64ch;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-top: 8px;
+  font-size: 14px;
+}
+.icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  color: var(--brand-ink);
+  border: 1px solid var(--green-line);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--brand-ink) 6%, transparent);
+}
+.page > .templatePanel {
+  margin-bottom: 0;
+  margin-top: 24px;
+  scroll-margin-top: 160px;
+}
+.templatePanel > :last-child {
+  width: 210px;
+  max-width: 100%;
+}
+.templatePanel > :last-child :global(.button) {
+  width: 100%;
+}
+.unavailable {
+  padding-block: 16px;
+}
+.unavailable > a {
+  display: inline-flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+.discovery {
+  border-block: 1px solid var(--line);
+  padding-block: 24px;
+}
+.shortcuts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+.shortcuts a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font-size: 14px;
+}
+.shortcuts a:hover {
+  color: var(--brand-ink);
+  border-color: var(--green-line);
+}
+@media (max-width: 1199px) {
+  .page .savedGrid:global(.product-grid),
+  .page .supportGrid:global(.product-grid) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .empty,
+  .templatePanel {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .empty > :last-child,
+  .templatePanel > :last-child {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+@media (max-width: 767px) {
+  .page > :global(.page-intro) {
+    margin-block: 12px 20px;
+  }
+  .page .savedGrid:global(.product-grid),
+  .page .supportGrid:global(.product-grid) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .summary {
+    gap: 8px 14px;
+  }
+  .page .supportGrid:global(.product-grid) {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% - 24px) / 2);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x proximity;
+    padding-bottom: 10px;
+  }
+  .supportGrid > :global(.product-card) {
+    scroll-snap-align: start;
+  }
+  .actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+  .actions :global(.button) {
+    width: 100%;
+  }
+  .clear {
+    justify-self: start;
+  }
+  .empty,
+  .templatePanel {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+    padding: 20px;
+  }
+  .empty > :last-child,
+  .templatePanel > :last-child {
+    grid-column: auto;
+    width: 100%;
+  }
+  .page > .section,
+  .page > .discovery {
+    margin-top: 24px;
+  }
+}
+@media (max-width: 359px) {
+  .page .savedGrid:global(.product-grid) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .page .supportGrid:global(.product-grid) {
+    grid-auto-columns: 78%;
+  }
+}

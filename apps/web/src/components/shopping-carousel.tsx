@@ -5,6 +5,38 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { usePresentation } from "@/context/presentation";
 import styles from "./shopping-carousel.module.css";
 
+function readPosition(viewport: HTMLDivElement, centered: boolean) {
+  const end = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
+  const offset = centered ? viewport.clientWidth / 2 : 0;
+  let active = 0;
+  let lastReachable = 0;
+  let closest = Infinity;
+  let closestToEnd = Infinity;
+  Array.from(viewport.children).forEach((child, index) => {
+    const slide = child as HTMLElement;
+    const point = centered
+      ? slide.offsetLeft + slide.offsetWidth / 2
+      : Math.min(end, Math.max(0, slide.offsetLeft - 4));
+    const distance = Math.abs(point - viewport.scrollLeft - offset);
+    const endDistance = Math.abs(point - end - offset);
+    if (distance < closest) {
+      closest = distance;
+      active = index;
+    }
+    if (endDistance < closestToEnd) {
+      closestToEnd = endDistance;
+      lastReachable = index;
+    }
+  });
+  return {
+    active,
+    lastReachable,
+    atStart: viewport.scrollLeft <= 2,
+    atEnd: viewport.scrollLeft >= end - 2,
+    canScroll: end > 2,
+  };
+}
+
 export function ShoppingCarousel({
   children,
   label,
@@ -23,8 +55,10 @@ export function ShoppingCarousel({
   const scrollFrame = useRef<number | null>(null);
   const [position, setPosition] = useState({
     active: initialIndex,
+    lastReachable: slides.length - 1,
     atStart: initialIndex === 0,
     atEnd: slides.length < 2,
+    canScroll: false,
   });
 
   const moveTo = (index: number, smooth = true) => {
@@ -46,28 +80,9 @@ export function ShoppingCarousel({
   const measure = () => {
     const viewport = track.current;
     if (!viewport) return;
-    const reference =
-      viewport.scrollLeft +
-      (variant === "orders" ? viewport.clientWidth / 2 : 4);
-    let active = 0;
-    let closest = Infinity;
-    Array.from(viewport.children).forEach((child, index) => {
-      const slide = child as HTMLElement;
-      const center =
-        slide.offsetLeft + (variant === "orders" ? slide.offsetWidth / 2 : 0);
-      const distance = Math.abs(center - reference);
-      if (distance < closest) {
-        closest = distance;
-        active = index;
-      }
-    });
-    activeRef.current = active;
-    setPosition({
-      active,
-      atStart: viewport.scrollLeft <= 2,
-      atEnd:
-        viewport.scrollLeft >= viewport.scrollWidth - viewport.clientWidth - 2,
-    });
+    const next = readPosition(viewport, variant === "orders");
+    activeRef.current = next.active;
+    setPosition(next);
   };
 
   useEffect(() => {
@@ -92,14 +107,9 @@ export function ShoppingCarousel({
     align();
     const observer = new ResizeObserver(() => {
       align();
-      setPosition((current) => ({
-        ...current,
-        active: activeRef.current,
-        atStart: viewport.scrollLeft <= 2,
-        atEnd:
-          viewport.scrollLeft >=
-          viewport.scrollWidth - viewport.clientWidth - 2,
-      }));
+      const next = readPosition(viewport, variant === "orders");
+      activeRef.current = next.active;
+      setPosition(next);
     });
     observer.observe(viewport);
     return () => {
@@ -136,11 +146,13 @@ export function ShoppingCarousel({
       role="region"
       aria-label={label}
       data-single={slides.length === 1 || undefined}
+      data-sparse={slides.length <= 2 || undefined}
+      data-static={!position.canScroll || undefined}
     >
       <div
         ref={track}
         className={styles.track}
-        tabIndex={slides.length > 1 ? 0 : undefined}
+        tabIndex={slides.length > 1 && position.canScroll ? 0 : undefined}
         onScroll={() => {
           if (scrollFrame.current !== null)
             cancelAnimationFrame(scrollFrame.current);
@@ -148,6 +160,7 @@ export function ShoppingCarousel({
         }}
         onKeyDown={(event) => {
           if (event.target !== event.currentTarget) return;
+          if (!position.canScroll) return;
           if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
             event.preventDefault();
             step(event.key === "ArrowLeft" ? -1 : 1);
@@ -170,7 +183,7 @@ export function ShoppingCarousel({
           </div>
         ))}
       </div>
-      {slides.length > 1 && (
+      {slides.length > 1 && position.canScroll && (
         <>
           <div className={styles.arrows}>
             <button
@@ -192,9 +205,9 @@ export function ShoppingCarousel({
               <ChevronRight size={21} aria-hidden="true" />
             </button>
           </div>
-          {variant === "orders" && (
+          {(variant === "orders" || slides.length > 1) && (
             <div className={styles.dots}>
-              {slides.map((_, index) => (
+              {slides.slice(0, position.lastReachable + 1).map((_, index) => (
                 <button
                   key={index}
                   type="button"

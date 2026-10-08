@@ -1,0 +1,302 @@
+{
+  "date": "2026-10-08",
+  "status": "Fresh Chromium PASS; normal user browser comparison pending",
+  "repository": "D:/Workshop/Paykar/Test_Task_Paykar_Shop-main",
+  "head": "cf1dea3",
+  "url": "http://localhost:3000/my-shopping",
+  "browser": "New standalone Chromium contexts; no injected CSS or devtools overrides; normal motion by default",
+  "data": "Existing persisted order IDs and real product-preview API; temporary personal-template fixtures in isolated QA storage; no persistent orders created",
+  "confirmedCause": "Orders used a centered 1120px viewport; personal templates used the full 1320px page width and had no centering rule for short collections.",
+  "css": [
+    {
+      "url": "http://localhost:3000/_next/static/chunks/3xsgaac3w7tmw.css",
+      "status": 200,
+      "sha256": "93ad84b6ac1735e893551cc311b06b93768cf32093c67701ef784bf1056111b3"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/chunks/01gnv0loooeom.css",
+      "status": 200,
+      "sha256": "fff56e5c99154cff38bf1f4a9bdc47e8a1583c0c50d794578beb412c1e96a284"
+    }
+  ],
+  "layout": [
+    {
+      "width": 390,
+      "language": "ru",
+      "scrollY": 0,
+      "headerBottom": 145.55208587646484,
+      "mainTop": 145.55209350585938,
+      "breadcrumbTop": 161.55209350585938,
+      "history": {
+        "left": 16,
+        "width": 348
+      },
+      "templates": {
+        "left": 16,
+        "width": 348
+      },
+      "centerError": 0,
+      "neighbors": 2,
+      "overflow": false,
+      "clippedActions": []
+    },
+    {
+      "width": 390,
+      "language": "en",
+      "scrollY": 0,
+      "headerBottom": 145.55208587646484,
+      "mainTop": 145.55209350585938,
+      "breadcrumbTop": 161.55209350585938,
+      "history": {
+        "left": 16,
+        "width": 348
+      },
+      "templates": {
+        "left": 16,
+        "width": 348
+      },
+      "centerError": 0,
+      "neighbors": 2,
+      "overflow": false,
+      "clippedActions": []
+    },
+    {
+      "width": 768,
+      "language": "ru",
+      "scrollY": 0,
+      "headerBottom": 145.55208587646484,
+      "mainTop": 145.55209350585938,
+      "breadcrumbTop": 173.55209350585938,
+      "history": {
+        "left": 24,
+        "width": 710
+      },
+      "templates": {
+        "left": 24,
+        "width": 710
+      },
+      "centerError": 0,
+      "neighbors": 2,
+      "overflow": false,
+      "clippedActions": []
+    },
+    {
+      "width": 768,
+      "language": "en",
+      "scrollY": 0,
+      "headerBottom": 145.55208587646484,
+      "mainTop": 145.55209350585938,
+      "breadcrumbTop": 173.55209350585938,
+      "history": {
+        "left": 24,
+        "width": 710
+      },
+      "templates": {
+        "left": 24,
+        "width": 710
+      },
+      "centerError": 0,
+      "neighbors": 2,
+      "overflow": false,
+      "clippedActions": []
+    },
+    {
+      "width": 1024,
+      "language": "ru",
+      "scrollY": 0,
+      "headerBottom": 148.6666717529297,
+      "mainTop": 148.6666717529297,
+      "breadcrumbTop": 176.6666717529297,
+      "history": {
+        "left": 24,
+        "width": 966
+      },
+      "templates": {
+        "left": 24,
+        "width": 966
+      },
+      "centerError": 0,
+      "neighbors": 2,
+      "overflow": false,
+      "clippedActions": []
+    },
+    {
+      "width": 1024,
+      "language": "en",
+      "scrollY": 0,
+      "headerBottom": 148.6666717529297,
+      "mainTop": 148.6666717529297,
+      "breadcrumbTop": 176.6666717529297,
+      "history": {
+        "left": 24,
+        "width": 966
+      },
+      "templates": {
+        "left": 24,
+        "width": 966
+      },
+      "centerError": 0,
+      "neighbors": 2,
+      "overflow": false,
+      "clippedActions": []
+    },
+    {
+      "width": 1440,
+      "language": "ru",
+      "scrollY": 0,
+      "headerBottom": 151.11458587646484,
+      "mainTop": 151.11459350585938,
+      "breadcrumbTop": 179.11459350585938,
+      "history": {
+        "left": 155,
+        "width": 1120
+      },
+      "templates": {
+        "left": 155,
+        "width": 1120
+      },
+      "centerError": 0,
+      "neighbors": 2,
+      "overflow": false,
+      "clippedActions": []
+    },
+    {
+      "width": 1440,
+      "language": "en",
+      "scrollY": 0,
+      "headerBottom": 151.11458587646484,
+      "mainTop": 151.11459350585938,
+      "breadcrumbTop": 179.11459350585938,
+      "history": {
+        "left": 155,
+        "width": 1120
+      },
+      "templates": {
+        "left": 155,
+        "width": 1120
+      },
+      "centerError": 0,
+      "neighbors": 2,
+      "overflow": false,
+      "clippedActions": []
+    }
+  ],
+  "sparse": [
+    {
+      "count": 1,
+      "centerError": 0,
+      "scrollLeft": 0,
+      "overflow": false,
+      "arrows": []
+    },
+    {
+      "count": 2,
+      "centerError": 0,
+      "scrollLeft": 0,
+      "overflow": false,
+      "arrows": [
+        {
+          "label": "Previous card",
+          "disabled": true
+        },
+        {
+          "label": "Next card",
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "count": 3,
+      "centerError": 0,
+      "scrollLeft": 0,
+      "overflow": false,
+      "arrows": [
+        {
+          "label": "Previous card",
+          "disabled": true
+        },
+        {
+          "label": "Next card",
+          "disabled": true
+        }
+      ]
+    }
+  ],
+  "anchors": [
+    {
+      "width": 390,
+      "language": "ru",
+      "headerBottom": 67.55208587646484,
+      "templateHeadingTop": 83.83333587646484,
+      "scrollY": 802.6666870117188
+    },
+    {
+      "width": 390,
+      "language": "en",
+      "headerBottom": 67.55208587646484,
+      "templateHeadingTop": 83.70833587646484,
+      "scrollY": 778
+    },
+    {
+      "width": 768,
+      "language": "ru",
+      "headerBottom": 67.55208587646484,
+      "templateHeadingTop": 84.1875,
+      "scrollY": 833.3333129882812
+    },
+    {
+      "width": 768,
+      "language": "en",
+      "headerBottom": 67.55208587646484,
+      "templateHeadingTop": 84.0625,
+      "scrollY": 808.6666870117188
+    },
+    {
+      "width": 1024,
+      "language": "ru",
+      "headerBottom": 120.66667175292969,
+      "templateHeadingTop": 139.96875,
+      "scrollY": 780.6666870117188
+    },
+    {
+      "width": 1024,
+      "language": "en",
+      "headerBottom": 120.66667175292969,
+      "templateHeadingTop": 139.84375,
+      "scrollY": 756
+    },
+    {
+      "width": 1440,
+      "language": "ru",
+      "headerBottom": 123.11458587646484,
+      "templateHeadingTop": 139.75,
+      "scrollY": 799.3333129882812
+    },
+    {
+      "width": 1440,
+      "language": "en",
+      "headerBottom": 123.11458587646484,
+      "templateHeadingTop": 140.2916717529297,
+      "scrollY": 774
+    }
+  ],
+  "carousel": {
+    "initial": "2 / 5",
+    "next": true,
+    "previous": true,
+    "endDisabled": true,
+    "startDisabled": true,
+    "keyboard": true,
+    "templateBoundary": 0,
+    "trackpad": true,
+    "touch": true
+  },
+  "shoppingSmoke": {
+    "repeatAddsCart": true,
+    "editLink": true,
+    "reducedMotionNavigation": true
+  },
+  "pageErrors": [],
+  "failedAssets": [],
+  "normalBrowser": "Browser skill discovery returned no connected browser; regular Chrome launch rejected as blocked by policy; supplied attachment had text only, no broken screenshot."
+}

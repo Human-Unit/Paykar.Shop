@@ -20,7 +20,7 @@ import { Breadcrumbs } from "./breadcrumbs";
 import { ShoppingProductIdentity } from "./shopping-product-identity";
 import { ShoppingCarousel } from "./shopping-carousel";
 import { Failure, Loading } from "./states";
-import { ArrowRight, Plus } from "lucide-react";
+import { ArrowRight, Plus, ShoppingBasket, Layers3 } from "lucide-react";
 import {
   AddShoppingItems,
   SaveShoppingTemplate,
@@ -137,6 +137,106 @@ export function ShoppingDiscovery() {
   );
 }
 
+function ShoppingStarter({
+  kind,
+  compact = false,
+  hasHistory = false,
+  secondary = false,
+}: {
+  kind: "history" | "templates";
+  compact?: boolean;
+  hasHistory?: boolean;
+  secondary?: boolean;
+}) {
+  const { t } = usePresentation();
+  const history = kind === "history";
+  const Icon = history ? ShoppingBasket : Layers3;
+  return (
+    <section
+      className={`${styles.starterPanel} ${compact ? styles.compactStarter : ""}`}
+      aria-labelledby={`shopping-start-${kind}`}
+    >
+      <span className={styles.starterIcon}>
+        <Icon size={26} aria-hidden="true" />
+      </span>
+      <div className={styles.starterCopy}>
+        <h2 id={`shopping-start-${kind}`}>
+          {t(
+            history
+              ? "Начните с первой корзины"
+              : "Сохраните свою привычную корзину",
+          )}
+        </h2>
+        <p>
+          {t(
+            history
+              ? "После первого заказа здесь появятся ваши покупки — их можно будет повторить."
+              : "Создайте шаблон любимых продуктов, чтобы не искать их заново.",
+          )}
+        </p>
+      </div>
+      <div className={styles.starterActions}>
+        <Link
+          href={history ? "/catalog" : "/my-shopping/templates/new"}
+          className={secondary ? "button secondary" : "button"}
+        >
+          {history ? (
+            <ShoppingBasket size={18} aria-hidden="true" />
+          ) : (
+            <Plus size={18} aria-hidden="true" />
+          )}
+          {t(history ? "Перейти в каталог" : "Создать шаблон")}
+        </Link>
+        {!secondary && (
+          <Link
+            href={!history && hasHistory ? "#history" : "#curated"}
+            className="text-link"
+          >
+            {t(
+              !history && hasHistory
+                ? "Выбрать из заказов"
+                : "Посмотреть готовые наборы",
+            )}
+            <ArrowRight size={16} aria-hidden="true" />
+          </Link>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function SparseShoppingGuide({ kind }: { kind: "history" | "templates" }) {
+  const { t } = usePresentation();
+  const history = kind === "history";
+  const Icon = history ? ShoppingBasket : Layers3;
+  return (
+    <div className={styles.collectionGuide}>
+      <Icon size={24} aria-hidden="true" />
+      <h3>
+        {t(
+          history
+            ? "Знакомая корзина, новый заказ"
+            : "Ваша корзина всегда под рукой",
+        )}
+      </h3>
+      <p>
+        {t(
+          history
+            ? "Повторите покупку или сохраните её как шаблон. Состав можно изменить в корзине."
+            : "Добавьте набор целиком или откройте его, чтобы изменить продукты.",
+        )}
+      </p>
+      <Link
+        href={history ? "/catalog" : "/my-shopping/templates/new"}
+        className="text-link"
+      >
+        {t(history ? "Продолжить покупки" : "Создать ещё шаблон")}
+        <ArrowRight size={16} aria-hidden="true" />
+      </Link>
+    </div>
+  );
+}
+
 export function MyShopping() {
   const { t } = usePresentation();
   const { templates, orderIds } = useShoppingStorage();
@@ -150,7 +250,12 @@ export function MyShopping() {
   return (
     <div
       className={
-        "polish-page shopping-page " + styles.page + " " + styles.workspace
+        "polish-page shopping-page " +
+        styles.page +
+        " " +
+        styles.workspace +
+        " " +
+        styles.overview
       }
     >
       <Breadcrumbs
@@ -163,37 +268,56 @@ export function MyShopping() {
             "Повторяйте привычные покупки, сохраняйте любимые наборы и собирайте корзину за пару кликов.",
           )}
         </p>
-        {!hasTemplates && (
-          <Link
-            className={hasHistory ? "button secondary" : "button"}
-            href="/my-shopping/templates/new"
-          >
-            <Plus size={18} aria-hidden="true" />
-            {t("Создать свой шаблон")}
-          </Link>
-        )}
       </div>
+      {!hasHistory && !hasTemplates ? (
+        <div className={styles.emptyWorkspace}>
+          <ShoppingStarter kind="history" />
+          <ShoppingStarter kind="templates" secondary />
+        </div>
+      ) : !hasHistory ? (
+        <div className={styles.starterRow}>
+          <ShoppingStarter kind="history" compact />
+        </div>
+      ) : null}
       {hasHistory && (
-        <section id="history" className={styles.section}>
+        <section
+          id="history"
+          className={styles.section + " " + styles.personalSection}
+        >
           <h2>{t("Последний заказ")}</h2>
           <p className={styles.help}>
             {t(
               "Актуальные цены и наличие проверим перед добавлением в корзину.",
             )}
           </p>
-          <ShoppingCarousel
-            label={t("Последний заказ")}
-            variant="orders"
-            initialIndex={orderIds.length > 2 ? 1 : 0}
+          <div
+            className={
+              orderIds.length === 1 ? styles.sparseCollection : undefined
+            }
           >
-            {carouselOrderIds.map((id) => (
-              <HistoryOrder key={id} id={id} />
-            ))}
-          </ShoppingCarousel>
+            {orderIds.length === 1 && <SparseShoppingGuide kind="history" />}
+            <ShoppingCarousel
+              label={t("Последний заказ")}
+              variant="orders"
+              initialIndex={orderIds.length > 2 ? 1 : 0}
+            >
+              {carouselOrderIds.map((id) => (
+                <HistoryOrder key={id} id={id} />
+              ))}
+            </ShoppingCarousel>
+          </div>
         </section>
       )}
+      {hasHistory && !hasTemplates && (
+        <div className={styles.starterRow}>
+          <ShoppingStarter kind="templates" compact hasHistory />
+        </div>
+      )}
       {hasTemplates && (
-        <section id="templates" className={styles.section}>
+        <section
+          id="templates"
+          className={styles.section + " " + styles.personalSection}
+        >
           <div className={styles.sectionHeading}>
             <h2>{t("Мои шаблоны")}</h2>
             <Link
@@ -207,11 +331,20 @@ export function MyShopping() {
           <p className={styles.help}>
             {t("Ваши шаблоны сохраняются в этом браузере.")}
           </p>
-          <ShoppingCarousel label={t("Мои шаблоны")} variant="templates">
-            {templates.map((template) => (
-              <PersonalTemplateCard key={template.id} template={template} />
-            ))}
-          </ShoppingCarousel>
+          <div
+            className={
+              templates.length <= 2
+                ? `${styles.sparseCollection} ${templates.length === 2 ? styles.sparsePair : ""}`
+                : undefined
+            }
+          >
+            {templates.length <= 2 && <SparseShoppingGuide kind="templates" />}
+            <ShoppingCarousel label={t("Мои шаблоны")} variant="templates">
+              {templates.map((template) => (
+                <PersonalTemplateCard key={template.id} template={template} />
+              ))}
+            </ShoppingCarousel>
+          </div>
         </section>
       )}
       <CuratedShopping />

@@ -104,24 +104,45 @@ export function SaveShoppingTemplate({
   items,
   label = "Сохранить как шаблон",
   icon,
+  templateName,
 }: {
   items: ShoppingItem[];
   label?: string;
   icon?: ReactNode;
+  templateName?: string;
 }) {
   const { t } = usePresentation();
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
+  const [savedId, setSavedId] = useState("");
+  const save = (name: string) => {
+    try {
+      const result = saveShoppingTemplate(name, items);
+      setSavedId(result.template.id);
+      setOpen(false);
+      setName("");
+      setMessage(result.persisted ? "Шаблон сохранён." : storageWarning);
+    } catch (error) {
+      setMessage(
+        error instanceof Error ? error.message : "Не удалось сохранить шаблон.",
+      );
+    }
+  };
   return (
     <div className={styles.saveAction}>
       {!open && (
         <button
           type="button"
           className="button secondary"
+          disabled={templateName !== undefined && !!savedId}
           onClick={() => {
-            setOpen(true);
             setMessage("");
+            if (templateName !== undefined) {
+              save(templateName);
+            } else {
+              setOpen(true);
+            }
           }}
         >
           {icon}
@@ -133,20 +154,7 @@ export function SaveShoppingTemplate({
           className={styles.inlineForm}
           onSubmit={(e) => {
             e.preventDefault();
-            try {
-              const result = saveShoppingTemplate(name, items);
-              setOpen(false);
-              setName("");
-              setMessage(
-                result.persisted ? "Шаблон сохранён." : storageWarning,
-              );
-            } catch (error) {
-              setMessage(
-                error instanceof Error
-                  ? error.message
-                  : "Не удалось сохранить шаблон.",
-              );
-            }
+            save(name);
           }}
         >
           <label>
@@ -174,6 +182,16 @@ export function SaveShoppingTemplate({
       {message && (
         <p role="status">
           {t(message)}{" "}
+          {templateName !== undefined && savedId && (
+            <>
+              <Link
+                href={`/my-shopping/templates/${savedId}`}
+                className="text-link"
+              >
+                {t("Редактировать")}
+              </Link>{" "}
+            </>
+          )}
           <Link href="/my-shopping#templates" className="text-link">
             {t("Мои шаблоны")}
           </Link>
