@@ -13,7 +13,6 @@ import {
   isNavigationActive,
 } from "@/lib/navigation";
 import { CatalogMegaMenu } from "./catalog-mega-menu";
-import { LanguageSelector, Preferences } from "./preferences";
 
 export function MainNavigation() {
   const { t, language } = usePresentation();
@@ -156,10 +155,6 @@ export function BurgerMenu() {
           </button>
         </div>
         <nav aria-label={t("Навигация меню")}>
-          <div className="drawer-utilities">
-            <LanguageSelector />
-            <Preferences />
-          </div>
           {navigationGroups.map((group) => (
             <section
               className="drawer-group"
