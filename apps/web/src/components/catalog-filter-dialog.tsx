@@ -237,7 +237,7 @@ export function CatalogFilterDialog({
                     <input
                       name={field.key}
                       type="text"
-                      inputMode="decimal"
+                      inputMode="numeric"
                       autoComplete="off"
                       maxLength={32}
                       aria-invalid={Boolean(priceError)}
@@ -289,7 +289,7 @@ export function CatalogFilterDialog({
                   {t(
                     priceError === "reversed_price"
                       ? "Минимальная цена не должна превышать максимальную."
-                      : "Введите цену от 0 до 9 999 999 999.99, не более двух знаков после точки.",
+                      : "Введите целую цену от 0 до 9 999 999 999 сомони.",
                   )}
                 </p>
               )}

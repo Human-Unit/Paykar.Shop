@@ -91,18 +91,18 @@ test("removing one group leaves every other constraint intact", () => {
   assert.equal(noCategory.searchParams.get("q"), "tea");
 });
 
-test("price presets use the same API price parameters", () => {
+test("legacy decimal price presets normalize to whole-som API bounds", () => {
   const params = new URL(
     catalogHref(new URLSearchParams(combined), {
       min_price: "12.01",
-      max_price: "18.00",
+      max_price: "18.25",
     }),
     "http://test",
   ).searchParams;
   const apiParams = new URL(catalogApiQuery(params), "http://test")
     .searchParams;
-  assert.equal(apiParams.get("min_price"), "12.01");
-  assert.equal(apiParams.get("max_price"), "18.00");
+  assert.equal(apiParams.get("min_price"), "12");
+  assert.equal(apiParams.get("max_price"), "19");
   assert.equal(apiParams.get("min_discount"), "20");
   assert.equal(apiParams.get("unit"), "pack");
 });
@@ -207,6 +207,9 @@ test("invalid and incomplete prices cannot be used for a preview or apply", () =
     "1e3",
     "abc",
     "2.001",
+    "10.5",
+    "10.50",
+    "9999999999.99",
     "10000000000",
     "3.",
   ])
@@ -215,7 +218,7 @@ test("invalid and incomplete prices cannot be used for a preview or apply", () =
       "invalid_price",
       value,
     );
-  for (const value of ["0", "10", "10.5", "10.50", "9999999999.99"])
+  for (const value of ["0", "10", "9999999999"])
     assert.equal(
       catalogPriceError(new URLSearchParams({ max_price: value })),
       null,
@@ -226,10 +229,27 @@ test("invalid and incomplete prices cannot be used for a preview or apply", () =
     "reversed_price",
   );
   assert.equal(
-    catalogPriceError(new URLSearchParams("min_price=10&max_price=10.00")),
+    catalogPriceError(new URLSearchParams("min_price=10&max_price=10")),
     null,
   );
   assert.equal(catalogPriceError(new URLSearchParams()), null);
+});
+
+test("whole-som prices survive reload and preserve unrelated constraints", () => {
+  const source = new URLSearchParams(
+    "q=tea&min_price=10.50&max_price=20.25&in_stock=true",
+  );
+  const normalized = catalogParameters(source);
+  assert.equal(normalized.get("min_price"), "10");
+  assert.equal(normalized.get("max_price"), "21");
+  assert.equal(normalized.get("q"), "tea");
+  assert.equal(normalized.get("in_stock"), "true");
+  assert.equal(source.get("min_price"), "10.50");
+  assert.equal(catalogPriceError(normalized), null);
+  assert.deepEqual(
+    [...catalogParameters(new URLSearchParams(normalized.toString()))],
+    [...normalized],
+  );
 });
 
 test("draft reset keeps the shopper's search, category and sort without mutating applied state", () => {

@@ -278,6 +278,11 @@ async def test_real_facets_are_independent_of_selected_price_and_pagination(rich
     result = (await rich_client.get("/api/v1/products", params=params)).json()
     facets = result["facets"]
     assert facets["units"] == ["kg", "pack"]
+    # Whole-som inclusive presets may share a boundary; no product price is lost.
+    for row in facets["price_presets"]:
+        for bound in (row["min_price"], row["max_price"]):
+            if bound is not None:
+                assert Decimal(bound) == Decimal(bound).to_integral_value()
     filtered = (
         await rich_client.get("/api/v1/products", params={**params, "min_price": "19"})
     ).json()
@@ -289,7 +294,7 @@ async def test_real_facets_are_independent_of_selected_price_and_pagination(rich
             if (row["min_price"] is None or price >= Decimal(row["min_price"]))
             and (row["max_price"] is None or price <= Decimal(row["max_price"]))
         ]
-        assert len(matching) == 1
+        assert matching
     empty = (
         await rich_client.get("/api/v1/products", params={**params, "q": "nonexistent"})
     ).json()
