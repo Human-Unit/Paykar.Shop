@@ -1,7 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, ShoppingBasket } from "lucide-react";
+import {
+  ArrowRight,
+  FilePlus2,
+  MoreHorizontal,
+  Pencil,
+  Repeat2,
+  ShoppingBasket,
+  ShoppingCart,
+} from "lucide-react";
 import { usePresentation } from "@/context/presentation";
 import { useResource, type Order } from "@/lib/api";
 import { cents } from "@/lib/format";
@@ -44,15 +52,19 @@ function ProductPreview({
   items,
   count,
   composition = false,
+  overlap = false,
 }: {
   items: PreviewItem[];
   count: number;
   composition?: boolean;
+  overlap?: boolean;
 }) {
   const { t } = usePresentation();
   return (
-    <div className={composition ? styles.composition : styles.productPreview}>
-      {items.slice(0, 4).map((row, index) => (
+    <div
+      className={`${composition ? styles.composition : styles.productPreview} ${overlap ? styles.overlapPreview : ""}`}
+    >
+      {items.slice(0, overlap && composition ? 3 : 4).map((row, index) => (
         <div className={styles.previewTile} key={`${row.product_id}:${index}`}>
           {row.product ? (
             <ProductImage product={row.product} />
@@ -62,11 +74,14 @@ function ProductPreview({
               <span className="sr-only">{t("Больше не продаётся")}</span>
             </span>
           )}
-          {index === 3 && count > 4 && (
+          {!overlap && index === 3 && count > 4 && (
             <span className={styles.moreProducts}>+{count - 4}</span>
           )}
         </div>
       ))}
+      {overlap && !composition && count > 4 && (
+        <span className={styles.previewRemainder}>+{count - 4}</span>
+      )}
     </div>
   );
 }
@@ -123,6 +138,7 @@ function OrderProductPreview({ items }: { items: ShoppingItem[] }) {
               },
           )}
           count={items.length}
+          overlap
         />
       )}
     </div>
@@ -138,10 +154,21 @@ export function HistoryOrder({
 }) {
   const { t, money, locale } = usePresentation();
   const resource = useResource<Order>(`/orders/${encodeURIComponent(id)}`);
-  if (resource.loading) return <Loading label="Загружаем заказ…" />;
+  const cardClassName =
+    styles.card +
+    " " +
+    (compact
+      ? styles.compactOrder
+      : `${styles.latestOrder} ${styles.orderShowcaseCard}`);
+  if (resource.loading)
+    return (
+      <article className={cardClassName} aria-busy="true">
+        <Loading label="Загружаем заказ…" />
+      </article>
+    );
   if (resource.error)
     return (
-      <article className={styles.card}>
+      <article className={cardClassName}>
         <p>
           {t("Заказ недоступен:")} {id.slice(0, 8)}
         </p>
@@ -152,38 +179,48 @@ export function HistoryOrder({
   if (!order) return null;
   const items = orderItems(order);
   return (
-    <article
-      className={
-        styles.card + " " + (compact ? styles.compactOrder : styles.latestOrder)
-      }
-    >
-      {!compact && <OrderProductPreview items={items} />}
-      <div className={styles.orderInformation}>
-        <div className={styles.orderTitle}>
-          <h3>
-            {t("Заказ ")} #{order.id.slice(0, 8)}
-          </h3>
-          <span className={styles.statusBadge}>
-            {t(statuses[order.status] || order.status)}
-          </span>
+    <article className={cardClassName}>
+      <div className={styles.orderSummary}>
+        <div className={styles.orderInformation}>
+          <div className={styles.orderTitle}>
+            <h3>
+              {t("Заказ ")} #{order.id.slice(0, 8)}
+            </h3>
+            <span className={styles.statusBadge}>
+              {t(statuses[order.status] || order.status)}
+            </span>
+          </div>
+          <div className={styles.orderMeta}>
+            <time dateTime={order.created_at}>
+              {new Date(order.created_at).toLocaleDateString(locale, {
+                day: "numeric",
+                month: "long",
+              })}
+            </time>
+            <span aria-hidden="true">·</span>
+            <ItemCount count={order.items.length} />
+          </div>
         </div>
-        <div className={styles.orderMeta}>
-          <time dateTime={order.created_at}>
-            {new Date(order.created_at).toLocaleDateString(locale, {
-              day: "numeric",
-              month: "long",
-            })}
-          </time>
-          <span aria-hidden="true">·</span>
-          <ItemCount count={order.items.length} />
-          <span aria-hidden="true">·</span>
-          <span>{money(cents(order.total))}</span>
-        </div>
+        <strong className={styles.orderTotal}>
+          {money(cents(order.total))}
+        </strong>
       </div>
+      {!compact && <OrderProductPreview items={items} />}
       <div className={styles.orderCardActions}>
-        <AddShoppingItems items={items} label="Повторить заказ" />
-        <SaveShoppingTemplate items={items} />
-        <Link href={`/order/${order.id}`} className="text-link">
+        <SaveShoppingTemplate
+          items={items}
+          label="В шаблон"
+          icon={<FilePlus2 size={18} aria-hidden="true" />}
+        />
+        <AddShoppingItems
+          items={items}
+          label="Повторить заказ"
+          icon={<Repeat2 size={18} aria-hidden="true" />}
+        />
+        <Link
+          href={`/order/${order.id}`}
+          className={`text-link ${styles.orderViewLink}`}
+        >
           {t("Посмотреть заказ")} <ArrowRight size={16} aria-hidden="true" />
         </Link>
       </div>
@@ -199,7 +236,9 @@ export function PersonalTemplateCard({
   const { t } = usePresentation();
   const preview = useShoppingPreview(template.items);
   return (
-    <article className={styles.card + " " + styles.templateCard}>
+    <article
+      className={`${styles.card} ${styles.templateCard} ${styles.personalTemplateCard}`}
+    >
       {preview.loading && <Loading label="Загружаем товары…" />}
       {preview.error && <Failure error={preview.error} retry={preview.retry} />}
       {preview.data && (
@@ -207,21 +246,45 @@ export function PersonalTemplateCard({
           items={preview.data.items}
           count={template.items.length}
           composition
+          overlap
         />
       )}
-      <h3>{template.name}</h3>
+      <h3>
+        <Link href={`/my-shopping/templates/${template.id}`}>
+          {template.name}
+        </Link>
+      </h3>
       <div className={styles.cardMeta}>
         <ItemCount count={template.items.length} />
       </div>
       {preview.data && <PreviewEstimate items={preview.data.items} />}
       <div className={styles.templateActions}>
-        <AddShoppingItems items={template.items} label="Добавить в корзину" />
-        <Link
-          className="text-link"
-          href={`/my-shopping/templates/${template.id}`}
+        <AddShoppingItems
+          items={template.items}
+          label="Добавить в корзину"
+          icon={<ShoppingCart size={18} aria-hidden="true" />}
+        />
+        <details
+          className={styles.templateMenu}
+          onBlur={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget)) {
+              event.currentTarget.open = false;
+            }
+          }}
+          onKeyDown={(event) => {
+            if (event.key === "Escape") {
+              event.currentTarget.open = false;
+              event.currentTarget.querySelector("summary")?.focus();
+            }
+          }}
         >
-          {t("Редактировать")} <ArrowRight size={16} aria-hidden="true" />
-        </Link>
+          <summary aria-label={`${t("Редактировать")}: ${template.name}`}>
+            <MoreHorizontal size={22} aria-hidden="true" />
+          </summary>
+          <Link href={`/my-shopping/templates/${template.id}`}>
+            <Pencil size={16} aria-hidden="true" /> {t("Редактировать")}
+          </Link>
+        </details>
       </div>
     </article>
   );

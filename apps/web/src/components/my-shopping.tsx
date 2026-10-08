@@ -18,6 +18,7 @@ import {
 } from "@/lib/shopping";
 import { Breadcrumbs } from "./breadcrumbs";
 import { ShoppingProductIdentity } from "./shopping-product-identity";
+import { ShoppingCarousel } from "./shopping-carousel";
 import { Failure, Loading } from "./states";
 import { ArrowRight, Plus } from "lucide-react";
 import {
@@ -141,7 +142,11 @@ export function MyShopping() {
   const { templates, orderIds } = useShoppingStorage();
   const hasHistory = orderIds.length > 0;
   const hasTemplates = templates.length > 0;
-  const [showOlderOrders, setShowOlderOrders] = useState(false);
+  // Put the latest real order in the center with older orders on either side.
+  const carouselOrderIds =
+    orderIds.length > 2
+      ? [orderIds[1], orderIds[0], ...orderIds.slice(2)]
+      : orderIds;
   return (
     <div
       className={
@@ -176,29 +181,15 @@ export function MyShopping() {
               "Актуальные цены и наличие проверим перед добавлением в корзину.",
             )}
           </p>
-          <HistoryOrder id={orderIds[0]} />
-          {orderIds.length > 1 && (
-            <div className={styles.recentOrders}>
-              <button
-                type="button"
-                className="text-link"
-                aria-expanded={showOlderOrders}
-                aria-controls="recent-orders"
-                onClick={() => setShowOlderOrders((value) => !value)}
-              >
-                {t(showOlderOrders ? "Скрыть заказы" : "Все заказы")}
-                <ArrowRight size={16} aria-hidden="true" />
-              </button>
-              {showOlderOrders && (
-                <div id="recent-orders" className={styles.history}>
-                  <h3>{t("Недавние заказы")}</h3>
-                  {orderIds.slice(1).map((id) => (
-                    <HistoryOrder key={id} id={id} compact />
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
+          <ShoppingCarousel
+            label={t("Последний заказ")}
+            variant="orders"
+            initialIndex={orderIds.length > 2 ? 1 : 0}
+          >
+            {carouselOrderIds.map((id) => (
+              <HistoryOrder key={id} id={id} />
+            ))}
+          </ShoppingCarousel>
         </section>
       )}
       {hasTemplates && (
@@ -216,11 +207,11 @@ export function MyShopping() {
           <p className={styles.help}>
             {t("Ваши шаблоны сохраняются в этом браузере.")}
           </p>
-          <div className={styles.grid}>
+          <ShoppingCarousel label={t("Мои шаблоны")} variant="templates">
             {templates.map((template) => (
               <PersonalTemplateCard key={template.id} template={template} />
             ))}
-          </div>
+          </ShoppingCarousel>
         </section>
       )}
       <CuratedShopping />

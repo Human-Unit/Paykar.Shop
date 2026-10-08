@@ -32,7 +32,12 @@ export function Home() {
       .slice(0, 10) ?? [];
   return (
     <div className="polish-page home-page">
-      <HomeHero />
+      <HomeHero
+        promotions={discounts}
+        promotionsLoading={sales.loading}
+        promotionsError={Boolean(sales.error)}
+        products={products.data?.items ?? []}
+      />
       {(sales.loading || sales.error || discounts.length > 0) && (
         <section id="promotions" className="discount-section">
           <SectionHeader

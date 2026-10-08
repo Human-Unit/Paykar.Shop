@@ -813,3 +813,267 @@
     padding-inline: 10px;
   }
 }
+
+/* Reference-card treatment is limited to history and personal templates. */
+.workspace .orderShowcaseCard {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  min-height: 356px;
+  margin: 0;
+  padding: 24px;
+  border-radius: 26px;
+  background: var(--surface);
+  box-shadow:
+    0 18px 40px rgb(0 0 0 / 16%),
+    0 3px 12px color-mix(in srgb, var(--paykar-green) 7%, transparent);
+}
+.orderShowcaseCard .orderSummary {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.workspace .orderShowcaseCard .orderTitle {
+  gap: 6px 10px;
+}
+.workspace .orderShowcaseCard .orderTitle h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.orderShowcaseCard .statusBadge {
+  padding: 2px 7px;
+  font-size: 10px;
+}
+.orderShowcaseCard .orderMeta {
+  gap: 4px 6px;
+  margin-top: 7px;
+  font-size: 12px;
+}
+.orderShowcaseCard .orderTotal {
+  flex-shrink: 0;
+  color: var(--ink);
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.orderShowcaseCard .orderPreview {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: none;
+  min-height: 148px;
+  margin-block: 6px;
+}
+.orderShowcaseCard .orderPreview > div {
+  width: 100%;
+}
+.overlapPreview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  isolation: isolate;
+}
+.orderShowcaseCard .overlapPreview .previewTile,
+.workspace .personalTemplateCard .overlapPreview .previewTile {
+  flex: 0 1 94px;
+  width: 94px;
+  aspect-ratio: 0.9;
+  padding: 5px;
+  border: 2px solid color-mix(in srgb, var(--stage) 88%, white);
+  border-radius: 16px;
+  box-shadow: 0 5px 12px rgb(0 0 0 / 12%);
+  transform: translateY(4px) rotate(-6deg);
+}
+.orderShowcaseCard .overlapPreview .previewTile + .previewTile,
+.workspace .personalTemplateCard .overlapPreview .previewTile + .previewTile {
+  margin-left: -14px;
+}
+.orderShowcaseCard .overlapPreview .previewTile:nth-child(even),
+.workspace .personalTemplateCard .overlapPreview .previewTile:nth-child(even) {
+  z-index: 1;
+  transform: translateY(-5px) rotate(4deg);
+}
+.orderShowcaseCard .overlapPreview .previewTile:nth-child(3),
+.workspace .personalTemplateCard .overlapPreview .previewTile:nth-child(3) {
+  z-index: 2;
+  transform: translateY(0) rotate(-2deg);
+}
+.previewRemainder {
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  flex: 0 0 40px;
+  height: 44px;
+  margin-left: -8px;
+  border: 1px solid var(--green-line);
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--brand-ink);
+  font-size: 16px;
+  font-weight: 750;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 10%);
+}
+.workspace .orderShowcaseCard .orderCardActions {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 12px 8px;
+  width: 100%;
+  margin-top: auto;
+}
+.workspace .orderShowcaseCard .orderCardActions :global(.button) {
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  min-height: 46px;
+  padding: 9px 8px;
+  border-radius: 15px;
+  font-size: 12px;
+  line-height: 1.3;
+}
+.orderShowcaseCard .orderCardActions :global(.button) svg {
+  flex-shrink: 0;
+}
+.orderShowcaseCard .saveAction:has(form) {
+  grid-column: 1 / -1;
+}
+.workspace .orderShowcaseCard .orderViewLink {
+  grid-column: 1 / -1;
+  justify-content: center;
+  min-height: 36px;
+  margin-top: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+.workspace .personalTemplateCard {
+  min-height: 340px;
+  padding: 18px;
+  border-radius: 24px;
+  box-shadow: 0 10px 28px rgb(0 0 0 / 10%);
+}
+.workspace .personalTemplateCard .overlapPreview {
+  min-height: 118px;
+  margin: 0 0 12px;
+  padding: 8px 6px;
+  background: transparent;
+}
+.workspace .personalTemplateCard .overlapPreview .previewTile {
+  flex-basis: 100px;
+  width: 100px;
+}
+.workspace .personalTemplateCard h3 {
+  margin: 0 0 5px;
+  font-size: 18px;
+  font-weight: 750;
+  line-height: 1.3;
+}
+.personalTemplateCard .cardMeta {
+  font-size: 13px;
+}
+.workspace .personalTemplateCard .currentPrice {
+  margin-block: 8px 0;
+  font-size: 15px;
+}
+.personalTemplateCard .currentPrice span {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+.workspace .personalTemplateCard .templateActions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 44px;
+  align-items: start;
+  gap: 8px;
+  width: 100%;
+  padding-top: 16px;
+}
+.personalTemplateCard .templateActions .actionResult {
+  width: 100%;
+}
+.workspace .personalTemplateCard .templateActions :global(.button) {
+  justify-content: center;
+  gap: 7px;
+  width: 100%;
+  min-height: 46px;
+  padding: 9px 10px;
+  border-radius: 15px;
+  font-size: 13px;
+  line-height: 1.35;
+}
+.personalTemplateCard .templateActions :global(.button) svg {
+  flex-shrink: 0;
+}
+.templateMenu {
+  position: relative;
+  width: 44px;
+}
+.templateMenu summary {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 46px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: var(--elevated-surface);
+  color: var(--ink);
+  list-style: none;
+  cursor: pointer;
+}
+.templateMenu summary::-webkit-details-marker {
+  display: none;
+}
+.templateMenu[open] summary {
+  border-color: var(--green-line);
+  color: var(--brand-ink);
+}
+.templateMenu > a {
+  position: absolute;
+  z-index: 4;
+  right: 0;
+  bottom: calc(100% + 8px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 14px;
+  white-space: nowrap;
+  box-shadow: 0 8px 28px rgb(0 0 0 / 22%);
+}
+@media (max-width: 640px) {
+  .workspace .orderShowcaseCard {
+    min-height: 340px;
+    padding: 18px;
+    border-radius: 22px;
+  }
+  .orderShowcaseCard .orderSummary {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .orderShowcaseCard .orderTotal {
+    font-size: 20px;
+  }
+  .workspace .orderShowcaseCard .orderCardActions {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .workspace .orderShowcaseCard .orderCardActions :global(.button) {
+    flex-wrap: wrap;
+    font-size: 11px;
+  }
+  .workspace .personalTemplateCard {
+    min-height: 320px;
+    padding: 16px;
+    border-radius: 22px;
+  }
+}

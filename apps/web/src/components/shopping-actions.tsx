@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import Link from "next/link";
 import { api } from "@/lib/api";
 import type { Order } from "@/lib/api";
@@ -20,9 +20,11 @@ export const storageWarning =
 export function AddShoppingItems({
   items,
   label = "Добавить всё в корзину",
+  icon,
 }: {
   items: ShoppingItem[];
   label?: string;
+  icon?: ReactNode;
 }) {
   const { t } = usePresentation();
   const cart = useCart();
@@ -60,6 +62,7 @@ export function AddShoppingItems({
         onClick={add}
         disabled={busy || !items.length}
       >
+        {icon}
         {t(busy ? "Добавляем…" : label)}
       </button>
       <div role="status">
@@ -100,9 +103,11 @@ export function AddShoppingItems({
 export function SaveShoppingTemplate({
   items,
   label = "Сохранить как шаблон",
+  icon,
 }: {
   items: ShoppingItem[];
   label?: string;
+  icon?: ReactNode;
 }) {
   const { t } = usePresentation();
   const [open, setOpen] = useState(false);
@@ -119,6 +124,7 @@ export function SaveShoppingTemplate({
             setMessage("");
           }}
         >
+          {icon}
           {t(label)}
         </button>
       )}

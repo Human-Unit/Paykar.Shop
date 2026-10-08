@@ -1,0 +1,298 @@
+{
+  "date": "2026-10-08",
+  "browser": "Standalone Playwright Chromium; in-app Browser unavailable",
+  "data": "Existing persisted orders and real product-preview API; temporary personal templates in an isolated QA context; HTTP 503 failures intercepted only for error checks",
+  "functional": {
+    "initialLatest": true,
+    "next": true,
+    "previous": true,
+    "dot": true,
+    "keyboard": true,
+    "repeatCart": true,
+    "savedTemplate": true,
+    "templatePersisted": true,
+    "templateBulkAdd": true,
+    "menuOpened": true,
+    "escapeFocus": true,
+    "editLink": true,
+    "confirmationReload": true
+  },
+  "errorAndEmptyChecks": {
+    "failureVisible": true,
+    "failedAddPreservesCart": true,
+    "addRecovery": true,
+    "orderErrorVisible": true,
+    "orderRetry": true,
+    "singleRealOrder": true,
+    "singleTemplate": true,
+    "singleNoFakeControls": true,
+    "absentPersonalSections": true,
+    "curatedStillPresent": true
+  },
+  "carousel": {
+    "finalProductionBoundary": true,
+    "finalProductionScrollLeft": 0,
+    "templateNext": true,
+    "templatePrevious": true,
+    "smoothMotion": true,
+    "touchSwipe": true
+  },
+  "responsive": [
+    {
+      "width": 1440,
+      "language": "ru",
+      "theme": "dark",
+      "lang": "ru",
+      "overflow": false,
+      "order": {
+        "width": 390,
+        "height": 356
+      },
+      "template": {
+        "width": 340,
+        "height": 340
+      },
+      "clippedButtons": [],
+      "visibleNeighbors": 2
+    },
+    {
+      "width": 1440,
+      "language": "ru",
+      "theme": "light",
+      "lang": "ru",
+      "overflow": false,
+      "order": {
+        "width": 390,
+        "height": 356
+      },
+      "template": {
+        "width": 340,
+        "height": 340
+      },
+      "clippedButtons": [],
+      "visibleNeighbors": 2
+    },
+    {
+      "width": 1440,
+      "language": "tj",
+      "theme": "dark",
+      "lang": "tg",
+      "overflow": false,
+      "order": {
+        "width": 390,
+        "height": 374
+      },
+      "template": {
+        "width": 340,
+        "height": 340
+      },
+      "clippedButtons": [],
+      "visibleNeighbors": 2
+    },
+    {
+      "width": 1440,
+      "language": "tj",
+      "theme": "light",
+      "lang": "tg",
+      "overflow": false,
+      "order": {
+        "width": 390,
+        "height": 374
+      },
+      "template": {
+        "width": 340,
+        "height": 340
+      },
+      "clippedButtons": [],
+      "visibleNeighbors": 2
+    },
+    {
+      "width": 1440,
+      "language": "en",
+      "theme": "dark",
+      "lang": "en",
+      "overflow": false,
+      "order": {
+        "width": 390,
+        "height": 356
+      },
+      "template": {
+        "width": 340,
+        "height": 340
+      },
+      "clippedButtons": [],
+      "visibleNeighbors": 2
+    },
+    {
+      "width": 1440,
+      "language": "en",
+      "theme": "light",
+      "lang": "en",
+      "overflow": false,
+      "order": {
+        "width": 390,
+        "height": 356
+      },
+      "template": {
+        "width": 340,
+        "height": 340
+      },
+      "clippedButtons": [],
+      "visibleNeighbors": 2
+    },
+    {
+      "width": 1024,
+      "language": "ru",
+      "theme": "dark",
+      "lang": "ru",
+      "overflow": false,
+      "order": {
+        "width": 390,
+        "height": 356
+      },
+      "template": {
+        "width": 340,
+        "height": 340
+      },
+      "clippedButtons": [],
+      "visibleNeighbors": 2
+    },
+    {
+      "width": 390,
+      "language": "ru",
+      "theme": "dark",
+      "lang": "ru",
+      "overflow": false,
+      "order": {
+        "width": 318,
+        "height": 340
+      },
+      "template": {
+        "width": 318,
+        "height": 320
+      },
+      "clippedButtons": [],
+      "visibleNeighbors": 2
+    },
+    {
+      "width": 390,
+      "language": "ru",
+      "theme": "light",
+      "lang": "ru",
+      "overflow": false,
+      "order": {
+        "width": 318,
+        "height": 340
+      },
+      "template": {
+        "width": 318,
+        "height": 320
+      },
+      "clippedButtons": [],
+      "visibleNeighbors": 2
+    },
+    {
+      "width": 390,
+      "language": "tj",
+      "theme": "dark",
+      "lang": "tg",
+      "overflow": false,
+      "order": {
+        "width": 318,
+        "height": 381
+      },
+      "template": {
+        "width": 318,
+        "height": 320
+      },
+      "clippedButtons": [],
+      "visibleNeighbors": 2
+    },
+    {
+      "width": 390,
+      "language": "tj",
+      "theme": "light",
+      "lang": "tg",
+      "overflow": false,
+      "order": {
+        "width": 318,
+        "height": 381
+      },
+      "template": {
+        "width": 318,
+        "height": 320
+      },
+      "clippedButtons": [],
+      "visibleNeighbors": 2
+    },
+    {
+      "width": 390,
+      "language": "en",
+      "theme": "dark",
+      "lang": "en",
+      "overflow": false,
+      "order": {
+        "width": 318,
+        "height": 340
+      },
+      "template": {
+        "width": 318,
+        "height": 320
+      },
+      "clippedButtons": [],
+      "visibleNeighbors": 2
+    },
+    {
+      "width": 390,
+      "language": "en",
+      "theme": "light",
+      "lang": "en",
+      "overflow": false,
+      "order": {
+        "width": 318,
+        "height": 340
+      },
+      "template": {
+        "width": 318,
+        "height": 320
+      },
+      "clippedButtons": [],
+      "visibleNeighbors": 2
+    },
+    {
+      "width": 320,
+      "language": "tj",
+      "theme": "dark",
+      "lang": "tg",
+      "overflow": false,
+      "order": {
+        "width": 248,
+        "height": 421
+      },
+      "template": {
+        "width": 248,
+        "height": 320
+      },
+      "clippedButtons": [],
+      "visibleNeighbors": 2
+    },
+    {
+      "width": 320,
+      "language": "ru",
+      "theme": "dark",
+      "lang": "ru",
+      "overflow": false,
+      "order": {
+        "width": 248,
+        "height": 396
+      },
+      "template": {
+        "width": 248,
+        "height": 320
+      },
+      "clippedButtons": [],
+      "visibleNeighbors": 2
+    }
+  ],
+  "pageErrors": []
+}
