@@ -77,6 +77,144 @@ A useful composition test is:
 
 If every visible element is trying to be impressive, simplify until hierarchy returns.
 
+### High-end motion and WebGL effects
+
+When the task explicitly asks for Unicorn-Studio-level motion, shaders, interactive backgrounds, depth effects, or a similarly premium visual centerpiece, treat it as a graphics task rather than ordinary CSS animation. Difficulty is acceptable; visual intention, correct compositing, interaction quality, and performance matter more than choosing the easiest implementation.
+
+#### Understand the scene before coding
+
+Before implementing a complex visual effect, write a short internal scene brief covering:
+
+1. the visual purpose and focal point;
+2. the layer stack;
+3. which layers are DOM content versus WebGL/media decoration;
+4. blend modes, masks, clipping, and depth relationships;
+5. time-based motion;
+6. pointer/hover/scroll/appear inputs;
+7. expected desktop/mobile behavior;
+8. performance budget and fallback behavior.
+
+Do not start by adding random gradients, particles, or blur blobs. Know what each layer contributes to the final composition.
+
+#### Use a layer-and-effect composition model
+
+Unicorn Studio's core model is layer based: shapes, images, text, media, 3D and effects are stacked spatially; effects can target a layer or everything below them; masks and blend modes are part of the composition. Recreate that logic when building Paykar effects.
+
+A typical Paykar focal scene may use a stack such as:
+
+`base tone -> radial/linear light field -> product/logo/media layer -> depth/displacement -> noise/distortion -> masked glow -> vignette/grain -> DOM content above`
+
+Rules:
+
+- Effects are first-class visual layers, not finishing filters added after layout is done.
+- Prefer a few well-tuned layers over many weak effects.
+- Use masks and clipping to shape light and distortion instead of letting effects spill uniformly across the whole section.
+- Use blend/composite behavior deliberately. Overlay, screen/additive-like light, multiply/darken, alpha masks, and restrained opacity can create richer depth than extra shadows.
+- Centerpiece shader techniques may include animated noise, radial fields, SDF shapes, displacement, depth-map parallax, blur/bloom-like passes, particles, volumetric-looking haze, dithering, chromatic separation, or custom fragment shaders when the art direction calls for them.
+- Do not clone Unicorn Studio's exact artwork or palette. Adapt the method to Paykar's black/charcoal/green identity, Paykar mark, products, and current page composition.
+
+#### Motion is native to the scene
+
+Do not treat animation as a final `fadeIn` pass. Define motion while defining the scene.
+
+Map animation to meaningful inputs:
+
+- **time** for slow ambient evolution;
+- **pointer position/proximity** for depth, light attraction, subtle distortion, or bloom response;
+- **hover** for local emphasis and state transitions;
+- **scroll progress** for reveals, masks, depth changes, or scene progression;
+- **appear/viewport entry** for introduction and prewarming rather than repeated gimmicks.
+
+Interaction quality rules:
+
+- Normalize input values before sending them to shaders or transforms.
+- Bound amplitudes so pointer/scroll motion never exposes texture edges or breaks composition.
+- Smooth raw input with damping/spring/inertia rather than mapping the cursor directly to large movement.
+- Keep reactive movement subtle unless the reference clearly demands something dramatic.
+- Prefer one coherent interaction model over several unrelated animations fighting each other.
+- Time-based loops should evolve slowly enough that the scene feels alive rather than restless.
+
+#### Depth and dimensionality
+
+For flat product or editorial imagery, depth can be created with a grayscale depth map and small UV displacement/parallax. Keep the displacement restrained; large offsets reveal artifacts quickly.
+
+For true geometry, camera perspective, physically meaningful depth, or complex 3D object interaction, use a real 3D/WebGL scene rather than pretending that a 2D shader plane is a full 3D world.
+
+#### Keep real content in the DOM
+
+Do not move headings, prices, buttons, navigation, important labels, or SEO/accessibility-critical text into WebGL merely because the canvas can render text.
+
+- Keep semantic content as HTML above or alongside the visual scene.
+- Treat the shader/canvas as a visual surface.
+- Canvas visuals must not block pointer interaction with real controls unless interaction with the canvas is the task itself.
+- Provide an accessible/static equivalent when the scene communicates information rather than decoration.
+
+#### Preferred Paykar implementation path
+
+For a premium focal scene, choose the implementation intentionally:
+
+1. **Unicorn Studio authored scene** — preferred when the goal is rapid art-direction exploration, sophisticated layer/effect compositing, or close use of the Unicorn workflow. If Unicorn MCP/export is available, iterate visually there, then embed or self-host the published JSON/runtime in Paykar. Keep application content in the DOM.
+2. **Code-owned WebGL/Three.js scene** — preferred when the effect needs tight integration with application state, custom shader logic, geometry/camera control, or no external scene dependency. Recreate the same layer/effect discipline with shader passes/render targets instead of reducing the design to basic CSS blobs.
+3. **CSS/Framer Motion** — use for surrounding orchestration, DOM reveals, layout transitions, and lightweight accents. Do not use it as a substitute when the requested visual depends on real shader distortion, depth, particles, or per-pixel interaction.
+
+A new WebGL/Three.js/Unicorn runtime dependency is justified when the task explicitly calls for a high-end focal effect and the visual cannot be reproduced faithfully with the current stack. Keep that dependency isolated to the visual component and verify its bundle/runtime cost.
+
+#### Performance is part of authorship
+
+WebGL scenes usually pay for layers/effects as shader passes, draw calls, texture reads, framebuffers, and memory. Expensive raymarching, large multi-pass blur, full-resolution particles, and many independent canvases can destroy the experience even when each effect looks good in isolation.
+
+For complex scenes:
+
+- profile while designing, not only at the end;
+- target smooth `60fps` on capable desktop hardware; `30fps` can be an intentional fallback for ambient/mobile scenes;
+- downsample expensive passes when full resolution is visually unnecessary;
+- keep device-pixel-ratio/render scale controlled instead of blindly rendering at maximum DPR;
+- merge/flatten compatible visual layers or shader work when doing so reduces passes without changing the intended result;
+- cull hidden/occluded work and pause rendering when the scene is offscreen or the document is hidden;
+- lazy-load below-the-fold scenes and prewarm/compile expensive shaders before the first critical interaction when practical;
+- avoid several simultaneously active WebGL scenes in one viewport unless profiling proves the budget is safe;
+- release WebGL resources and destroy scenes on route/component unmount;
+- test texture sizes, video resolution, particle counts, blur radius/passes, draw calls, memory, frame time, and dropped frames rather than judging performance from build success.
+
+If using the Unicorn Studio runtime, prefer its production controls before inventing custom runtime management: `lazyLoad`, render `scale`, `dpi`, `fps`, production caching, visibility gating, responsive breakpoints, and explicit scene destruction on unmount.
+
+#### Progressive degradation
+
+Every complex visual scene needs a deliberate fallback strategy:
+
+- `prefers-reduced-motion` must simplify or freeze non-essential continuous motion;
+- weak/mobile hardware may use lower render scale/DPI/FPS, fewer effects, a lighter scene, or a static rendered fallback;
+- a WebGL initialization failure must not make the shopping interface disappear;
+- the visual layer must be removable without breaking layout or functionality.
+
+Do not call a scene production-ready until both the full and degraded paths have been checked.
+
+#### Visual iteration loop
+
+Use this sequence for reference-driven premium motion work:
+
+1. reproduce the static composition and visual weight first;
+2. build the minimal shader/effect stack that creates the focal appearance;
+3. add time motion;
+4. add one interaction source at a time;
+5. compare against the reference and keep a mismatch ledger;
+6. tune blend, opacity, scale, masking, motion amplitude, damping, and pacing;
+7. profile and optimize without flattening the art direction into a generic gradient;
+8. verify desktop, mobile, reduced-motion, loading, resize, and interaction behavior in the real browser.
+
+The target is not "add WebGL." The target is a coherent visual scene whose composition, motion, interaction, and performance feel intentionally authored.
+
+#### Research basis for this workflow
+
+This section is informed by current Unicorn Studio documentation/runtime guidance and George Hastings' published explanation of the tool's method: layer-based composition, effects as first-class scene elements, masks/blend modes, native appear/hover/scroll/mousemove animation, depth-map parallax, effect stacking, flattening compatible layers, per-layer downsampling/DPI/FPS controls, and frame/draw-call/memory profiling.
+
+Primary references:
+
+- `https://www.unicorn.studio/`
+- `https://www.unicorn.studio/docs/mcp/`
+- `https://github.com/hiunicornstudio/unicornstudio.js`
+- `https://tympanus.net/codrops/2026/03/04/webgl-for-designers-creating-interactive-shader-driven-graphics-directly-in-the-browser/`
+
 ## React and Next.js expectations
 
 - Keep server/client boundaries intentional; do not turn components into client components without a concrete need.
@@ -154,4 +292,4 @@ If a full-repository formatting check fails because of a pre-existing unrelated 
 
 ## Upstream workflow references
 
-These instructions are adapted to Paykar from current agent-oriented web-project guidance, especially the AI-first workflow in `agents-repo/webapp`, the AGENTS.md convention, OpenAI's frontend testing/debugging skill, and premium interactive-web composition patterns. Keep the Paykar-specific rules above authoritative for this repository.
+These instructions are adapted to Paykar from current agent-oriented web-project guidance, especially the AI-first workflow in `agents-repo/webapp`, the AGENTS.md convention, OpenAI's frontend testing/debugging skill, Unicorn Studio's published WebGL workflow/runtime guidance, and premium interactive-web composition patterns. Keep the Paykar-specific rules above authoritative for this repository.
