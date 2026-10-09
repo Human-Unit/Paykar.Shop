@@ -54,6 +54,29 @@ When the user supplies a screenshot, mockup, generated concept, or annotated ima
 - Keep personal/store content honest. Do not fabricate fake orders, templates, counts, stock, or history to make a layout look fuller.
 - Follow `docs/design-principles.md`: hide purposeless empty personal sections and surface useful store content or a real action instead.
 
+### Premium visual composition
+
+Use a restrained composition model inspired by high-end interactive product sites: a quiet canvas around a small number of strong visual moments.
+
+- **Quiet canvas, expressive focal point.** Do not make every card, button, and section visually loud. Keep surrounding UI restrained so the important block can carry the drama.
+- **One primary visual event per region.** A gradient field, oversized image, animated element, strong watermark, or other expressive treatment should have a clear focal role. Avoid stacking several competing effects in the same region without a reason.
+- **Keep interface chrome subordinate.** Navigation, borders, secondary buttons, dividers, labels, and utility controls should not compete with products, prices, primary actions, or key editorial content.
+- **Use typography for hierarchy before decoration.** Prefer confident scale, weight, spacing, and line-height over adding more badges, containers, colors, or borders.
+- **Build depth with tonal layers and gradients before heavy shadows.** Use black/charcoal/green transitions, subtle borders, blur, and controlled contrast. Avoid large generic drop shadows as the default way to create depth.
+- **Alternate calm and dense composition.** Follow information-rich sections with breathing room or a simpler visual statement instead of maintaining the same density across the whole page.
+- **Use asymmetry intentionally.** A primary offer, featured product, or important CTA may receive stronger visual treatment than neighboring items. Not every sibling needs equal visual weight.
+- **Motion must have a purpose.** Prefer hover, scroll, pointer, reveal, carousel, or state-driven motion over decorative looping animation. Movement should clarify hierarchy, state, or interaction rather than merely prove that animation exists.
+- **Motion should feel smooth and physical.** Use restrained distance, easing, opacity, scale, parallax, and layered movement rather than fast or gimmicky effects. Respect `prefers-reduced-motion`.
+- **Preserve the visual hierarchy on mobile instead of simply shrinking desktop.** Large focal type may remain large, cards may stack, dense rows may become carousels or vertical groups, and secondary chrome may simplify.
+- **Performance is part of the design.** Do not introduce WebGL, large videos, heavy shader effects, expensive scroll listeners, or animation libraries for minor decoration. A premium effect that makes the storefront janky is a regression.
+- **Prefer progressive enhancement for spectacle.** Functional shopping, search, cart, checkout, and navigation must remain correct without decorative effects. Visual enhancement must sit on top of a stable core interaction.
+
+A useful composition test is:
+
+`quiet canvas -> strong typography -> generous negative space -> restrained components -> one expressive focal treatment -> interaction-driven motion`
+
+If every visible element is trying to be impressive, simplify until hierarchy returns.
+
 ## React and Next.js expectations
 
 - Keep server/client boundaries intentional; do not turn components into client components without a concrete need.
@@ -131,4 +154,4 @@ If a full-repository formatting check fails because of a pre-existing unrelated 
 
 ## Upstream workflow references
 
-These instructions are adapted to Paykar from current agent-oriented web-project guidance, especially the AI-first workflow in `agents-repo/webapp`, the AGENTS.md convention, and OpenAI's frontend testing/debugging skill. Keep the Paykar-specific rules above authoritative for this repository.
+These instructions are adapted to Paykar from current agent-oriented web-project guidance, especially the AI-first workflow in `agents-repo/webapp`, the AGENTS.md convention, OpenAI's frontend testing/debugging skill, and premium interactive-web composition patterns. Keep the Paykar-specific rules above authoritative for this repository.
