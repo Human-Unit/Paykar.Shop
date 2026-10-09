@@ -1,30 +1,42 @@
 "use client";
+
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Home, ShoppingBasket } from "lucide-react";
 import { usePresentation } from "@/context/presentation";
-import { Brand } from "./brand";
+import styles from "./not-found-view.module.css";
+
 export function NotFoundView() {
   const { t } = usePresentation();
+
   return (
-    <section className="not-found-page">
-      <div className="not-found-brand">
-        <Brand />
+    <section className={styles.page} aria-labelledby="not-found-title">
+      <div className={styles.code} aria-hidden="true">
+        <span className={styles.digit}>4</span>
+        <span className={styles.zero}>
+          <ShoppingBasket />
+        </span>
+        <span className={styles.digit}>4</span>
       </div>
-      <span className="not-found-number" aria-hidden="true">
-        404
-      </span>
-      <h1>{t("Страница не найдена")}</h1>
-      <p>
-        {t(
-          "Возможно, адрес изменился. Вернитесь на главную или найдите нужные товары в каталоге.",
-        )}
-      </p>
-      <div className="page-actions">
-        <Link className="button" href="/">
-          {t("На главную")}
-        </Link>
-        <Link className="button secondary" href="/catalog">
-          {t("В каталог")} <ArrowRight size={20} aria-hidden="true" />
+
+      <div className={styles.copy}>
+        <h1 id="not-found-title">{t("Страница не найдена")}</h1>
+        <p>
+          {t(
+            "Возможно, адрес изменился. Вернитесь на главную или найдите нужные товары в каталоге.",
+          )}
+        </p>
+
+        <div className={styles.actions}>
+          <Link className="button" href="/catalog">
+            {t("В каталог")} <ArrowRight size={19} aria-hidden="true" />
+          </Link>
+          <Link className="button secondary" href="/">
+            <Home size={18} aria-hidden="true" /> {t("На главную")}
+          </Link>
+        </div>
+
+        <Link className={styles.secondaryLink} href="/my-shopping">
+          {t("Мои покупки")} <ArrowRight size={16} aria-hidden="true" />
         </Link>
       </div>
     </section>
