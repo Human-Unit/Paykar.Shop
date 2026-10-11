@@ -563,6 +563,23 @@
 }
 
 /* Coherence adoption is local: no change to order confirmation or discovery. */
+.templatePage {
+  max-width: 1120px;
+  margin-inline: auto;
+}
+
+.templatePage .pickerSection,
+.templatePage .templateSummary,
+.templatePage .itemList {
+  background: linear-gradient(145deg, var(--surface), var(--green-softer));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 3%);
+}
+
+.templatePage input:focus-visible {
+  outline: 2px solid var(--brand-ink);
+  outline-offset: 2px;
+}
+
 .workspace > .section {
   margin-top: var(--shopping-section-gap);
 }
@@ -1341,5 +1358,526 @@
     min-height: 320px;
     padding: 14px;
     border-radius: 22px;
+  }
+}
+
+/* Premium overview only. Editor, confirmation and homepage keep their styles. */
+.overview {
+  --workspace-ease: cubic-bezier(0.22, 0.68, 0.3, 1);
+  max-width: 1120px;
+  padding-bottom: 12px;
+}
+.overview .intro {
+  max-width: 64ch;
+}
+.overview .intro p {
+  font-size: 16px;
+}
+.overview > .personalSection {
+  margin-top: 40px;
+}
+.overview > .personalSection + .personalSection {
+  margin-top: 56px;
+}
+.overview .intro + .personalSection {
+  margin-top: 40px;
+}
+.overview .personalSection > h2 {
+  font-size: clamp(28px, 3vw, 34px);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+.overview .sectionHeading h2 {
+  font-size: clamp(25px, 2.5vw, 30px);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+.overview .personalSection > .help {
+  font-size: 14px;
+}
+.overview .card,
+.overview .starterPanel {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(
+      ellipse at 100% 100%,
+      color-mix(in srgb, var(--paykar-green) 7%, transparent),
+      transparent 70%
+    ),
+    linear-gradient(130deg, var(--surface), var(--elevated-surface));
+  border: 1px solid var(--line);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 9%);
+}
+.overview .card::before,
+.overview .starterPanel::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  background: url("/icon.png") 130% 130% / 90% auto no-repeat;
+  opacity: 0.06;
+  -webkit-mask-image: linear-gradient(130deg, transparent 30%, black);
+  mask-image: linear-gradient(130deg, transparent 30%, black);
+  pointer-events: none;
+}
+:global([data-theme="light"]) .overview .card::before,
+:global([data-theme="light"]) .overview .starterPanel::before {
+  opacity: 0.035;
+}
+.overview .card {
+  transition:
+    translate 220ms var(--workspace-ease),
+    border-color 180ms ease;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .overview .card:hover {
+    translate: 0 -2px;
+    border-color: var(--green-line);
+  }
+}
+.overview .orderCarousel {
+  --carousel-card-width: 460px;
+  width: 100%;
+  max-width: 1060px;
+  margin: 16px auto 0;
+}
+.overview .orderCarousel > div:first-child {
+  margin-inline: 0;
+  padding-block: 24px 26px;
+}
+.overview .orderCarousel[data-single] {
+  width: 100%;
+  max-width: 480px;
+  margin-inline: auto;
+}
+.overview .orderShowcaseCard {
+  min-height: 440px;
+  padding: 24px;
+  border-radius: 28px;
+}
+.overview .orderShowcaseCard .orderTitle h3 {
+  font-size: 16px;
+}
+.overview .orderShowcaseCard .statusBadge {
+  padding: 3px 8px;
+  font-size: 11px;
+}
+.overview .orderShowcaseCard .orderMeta {
+  font-size: 14px;
+}
+.overview .orderShowcaseCard .orderTotal {
+  font-size: 28px;
+  letter-spacing: -0.025em;
+}
+.overview .orderShowcaseCard .orderPreview {
+  min-height: 210px;
+  margin-block: 12px;
+}
+.overview .orderShowcaseCard .previewTile {
+  flex-basis: 32%;
+  width: 32%;
+  padding: 4px;
+  border-radius: 18px;
+}
+.overview .orderShowcaseCard .previewTile + .previewTile {
+  margin-left: -18px;
+}
+.overview .orderShowcaseCard .previewTile:only-child {
+  flex-basis: 58%;
+  max-width: 200px;
+}
+.overview .orderShowcaseCard .orderCardActions :global(.button) {
+  min-height: 48px;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 14px;
+}
+.overview .orderShowcaseCard .orderViewLink {
+  min-height: 44px;
+  font-size: 16px;
+}
+.overview .templateCarousel,
+.overview .curatedCarousel {
+  --carousel-card-width: 340px;
+  margin-top: 16px;
+}
+.overview .templateCarousel[data-sparse],
+.overview .templateCarousel[data-single] {
+  --carousel-card-width: 340px;
+}
+.overview .templateCarousel > div:first-child,
+.overview .curatedCarousel > div:first-child {
+  margin-inline: 0;
+  padding-block: 14px 22px;
+}
+.overview .personalTemplateCard {
+  min-height: 350px;
+  aspect-ratio: auto;
+  padding: 20px;
+  border-radius: 26px;
+}
+.overview .personalTemplateCard .overlapPreview {
+  min-height: 150px;
+  margin: 0 0 12px;
+  padding: 6px 4px;
+}
+.overview .personalTemplateCard .overlapPreview .previewTile {
+  flex-basis: 41%;
+  width: 41%;
+  padding: 3px;
+  border-radius: 17px;
+}
+.overview .personalTemplateCard .overlapPreview .previewTile + .previewTile {
+  margin-left: -12%;
+}
+.overview .personalTemplateCard h3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  min-height: 26px;
+  margin-bottom: 6px;
+  font-size: 22px;
+  line-height: 1.2;
+}
+.overview .personalTemplateCard .cardMeta {
+  font-size: 14px;
+  line-height: 1.4;
+}
+.overview .personalTemplateCard .currentPrice {
+  margin: 8px 0 0;
+  font-size: 21px;
+  line-height: 1.3;
+}
+.overview .personalTemplateCard .currentPrice span {
+  font-size: 13px;
+}
+.overview .personalTemplateCard .templateActions {
+  padding-top: 16px;
+  gap: 8px;
+}
+.overview .personalTemplateCard .templateActions :global(.button) {
+  min-height: 48px;
+  font-size: 14px;
+  padding: 10px 8px;
+}
+.overview .templateMenu,
+.overview .templateMenu summary {
+  height: 48px;
+}
+.overview .sparseCollection {
+  grid-template-columns: minmax(0, 240px) minmax(0, 480px);
+  max-width: 780px;
+  gap: 32px;
+}
+.overview .sparsePair {
+  grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
+  max-width: 1000px;
+}
+.overview .sparseCollection .personalTemplateCard {
+  padding: 20px;
+}
+.overview .sparseCollection .personalTemplateCard .overlapPreview {
+  min-height: 150px;
+}
+.overview .sparseCollection .personalTemplateCard .previewTile {
+  flex-basis: 41%;
+  width: 41%;
+}
+.overview .sparseCollection .personalTemplateCard h3 {
+  font-size: 22px;
+  line-height: 1.2;
+}
+.overview .sparseCollection .personalTemplateCard .currentPrice {
+  font-size: 21px;
+}
+.overview > :global(#curated) {
+  margin-top: 56px;
+}
+.overview > :global(#curated) .sectionHeading h2 {
+  font-size: 24px;
+}
+.overview .curatedCard {
+  height: 100%;
+  padding: 20px;
+  border-radius: 26px;
+  box-shadow: none;
+}
+.overview .curatedCard .overlapPreview {
+  min-height: 132px;
+  margin-bottom: 16px;
+}
+.overview .curatedCard .previewTile {
+  flex: 0 1 41%;
+  padding: 3px;
+  background: #fff;
+  box-shadow: 0 6px 14px rgb(0 0 0 / 12%);
+}
+.overview .curatedCard .previewTile + .previewTile {
+  margin-left: -12%;
+}
+.overview .curatedCard .templateActions {
+  padding-top: 12px;
+}
+.overview .starterRow {
+  margin-top: 32px;
+}
+.overview .compactStarter {
+  padding: 24px;
+}
+@media (max-width: 1100px) {
+  .overview .orderCarousel {
+    --carousel-card-width: 420px;
+  }
+  .overview .templateCarousel,
+  .overview .curatedCarousel {
+    --carousel-card-width: 340px;
+  }
+}
+@media (max-width: 900px) {
+  .overview .orderCarousel {
+    --carousel-card-width: 380px;
+  }
+  .overview .sparseCollection {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  .overview .orderShowcaseCard .orderSummary {
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 640px) {
+  .overview > .personalSection,
+  .overview .intro + .personalSection {
+    margin-top: 28px;
+  }
+  .overview > .personalSection + .personalSection,
+  .overview > :global(#curated) {
+    margin-top: 36px;
+  }
+  .overview .personalSection > .help {
+    font-size: 13px;
+  }
+  .overview .orderCarousel {
+    --carousel-card-width: calc(100vw - 80px);
+    margin-top: 8px;
+  }
+  .overview .orderCarousel > div:first-child {
+    padding-block: 14px 18px;
+    gap: 8px;
+  }
+  .overview
+    .orderCarousel
+    [role="group"]:not([data-active]):not(:focus-within) {
+    transform: scale(0.96);
+  }
+  .overview .orderShowcaseCard {
+    min-height: 400px;
+    padding: 18px;
+    border-radius: 24px;
+  }
+  .overview .orderShowcaseCard .orderPreview {
+    min-height: 170px;
+    margin-block: 8px;
+  }
+  .overview .orderShowcaseCard .orderTotal {
+    font-size: 25px;
+  }
+  .overview .orderShowcaseCard .orderCardActions {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+  .overview .orderShowcaseCard .orderCardActions :global(.button) {
+    flex-wrap: nowrap;
+    min-height: 48px;
+    font-size: 14px;
+  }
+  .overview .templateCarousel,
+  .overview .templateCarousel[data-sparse],
+  .overview .templateCarousel[data-single],
+  .overview .curatedCarousel {
+    --carousel-card-width: calc(100vw - 88px);
+  }
+  .overview .personalTemplateCard,
+  .overview .sparseCollection .personalTemplateCard {
+    min-height: 340px;
+    padding: 16px;
+    border-radius: 24px;
+  }
+  .overview .personalTemplateCard .overlapPreview,
+  .overview .sparseCollection .personalTemplateCard .overlapPreview {
+    min-height: 150px;
+  }
+  .overview .orderCarousel button,
+  .overview .templateCarousel button,
+  .overview .curatedCarousel button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .overview .compactStarter {
+    padding: 20px;
+  }
+}
+
+/* Finishing interactions stay inside the approved overview geometry. */
+.overview .orderCarousel [role="group"] {
+  transition:
+    opacity 200ms ease,
+    transform 300ms var(--workspace-ease);
+}
+.overview .orderCarousel [data-active] .orderShowcaseCard,
+.overview .orderCarousel [role="group"]:focus-within .orderShowcaseCard {
+  border-color: color-mix(in srgb, var(--paykar-green) 24%, var(--line-strong));
+  box-shadow:
+    0 10px 30px rgb(0 0 0 / 9%),
+    0 0 24px color-mix(in srgb, var(--paykar-green) 4%, transparent);
+}
+.overview .card::before {
+  transition: opacity 200ms ease;
+}
+.overview .orderCarousel [data-active] .card::before {
+  opacity: 0.075;
+}
+:global([data-theme="light"])
+  .overview
+  .orderCarousel
+  [data-active]
+  .card::before {
+  opacity: 0.045;
+}
+.overview .overlapPreview .previewTile {
+  transition:
+    translate 220ms var(--workspace-ease),
+    scale 220ms var(--workspace-ease);
+}
+.overview :global(.button),
+.overview .templateMenu summary,
+.overview .templateMenu > a,
+.overview
+  :is(.orderCarousel, .templateCarousel, .curatedCarousel)
+  > div:nth-child(2)
+  button {
+  transition:
+    translate 160ms var(--workspace-ease),
+    scale 140ms var(--workspace-ease),
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    opacity 160ms ease;
+}
+.overview :global(.button)::after {
+  display: none;
+}
+.overview .actionResult > button[aria-busy="true"] {
+  cursor: progress;
+  border-color: var(--green-line);
+}
+.overview .actionResult[data-state="complete"] > button {
+  border-color: color-mix(in srgb, var(--paykar-green) 65%, var(--ink));
+}
+.overview .actionResult [role="status"] > p,
+.overview .currentPrice,
+.overview .card > .help,
+.overview .templateMenu[open] > a {
+  animation: workspace-feedback 180ms ease-out;
+}
+.overview .templateMenu summary:hover,
+.overview .templateMenu > a:hover {
+  border-color: var(--green-line);
+  background: var(--hover-surface);
+}
+.overview .templateMenu summary:focus-visible,
+.overview .templateMenu > a:focus-visible,
+.overview
+  :is(.orderCarousel, .templateCarousel, .curatedCarousel)
+  button:focus-visible {
+  outline: 2px solid var(--paykar-green);
+  outline-offset: 3px;
+  border-radius: 12px;
+}
+.overview
+  :is(.orderCarousel, .templateCarousel, .curatedCarousel)
+  button[aria-pressed]::before {
+  width: 10px;
+  height: 10px;
+  transition:
+    scale 180ms var(--workspace-ease),
+    background-color 180ms ease,
+    opacity 180ms ease;
+}
+.overview
+  :is(.orderCarousel, .templateCarousel, .curatedCarousel)
+  button[aria-pressed="true"]::before {
+  scale: 1.2;
+}
+@keyframes workspace-feedback {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .overview .personalTemplateCard:hover .previewTile,
+  .overview .orderCarousel [data-active] .card:hover .previewTile {
+    translate: 0 -3px;
+    scale: 1.012;
+  }
+  .overview .personalTemplateCard:hover .previewTile:first-child,
+  .overview .orderCarousel [data-active] .card:hover .previewTile:first-child {
+    translate: -3px -1px;
+  }
+  .overview .personalTemplateCard:hover .previewTile:last-child,
+  .overview .orderCarousel [data-active] .card:hover .previewTile:last-child {
+    translate: 3px -1px;
+  }
+  .overview .card:hover .previewTile:only-child {
+    translate: 0 -2px;
+  }
+  .overview .card:hover::before {
+    opacity: 0.09;
+  }
+  :global([data-theme="light"]) .overview .card:hover::before {
+    opacity: 0.055;
+  }
+  .overview :global(.button):not(:disabled):hover {
+    translate: 0 -1px;
+    scale: 1.008;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 18%);
+  }
+  .overview :global(.button):not(:disabled):active,
+  .overview .templateMenu summary:active,
+  .overview
+    :is(.orderCarousel, .templateCarousel, .curatedCarousel)
+    > div:nth-child(2)
+    button:not(:disabled):active {
+    translate: none;
+    scale: 0.98;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .overview .orderCarousel [role="group"] {
+    transition: opacity 100ms ease;
+  }
+  .overview .card,
+  .overview .overlapPreview .previewTile,
+  .overview :global(.button),
+  .overview .templateMenu summary {
+    translate: none;
+    scale: none;
+    transition:
+      opacity 100ms ease,
+      color 100ms ease,
+      background-color 100ms ease,
+      border-color 100ms ease;
+  }
+  .overview .actionResult [role="status"] > p,
+  .overview .currentPrice,
+  .overview .card > .help,
+  .overview .templateMenu[open] > a {
+    animation-duration: 100ms;
   }
 }

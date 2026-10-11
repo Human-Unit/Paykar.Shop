@@ -2,6 +2,7 @@
 import { usePresentation } from "@/context/presentation";
 import Link from "next/link";
 import { ApiError } from "@/lib/api";
+import styles from "./states.module.css";
 import {
   ShoppingBasket,
   CircleAlert,
@@ -20,7 +21,9 @@ export function Loading({
     <div
       role="status"
       aria-busy="true"
-      className={kind === "message" ? "message" : `skeleton-${kind}`}
+      className={
+        kind === "message" ? `message ${styles.loading}` : `skeleton-${kind}`
+      }
     >
       {kind === "message" && (
         <Package className="loading-icon" size={28} aria-hidden="true" />
@@ -69,7 +72,7 @@ export function Loading({
 export function Failure({ error, retry }: { error: Error; retry: () => void }) {
   const { t } = usePresentation();
   return (
-    <div className="message failure-state" role="alert">
+    <div className={`message failure-state ${styles.failure}`} role="alert">
       <span className="state-icon">
         <CircleAlert size={32} aria-hidden="true" />
       </span>
@@ -105,7 +108,9 @@ export function Empty({
 }) {
   const { t } = usePresentation();
   return (
-    <div className={`empty-state${compact ? " is-compact" : ""}`}>
+    <div
+      className={`empty-state ${styles.empty}${compact ? " is-compact" : ""}`}
+    >
       <span className="state-icon">
         <Icon size={44} strokeWidth={1.4} aria-hidden="true" />
       </span>

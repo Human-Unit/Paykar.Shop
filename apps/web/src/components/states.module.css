@@ -1,0 +1,65 @@
+.empty:global(.empty-state),
+.failure:global(.failure-state),
+.loading:global(.message) {
+  min-height: 0;
+  max-width: 800px;
+  margin-inline: auto;
+  padding: 32px 24px;
+  border-radius: 24px;
+  background: linear-gradient(140deg, var(--surface), var(--green-softer));
+  box-shadow: none;
+}
+
+.empty:global(.empty-state) :global(.state-icon),
+.failure:global(.failure-state) :global(.state-icon) {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 20px;
+  border-radius: 16px;
+  animation: none;
+}
+
+.empty :global(.state-icon)::before {
+  display: none;
+}
+
+.empty :global(.state-icon svg),
+.failure :global(.state-icon svg) {
+  width: 28px;
+  height: 28px;
+}
+
+.empty h2,
+.failure h2 {
+  font-size: clamp(24px, 2.4vw, 30px);
+  line-height: 1.25;
+}
+
+.empty p,
+.failure p {
+  max-width: 60ch;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.failure:global(.failure-state) :global(.state-link) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.empty :global(a:focus-visible),
+.failure :global(a:focus-visible),
+.failure :global(button:focus-visible) {
+  outline: 2px solid var(--brand-ink);
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .empty:global(.empty-state),
+  .failure:global(.failure-state),
+  .loading:global(.message) {
+    padding: 24px 20px;
+    border-radius: 20px;
+  }
+}

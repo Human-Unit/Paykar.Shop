@@ -11,6 +11,61 @@
 .templates {
   --carousel-card-width: 340px;
 }
+.homeTemplates {
+  --carousel-card-width: calc(100% - 8px);
+  width: 100%;
+  margin-top: 0;
+}
+.homeOffers {
+  --carousel-card-width: calc((100% - 68px) / 4);
+}
+.homeTemplates .track {
+  padding-block: 4px;
+}
+.homeOffers .track {
+  padding-block: 4px 10px;
+}
+.homeTemplates .arrows,
+.homeOffers .arrows {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+.homeTemplates .arrows {
+  position: absolute;
+  right: 4px;
+  bottom: -36px;
+  margin-top: 0;
+}
+.homeTemplates .arrows button,
+.homeOffers .arrows button {
+  position: static;
+  width: 36px;
+  height: 36px;
+  transform: none;
+  box-shadow: none;
+}
+@media (max-width: 1100px) {
+  .homeOffers {
+    --carousel-card-width: calc((100% - 48px) / 3);
+  }
+}
+@media (max-width: 800px) {
+  .homeOffers {
+    --carousel-card-width: calc((100% - 28px) / 2);
+  }
+}
+@media (max-width: 480px) {
+  .homeOffers {
+    --carousel-card-width: calc(100% - 8px);
+  }
+  .homeTemplates .arrows button,
+  .homeOffers .arrows button {
+    width: 44px;
+    height: 44px;
+  }
+}
 .track {
   position: relative;
   display: flex;
@@ -288,5 +343,14 @@
 @media (prefers-reduced-motion: reduce) {
   .orders .slide {
     transition: none;
+  }
+}
+
+/* Keep approved mouse layouts; coarse pointers need usable tap targets. */
+@media (pointer: coarse) {
+  .carousel .arrows button,
+  .carousel .dots button {
+    min-width: 44px;
+    min-height: 44px;
   }
 }

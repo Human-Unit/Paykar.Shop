@@ -9,11 +9,11 @@ import { Bookmark, Route, Clock3, ArrowRight } from "lucide-react";
 import { Breadcrumbs } from "./breadcrumbs";
 import { m, useReveal } from "./motion-primitives";
 import { OrderShoppingActions } from "./my-shopping";
+import styles from "./checkout-workspace.module.css";
 export function OrderConfirmation({ id }: { id: string }) {
   const { t, money, distance, duration, locale } = usePresentation();
-  const success = useReveal({ rise: 0, scale: 0.6, inView: false });
-  const heading = useReveal({ rise: 12, delay: 0.06, inView: false });
-  const details = useReveal({ rise: 0, delay: 0.12 });
+  const success = useReveal({ rise: 0, inView: false });
+  const heading = useReveal({ rise: 0, inView: false });
   const validID =
     /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
   const resource = useResource<Order>(
@@ -34,7 +34,7 @@ export function OrderConfirmation({ id }: { id: string }) {
     cancelled: "Отменён",
   };
   return (
-    <div className="polish-page confirmation">
+    <div className={`polish-page confirmation ${styles.confirmation}`}>
       <Breadcrumbs
         items={[
           { label: "Главная", href: "/" },
@@ -61,7 +61,7 @@ export function OrderConfirmation({ id }: { id: string }) {
           {t("Сохраните ссылку на эту страницу, чтобы открыть заказ снова.")}
         </p>
       </m.div>
-      <m.div {...details} className="confirmation-layout">
+      <div className="confirmation-layout">
         <section className="checkout-panel confirmation-info">
           <h2>
             {t("Заказ ")}
@@ -150,7 +150,7 @@ export function OrderConfirmation({ id }: { id: string }) {
             </p>
           </div>
         </section>
-      </m.div>
+      </div>
       <OrderShoppingActions order={order} />
       <div className="page-actions confirmation-actions">
         <Link href="/catalog" className="button">

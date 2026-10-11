@@ -2,6 +2,41 @@
   position: relative;
 }
 
+/* One sale treatment for every ProductCard consumer, including recommendations. */
+.card:global(.product-card) :global(.image-wrap) {
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.card:global(.product-card) :global(.badge) {
+  top: 18px;
+  right: -32px;
+  left: auto;
+  z-index: 2;
+  display: grid;
+  width: 136px;
+  height: 28px;
+  place-items: center;
+  padding: 0;
+  border-radius: 0;
+  background: #ff0000;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 850;
+  line-height: 1;
+  transform: rotate(45deg);
+  box-shadow: 0 3px 7px rgb(75 0 0 / 22%);
+  pointer-events: none;
+}
+
+.card:global(.product-card) > .saveButton {
+  left: 13px;
+  right: auto;
+  width: 44px;
+  height: 44px;
+  box-shadow: 0 3px 12px rgb(0 0 0 / 12%);
+}
+
 .saveButton {
   position: absolute;
   top: 10px;

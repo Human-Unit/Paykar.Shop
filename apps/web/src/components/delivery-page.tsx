@@ -18,6 +18,7 @@ import { useResource, type DeliveryConfig } from "@/lib/api";
 import { cents } from "@/lib/format";
 import { Breadcrumbs } from "./breadcrumbs";
 import { m, useReveal } from "./motion-primitives";
+import styles from "./support-workspace.module.css";
 
 const benefits = [
   {
@@ -145,7 +146,7 @@ export function DeliveryPage() {
   const sectionReveal = useReveal();
   const config = useResource<DeliveryConfig>("/delivery/config");
   return (
-    <div className="delivery-page">
+    <div className={`delivery-page ${styles.typography}`}>
       <Breadcrumbs
         items={[{ label: "Главная", href: "/" }, { label: "Доставка" }]}
       />

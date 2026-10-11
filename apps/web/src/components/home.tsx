@@ -15,6 +15,7 @@ import { ArticleCard } from "./article-card";
 import { HomeStoreNetwork } from "./home-store-network";
 import { OrderShowcase } from "./order-showcase";
 import { ShoppingDiscovery } from "./my-shopping";
+import { ShoppingCarousel } from "./shopping-carousel";
 export function Home() {
   const { t } = usePresentation();
   const grid = useReveal({ rise: 14 });
@@ -26,6 +27,9 @@ export function Home() {
     "/products?on_sale=true&in_stock=true&page_size=5",
   );
   const discounts = sales.data?.items ?? [];
+  // Keep the full assortment, with the featured deal after the other offers.
+  const promotionPreview =
+    discounts.length > 1 ? [...discounts.slice(1), discounts[0]] : discounts;
   const everyday =
     products.data?.items
       .filter((p) => !discounts.some((d) => d.id === p.id))
@@ -48,11 +52,11 @@ export function Home() {
           {sales.loading && <Loading kind="grid" />}
           {sales.error && <Failure error={sales.error} retry={sales.retry} />}
           {discounts.length > 0 && (
-            <div className="product-grid one-row">
-              {discounts.map((p, index) => (
+            <ShoppingCarousel label={t("Акции")} variant="home-offers">
+              {promotionPreview.map((p, index) => (
                 <ProductCard key={p.id} product={p} revealIndex={index} />
               ))}
-            </div>
+            </ShoppingCarousel>
           )}
           {discounts.length > 0 && (
             <p className="section-note">

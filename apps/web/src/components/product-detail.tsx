@@ -1,6 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { usePresentation } from "@/context/presentation";
+import { useSavedItems } from "@/context/saved-items";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -29,10 +30,13 @@ import {
   Route,
   CreditCard,
   ArrowRight,
+  Heart,
 } from "lucide-react";
 import { SectionHeader } from "./page-patterns";
+import styles from "./product-detail.module.css";
 export function ProductDetail({ slug }: { slug: string }) {
   const { t, money } = usePresentation();
+  const saved = useSavedItems();
   const resource = useResource<Product>(
     `/products/${encodeURIComponent(slug)}`,
   );
@@ -66,9 +70,10 @@ export function ProductDetail({ slug }: { slug: string }) {
   if (!p) return null;
   const discount = discountPercent(p);
   const available = Number(p.stock_quantity) >= 1;
+  const isSaved = saved.has(p.id);
   const enriched = getProductContent(p.slug);
   return (
-    <div className="polish-page product-page shopping-page">
+    <div className={`polish-page product-page shopping-page ${styles.page}`}>
       <Breadcrumbs
         items={[
           { label: t("Главная"), href: "/" },
@@ -85,37 +90,63 @@ export function ProductDetail({ slug }: { slug: string }) {
           { label: t(p.name) },
         ]}
       />
-      <div className="product-detail">
-        <header className="detail-heading commerce-heading">
-          <span className="eyebrow">
-            <Package size={16} aria-hidden="true" />
-            {category ? t(category.name) : t("Продукты на каждый день")}
-          </span>
-          <h1>{t(p.name)}</h1>
-          <p className="unit">
-            {t("Артикул: ")}
-            {p.sku.replace(/^DEMO-/, "")} · {t(p.unit)}
-          </p>
-        </header>
-        <figure className="detail-image">
+      <div className={styles.primary}>
+        <figure className={styles.visual}>
           <ProductImage product={p} large />
+          {discount > 0 && <span className={styles.ribbon}>−{discount}%</span>}
           {hasCategoryImage(p) && (
-            <figcaption className="detail-image-caption">
+            <figcaption className={styles.caption}>
               {t("Иллюстрация категории")}
             </figcaption>
           )}
         </figure>
-        <div className="detail-info">
-          <div className="detail-purchase">
+        <div className={styles.info}>
+          <header className={styles.heading}>
+            <div className={styles.identity}>
+              {category ? (
+                <Link
+                  href={`/catalog/${category.slug}`}
+                  className={styles.category}
+                >
+                  <Package size={16} aria-hidden="true" />
+                  {t(category.name)}
+                </Link>
+              ) : (
+                <span className={styles.category}>
+                  {t("Продукты на каждый день")}
+                </span>
+              )}
+              <button
+                type="button"
+                className={styles.favorite}
+                data-saved={isSaved}
+                aria-pressed={isSaved}
+                aria-label={
+                  t(isSaved ? "Убрать из сохранённых: " : "Сохранить: ") +
+                  t(p.name)
+                }
+                onClick={() => saved.toggle(p.id)}
+              >
+                <Heart
+                  size={21}
+                  fill={isSaved ? "currentColor" : "none"}
+                  aria-hidden="true"
+                />
+              </button>
+            </div>
+            <h1>{t(p.name)}</h1>
+            <p className="unit">
+              {t("Артикул: ")}
+              {p.sku.replace(/^DEMO-/, "")} · {t(p.unit)}
+            </p>
+          </header>
+          <div className={styles.purchase}>
             <div
               className="prices detail-price"
               data-sale={discount > 0 || undefined}
             >
               <strong>{money(cents(p.price))}</strong>
               {p.old_price && <del>{money(cents(p.old_price))}</del>}
-              {discount > 0 && (
-                <span className="detail-discount">−{discount}%</span>
-              )}
             </div>
             <p className="stock-state" data-available={available}>
               {available ? (

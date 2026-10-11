@@ -1,28 +1,24 @@
 "use client";
 
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import Link from "next/link";
-import {
-  ArrowRight,
-  ArrowUpRight,
-  Check,
-  Percent,
-  Store,
-  Truck,
-} from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check, Store, Truck } from "lucide-react";
 import { usePresentation } from "@/context/presentation";
 import { useResource, type DeliveryConfig, type Product } from "@/lib/api";
 import { cents } from "@/lib/format";
 import type { CuratedTemplate } from "@/lib/shopping";
 import { useShoppingStorage } from "@/lib/shopping-storage";
 import { storeLocations } from "@/lib/store-locations";
-import { ProductImage, discountPercent } from "./product-card";
-import {
-  m,
-  MotionImage,
-  usePointerLight,
-  useReveal,
-} from "./motion-primitives";
+import { AddButton, ProductImage, discountPercent } from "./product-card";
+import { m, useReveal } from "./motion-primitives";
+import { ShoppingCarousel } from "./shopping-carousel";
+import { HomeTemplatePreview } from "./home-template-preview";
+
+const HeroVisualScene = dynamic(
+  () => import("./hero-visual-scene").then((module) => module.HeroVisualScene),
+  { ssr: false },
+);
 
 export function HomeHero({
   promotions,
@@ -36,30 +32,14 @@ export function HomeHero({
   products: Product[];
 }) {
   const { t, money } = usePresentation();
-  const light = usePointerLight();
   const config = useResource<DeliveryConfig>("/delivery/config");
   const curated = useResource<CuratedTemplate[]>("/shopping/templates");
   const { templates } = useShoppingStorage();
-  const personalTemplates = templates.map((template) => ({
-    id: template.id,
-    name: template.name,
-    itemCount: template.items.length,
-    href: `/my-shopping/templates/${template.id}`,
-    product: template.items
-      .map((item) => products.find((product) => product.id === item.product_id))
-      .find((product): product is Product => Boolean(product)),
-    personal: true,
-  }));
-  const curatedTemplates = (curated.data ?? []).map((template) => ({
-    id: template.id,
-    name: template.name,
-    itemCount: template.items.length,
-    href: `/my-shopping/templates/curated-${template.id}`,
-    product: template.items.find((item) => item.product)?.product ?? undefined,
-    personal: false,
-  }));
-  const templateCards =
-    personalTemplates.length > 0 ? personalTemplates : curatedTemplates;
+  const curatedTemplates = (curated.data ?? []).filter(
+    (template) => template.items.length > 0,
+  );
+  const featuredDeal = promotions[0];
+  const featuredDiscount = featuredDeal ? discountPercent(featuredDeal) : 0;
   const promotionHref =
     promotions.length > 0 || promotionsLoading || promotionsError
       ? "/promotions"
@@ -69,12 +49,6 @@ export function HomeHero({
   const lead = useReveal({ rise: 16, delay: 0.15, inView: false });
   const actions = useReveal({ rise: 14, delay: 0.23, inView: false });
   const facts = useReveal({ rise: 10, delay: 0.32, inView: false });
-  const photo = useReveal({
-    rise: 0,
-    scale: 1.05,
-    duration: 1,
-    inView: false,
-  });
   const firstChip = useReveal({
     rise: 14,
     scale: 0.9,
@@ -101,10 +75,8 @@ export function HomeHero({
   });
   return (
     <section className="home-bento">
-      <div className="hero-card pointer-surface" {...light}>
-        <span className="surface-light" aria-hidden="true" />
-        <MotionImage
-          {...photo}
+      <div className="hero-card premium-hero">
+        <Image
           src="/images/paykar/hero.webp"
           width={1536}
           height={1024}
@@ -113,6 +85,7 @@ export function HomeHero({
           unoptimized
           className="hero-image"
         />
+        <HeroVisualScene />
         <div className="hero-body">
           <m.span {...eyebrow} className="hero-eyebrow">
             <i className="pulse-dot" aria-hidden="true" />
@@ -175,60 +148,46 @@ export function HomeHero({
       </div>
       <m.div
         {...routeCard}
-        className="bento-card bento-route"
-        aria-labelledby="home-promotions-title"
+        className="bento-card featured-deal"
+        aria-labelledby="home-featured-deal-title"
+        aria-busy={promotionsLoading}
       >
-        <span className="bento-promo-ribbon" aria-hidden="true">
-          {t("АКЦИЯ")}
-        </span>
-        <div className="bento-top">
-          <h2 id="home-promotions-title" className="sr-only">
-            {t("Акции")}
-          </h2>
-          <Percent size={24} aria-hidden="true" />
+        <div className="featured-deal-heading">
+          <h2 id="home-featured-deal-title">{t("Выгода дня")}</h2>
         </div>
-        {promotions.length > 0 ? (
-          <ul className="bento-promo-preview" aria-label={t("Акции")}>
-            {promotions.slice(0, 5).map((product) => (
-              <li key={product.id}>
-                <Link
-                  href={`/product/${product.slug}`}
-                  className="bento-promo-item"
-                  aria-label={`${t(product.name)}. ${money(cents(product.price))}`}
-                >
-                  <span className="bento-promo-image">
-                    <ProductImage product={product} />
-                    {discountPercent(product) > 0 && (
-                      <span className="bento-promo-discount">
-                        −{discountPercent(product)}%
-                      </span>
-                    )}
+        {featuredDeal ? (
+          <>
+            <Link
+              href={`/product/${featuredDeal.slug}`}
+              className="featured-deal-product"
+            >
+              <span className="featured-deal-image">
+                <ProductImage product={featuredDeal} large />
+                {featuredDiscount > 0 && (
+                  <span className="featured-deal-discount">
+                    −{featuredDiscount}%
                   </span>
-                  <strong className="bento-promo-name">
-                    {t(product.name)}
-                  </strong>
-                  <span className="bento-promo-price">
-                    <strong>{money(cents(product.price))}</strong>
-                    {product.old_price && (
-                      <del>{money(cents(product.old_price))}</del>
-                    )}
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+                )}
+              </span>
+              <span className="featured-deal-copy">
+                <strong className="featured-deal-name">
+                  {t(featuredDeal.name)}
+                </strong>
+                <span className="featured-deal-price">
+                  <strong>{money(cents(featuredDeal.price))}</strong>
+                  {featuredDeal.old_price && (
+                    <del>{money(cents(featuredDeal.old_price))}</del>
+                  )}
+                </span>
+              </span>
+            </Link>
+            <AddButton product={featuredDeal} />
+          </>
         ) : (
-          <div className="bento-promo-empty" aria-live="polite">
+          <div className="featured-deal-state" aria-live="polite">
             {promotionsLoading ? (
               <>
-                <div className="bento-promo-preview" aria-hidden="true">
-                  {[0, 1, 2].map((item) => (
-                    <span className="bento-promo-placeholder" key={item}>
-                      <span />
-                      <span />
-                    </span>
-                  ))}
-                </div>
+                <div className="featured-deal-placeholder" aria-hidden="true" />
                 <p>{t("Загружаем актуальные акции…")}</p>
               </>
             ) : promotionsError ? (
@@ -254,46 +213,24 @@ export function HomeHero({
           <h2 id="home-shopping-title">{t("Мои покупки")}</h2>
         </div>
         <div className="bento-template-content">
-          {templateCards.length > 0 ? (
-            <ul
-              className="bento-template-preview"
-              aria-label={t("Мои покупки")}
-            >
-              {templateCards.map((template) => (
-                <li
-                  key={`${template.personal ? "personal" : "curated"}-${template.id}`}
-                >
-                  <Link
-                    href={template.href}
-                    className="bento-template-card"
-                    aria-label={`${template.personal ? template.name : t(template.name)}. ${template.itemCount} ${t("товаров в наборе")}`}
-                  >
-                    <span className="bento-template-photo">
-                      {template.product ? (
-                        <ProductImage product={template.product} />
-                      ) : (
-                        <Image
-                          src="/images/products/fallback.svg"
-                          alt=""
-                          width={108}
-                          height={108}
-                          unoptimized
-                          className="product-image"
-                        />
-                      )}
-                    </span>
-                    <span className="bento-template-copy">
-                      <strong>
-                        {template.personal ? template.name : t(template.name)}
-                      </strong>
-                      <small>
-                        {template.itemCount} {t("товаров в наборе")}
-                      </small>
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          {templates.length > 0 || curatedTemplates.length > 0 ? (
+            <ShoppingCarousel label={t("Мои покупки")} variant="home-templates">
+              {templates.length > 0
+                ? templates.map((template) => (
+                    <HomeTemplatePreview
+                      key={template.id}
+                      personal={template}
+                      products={products}
+                    />
+                  ))
+                : curatedTemplates.map((template) => (
+                    <HomeTemplatePreview
+                      key={template.id}
+                      curated={template}
+                      products={products}
+                    />
+                  ))}
+            </ShoppingCarousel>
           ) : (
             <p className="bento-template-state" aria-live="polite">
               {curated.error

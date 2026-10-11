@@ -7,6 +7,11 @@
 .page > :global(.page-intro) {
   margin-block: 16px 24px;
 }
+.page > :global(.page-intro h1) {
+  font-size: clamp(30px, 3.4vw, 46px);
+  font-weight: 850;
+  line-height: 1.14;
+}
 .page h2 {
   font-size: clamp(21px, 2vw, 27px);
   line-height: 1.25;

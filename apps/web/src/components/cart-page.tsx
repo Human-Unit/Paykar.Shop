@@ -17,6 +17,7 @@ import { Breadcrumbs } from "./breadcrumbs";
 import { PageIntro, SectionHeader } from "./page-patterns";
 import { useProductConnectionBatch } from "@/lib/api";
 import { SaveShoppingTemplate } from "./my-shopping";
+import styles from "./support-workspace.module.css";
 export function CartPage() {
   const { t, money } = usePresentation();
   const cart = useCart();
@@ -66,7 +67,9 @@ export function CartPage() {
     );
   });
   return (
-    <div className="polish-page cart-page">
+    <div
+      className={`polish-page cart-page ${styles.page} ${styles.typography}`}
+    >
       <Breadcrumbs
         items={[{ label: "Главная", href: "/" }, { label: "Корзина" }]}
       />

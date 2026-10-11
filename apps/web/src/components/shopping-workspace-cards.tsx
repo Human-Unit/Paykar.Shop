@@ -249,7 +249,7 @@ export function PersonalTemplateCard({
           overlap
         />
       )}
-      <h3>
+      <h3 title={template.name}>
         <Link href={`/my-shopping/templates/${template.id}`}>
           {template.name}
         </Link>
@@ -292,8 +292,10 @@ export function PersonalTemplateCard({
 
 export function CuratedTemplateCard({
   template,
+  workspace = false,
 }: {
   template: CuratedTemplate;
+  workspace?: boolean;
 }) {
   const { t } = usePresentation();
   const items = template.items.map((row) => ({
@@ -311,6 +313,7 @@ export function CuratedTemplateCard({
         items={template.items}
         count={template.items.length}
         composition
+        overlap={workspace}
       />
       <h3>
         <Link href={href}>{t(template.name)}</Link>

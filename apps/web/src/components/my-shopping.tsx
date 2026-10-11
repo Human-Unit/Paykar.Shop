@@ -53,7 +53,13 @@ export function OrderShoppingActions({ order }: { order: Order }) {
   );
 }
 
-export function CuratedShopping({ compact = false }: { compact?: boolean }) {
+export function CuratedShopping({
+  compact = false,
+  workspace = false,
+}: {
+  compact?: boolean;
+  workspace?: boolean;
+}) {
   const { t } = usePresentation();
   const resource = useResource<CuratedTemplate[]>("/shopping/templates");
   return (
@@ -71,13 +77,29 @@ export function CuratedShopping({ compact = false }: { compact?: boolean }) {
       {resource.error && (
         <Failure error={resource.error} retry={resource.retry} />
       )}
-      <div className={styles.grid}>
-        {(compact ? resource.data?.slice(0, 3) : resource.data)?.map(
-          (template) => (
-            <CuratedTemplateCard key={template.id} template={template} />
-          ),
-        )}
-      </div>
+      {workspace && resource.data && resource.data.length > 0 ? (
+        <ShoppingCarousel
+          label={t("Готовые наборы")}
+          variant="templates"
+          className={styles.curatedCarousel}
+        >
+          {resource.data.map((template) => (
+            <CuratedTemplateCard
+              key={template.id}
+              template={template}
+              workspace
+            />
+          ))}
+        </ShoppingCarousel>
+      ) : (
+        <div className={styles.grid}>
+          {(compact ? resource.data?.slice(0, 3) : resource.data)?.map(
+            (template) => (
+              <CuratedTemplateCard key={template.id} template={template} />
+            ),
+          )}
+        </div>
+      )}
       {resource.data && resource.data.length > 0 && (
         <p className={styles.help}>
           {t(
@@ -270,13 +292,8 @@ export function MyShopping() {
         </p>
       </div>
       {!hasHistory && !hasTemplates ? (
-        <div className={styles.emptyWorkspace}>
-          <ShoppingStarter kind="history" />
-          <ShoppingStarter kind="templates" secondary />
-        </div>
-      ) : !hasHistory ? (
         <div className={styles.starterRow}>
-          <ShoppingStarter kind="history" compact />
+          <ShoppingStarter kind="templates" compact />
         </div>
       ) : null}
       {hasHistory && (
@@ -300,6 +317,7 @@ export function MyShopping() {
               label={t("Последний заказ")}
               variant="orders"
               initialIndex={orderIds.length > 2 ? 1 : 0}
+              className={styles.orderCarousel}
             >
               {carouselOrderIds.map((id) => (
                 <HistoryOrder key={id} id={id} />
@@ -339,7 +357,11 @@ export function MyShopping() {
             }
           >
             {templates.length <= 2 && <SparseShoppingGuide kind="templates" />}
-            <ShoppingCarousel label={t("Мои шаблоны")} variant="templates">
+            <ShoppingCarousel
+              label={t("Мои шаблоны")}
+              variant="templates"
+              className={styles.templateCarousel}
+            >
               {templates.map((template) => (
                 <PersonalTemplateCard key={template.id} template={template} />
               ))}
@@ -347,7 +369,12 @@ export function MyShopping() {
           </div>
         </section>
       )}
-      <CuratedShopping />
+      {!hasHistory && hasTemplates && (
+        <div className={styles.starterRow}>
+          <ShoppingStarter kind="history" compact secondary />
+        </div>
+      )}
+      <CuratedShopping workspace />
     </div>
   );
 }

@@ -55,12 +55,18 @@ export function AddShoppingItems({
     }
   };
   return (
-    <div className={styles.actionResult}>
+    <div
+      className={styles.actionResult}
+      data-state={
+        busy ? "pending" : error ? "error" : summary ? "complete" : "idle"
+      }
+    >
       <button
         type="button"
         className="button"
         onClick={add}
         disabled={busy || !items.length}
+        aria-busy={busy}
       >
         {icon}
         {t(busy ? "Добавляем…" : label)}

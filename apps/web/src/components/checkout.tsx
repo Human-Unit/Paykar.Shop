@@ -33,6 +33,7 @@ import {
 import { ProductImage } from "./product-card";
 import { Breadcrumbs } from "./breadcrumbs";
 import { PageIntro } from "./page-patterns";
+import styles from "./checkout-workspace.module.css";
 const Map = dynamic(() => import("./delivery-map"), {
   ssr: false,
   loading: MapLoading,
@@ -296,7 +297,7 @@ export function Checkout() {
   ];
   const currentStep = steps.findIndex((step) => !step.done);
   return (
-    <div className="polish-page checkout-page">
+    <div className={`polish-page checkout-page ${styles.checkout}`}>
       <Breadcrumbs
         items={[
           { label: "Главная", href: "/" },
@@ -464,7 +465,12 @@ export function Checkout() {
                 />
               </label>
             </div>
-            <div className="delivery-status" aria-live="polite">
+            <div
+              className="delivery-status"
+              aria-live="polite"
+              aria-busy={quoting}
+              data-stale={Boolean(quoted && !quote && !quoting) || undefined}
+            >
               {!point ? (
                 <p>{t("Выберите точку доставки.")}</p>
               ) : quote ? (
@@ -515,10 +521,17 @@ export function Checkout() {
                   </button>
                 </p>
               )}
+              {error && !quote && (
+                <p className="checkout-error" id="checkout-error" role="alert">
+                  {t(error)}
+                  {t(" Корзина и введённые данные сохранены.")}
+                </p>
+              )}
             </div>
             <button
-              className="button"
+              className={`button secondary ${styles.calculate}`}
               type="button"
+              aria-busy={quoting}
               disabled={
                 !point || address.trim().length < 5 || quoting || submitting
               }
@@ -630,6 +643,22 @@ export function Checkout() {
               {t(method === "card" ? "Тестовая оплата" : "Наличными")}
             </strong>
           </div>
+          {quote && (
+            <dl className={styles.summaryRoute}>
+              <div>
+                <dt>
+                  <Route size={16} aria-hidden="true" /> {t("Расстояние")}
+                </dt>
+                <dd>{distance(quote.distance_meters)}</dd>
+              </div>
+              <div>
+                <dt>
+                  <Clock3 size={16} aria-hidden="true" /> {t("Время в пути")}
+                </dt>
+                <dd>{duration(quote.duration_seconds)}</dd>
+              </div>
+            </dl>
+          )}
           <div className="summary-total">
             <span>
               {t("Итого")}
@@ -648,7 +677,7 @@ export function Checkout() {
                 )
               : ""}
           </p>
-          {error && (
+          {error && quote && (
             <p className="checkout-error" id="checkout-error" role="alert">
               {t(error)}
               {t(" Корзина и введённые данные сохранены.")}
@@ -669,6 +698,7 @@ export function Checkout() {
           <button
             className="button"
             type="submit"
+            aria-busy={submitting}
             disabled={
               !quote ||
               !validCustomer ||

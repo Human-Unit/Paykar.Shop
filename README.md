@@ -369,7 +369,7 @@ docker compose exec api alembic current
 docker compose exec api alembic check
 ```
 
-The latest full suite runs **77 tests with zero skips** against a dedicated PostgreSQL test database.
+The final submission check passed **137 backend tests with zero skips** against a fresh, migrated PostgreSQL test database. See [the final verification report](docs/progress/final-submission-verification.md) for frontend checks and actual Docker/browser evidence.
 
 Example test-database setup:
 

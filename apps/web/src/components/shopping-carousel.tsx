@@ -5,6 +5,13 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { usePresentation } from "@/context/presentation";
 import styles from "./shopping-carousel.module.css";
 
+const variantClasses = {
+  orders: styles.orders,
+  templates: styles.templates,
+  "home-templates": styles.homeTemplates,
+  "home-offers": styles.homeOffers,
+};
+
 function readPosition(viewport: HTMLDivElement, centered: boolean) {
   const end = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
   const offset = centered ? viewport.clientWidth / 2 : 0;
@@ -42,11 +49,13 @@ export function ShoppingCarousel({
   label,
   variant,
   initialIndex = 0,
+  className = "",
 }: {
   children: ReactNode;
   label: string;
-  variant: "orders" | "templates";
+  variant: keyof typeof variantClasses;
   initialIndex?: number;
+  className?: string;
 }) {
   const { t } = usePresentation();
   const slides = Children.toArray(children);
@@ -120,7 +129,7 @@ export function ShoppingCarousel({
   }, [variant, slides.length]);
 
   const step = (direction: -1 | 1) => {
-    if (variant === "templates") {
+    if (variant !== "orders") {
       const viewport = track.current;
       const slide = viewport?.firstElementChild as HTMLElement | null;
       if (!viewport || !slide) return;
@@ -142,7 +151,7 @@ export function ShoppingCarousel({
 
   return (
     <div
-      className={`${styles.carousel} ${variant === "orders" ? styles.orders : styles.templates}`}
+      className={`${styles.carousel} ${variantClasses[variant]} ${className}`}
       role="region"
       aria-label={label}
       data-single={slides.length === 1 || undefined}
@@ -205,7 +214,7 @@ export function ShoppingCarousel({
               <ChevronRight size={21} aria-hidden="true" />
             </button>
           </div>
-          {(variant === "orders" || slides.length > 1) && (
+          {(variant === "orders" || variant === "templates") && (
             <div className={styles.dots}>
               {slides.slice(0, position.lastReachable + 1).map((_, index) => (
                 <button

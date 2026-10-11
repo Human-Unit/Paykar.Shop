@@ -1,0 +1,403 @@
+/* Catalog-only presentation: shared product cards and other routes stay intact. */
+.page:global(.catalog-page) {
+  max-width: 1240px;
+  margin-inline: auto;
+}
+
+.page:global(.catalog-page) :global(.catalog-head) {
+  gap: 24px;
+  align-items: end;
+  margin-bottom: 32px;
+}
+
+.page:global(.catalog-page) :global(.page-title h1) {
+  font-size: clamp(30px, 3.4vw, 46px);
+  font-weight: 850;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+}
+
+.page:global(.catalog-page) :global(.page-title p) {
+  max-width: 600px;
+  margin-top: 12px;
+  line-height: 1.6;
+}
+
+.page:global(.catalog-page) :global(.result-count) {
+  margin: 0;
+  white-space: normal;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.page:global(.catalog-page) :global(.result-count strong) {
+  color: var(--ink);
+  font-size: 22px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.page:global(.catalog-page) :global(.catalog-layout) {
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 32px;
+}
+
+.page:global(.catalog-page) :global(.catalog-sidebar) {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.page:global(.catalog-page) :global(.catalog-sidebar h2) {
+  padding: 8px 12px 14px;
+}
+
+.page:global(.catalog-page) :global(.catalog-sidebar a) {
+  min-height: 44px;
+  margin-block: 2px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.page:global(.catalog-page) :global(.catalog-sidebar a.active) {
+  background: linear-gradient(110deg, var(--green-soft), var(--green-softer));
+  box-shadow: inset 2px 0 var(--brand-ink);
+}
+
+.page:global(.catalog-page) :global(.catalog-sidebar a.child) {
+  padding-left: 28px;
+}
+
+.page:global(.catalog-page) :global(.catalog-toolbar) {
+  gap: 10px;
+  margin-bottom: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.page:global(.catalog-page) :global(.toolbar-search) {
+  flex: 1 1 100%;
+  height: 60px;
+  margin-bottom: 6px;
+  padding-inline: 18px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 16px;
+  background: linear-gradient(120deg, var(--surface), var(--green-softer));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 3%);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.page:global(.catalog-page) :global(.toolbar-search:focus-within) {
+  border-color: var(--brand-ink);
+  box-shadow: 0 0 0 3px var(--green-soft);
+}
+
+.page:global(.catalog-page) :global(.toolbar-search input) {
+  font-size: 17px;
+}
+
+.page:global(.catalog-page) :global(.toolbar-search > svg) {
+  width: 22px;
+  height: 22px;
+  color: var(--brand-ink);
+}
+
+.page:global(.catalog-page) :global(.toolbar-search button) {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+
+.page:global(.catalog-page) :global(.toolbar-sort),
+.page:global(.catalog-page) :global(.catalog-toolbar .filter-toggle) {
+  height: 44px;
+  border-radius: 10px;
+  background: var(--surface);
+  font-size: 14px;
+}
+
+.page:global(.catalog-page) :global(.toolbar-sort) {
+  margin-right: auto;
+}
+
+.page:global(.catalog-page) :global(.toolbar-sort select) {
+  height: 44px;
+  font-size: 14px;
+}
+
+.page:global(.catalog-page) :global(.filter-toggle:has(input:checked)) {
+  background: var(--green-soft);
+  border-color: var(--green-line);
+  color: var(--brand-ink);
+}
+
+.page:global(.catalog-page) :global(.active-filters) {
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.page:global(.catalog-page) :global(.active-filters a) {
+  min-height: 44px;
+  padding-inline: 12px;
+  border-color: var(--green-line);
+  background: var(--green-softer);
+  font-size: 13px;
+}
+
+.page:global(.catalog-page) :global(.active-filters .filter-reset) {
+  border-color: transparent;
+  background: transparent;
+}
+
+.page:global(.catalog-page) :global(.product-grid.catalog-grid),
+.page:global(.catalog-page) :global(.skeleton-grid .product-grid) {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px 16px;
+}
+
+.page:global(.catalog-page) :global(.catalog-grid .product-card) {
+  padding: 7px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: linear-gradient(155deg, var(--surface), var(--green-softer));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 3%);
+}
+
+.page:global(.catalog-page) :global(.catalog-grid .image-wrap) {
+  aspect-ratio: 1;
+  border-radius: 16px;
+  isolation: isolate;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 35%, #fafbf7, var(--stage));
+}
+
+.page:global(.catalog-page)
+  :global(.catalog-grid .product-card > button[aria-pressed]) {
+  top: 13px;
+  left: 13px;
+  right: auto;
+  width: 44px;
+  height: 44px;
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  box-shadow: 0 3px 12px rgb(0 0 0 / 12%);
+}
+
+.page:global(.catalog-page) :global(.catalog-grid .product-card-body) {
+  padding: 14px 9px 9px;
+}
+
+.page:global(.catalog-page) :global(.catalog-grid .unit) {
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+
+.page:global(.catalog-page) :global(.catalog-grid .product-name) {
+  min-height: 2.8em;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.page:global(.catalog-page) :global(.catalog-grid .prices) {
+  gap: 8px;
+  padding-top: 18px;
+  margin-bottom: 14px;
+}
+
+.page:global(.catalog-page) :global(.catalog-grid .prices strong) {
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 850;
+}
+
+.page:global(.catalog-page) :global(.catalog-grid .add-button),
+.page:global(.catalog-page) :global(.catalog-grid .card-quantity) {
+  min-height: 46px;
+  border-radius: 12px;
+}
+
+.page:global(.catalog-page) :global(.catalog-grid .add-button) {
+  height: auto;
+  padding: 8px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.page:global(.catalog-page) :global(.catalog-grid .add-button svg) {
+  flex-shrink: 0;
+}
+
+.page:global(.catalog-page) :global(.catalog-grid .card-quantity button) {
+  min-width: 44px;
+  min-height: 46px;
+}
+
+.page:global(.catalog-page) :global(.empty-state),
+.page:global(.catalog-page) :global(.failure-state) {
+  min-height: 0;
+  padding: 40px 24px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, var(--surface), var(--green-softer));
+}
+
+.page:global(.catalog-page) :global(.filter-panel) {
+  border-radius: 24px;
+  background: linear-gradient(145deg, var(--surface), var(--green-softer));
+}
+
+.page:global(.catalog-page) :global(.filter-panel legend) {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.page:global(.catalog-page) :global(.filter-presets button) {
+  min-height: 44px;
+  border-radius: 10px;
+}
+
+.page:global(.catalog-page) :global(a:focus-visible),
+.page:global(.catalog-page) :global(button:focus-visible),
+.page:global(.catalog-page) :global(select:focus-visible) {
+  outline: 2px solid var(--brand-ink);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .page:global(.catalog-page) :global(.catalog-grid .product-card:hover) {
+    border-color: var(--green-line);
+    box-shadow: 0 12px 24px -18px rgb(0 0 0 / 45%);
+    translate: 0 -3px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .page:global(.catalog-page) :global(.catalog-layout) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .page:global(.catalog-page) :global(.catalog-sidebar) {
+    margin: 0;
+    padding: 2px 0 8px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .page:global(.catalog-page) :global(.catalog-sidebar a),
+  .page:global(.catalog-page) :global(.catalog-sidebar a.child) {
+    padding: 10px 14px;
+  }
+}
+
+@media (max-width: 900px) {
+  .page:global(.catalog-page) :global(.product-grid.catalog-grid),
+  .page:global(.catalog-page) :global(.skeleton-grid .product-grid) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .page:global(.catalog-page) :global(.catalog-head) {
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .page:global(.catalog-page) :global(.result-count strong) {
+    font-size: 18px;
+  }
+
+  .page:global(.catalog-page) :global(.catalog-layout) {
+    gap: 20px;
+  }
+
+  .page:global(.catalog-page) :global(.toolbar-search) {
+    height: 56px;
+    padding-left: 14px;
+  }
+
+  .page:global(.catalog-page) :global(.toolbar-search input) {
+    font-size: 16px;
+  }
+
+  .page:global(.catalog-page) :global(.catalog-toolbar) {
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .page:global(.catalog-page) :global(.toolbar-sort),
+  .page:global(.catalog-page) :global(.catalog-toolbar .filter-toggle) {
+    flex: 1 1 calc(50% - 4px);
+    justify-content: center;
+    min-width: 0;
+    padding-inline: 10px;
+    font-size: 13px;
+  }
+
+  .page:global(.catalog-page) :global(.toolbar-sort select) {
+    padding-inline: 32px;
+    font-size: 13px;
+  }
+
+  .page:global(.catalog-page) :global(.product-grid.catalog-grid),
+  .page:global(.catalog-page) :global(.skeleton-grid .product-grid) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 10px;
+  }
+
+  .page:global(.catalog-page) :global(.catalog-grid .product-card) {
+    padding: 5px;
+    border-radius: 18px;
+  }
+
+  .page:global(.catalog-page) :global(.catalog-grid .image-wrap) {
+    border-radius: 13px;
+  }
+
+  .page:global(.catalog-page)
+    :global(.catalog-grid .product-card > button[aria-pressed]) {
+    top: 9px;
+    left: 9px;
+  }
+
+  .page:global(.catalog-page) :global(.catalog-grid .product-card-body) {
+    padding: 12px 6px 6px;
+  }
+
+  .page:global(.catalog-page) :global(.catalog-grid .product-name) {
+    font-size: 14px;
+  }
+
+  .page:global(.catalog-page) :global(.catalog-grid .prices) {
+    padding-top: 14px;
+    margin-bottom: 12px;
+  }
+
+  .page:global(.catalog-page) :global(.catalog-grid .prices strong) {
+    font-size: 20px;
+  }
+
+  .page:global(.catalog-page) :global(.filter-panel) {
+    border-radius: 24px 24px 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page:global(.catalog-page) :global(.catalog-grid .product-card),
+  .page:global(.catalog-page) :global(.catalog-grid .product-image),
+  .page:global(.catalog-page) :global(.catalog-grid button),
+  .page:global(.catalog-page) :global(.catalog-grid .quantity-value),
+  .page:global(.catalog-page) :global(.filter-panel) {
+    animation: none;
+    transition: none;
+    translate: none;
+    scale: 1;
+  }
+}

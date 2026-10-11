@@ -1,0 +1,622 @@
+/* Checkout and receipt only. Map layers, markers and interaction are untouched. */
+.checkout:global(.checkout-page),
+.confirmation:global(.confirmation) {
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+.checkout:global(.checkout-page) :global(.page-intro) {
+  margin-bottom: 28px;
+}
+
+.checkout:global(.checkout-page) :global(.page-intro h1),
+.confirmation:global(.confirmation) :global(.confirmation-heading h1) {
+  font-size: clamp(30px, 3.4vw, 46px);
+  font-weight: 850;
+  letter-spacing: -0.035em;
+  line-height: 1.14;
+}
+
+.checkout:global(.checkout-page) :global(.checkout-steps) {
+  margin-bottom: 32px;
+}
+
+.checkout:global(.checkout-page) :global(.checkout-steps ol) {
+  gap: 12px;
+  padding: 0 0 20px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.checkout:global(.checkout-page) :global(.checkout-steps a) {
+  gap: 10px;
+  padding: 8px;
+  border-radius: 12px;
+  font-size: 13px;
+}
+
+.checkout:global(.checkout-page) :global(.checkout-layout) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  align-items: start;
+  gap: 32px;
+}
+
+.checkout:global(.checkout-page) :global(.checkout-sections) {
+  min-width: 0;
+  gap: 28px;
+}
+
+.checkout:global(.checkout-page) :global(.checkout-panel),
+.confirmation:global(.confirmation) :global(.checkout-panel) {
+  min-width: 0;
+  padding: 28px;
+  border-radius: 24px;
+  border: 1px solid var(--line);
+  background: linear-gradient(145deg, var(--surface), var(--green-softer));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 3%);
+}
+
+.checkout:global(.checkout-page) :global(.checkout-step-heading) {
+  gap: 12px;
+  margin-bottom: 24px;
+  font-size: 24px;
+  line-height: 1.25;
+  font-weight: 800;
+}
+
+.checkout:global(.checkout-page) :global(.flow-number) {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: var(--green-soft);
+  color: var(--brand-ink);
+  box-shadow: none;
+  font-size: 12px;
+}
+
+.checkout:global(.checkout-page) :global(.checkout-panel label) {
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.checkout:global(.checkout-page)
+  :global(.checkout-panel input:not([type="radio"], [type="checkbox"])),
+.checkout:global(.checkout-page) :global(.checkout-panel textarea) {
+  min-width: 0;
+  width: 100%;
+  min-height: 52px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.checkout:global(.checkout-page)
+  :global(.checkout-panel input:not([type="radio"], [type="checkbox"]):focus),
+.checkout:global(.checkout-page) :global(.checkout-panel textarea:focus) {
+  border-color: var(--brand-ink);
+  box-shadow: 0 0 0 3px var(--green-soft);
+}
+
+.checkout:global(.checkout-page) :global(.checkout-panel input:user-invalid),
+.checkout:global(.checkout-page)
+  :global(.checkout-panel input[aria-invalid="true"]) {
+  border-color: var(--warning-text);
+}
+
+.checkout:global(.checkout-page) :global(.delivery-map) {
+  width: 100%;
+  height: 380px;
+  margin-block: 20px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 18px;
+  box-shadow: 0 12px 24px -24px rgb(0 0 0 / 40%);
+}
+
+.checkout:global(.checkout-page) :global(.map-legend) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-bottom: 20px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.checkout:global(.checkout-page) :global(.delivery-status) {
+  margin-block: 4px 20px;
+}
+
+.checkout:global(.checkout-page) :global(.delivery-status > p) {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--green-softer);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.checkout:global(.checkout-page) :global(.delivery-status[data-stale] > p),
+.checkout:global(.checkout-page) :global(.delivery-status > .stock-warning),
+.checkout:global(.checkout-page) :global(.checkout-error) {
+  border: 1px solid color-mix(in srgb, var(--warning-text) 26%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--warning-text) 7%, var(--surface));
+  color: var(--warning-text);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.checkout:global(.checkout-page) :global(.route-metrics),
+.confirmation:global(.confirmation) :global(.route-metrics) {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  margin: 0;
+  padding: 16px 0;
+  border-block: 1px solid var(--green-line);
+  background: var(--green-softer);
+  border-radius: 14px;
+  animation: none;
+}
+
+.checkout:global(.checkout-page) :global(.route-metrics > span),
+.confirmation:global(.confirmation) :global(.route-metrics > span) {
+  min-width: 0;
+  padding: 4px 16px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.checkout:global(.checkout-page) :global(.route-metrics > span + span),
+.confirmation:global(.confirmation) :global(.route-metrics > span + span) {
+  border-left: 1px solid var(--line);
+}
+
+.checkout:global(.checkout-page) :global(.route-metrics small),
+.confirmation:global(.confirmation) :global(.route-metrics small) {
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.checkout:global(.checkout-page) :global(.route-metrics strong),
+.confirmation:global(.confirmation) :global(.route-metrics strong) {
+  font-size: 22px;
+  line-height: 1.25;
+}
+
+.checkout .calculate {
+  min-height: 52px;
+  padding-inline: 20px;
+  border-color: var(--green-line);
+  color: var(--brand-ink);
+  box-shadow: none;
+}
+
+.checkout:global(.checkout-page) :global(.payment-methods label) {
+  min-height: 68px;
+  padding: 14px 44px 14px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+}
+
+.checkout:global(.checkout-page)
+  :global(.payment-methods label:has(input:checked)) {
+  background: var(--green-softer);
+  box-shadow: none;
+}
+
+.checkout:global(.checkout-page) :global(.payment-methods label > svg) {
+  padding: 6px;
+  background: none;
+}
+
+.checkout:global(.checkout-page) :global(.checkout-summary) {
+  position: sticky;
+  top: calc(var(--header-offset) + 16px);
+  padding: 24px;
+  border-radius: 24px;
+  background: linear-gradient(145deg, var(--surface), var(--green-softer));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 3%);
+  scroll-margin-top: calc(var(--header-offset) + 16px);
+}
+
+.checkout:global(.checkout-page) :global(.checkout-summary::before) {
+  height: 1px;
+  opacity: 0.5;
+}
+
+.checkout:global(.checkout-page)
+  :global(.checkout-summary .checkout-step-heading) {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.checkout:global(.checkout-page) :global(.checkout-item) {
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 4px 12px;
+  padding-block: 14px;
+  font-size: 14px;
+}
+
+.checkout:global(.checkout-page) :global(.checkout-item .thumb) {
+  grid-row: 1 / 3;
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  background: var(--stage);
+}
+
+.checkout:global(.checkout-page) :global(.checkout-item > span:not(.thumb)) {
+  font-weight: 650;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.checkout:global(.checkout-page) :global(.checkout-item small) {
+  font-size: 12px;
+}
+
+.checkout:global(.checkout-page) :global(.checkout-item > strong) {
+  grid-column: 2;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.summaryRoute {
+  display: grid;
+  gap: 10px;
+  padding-block: 16px;
+  margin-top: 18px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+}
+
+.summaryRoute > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.summaryRoute dt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+}
+
+.summaryRoute dd {
+  margin: 0;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.checkout:global(.checkout-page) :global(.checkout-summary .summary-total) {
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 20px;
+}
+
+.checkout:global(.checkout-page) :global(.summary-total strong),
+.confirmation:global(.confirmation) :global(.summary-total strong) {
+  font-size: 36px;
+  font-weight: 850;
+  line-height: 1.1;
+}
+
+.checkout:global(.checkout-page)
+  :global(.checkout-summary button[type="submit"]) {
+  min-height: 56px;
+  margin-top: 20px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.checkout:global(.checkout-page) :global(.checkout-summary .field-hint) {
+  margin-top: 12px;
+  font-size: 12px;
+}
+
+.checkout:global(.checkout-page) :global(button:focus-visible),
+.checkout:global(.checkout-page) :global(a:focus-visible),
+.confirmation:global(.confirmation) :global(button:focus-visible),
+.confirmation:global(.confirmation) :global(a:focus-visible) {
+  outline: 2px solid var(--brand-ink);
+  outline-offset: 3px;
+}
+
+/* A calm receipt: success, durable reference, delivery details and totals. */
+.confirmation:global(.confirmation) :global(.confirmation-heading) {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px 24px;
+  padding: 32px;
+  margin-bottom: 32px;
+  border-radius: 24px;
+  background: linear-gradient(130deg, var(--green-soft), var(--surface) 75%);
+  box-shadow: none;
+  text-align: left;
+}
+
+.confirmation:global(.confirmation) :global(.confirmation-check) {
+  grid-row: 1 / 4;
+  width: 64px;
+  height: 64px;
+  margin: 0;
+  background: var(--green-soft);
+  color: var(--brand-ink);
+  box-shadow: none;
+}
+
+.confirmation:global(.confirmation) :global(.confirmation-check::after) {
+  display: none;
+  animation: none;
+}
+
+.confirmation:global(.confirmation) :global(.confirmation-check svg) {
+  width: 40px;
+  height: 40px;
+}
+
+.confirmation:global(.confirmation) :global(.check-ring),
+.confirmation:global(.confirmation) :global(.check-mark) {
+  animation: none;
+  stroke-dashoffset: 0;
+}
+
+.confirmation:global(.confirmation) :global(.confirmation-heading p) {
+  margin: 4px 0 0;
+  max-width: 640px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.confirmation:global(.confirmation) :global(.confirmation-layout) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  align-items: start;
+  gap: 32px;
+  margin-bottom: 32px;
+}
+
+.confirmation:global(.confirmation) :global(.confirmation-info) {
+  padding: 8px 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.confirmation:global(.confirmation) :global(.confirmation-info h2) {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 24px;
+  font-size: 24px;
+}
+
+.confirmation:global(.confirmation) :global(.order-id) {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+  font-size: 13px;
+}
+
+.confirmation:global(.confirmation) :global(.order-details > div) {
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 16px;
+  padding-block: 14px;
+  font-size: 14px;
+}
+
+.confirmation:global(.confirmation) :global(.order-details dd) {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+
+.confirmation:global(.confirmation) :global(.route-metrics) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 24px;
+}
+
+.confirmation:global(.confirmation) :global(.confirmation-save-note) {
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.confirmation:global(.confirmation) :global(.confirmation-purchases h2) {
+  margin-bottom: 16px;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.confirmation:global(.confirmation) :global(.confirmation-items > div) {
+  align-items: start;
+  gap: 16px;
+  font-size: 14px;
+}
+
+.confirmation:global(.confirmation) :global(.confirmation-items small) {
+  margin-top: 6px;
+  font-size: 12px;
+}
+
+.confirmation:global(.confirmation)
+  :global(.confirmation-totals .summary-total) {
+  align-items: center;
+  padding-top: 20px;
+  margin-top: 20px;
+}
+
+.confirmation:global(.confirmation) :global(.confirmation-actions) {
+  margin-top: 24px;
+}
+
+@media (max-width: 1100px) {
+  .checkout:global(.checkout-page) :global(.checkout-layout),
+  .confirmation:global(.confirmation) :global(.confirmation-layout) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+
+  .checkout:global(.checkout-page) :global(.checkout-summary) {
+    position: relative;
+    top: auto;
+  }
+
+  .checkout:global(.checkout-page) :global(.checkout-item) {
+    grid-template-columns: 72px minmax(0, 1fr) auto;
+    gap: 12px;
+  }
+
+  .checkout:global(.checkout-page) :global(.checkout-item .thumb) {
+    grid-row: auto;
+    width: 72px;
+    height: 72px;
+  }
+
+  .checkout:global(.checkout-page) :global(.checkout-item > strong) {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .checkout:global(.checkout-page) :global(.checkout-panel),
+  .checkout:global(.checkout-page) :global(.checkout-summary),
+  .confirmation:global(.confirmation) :global(.confirmation-purchases) {
+    padding: 20px 16px;
+    border-radius: 20px;
+  }
+
+  .checkout:global(.checkout-page) :global(.checkout-step-heading) {
+    margin-bottom: 20px;
+    font-size: 22px;
+  }
+
+  .checkout:global(.checkout-page) :global(.checkout-sections) {
+    gap: 24px;
+  }
+
+  .checkout:global(.checkout-page) :global(.checkout-steps ol) {
+    gap: 8px;
+    padding-bottom: 16px;
+  }
+
+  .checkout:global(.checkout-page) :global(.checkout-steps a) {
+    font-size: 12px;
+  }
+
+  .checkout:global(.checkout-page) :global(.field-grid) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .checkout:global(.checkout-page) :global(.delivery-map) {
+    height: 320px;
+    border-radius: 14px;
+  }
+
+  .checkout:global(.checkout-page) :global(.route-metrics) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 0;
+  }
+
+  .checkout:global(.checkout-page) :global(.route-metrics > span:last-child) {
+    grid-column: 1 / -1;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    padding-top: 14px;
+  }
+
+  .checkout .calculate {
+    width: 100%;
+  }
+
+  .checkout:global(.checkout-page) :global(.checkout-item) {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 4px 12px;
+  }
+
+  .checkout:global(.checkout-page) :global(.checkout-item .thumb) {
+    grid-row: 1 / 3;
+    width: 64px;
+    height: 64px;
+  }
+
+  .checkout:global(.checkout-page) :global(.checkout-item > strong) {
+    grid-column: 2;
+  }
+
+  .checkout:global(.checkout-page) :global(.summary-total strong),
+  .confirmation:global(.confirmation) :global(.summary-total strong) {
+    font-size: 30px;
+  }
+
+  .confirmation:global(.confirmation) :global(.confirmation-heading) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    padding: 24px 20px;
+  }
+
+  .confirmation:global(.confirmation) :global(.confirmation-check) {
+    grid-row: auto;
+    width: 52px;
+    height: 52px;
+    margin-bottom: 4px;
+  }
+
+  .confirmation:global(.confirmation) :global(.order-details > div) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+    padding-block: 12px;
+  }
+
+  .confirmation:global(.confirmation) :global(.confirmation-actions .button) {
+    flex: 1 1 100%;
+    max-width: none;
+    min-height: 52px;
+    padding: 12px 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .checkout:global(.checkout-page) :global(.checkout-steps *),
+  .checkout:global(.checkout-page) :global(.checkout-panel),
+  .checkout:global(.checkout-page) :global(input),
+  .checkout:global(.checkout-page) :global(textarea),
+  .checkout:global(.checkout-page) :global(button),
+  .confirmation:global(.confirmation) :global(.confirmation-check *),
+  .confirmation:global(.confirmation) :global(button) {
+    animation: none;
+    transition: none;
+    translate: none;
+    scale: 1;
+  }
+
+  .confirmation:global(.confirmation) :global(.check-ring),
+  .confirmation:global(.confirmation) :global(.check-mark) {
+    stroke-dashoffset: 0;
+  }
+}

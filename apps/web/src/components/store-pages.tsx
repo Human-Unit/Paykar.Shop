@@ -37,6 +37,7 @@ import {
   CTASection,
 } from "./page-patterns";
 import { ArticleCard, articlePresentation } from "./article-card";
+import styles from "./support-workspace.module.css";
 import {
   ReturnsIllustration,
   OffersIllustration,
@@ -260,7 +261,9 @@ export function PublicPage({ page }: { page: StorePage }) {
         ? { href: "/catalog", label: "Перейти в каталог" }
         : undefined;
   return (
-    <div className={`polish-page public-page page-${page.slug}`}>
+    <div
+      className={`polish-page public-page page-${page.slug} ${styles.typography} ${page.slug === "stores" ? "" : `${styles.page} ${styles.public}`}`}
+    >
       <Breadcrumbs
         items={[{ label: "Главная", href: "/" }, { label: page.title }]}
       />
@@ -466,7 +469,9 @@ export function PublicPage({ page }: { page: StorePage }) {
 export function BlogArticle({ article }: { article: Article }) {
   const { t } = usePresentation();
   return (
-    <div className="polish-page article-page">
+    <div
+      className={`polish-page article-page ${styles.page} ${styles.typography}`}
+    >
       <Breadcrumbs
         items={[
           { label: "Главная", href: "/" },

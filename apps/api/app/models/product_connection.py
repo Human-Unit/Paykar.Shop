@@ -7,6 +7,7 @@ from sqlalchemy import (
     DateTime,
     ForeignKey,
     Identity,
+    Index,
     Integer,
     Text,
     UniqueConstraint,
@@ -28,6 +29,12 @@ class ProductConnection(Base):
         CheckConstraint("position >= 0", name="ck_product_connections_position"),
         UniqueConstraint(
             "source_product_id", "target_product_id", name="uq_product_connections_pair"
+        ),
+        Index(
+            "ix_product_connections_source_active_position",
+            "source_product_id",
+            "is_active",
+            "position",
         ),
     )
 

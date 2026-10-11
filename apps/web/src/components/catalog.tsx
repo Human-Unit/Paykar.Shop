@@ -25,6 +25,7 @@ import { Empty, Failure, Loading } from "./states";
 import { CategoryLabel } from "./category-label";
 import { catalogGroups } from "@/lib/category-presentation";
 import { CatalogFilterDialog } from "./catalog-filter-dialog";
+import styles from "./catalog.module.css";
 
 const pageSize = 12;
 const sorts = ["name", "price_asc", "price_desc"] as const;
@@ -177,7 +178,7 @@ export function Catalog({ slug }: { slug?: string }) {
   const total = products.data?.total;
   const pages = Math.max(1, Math.ceil((total ?? 0) / pageSize));
   return (
-    <div className="polish-page catalog-page shopping-page">
+    <div className={`polish-page catalog-page shopping-page ${styles.page}`}>
       <Breadcrumbs
         items={[
           { label: t("Главная"), href: "/" },
