@@ -1,13 +1,18 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, MapPin, Store } from "lucide-react";
+import { ArrowRight, ArrowUpRight, MapPin, Store } from "lucide-react";
 import { usePresentation } from "@/context/presentation";
 import { storeLocations } from "@/lib/store-locations";
+import { storeLocatorLocations } from "@/lib/store-locator";
 import { SectionHeader } from "./page-patterns";
 import styles from "./home-store-network.module.css";
+import directoryStyles from "./stores-workspace.module.css";
 import { m, useReveal } from "./motion-primitives";
+
+const locatorLocations = storeLocatorLocations(storeLocations);
 
 function MapLoading() {
   const { t } = usePresentation();
@@ -19,12 +24,22 @@ const StoreNetworkMap = dynamic(() => import("./store-network-map"), {
   loading: () => <MapLoading />,
 });
 
-export function HomeStoreNetwork() {
+export function HomeStoreNetwork({
+  variant = "home",
+}: {
+  variant?: "home" | "directory";
+}) {
   const { t } = usePresentation();
+  const directory = variant === "directory";
+  const locations = directory ? locatorLocations : storeLocations;
   const mapReveal = useReveal({ rise: 0 });
   const directoryReveal = useReveal({ rise: 10, delay: 0.06 });
   const [selectedStoreId, setSelectedStoreId] = useState<number | null>(null);
   const [selectionRevision, setSelectionRevision] = useState(0);
+  const [hoveredStoreId, setHoveredStoreId] = useState<number | null>(null);
+  const [focusedStoreId, setFocusedStoreId] = useState<number | null>(null);
+  const previewedStoreId = hoveredStoreId ?? focusedStoreId;
+  const selectedStore = locations.find((store) => store.id === selectedStoreId);
   const selectStore = (storeId: number) => {
     setSelectedStoreId(storeId);
     setSelectionRevision((revision) => revision + 1);
@@ -62,54 +77,131 @@ export function HomeStoreNetwork() {
   }, [selectedStoreId]);
 
   return (
-    <section className={styles.section} aria-label={t("Магазины")}>
-      <SectionHeader
-        eyebrow="Адрес и карта"
-        title="Магазины"
-        text="Выберите Пайкар — на карте сразу увидите название и адрес магазина."
-      />
+    <section
+      className={`${styles.section} ${directory ? directoryStyles.workspace : ""}`}
+      aria-label={t("Магазины")}
+    >
+      {!directory && (
+        <SectionHeader
+          eyebrow="Адрес и карта"
+          title="Магазины"
+          text="Выберите Пайкар — на карте сразу увидите название и адрес магазина."
+        />
+      )}
 
-      <div className={styles.layout}>
-        <m.div {...mapReveal} className={styles.mapShell}>
+      <div
+        className={`${styles.layout} ${directory ? directoryStyles.frame : ""}`}
+      >
+        <m.div
+          {...mapReveal}
+          className={`${styles.mapShell} ${directory ? directoryStyles.mapShell : ""}`}
+        >
           <StoreNetworkMap
-            stores={storeLocations}
+            stores={locations}
             selectedStoreId={selectedStoreId}
             selectionRevision={selectionRevision}
             onSelectStore={selectStore}
+            className={directory ? directoryStyles.map : undefined}
+            previewedStoreId={directory ? previewedStoreId : null}
+            onHoverStore={directory ? setHoveredStoreId : undefined}
+            onFocusStore={directory ? setFocusedStoreId : undefined}
           />
-          <div className={styles.mapBadge} aria-hidden="true">
+          <div
+            className={`${styles.mapBadge} ${directory ? directoryStyles.mapBadge : ""}`}
+            aria-hidden="true"
+          >
             <Store size={18} />
             <span>
               <strong>{storeLocations.length}</strong>
-              <small>{t("Магазины")} · Душанбе</small>
+              <small>
+                {t("Магазины")} · {directory ? t("Душанбе") : "Душанбе"}
+              </small>
             </span>
           </div>
         </m.div>
 
         <m.aside
           {...directoryReveal}
-          className={styles.listPanel}
+          className={`${styles.listPanel} ${directory ? directoryStyles.listPanel : ""}`}
           aria-label={t("Магазины")}
         >
-          <div className={styles.listHeader}>
+          {directory && selectedStore && (
+            <div className={directoryStyles.selectedSummary}>
+              <span className={directoryStyles.storeMarker} aria-hidden="true">
+                <Store size={18} />
+              </span>
+              <span aria-live="polite" aria-atomic="true">
+                <small>{t("Выбранный магазин")}</small>
+                <strong>{selectedStore.name}</strong>
+                <span>{selectedStore.address}</span>
+              </span>
+              <a
+                className={`${styles.externalLink} ${directoryStyles.externalLink}`}
+                href={`https://www.openstreetmap.org/?mlat=${selectedStore.latitude}&mlon=${selectedStore.longitude}#map=16/${selectedStore.latitude}/${selectedStore.longitude}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${t("Открыть на карте")}: ${selectedStore.name}, ${selectedStore.address}`}
+              >
+                <ArrowUpRight size={18} aria-hidden="true" />
+              </a>
+            </div>
+          )}
+          <div
+            className={`${styles.listHeader} ${directory ? directoryStyles.listHeader : ""}`}
+          >
             <span className={styles.listHeaderIcon}>
               <Store size={22} aria-hidden="true" />
             </span>
             <div>
               <strong>{t("Магазины")}</strong>
-              <small>{storeLocations.length} · Душанбе</small>
+              <small>
+                {storeLocations.length} · {directory ? t("Душанбе") : "Душанбе"}
+              </small>
             </div>
           </div>
 
-          <div ref={list} className={styles.list} role="list">
-            {storeLocations.map((store) => {
+          <div
+            ref={list}
+            className={`${styles.list} ${directory ? directoryStyles.list : ""}`}
+            role="list"
+          >
+            {locations.map((store) => {
               const selected = selectedStoreId === store.id;
               const osmUrl = `https://www.openstreetmap.org/?mlat=${store.latitude}&mlon=${store.longitude}#map=16/${store.latitude}/${store.longitude}`;
 
               return (
                 <div
-                  className={styles.storeRow}
+                  className={`${styles.storeRow} ${directory ? directoryStyles.storeRow : ""}`}
                   data-selected={selected ? "true" : undefined}
+                  data-previewed={
+                    directory && previewedStoreId === store.id
+                      ? "true"
+                      : undefined
+                  }
+                  onPointerEnter={
+                    directory
+                      ? (event) => {
+                          if (event.pointerType !== "touch")
+                            setHoveredStoreId(store.id);
+                        }
+                      : undefined
+                  }
+                  onPointerLeave={
+                    directory ? () => setHoveredStoreId(null) : undefined
+                  }
+                  onFocusCapture={
+                    directory ? () => setFocusedStoreId(store.id) : undefined
+                  }
+                  onBlurCapture={
+                    directory
+                      ? (event) => {
+                          if (
+                            !event.currentTarget.contains(event.relatedTarget)
+                          )
+                            setFocusedStoreId(null);
+                        }
+                      : undefined
+                  }
                   key={store.id}
                   role="listitem"
                 >
@@ -117,27 +209,34 @@ export function HomeStoreNetwork() {
                     ref={(node) => {
                       storeButtons.current[store.id] = node;
                     }}
-                    className={styles.storeSelect}
+                    className={`${styles.storeSelect} ${directory ? directoryStyles.storeSelect : ""}`}
                     type="button"
                     aria-pressed={selected}
                     aria-label={`${t("Показать на карте")}: ${store.name}, ${store.address}`}
                     onClick={() => selectStore(store.id)}
                   >
-                    <span className={styles.storeMarker} aria-hidden="true">
+                    <span
+                      className={`${styles.storeMarker} ${directory ? directoryStyles.storeMarker : ""}`}
+                      aria-hidden="true"
+                    >
                       <Store size={17} />
                     </span>
-                    <span className={styles.storeCopy}>
+                    <span
+                      className={`${styles.storeCopy} ${directory ? directoryStyles.storeCopy : ""}`}
+                    >
                       <strong>{store.name}</strong>
                       <span>
                         <MapPin size={13} aria-hidden="true" />
                         <span>
-                          {store.city} · {store.address}
+                          {directory
+                            ? store.address
+                            : `${store.city} · ${store.address}`}
                         </span>
                       </span>
                     </span>
                   </button>
                   <a
-                    className={styles.externalLink}
+                    className={`${styles.externalLink} ${directory ? directoryStyles.externalLink : ""}`}
                     href={osmUrl}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -150,6 +249,14 @@ export function HomeStoreNetwork() {
               );
             })}
           </div>
+          {directory && (
+            <div className={directoryStyles.listFooter}>
+              <Link className="text-link" href="/catalog">
+                {t("Выбрать продукты")}
+                <ArrowRight size={18} aria-hidden="true" />
+              </Link>
+            </div>
+          )}
         </m.aside>
       </div>
     </section>

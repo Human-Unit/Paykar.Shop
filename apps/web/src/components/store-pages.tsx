@@ -1,11 +1,9 @@
 "use client";
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import {
   ArrowRight,
-  ArrowUpRight,
   CheckCircle2,
   CreditCard,
   Wallet,
@@ -38,19 +36,13 @@ import {
 } from "./page-patterns";
 import { ArticleCard, articlePresentation } from "./article-card";
 import styles from "./support-workspace.module.css";
+import { HomeStoreNetwork } from "./home-store-network";
+import storeStyles from "./stores-workspace.module.css";
 import {
   ReturnsIllustration,
   OffersIllustration,
   PaymentIllustration,
 } from "./public-page-visuals";
-const StoreMap = dynamic(() => import("./store-map"), {
-  ssr: false,
-  loading: () => (
-    <div className="store-map map-loading">
-      <Loading label="Загружаем карту…" />
-    </div>
-  ),
-});
 const stepIcons = [
   Search,
   ShoppingBasket,
@@ -145,66 +137,6 @@ function ContactAddress() {
     </section>
   );
 }
-function StoreLocation() {
-  const { t } = usePresentation();
-  const config = useResource<DeliveryConfig>("/delivery/config");
-  if (config.loading)
-    return (
-      <div id="store-location">
-        <Loading kind="location" label="Загружаем карту…" />
-      </div>
-    );
-  if (config.error)
-    return (
-      <div id="store-location">
-        <Failure error={config.error} retry={config.retry} />
-      </div>
-    );
-  const store = config.data;
-  if (!store) return null;
-  const located = store.store_lat !== null && store.store_lon !== null;
-  return (
-    <section className="store-location" id="store-location">
-      <div className="information-panel">
-        <div className="location-card-top">
-          <span className="icon-tile">
-            <Store size={28} aria-hidden="true" />
-          </span>
-          <span className="eyebrow">{t("Магазин Пайкар")}</span>
-        </div>
-        <h2>{t("Адрес магазина")}</h2>
-        <p className="location-address">
-          <MapPin size={20} aria-hidden="true" />
-          {t(store.store_address)}
-        </p>
-        <p>{t("Найдите магазин и откройте его расположение на карте.")}</p>
-        {located ? (
-          <a
-            className="button secondary"
-            href={`https://www.openstreetmap.org/?mlat=${store.store_lat}&mlon=${store.store_lon}#map=16/${store.store_lat}/${store.store_lon}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {t("Показать на карте")}{" "}
-            <ArrowUpRight size={16} aria-hidden="true" />
-          </a>
-        ) : (
-          <p>{t("Координаты магазина пока недоступны.")}</p>
-        )}
-        <Link className="text-link location-catalog-link" href="/catalog">
-          {t("Выбрать продукты")} <ArrowRight size={18} aria-hidden="true" />
-        </Link>
-      </div>
-      {located && (
-        <StoreMap
-          latitude={store.store_lat!}
-          longitude={store.store_lon!}
-          address={store.store_address}
-        />
-      )}
-    </section>
-  );
-}
 export function PublicPage({ page }: { page: StorePage }) {
   const { t } = usePresentation();
   const pageIcons = {
@@ -262,7 +194,7 @@ export function PublicPage({ page }: { page: StorePage }) {
         : undefined;
   return (
     <div
-      className={`polish-page public-page page-${page.slug} ${styles.typography} ${page.slug === "stores" ? "" : `${styles.page} ${styles.public}`}`}
+      className={`polish-page public-page page-${page.slug} ${styles.typography} ${page.slug === "stores" ? storeStyles.page : `${styles.page} ${styles.public}`}`}
     >
       <Breadcrumbs
         items={[{ label: "Главная", href: "/" }, { label: page.title }]}
@@ -276,7 +208,11 @@ export function PublicPage({ page }: { page: StorePage }) {
               : "Покупателям"
         }
         title={page.title}
-        description={page.description}
+        description={
+          page.slug === "stores"
+            ? "Выберите Пайкар — на карте сразу увидите название и адрес магазина."
+            : page.description
+        }
         icon={Icon}
         variant={
           ["promotions", "blog", "brands", "contacts", "stores"].includes(
@@ -416,7 +352,7 @@ export function PublicPage({ page }: { page: StorePage }) {
         </section>
       )}
       {page.slug === "contacts" && <ContactAddress />}
-      {page.slug === "stores" && <StoreLocation />}
+      {page.slug === "stores" && <HomeStoreNetwork variant="directory" />}
       {["contacts", "stores"].includes(page.slug) && (
         <div className="location-help">
           <Link href="/delivery">

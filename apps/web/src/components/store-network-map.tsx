@@ -24,21 +24,34 @@ export default function StoreNetworkMap({
   selectedStoreId,
   selectionRevision,
   onSelectStore,
+  className = "",
+  previewedStoreId = null,
+  onHoverStore,
+  onFocusStore,
 }: {
   stores: StoreLocation[];
   selectedStoreId: number | null;
   selectionRevision: number;
   onSelectStore: (storeId: number) => void;
+  className?: string;
+  previewedStoreId?: number | null;
+  onHoverStore?: (storeId: number | null) => void;
+  onFocusStore?: (storeId: number | null) => void;
 }) {
   const { t } = usePresentation();
   const element = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const markersRef = useRef<Map<number, L.Marker>>(new Map());
   const onSelectStoreRef = useRef(onSelectStore);
+  const onHoverStoreRef = useRef(onHoverStore);
+  const onFocusStoreRef = useRef(onFocusStore);
+  const layoutLabelsRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     onSelectStoreRef.current = onSelectStore;
-  }, [onSelectStore]);
+    onHoverStoreRef.current = onHoverStore;
+    onFocusStoreRef.current = onFocusStore;
+  }, [onSelectStore, onHoverStore, onFocusStore]);
 
   useEffect(() => {
     if (!element.current || stores.length === 0) return;
@@ -118,12 +131,21 @@ export default function StoreNetworkMap({
         });
 
       marker.on("click", () => onSelectStoreRef.current(store.id));
+      marker.on("mouseover", () => onHoverStoreRef.current?.(store.id));
+      marker.on("mouseout", () => onHoverStoreRef.current?.(null));
+      marker
+        .getElement()
+        ?.addEventListener("focus", () => onFocusStoreRef.current?.(store.id));
+      marker
+        .getElement()
+        ?.addEventListener("blur", () => onFocusStoreRef.current?.(null));
       mapMarkers.set(store.id, marker);
       return marker;
     });
 
     // Labels may move or collapse; Leaflet alone owns each pin's transform.
     const layoutLabels = () => {
+      if (mapRef.current !== map) return;
       const size = map.getSize();
       const points = markers.map((marker) =>
         map.latLngToContainerPoint(marker.getLatLng()),
@@ -138,7 +160,9 @@ export default function StoreNetworkMap({
       const viewport = L.bounds([8, 8], [size.x - 8, size.y - 24]);
       const priority = (marker: L.Marker) =>
         Number(
-          marker.getElement()?.matches(".is-active, :hover, :focus") ?? false,
+          marker
+            .getElement()
+            ?.matches(".is-active, .is-previewed, :hover, :focus") ?? false,
         );
 
       for (const marker of [...markers].sort(
@@ -181,6 +205,7 @@ export default function StoreNetworkMap({
         }
       }
     };
+    layoutLabelsRef.current = layoutLabels;
     map.on("moveend zoomend resize", layoutLabels);
 
     if (markers.length === 1) {
@@ -204,8 +229,16 @@ export default function StoreNetworkMap({
 
     return () => {
       resize.disconnect();
+      map.off("moveend zoomend resize", layoutLabels);
+      for (const marker of markers) {
+        const root = marker.getElement();
+        root?.removeEventListener("focus", layoutLabels);
+        root?.removeEventListener("blur", layoutLabels);
+      }
+      map.stop();
       mapMarkers.clear();
       mapRef.current = null;
+      layoutLabelsRef.current = null;
       map.remove();
     };
   }, [stores, t]);
@@ -239,10 +272,27 @@ export default function StoreNetworkMap({
     };
   }, [selectedStoreId, selectionRevision, stores, t]);
 
+  // Preview changes only visual emphasis; selection alone owns pan and popups.
+  useEffect(() => {
+    for (const [storeId, marker] of markersRef.current.entries()) {
+      marker
+        .getElement()
+        ?.classList.toggle("is-previewed", storeId === previewedStoreId);
+      marker.setZIndexOffset(
+        storeId === selectedStoreId
+          ? 1000
+          : storeId === previewedStoreId
+            ? 900
+            : 0,
+      );
+    }
+    layoutLabelsRef.current?.();
+  }, [previewedStoreId, selectedStoreId, stores, t]);
+
   return (
     <div
       ref={element}
-      className={styles.map}
+      className={`${styles.map} ${className}`}
       role="region"
       aria-label={`${t("Магазины")}: ${stores.length}`}
     />

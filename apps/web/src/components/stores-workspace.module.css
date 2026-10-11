@@ -1,0 +1,462 @@
+/* Opt-in directory presentation. The homepage retains its original map styles. */
+.page {
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-bottom: 24px;
+}
+
+:global(.main-content):has(> :global(.page-enter) > .page) {
+  padding-bottom: 40px;
+}
+
+.page :global(.page-intro) {
+  margin-bottom: 32px;
+}
+
+.page :global(.location-help) {
+  margin-top: 24px;
+}
+
+.page .workspace {
+  margin-bottom: 0;
+}
+
+.workspace .frame {
+  grid-template-columns: minmax(0, 2.25fr) minmax(280px, 1fr);
+  gap: 0;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid var(--line-strong);
+  border-radius: 28px;
+  background: linear-gradient(140deg, var(--surface), var(--green-softer));
+  box-shadow:
+    0 20px 48px -32px rgb(0 0 0 / 35%),
+    inset 0 1px 0 rgb(255 255 255 / 4%);
+}
+
+.workspace .mapShell {
+  min-height: 540px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.workspace .map,
+.workspace .mapShell > div:first-child {
+  height: 540px;
+}
+
+.workspace .map {
+  min-height: 0;
+}
+
+.workspace .map::after {
+  content: "";
+  position: absolute;
+  z-index: 450;
+  inset: 0;
+  box-shadow: inset 0 0 36px rgb(5 26 13 / 14%);
+  background: linear-gradient(
+    115deg,
+    rgb(8 34 23 / 6%),
+    transparent 48%,
+    rgb(9 49 28 / 10%)
+  );
+  pointer-events: none;
+}
+
+.workspace .mapBadge {
+  top: 16px;
+  right: 16px;
+  background: var(--surface);
+  border-color: var(--line);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 12%);
+  backdrop-filter: none;
+}
+
+.workspace .listPanel {
+  max-height: 540px;
+  border: 0;
+  border-left: 1px solid var(--line);
+  border-radius: 0;
+  background: linear-gradient(155deg, var(--surface), var(--green-softer));
+  box-shadow: none;
+}
+
+.workspace .listHeader {
+  flex-shrink: 0;
+  gap: 12px;
+  padding: 24px 20px;
+}
+
+.workspace .listHeader strong {
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.workspace .listHeader small {
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+.workspace .list {
+  min-height: 0;
+  padding: 8px;
+  gap: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--paykar-green) 32%, var(--surface))
+    transparent;
+}
+
+.workspace .list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.workspace .list::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--paykar-green) 32%, var(--surface));
+}
+
+.workspace .list::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--paykar-green) 52%, var(--surface));
+}
+
+.workspace .list::-webkit-scrollbar-track {
+  background: color-mix(in srgb, var(--line) 35%, transparent);
+}
+
+.selectedSummary {
+  display: none;
+}
+
+.workspace .listFooter {
+  flex-shrink: 0;
+  padding: 10px 20px;
+  border-top: 1px solid var(--line);
+}
+
+.workspace .listFooter a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-size: 14px;
+}
+
+.workspace .storeRow {
+  grid-template-columns: minmax(0, 1fr) 44px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease;
+}
+
+.workspace .storeRow::before {
+  display: none;
+}
+
+.workspace .storeRow[data-selected="true"] {
+  border-color: color-mix(in srgb, var(--paykar-green) 38%, var(--line));
+  background: linear-gradient(110deg, var(--green-wash), var(--green-softer));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 3%),
+    inset 3px 0 18px -12px var(--paykar-green);
+}
+
+.workspace .storeRow[data-previewed="true"]:not([data-selected="true"]) {
+  border-color: var(--green-line);
+  background: var(--green-softer);
+}
+
+.workspace .storeSelect {
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 12px;
+  min-height: 80px;
+  padding: 12px;
+  border-radius: 13px;
+}
+
+.workspace .storeMarker {
+  width: 36px;
+  height: 36px;
+  border-color: var(--line);
+  border-radius: 11px;
+  background: var(--green-softer);
+  color: var(--brand-ink);
+  box-shadow: none;
+}
+
+.workspace .storeRow[data-selected="true"] .storeMarker {
+  background: color-mix(in srgb, var(--paykar-green) 24%, var(--surface));
+  color: var(--brand-ink);
+  border-color: var(--green-line);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--paykar-green) 7%, transparent);
+}
+
+.workspace .storeRow[data-selected="true"] .storeCopy strong {
+  font-weight: 850;
+}
+
+.workspace .storeCopy strong {
+  font-size: 17px;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+.workspace .storeCopy > span {
+  margin-top: 5px;
+  font-size: 13px;
+}
+
+.workspace .externalLink {
+  color: var(--muted);
+  border-radius: 11px;
+}
+
+.workspace .storeRow[data-selected="true"] .externalLink,
+.workspace .externalLink:hover {
+  color: var(--brand-ink);
+}
+
+.workspace .map :global(.leaflet-tile-pane) {
+  filter: saturate(0.94) contrast(1.02);
+}
+
+:global(html[data-theme="dark"]) .workspace .map :global(.leaflet-tile-pane) {
+  filter: brightness(0.74) saturate(0.82) contrast(1.12);
+}
+
+.workspace .map :global(.paykar-network-pin) {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  flex-basis: 32px;
+  margin-left: 4px;
+  border-color: color-mix(in srgb, var(--surface) 80%, var(--paykar-green));
+  box-shadow: 0 4px 12px rgb(0 0 0 / 24%);
+  background: linear-gradient(140deg, var(--paykar-green), #009929);
+}
+
+/* Preserve Leaflet's anchors and transform; only the inner visual responds. */
+.workspace .map :global(.paykar-network-pin::before) {
+  content: "";
+  position: absolute;
+  inset: -6px;
+}
+
+.workspace .map :global(.paykar-network-marker.is-active .paykar-network-pin),
+.workspace
+  .map
+  :global(.paykar-network-marker.is-previewed .paykar-network-pin),
+.workspace .map :global(.paykar-network-marker:hover .paykar-network-pin),
+.workspace .map :global(.paykar-network-marker:focus .paykar-network-pin) {
+  border-color: var(--paykar-green);
+  box-shadow:
+    0 6px 16px rgb(0 0 0 / 24%),
+    0 0 0 5px color-mix(in srgb, var(--paykar-green) 15%, transparent);
+  transform: rotate(-45deg) scale(1.07);
+}
+
+.workspace .map :global(.paykar-network-marker.is-active .paykar-network-pin) {
+  box-shadow:
+    0 6px 18px rgb(0 0 0 / 30%),
+    0 0 0 5px color-mix(in srgb, var(--paykar-green) 22%, transparent),
+    inset 0 1px 0 rgb(255 255 255 / 28%);
+  transform: rotate(-45deg) scale(1.12);
+}
+
+.workspace .map :global(.paykar-network-label) {
+  visibility: hidden;
+  opacity: 0;
+  max-width: 146px;
+  padding: 6px 8px;
+  border-radius: 9px;
+  background: var(--surface);
+  backdrop-filter: none;
+  transition: opacity 160ms ease;
+}
+
+.workspace
+  .map
+  :global(.paykar-network-marker:is(:hover, :focus, .is-active, .is-previewed))
+  :global(.paykar-network-label:not([data-collapsed="true"])) {
+  visibility: visible;
+  opacity: 1;
+}
+
+.workspace .map :global(.paykar-network-label strong) {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* The popup already identifies the selected store; restore its label on close. */
+.workspace
+  .map:has(:global(.leaflet-popup))
+  :global(.paykar-network-marker.is-active .paykar-network-label) {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.workspace .map :global(.leaflet-control-zoom) {
+  box-shadow: 0 4px 16px rgb(0 0 0 / 14%);
+}
+
+.workspace .map :global(.leaflet-popup .leaflet-popup-close-button) {
+  width: 44px;
+  height: 44px;
+  line-height: 44px;
+}
+
+.workspace .map :global(.paykar-network-popup-link) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+@media (max-width: 1100px) {
+  .workspace .frame {
+    grid-template-columns: minmax(0, 2.25fr) minmax(280px, 1fr);
+  }
+
+  .workspace .listHeader {
+    padding: 20px 16px;
+  }
+
+  .workspace .storeSelect {
+    padding: 12px 8px;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 800px) {
+  .page {
+    padding-bottom: 16px;
+  }
+
+  .workspace .frame {
+    grid-template-columns: minmax(0, 1fr);
+    border-radius: 24px;
+  }
+
+  .workspace .mapShell,
+  .workspace .map,
+  .workspace .mapShell > div:first-child {
+    min-height: 0;
+    height: 420px;
+  }
+
+  .workspace .listPanel {
+    max-height: none;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .workspace .list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow: visible;
+  }
+
+  .workspace .selectedSummary {
+    display: grid;
+    grid-template-columns: 36px minmax(0, 1fr) 44px;
+    align-items: center;
+    gap: 12px;
+    padding: 20px;
+    border-bottom: 1px solid var(--green-line);
+    background: linear-gradient(110deg, var(--green-wash), transparent);
+  }
+
+  .selectedSummary > span:nth-child(2) {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .selectedSummary small {
+    color: var(--brand-ink);
+    font-size: 12px;
+    font-weight: 650;
+  }
+
+  .selectedSummary strong {
+    color: var(--ink);
+    font-size: 17px;
+    line-height: 1.35;
+  }
+
+  .selectedSummary > span > span {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .workspace .storeRow:nth-child(odd) {
+    border-right: 1px solid transparent;
+  }
+
+  .workspace .storeRow[data-selected="true"] {
+    border-color: var(--green-line);
+  }
+}
+
+@media (max-width: 520px) {
+  .page :global(.page-intro) {
+    margin-bottom: 24px;
+  }
+
+  .workspace .frame {
+    border-radius: 22px;
+  }
+
+  .workspace .mapShell,
+  .workspace .map,
+  .workspace .mapShell > div:first-child {
+    height: 360px;
+  }
+
+  .workspace .list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .workspace .listHeader {
+    padding: 20px;
+  }
+
+  .workspace .storeSelect {
+    min-height: 76px;
+    padding: 12px;
+    gap: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workspace .storeRow,
+  .workspace .map :global(.paykar-network-label) {
+    transition: none;
+  }
+
+  .workspace
+    .map
+    :global(
+      .paykar-network-marker:is(:hover, :focus, .is-active, .is-previewed)
+    )
+    :global(.paykar-network-pin) {
+    transform: rotate(-45deg);
+  }
+
+  .workspace
+    .map
+    :global(
+      .paykar-network-marker:is(:hover, :focus, .is-active, .is-previewed)
+    )
+    :global(.paykar-network-label) {
+    transform: none;
+  }
+
+  .workspace .externalLink:hover {
+    transform: none;
+  }
+}
