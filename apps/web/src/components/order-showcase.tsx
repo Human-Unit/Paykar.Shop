@@ -14,6 +14,7 @@ import {
   ArrowRight,
   Check,
   CheckCircle2,
+  Info,
   Route,
   ShoppingBasket,
   Truck,
@@ -22,6 +23,7 @@ import { usePresentation } from "@/context/presentation";
 import { cents } from "@/lib/format";
 import { ProductImage } from "./product-card";
 import { m, usePointerLight, useReveal } from "./motion-primitives";
+import styles from "./order-showcase.module.css";
 
 // Presentation snapshot from db/seed/products.json. No customer/order reads,
 // catalog requests, cart mutations, or simulated order submission.
@@ -337,22 +339,57 @@ export function OrderShowcase() {
   const { t } = usePresentation();
   const copy = useReveal({ rise: 20 });
   return (
-    <section className="order-showcase" aria-labelledby="order-showcase-title">
+    <section
+      className={`order-showcase ${styles.scene}`}
+      aria-labelledby="order-showcase-title"
+    >
+      <svg
+        className={styles.journey}
+        viewBox="0 0 1000 600"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <defs>
+          <linearGradient id="showcase-journey-fade" x1="0" x2="1">
+            <stop offset="0" stopColor="currentColor" stopOpacity="0" />
+            <stop offset="0.3" stopColor="currentColor" stopOpacity="0.65" />
+            <stop offset="0.65" stopColor="currentColor" stopOpacity="0.8" />
+            <stop offset="1" stopColor="currentColor" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <path
+          d="M 360 392 C 450 402 446 280 540 285 S 650 338 742 234"
+          fill="none"
+          stroke="url(#showcase-journey-fade)"
+          strokeWidth="1"
+          vectorEffect="non-scaling-stroke"
+        />
+        <circle cx="474" cy="316" r="3" />
+        <circle cx="573" cy="291" r="3" />
+        <circle cx="660" cy="300" r="3" />
+      </svg>
       <m.div {...copy} className="order-showcase-copy">
         <span className="eyebrow">{t("ПОКУПКИ БЕЗ ЛИШНИХ ШАГОВ")}</span>
-        <h2 id="order-showcase-title">{t("От корзины до двери.")}</h2>
-        <p>{t("Выбираете продукты. Видите доставку. Подтверждаете заказ.")}</p>
+        <h2 id="order-showcase-title">
+          <span>{t("От корзины")}</span> <strong>{t("до двери.")}</strong>
+        </h2>
+        <p className={styles.supporting}>
+          <span>{t("Выбираете продукты.")}</span>
+          <span>{t("Видите маршрут и стоимость.")}</span>
+          <span>{t("Подтверждаете заказ.")}</span>
+        </p>
         <ul className="showcase-benefits">
           <li>
-            <ShoppingBasket size={20} aria-hidden="true" />
+            <ShoppingBasket size={24} aria-hidden="true" />
             <span>{t("Покупки без регистрации")}</span>
           </li>
           <li>
-            <Route size={20} aria-hidden="true" />
-            <span>{t("Маршрут и стоимость — до заказа.")}</span>
+            <Route size={24} aria-hidden="true" />
+            <span>{t("Маршрут до заказа")}</span>
           </li>
           <li>
-            <CheckCircle2 size={20} aria-hidden="true" />
+            <CheckCircle2 size={24} aria-hidden="true" />
             <span>{t("Оплата при получении")}</span>
           </li>
         </ul>
@@ -360,11 +397,12 @@ export function OrderShowcase() {
           {t("За покупками")}
           <ArrowRight size={20} aria-hidden="true" />
         </Link>
-        <p className="showcase-demo-note">
-          {t("Демонстрационный заказ — пример оформления в Пайкар.")}
-        </p>
       </m.div>
       <OrderPhone />
+      <p className={`showcase-demo-note ${styles.note}`}>
+        <Info size={14} aria-hidden="true" />
+        <span>{t("Демонстрационный заказ — пример оформления в Пайкар.")}</span>
+      </p>
     </section>
   );
 }
