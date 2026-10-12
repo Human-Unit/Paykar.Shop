@@ -80,7 +80,7 @@
 }
 @media (hover: hover) {
   .product-card:hover .image-wrap .product-image {
-    scale: 1.02;
+    scale: var(--design-image-scale, 1.02);
   }
 }
 .badge {

@@ -3,6 +3,7 @@ import { CartProvider } from "@/context/cart";
 import { Shell } from "@/components/shell";
 import { PresentationProvider } from "@/context/presentation";
 import { SavedItemsProvider } from "@/context/saved-items";
+import { StorefrontDesign } from "@/components/storefront-design";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -34,6 +35,7 @@ export default function RootLayout({
       </head>
       <body>
         <PresentationProvider>
+          <StorefrontDesign />
           <SavedItemsProvider>
             <CartProvider>
               <Shell>{children}</Shell>
