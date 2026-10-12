@@ -1,0 +1,290 @@
+/* Homepage-only finish. Background layers clip themselves; focal objects may
+   cross the feature edge without changing any carousel track geometry. */
+.scene {
+  --feature-fade: 160ms;
+}
+
+:global(.home-page)
+  .scene:global(.home-bento)
+  .feature:is(.offer, .shopping):global(.bento-card) {
+  --ink: #f4f7f4;
+  --muted: #aeb9b0;
+  --brand-ink: #00cf45;
+  --surface: #101813;
+  --line: rgb(195 225 206 / 12%);
+  --green-line: rgb(78 165 107 / 32%);
+  overflow: visible;
+  background:
+    linear-gradient(155deg, rgb(255 255 255 / 3%), transparent 42%),
+    linear-gradient(120deg, rgb(15 20 17 / 94%), rgb(10 29 18 / 86%));
+  border-color: rgb(157 208 175 / 16%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 5%),
+    0 12px 30px -24px rgb(0 0 0 / 75%);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+:global(.home-page)
+  .scene:global(.home-bento)
+  .feature:is(.offer, .shopping):global(.bento-card)::before {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse at 85% 12%, rgb(38 139 74 / 70%), transparent 62%),
+    url("/icon.png") right -80px bottom -80px / 300px no-repeat;
+  opacity: 0.1;
+  -webkit-mask-image: linear-gradient(110deg, transparent, black 88%);
+  mask-image: linear-gradient(110deg, transparent, black 88%);
+  clip-path: inset(0 round var(--radius-lg));
+  transition: opacity var(--feature-fade) ease;
+}
+
+.scene .feature .heading {
+  position: relative;
+  z-index: 1;
+  max-width: 54%;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.18;
+}
+
+.offer .offerLink {
+  display: block;
+  min-height: 148px;
+  align-content: center;
+}
+
+.offer .offerArt {
+  position: absolute;
+  z-index: 1;
+  top: -12px;
+  right: -6px;
+  width: 48%;
+  height: 190px;
+  border-color: rgb(255 255 255 / 30%);
+  box-shadow:
+    0 18px 24px -18px rgb(0 0 0 / 80%),
+    0 1px 0 rgb(255 255 255 / 12%);
+  rotate: 4deg;
+  transition: transform 240ms var(--ease-out);
+}
+
+.offer .offerCopy {
+  width: 49%;
+  gap: 14px;
+}
+
+.scene .feature:global(.bento-card) :global(.promo-action) {
+  position: relative;
+  z-index: 2;
+  min-height: 44px;
+  align-items: center;
+}
+
+.feature :global(.add-button),
+.feature :global(.quantity-control) {
+  position: relative;
+  z-index: 2;
+  min-height: 44px;
+}
+
+.feature :global(.add-button) {
+  transition:
+    transform 180ms var(--ease-out),
+    background-color 180ms ease;
+}
+
+.feature :global(.add-button):active {
+  transform: scale(0.985);
+}
+
+.shopping .shoppingHeading {
+  min-height: 64px;
+  align-items: flex-start;
+  padding-top: 2px;
+}
+
+.basketArt {
+  position: absolute;
+  z-index: 1;
+  top: -19px;
+  right: -5px;
+  width: 126px;
+  height: 126px;
+  pointer-events: none;
+  filter: drop-shadow(0 9px 10px rgb(0 0 0 / 28%));
+  transition: transform 240ms var(--ease-out);
+}
+
+.basketArt img,
+.chipArt img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.shopping :global(.bento-template-card) {
+  background: linear-gradient(145deg, rgb(27 43 33 / 46%), rgb(10 20 14 / 40%));
+  border-color: rgb(171 209 184 / 11%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 3%);
+}
+
+.shopping :global(.bento-template-content) button {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.scene .chip {
+  min-height: 60px;
+  padding: 10px 16px 10px 88px;
+  overflow: visible;
+  animation: none;
+  border-color: rgb(163 205 177 / 22%);
+  background:
+    radial-gradient(ellipse at 15% 50%, rgb(0 124 52 / 14%), transparent 75%),
+    rgb(12 22 17 / 78%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 7%),
+    0 14px 25px -22px rgb(0 0 0 / 80%);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.scene .delivery {
+  background:
+    radial-gradient(ellipse at 15% 50%, rgb(45 119 125 / 20%), transparent 75%),
+    rgb(12 22 21 / 78%);
+}
+
+.chipArt {
+  position: absolute;
+  left: -10px;
+  top: -19px;
+  width: 88px;
+  height: 88px;
+  filter: drop-shadow(0 8px 8px rgb(0 0 0 / 35%));
+}
+
+.stores .chipArt {
+  left: -16px;
+  top: -21px;
+  width: 96px;
+  height: 96px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :global(.home-page)
+    .scene:global(.home-bento)
+    .feature:is(.offer, .shopping):global(.bento-card):is(
+      :hover,
+      :focus-within
+    )::before {
+    opacity: 0.13;
+  }
+  .scene .feature:is(:hover, :focus-within) :global(.promo-action) svg {
+    translate: 3px -3px;
+  }
+  .offer:hover .offerArt,
+  .offer:focus-within .offerArt {
+    transform: translate3d(
+      calc((var(--mouse-x, 170px) - 170px) * 0.008),
+      -3px,
+      0
+    );
+  }
+  .shopping:hover .basketArt,
+  .shopping:focus-within .basketArt {
+    transform: translate3d(
+      calc((var(--mouse-x, 170px) - 170px) * 0.008),
+      -3px,
+      0
+    );
+  }
+}
+
+/* Recompose the compact desktop aside so long translated headings keep their
+   words intact, rather than squeezing typography behind the floating object. */
+@media (min-width: 961px) and (max-width: 1100px) {
+  .scene .feature .heading {
+    max-width: 56%;
+    font-size: 22px;
+  }
+  .scene .offer .heading {
+    max-width: 60%;
+  }
+  .offer .offerArt {
+    width: 42%;
+    height: 160px;
+  }
+  .offer .offerCopy {
+    width: 55%;
+  }
+  .basketArt {
+    width: 114px;
+    height: 114px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 960px) {
+  /* Keep the complete hover excursion inside the gap below the hero. */
+  .offer .offerArt {
+    top: -6px;
+  }
+}
+
+@media (max-width: 640px) {
+  .scene .feature .heading {
+    font-size: 23px;
+  }
+  .offer .offerArt {
+    top: -7px;
+    right: 2px;
+    height: 174px;
+    rotate: 3deg;
+  }
+  .basketArt {
+    top: -10px;
+    right: 2px;
+    width: 116px;
+    height: 116px;
+  }
+  .scene .chip {
+    min-height: 50px;
+    padding: 8px 12px 8px 72px;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+  .chipArt,
+  .stores .chipArt {
+    top: -13px;
+    left: -5px;
+    width: 72px;
+    height: 72px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene {
+    --feature-fade: 0ms;
+  }
+  .scene .feature:is(:hover, :focus-within) :global(.promo-action) svg {
+    translate: none;
+  }
+  .offer .offerArt,
+  .basketArt,
+  .feature :global(.add-button) {
+    transition: none;
+    transform: none;
+  }
+  .offer:hover .offerArt,
+  .offer:focus-within .offerArt,
+  .shopping:hover .basketArt,
+  .shopping:focus-within .basketArt,
+  .feature :global(.add-button):active {
+    transform: none;
+  }
+}

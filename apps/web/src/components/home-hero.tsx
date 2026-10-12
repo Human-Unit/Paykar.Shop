@@ -3,7 +3,7 @@
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Check, Store, Truck } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check } from "lucide-react";
 import { usePresentation } from "@/context/presentation";
 import { useResource, type DeliveryConfig, type Product } from "@/lib/api";
 import { cents } from "@/lib/format";
@@ -11,9 +11,10 @@ import type { CuratedTemplate } from "@/lib/shopping";
 import { useShoppingStorage } from "@/lib/shopping-storage";
 import { storeLocations } from "@/lib/store-locations";
 import { AddButton, ProductImage, discountPercent } from "./product-card";
-import { m, useReveal } from "./motion-primitives";
+import { m, usePointerLight, useReveal } from "./motion-primitives";
 import { ShoppingCarousel } from "./shopping-carousel";
 import { HomeTemplatePreview } from "./home-template-preview";
+import styles from "./home-feature-cards.module.css";
 
 const HeroVisualScene = dynamic(
   () => import("./hero-visual-scene").then((module) => module.HeroVisualScene),
@@ -32,6 +33,8 @@ export function HomeHero({
   products: Product[];
 }) {
   const { t, money } = usePresentation();
+  const offerPointer = usePointerLight();
+  const shoppingPointer = usePointerLight();
   const config = useResource<DeliveryConfig>("/delivery/config");
   const curated = useResource<CuratedTemplate[]>("/shopping/templates");
   const { templates } = useShoppingStorage();
@@ -74,7 +77,7 @@ export function HomeHero({
     lift: 3,
   });
   return (
-    <section className="home-bento">
+    <section className={`home-bento ${styles.scene}`}>
       <div className="hero-card premium-hero">
         <Image
           src="/images/paykar/hero.webp"
@@ -125,9 +128,18 @@ export function HomeHero({
         </div>
         <div className="hero-chips" aria-hidden="true">
           {config.data && (
-            <m.div {...firstChip} className="hero-chip hero-chip-fee">
-              <span className="hero-chip-icon">
-                <Truck size={20} />
+            <m.div
+              {...firstChip}
+              className={`hero-chip hero-chip-fee ${styles.chip} ${styles.delivery}`}
+            >
+              <span className={styles.chipArt}>
+                <Image
+                  src="/images/paykar/features/delivery-pin.webp"
+                  width={320}
+                  height={320}
+                  alt=""
+                  unoptimized
+                />
               </span>
               <span>
                 <small>{t("Доставка")}</small>
@@ -135,9 +147,18 @@ export function HomeHero({
               </span>
             </m.div>
           )}
-          <m.div {...secondChip} className="hero-chip hero-chip-stores">
-            <span className="hero-chip-icon">
-              <Store size={20} />
+          <m.div
+            {...secondChip}
+            className={`hero-chip hero-chip-stores ${styles.chip} ${styles.stores}`}
+          >
+            <span className={styles.chipArt}>
+              <Image
+                src="/images/paykar/features/storefront.webp"
+                width={320}
+                height={320}
+                alt=""
+                unoptimized
+              />
             </span>
             <span>
               <small>{t("Магазины")}</small>
@@ -148,20 +169,23 @@ export function HomeHero({
       </div>
       <m.div
         {...routeCard}
-        className="bento-card featured-deal"
+        {...offerPointer}
+        className={`bento-card featured-deal ${styles.feature} ${styles.offer}`}
         aria-labelledby="home-featured-deal-title"
         aria-busy={promotionsLoading}
       >
         <div className="featured-deal-heading">
-          <h2 id="home-featured-deal-title">{t("Выгода дня")}</h2>
+          <h2 id="home-featured-deal-title" className={styles.heading}>
+            {t("Выгода дня")}
+          </h2>
         </div>
         {featuredDeal ? (
           <>
             <Link
               href={`/product/${featuredDeal.slug}`}
-              className="featured-deal-product"
+              className={`featured-deal-product ${styles.offerLink}`}
             >
-              <span className="featured-deal-image">
+              <span className={`featured-deal-image ${styles.offerArt}`}>
                 <ProductImage product={featuredDeal} large />
                 {featuredDiscount > 0 && (
                   <span className="featured-deal-discount">
@@ -169,7 +193,7 @@ export function HomeHero({
                   </span>
                 )}
               </span>
-              <span className="featured-deal-copy">
+              <span className={`featured-deal-copy ${styles.offerCopy}`}>
                 <strong className="featured-deal-name">
                   {t(featuredDeal.name)}
                 </strong>
@@ -206,11 +230,23 @@ export function HomeHero({
       </m.div>
       <m.div
         {...shopCard}
-        className="bento-card bento-shop"
+        {...shoppingPointer}
+        className={`bento-card bento-shop ${styles.feature} ${styles.shopping}`}
         aria-labelledby="home-shopping-title"
       >
-        <div className="bento-top">
-          <h2 id="home-shopping-title">{t("Мои покупки")}</h2>
+        <div className={`bento-top ${styles.shoppingHeading}`}>
+          <h2 id="home-shopping-title" className={styles.heading}>
+            {t("Мои покупки")}
+          </h2>
+          <span className={styles.basketArt} aria-hidden="true">
+            <Image
+              src="/images/paykar/features/shopping-basket.webp"
+              width={480}
+              height={480}
+              alt=""
+              unoptimized
+            />
+          </span>
         </div>
         <div className="bento-template-content">
           {templates.length > 0 || curatedTemplates.length > 0 ? (
