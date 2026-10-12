@@ -1,4 +1,4 @@
-/* Opt-in directory presentation. The homepage retains its original map styles. */
+/* Shared locator composition; page spacing applies only to the Stores route. */
 .page {
   max-width: 1240px;
   margin-inline: auto;
@@ -48,21 +48,6 @@
 
 .workspace .map {
   min-height: 0;
-}
-
-.workspace .map::after {
-  content: "";
-  position: absolute;
-  z-index: 450;
-  inset: 0;
-  box-shadow: inset 0 0 36px rgb(5 26 13 / 14%);
-  background: linear-gradient(
-    115deg,
-    rgb(8 34 23 / 6%),
-    transparent 48%,
-    rgb(9 49 28 / 10%)
-  );
-  pointer-events: none;
 }
 
 .workspace .mapBadge {
@@ -220,101 +205,6 @@
   color: var(--brand-ink);
 }
 
-.workspace .map :global(.leaflet-tile-pane) {
-  filter: saturate(0.94) contrast(1.02);
-}
-
-:global(html[data-theme="dark"]) .workspace .map :global(.leaflet-tile-pane) {
-  filter: brightness(0.74) saturate(0.82) contrast(1.12);
-}
-
-.workspace .map :global(.paykar-network-pin) {
-  position: relative;
-  width: 32px;
-  height: 32px;
-  flex-basis: 32px;
-  margin-left: 4px;
-  border-color: color-mix(in srgb, var(--surface) 80%, var(--paykar-green));
-  box-shadow: 0 4px 12px rgb(0 0 0 / 24%);
-  background: linear-gradient(140deg, var(--paykar-green), #009929);
-}
-
-/* Preserve Leaflet's anchors and transform; only the inner visual responds. */
-.workspace .map :global(.paykar-network-pin::before) {
-  content: "";
-  position: absolute;
-  inset: -6px;
-}
-
-.workspace .map :global(.paykar-network-marker.is-active .paykar-network-pin),
-.workspace
-  .map
-  :global(.paykar-network-marker.is-previewed .paykar-network-pin),
-.workspace .map :global(.paykar-network-marker:hover .paykar-network-pin),
-.workspace .map :global(.paykar-network-marker:focus .paykar-network-pin) {
-  border-color: var(--paykar-green);
-  box-shadow:
-    0 6px 16px rgb(0 0 0 / 24%),
-    0 0 0 5px color-mix(in srgb, var(--paykar-green) 15%, transparent);
-  transform: rotate(-45deg) scale(1.07);
-}
-
-.workspace .map :global(.paykar-network-marker.is-active .paykar-network-pin) {
-  box-shadow:
-    0 6px 18px rgb(0 0 0 / 30%),
-    0 0 0 5px color-mix(in srgb, var(--paykar-green) 22%, transparent),
-    inset 0 1px 0 rgb(255 255 255 / 28%);
-  transform: rotate(-45deg) scale(1.12);
-}
-
-.workspace .map :global(.paykar-network-label) {
-  visibility: hidden;
-  opacity: 0;
-  max-width: 146px;
-  padding: 6px 8px;
-  border-radius: 9px;
-  background: var(--surface);
-  backdrop-filter: none;
-  transition: opacity 160ms ease;
-}
-
-.workspace
-  .map
-  :global(.paykar-network-marker:is(:hover, :focus, .is-active, .is-previewed))
-  :global(.paykar-network-label:not([data-collapsed="true"])) {
-  visibility: visible;
-  opacity: 1;
-}
-
-.workspace .map :global(.paykar-network-label strong) {
-  white-space: normal;
-  overflow-wrap: anywhere;
-}
-
-/* The popup already identifies the selected store; restore its label on close. */
-.workspace
-  .map:has(:global(.leaflet-popup))
-  :global(.paykar-network-marker.is-active .paykar-network-label) {
-  visibility: hidden;
-  opacity: 0;
-}
-
-.workspace .map :global(.leaflet-control-zoom) {
-  box-shadow: 0 4px 16px rgb(0 0 0 / 14%);
-}
-
-.workspace .map :global(.leaflet-popup .leaflet-popup-close-button) {
-  width: 44px;
-  height: 44px;
-  line-height: 44px;
-}
-
-.workspace .map :global(.paykar-network-popup-link) {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-}
-
 @media (max-width: 1100px) {
   .workspace .frame {
     grid-template-columns: minmax(0, 2.25fr) minmax(280px, 1fr);
@@ -433,27 +323,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .workspace .storeRow,
-  .workspace .map :global(.paykar-network-label) {
+  .workspace .storeRow {
     transition: none;
-  }
-
-  .workspace
-    .map
-    :global(
-      .paykar-network-marker:is(:hover, :focus, .is-active, .is-previewed)
-    )
-    :global(.paykar-network-pin) {
-    transform: rotate(-45deg);
-  }
-
-  .workspace
-    .map
-    :global(
-      .paykar-network-marker:is(:hover, :focus, .is-active, .is-previewed)
-    )
-    :global(.paykar-network-label) {
-    transform: none;
   }
 
   .workspace .externalLink:hover {

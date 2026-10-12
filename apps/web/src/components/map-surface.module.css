@@ -1,0 +1,249 @@
+/* Shared map finish. Each consumer retains its camera, layers and dimensions. */
+.surface:global(.leaflet-container) {
+  isolation: isolate;
+  background: linear-gradient(140deg, var(--surface), var(--green-softer));
+  font-family: inherit;
+}
+
+.surface:global(.leaflet-container)::after {
+  content: "";
+  position: absolute;
+  z-index: 450;
+  inset: 0;
+  box-shadow: inset 0 0 36px rgb(5 26 13 / 14%);
+  background: linear-gradient(
+    115deg,
+    rgb(8 34 23 / 6%),
+    transparent 48%,
+    rgb(9 49 28 / 10%)
+  );
+  pointer-events: none;
+}
+
+.surface:global(.leaflet-container) :global(.leaflet-tile-pane) {
+  filter: saturate(0.94) contrast(1.02);
+}
+
+:global(html[data-theme="dark"])
+  .surface:global(.leaflet-container)
+  :global(.leaflet-tile-pane) {
+  filter: brightness(0.74) saturate(0.82) contrast(1.12);
+}
+
+.surface:global(.leaflet-container) :global(.paykar-network-pin) {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  flex-basis: 32px;
+  margin-left: 4px;
+  border-color: color-mix(in srgb, var(--surface) 80%, var(--paykar-green));
+  box-shadow: 0 4px 12px rgb(0 0 0 / 24%);
+  background: linear-gradient(140deg, var(--paykar-green), #009929);
+}
+
+/* Preserve Leaflet's anchors and transform; only the inner visual responds. */
+.surface:global(.leaflet-container) :global(.paykar-network-pin::before) {
+  content: "";
+  position: absolute;
+  inset: -6px;
+}
+
+.surface:global(.leaflet-container)
+  :global(.paykar-network-marker.is-active .paykar-network-pin),
+.surface:global(.leaflet-container)
+  :global(.paykar-network-marker.is-previewed .paykar-network-pin),
+.surface:global(.leaflet-container)
+  :global(.paykar-network-marker:hover .paykar-network-pin),
+.surface:global(.leaflet-container)
+  :global(.paykar-network-marker:focus .paykar-network-pin) {
+  border-color: var(--paykar-green);
+  box-shadow:
+    0 6px 16px rgb(0 0 0 / 24%),
+    0 0 0 5px color-mix(in srgb, var(--paykar-green) 15%, transparent);
+  transform: rotate(-45deg) scale(1.07);
+}
+
+.surface:global(.leaflet-container)
+  :global(.paykar-network-marker.is-active .paykar-network-pin) {
+  box-shadow:
+    0 6px 18px rgb(0 0 0 / 30%),
+    0 0 0 5px color-mix(in srgb, var(--paykar-green) 22%, transparent),
+    inset 0 1px 0 rgb(255 255 255 / 28%);
+  transform: rotate(-45deg) scale(1.12);
+}
+
+.surface:global(.leaflet-container) :global(.paykar-network-label) {
+  visibility: hidden;
+  opacity: 0;
+  max-width: 146px;
+  padding: 6px 8px;
+  border-radius: 9px;
+  background: var(--surface);
+  backdrop-filter: none;
+  transition: opacity 160ms ease;
+}
+
+.surface:global(.leaflet-container)
+  :global(.paykar-network-marker:is(:hover, :focus, .is-active, .is-previewed))
+  :global(.paykar-network-label:not([data-collapsed="true"])) {
+  visibility: visible;
+  opacity: 1;
+}
+
+.surface:global(.leaflet-container) :global(.paykar-network-label strong) {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* The popup already identifies the selected store; restore its label on close. */
+.surface:global(.leaflet-container):has(:global(.leaflet-popup))
+  :global(.paykar-network-marker.is-active .paykar-network-label) {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.surface:global(.leaflet-container) :global(.leaflet-control-zoom) {
+  box-shadow: 0 4px 16px rgb(0 0 0 / 14%);
+}
+
+.surface:global(.leaflet-container)
+  :global(.leaflet-popup .leaflet-popup-close-button) {
+  width: 44px;
+  height: 44px;
+  line-height: 44px;
+}
+
+.surface:global(.leaflet-container) :global(.paykar-network-popup-link) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.surface:global(.leaflet-container) :global(.leaflet-bar) {
+  border-color: var(--line);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 14%);
+}
+
+.surface:global(.leaflet-container) :global(.leaflet-control-zoom a) {
+  background: var(--surface);
+  color: var(--ink);
+  line-height: 44px;
+}
+
+.surface:global(.leaflet-container) :global(.leaflet-control-zoom a:hover),
+.surface:global(.leaflet-container)
+  :global(.leaflet-control-zoom a:focus-visible) {
+  background: var(--hover-surface);
+  color: var(--brand-ink);
+}
+
+.surface:global(.leaflet-container)
+  :global(.leaflet-control-zoom a:focus-visible),
+.surface:global(.leaflet-container)
+  :global(.leaflet-marker-icon:focus-visible) {
+  outline: 2px solid var(--brand-ink);
+  outline-offset: -3px;
+}
+
+.surface:global(.leaflet-container) :global(.leaflet-control-attribution) {
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  color: var(--muted);
+}
+
+.surface:global(.leaflet-container) :global(.leaflet-control-attribution a) {
+  color: var(--brand-ink);
+}
+
+.surface:global(.leaflet-container) :global(.leaflet-popup-content-wrapper),
+.surface:global(.leaflet-container) :global(.leaflet-popup-tip),
+.surface:global(.leaflet-container) :global(.leaflet-tooltip) {
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.surface:global(.leaflet-container) :global(.leaflet-popup-content-wrapper),
+.surface:global(.leaflet-container) :global(.leaflet-tooltip) {
+  border: 1px solid var(--green-line);
+  border-radius: 14px;
+  box-shadow: 0 16px 38px rgb(0 0 0 / 26%);
+}
+
+.surface:global(.leaflet-container) :global(.leaflet-tooltip-left::before) {
+  border-left-color: var(--surface);
+}
+
+.surface:global(.leaflet-container) :global(.leaflet-tooltip-right::before) {
+  border-right-color: var(--surface);
+}
+
+/* Leaflet still positions the marker root; rotate only its inner visual. */
+.surface:global(.leaflet-container) :global(.delivery-marker) {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.surface:global(.leaflet-container) .pin {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border: 2px solid color-mix(in srgb, var(--surface) 80%, var(--paykar-green));
+  border-radius: 50% 50% 50% 8px;
+  background: linear-gradient(140deg, var(--paykar-green), #009929);
+  color: var(--on-accent);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 24%);
+  transform: rotate(-45deg);
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.symbol {
+  font-size: 13px;
+  font-weight: 850;
+  line-height: 1;
+  transform: rotate(45deg);
+}
+
+.surface:global(.leaflet-container) :global(.customer-marker) .pin {
+  border-color: var(--brand-ink);
+  background: var(--surface);
+  color: var(--brand-ink);
+}
+
+.surface:global(.leaflet-container) :global(.delivery-marker:hover) .pin,
+.surface:global(.leaflet-container) :global(.delivery-marker:focus) .pin {
+  box-shadow:
+    0 6px 16px rgb(0 0 0 / 24%),
+    0 0 0 5px color-mix(in srgb, var(--paykar-green) 15%, transparent);
+  transform: rotate(-45deg) scale(1.07);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .surface:global(.leaflet-container) .pin,
+  .surface:global(.leaflet-container) :global(.paykar-network-label),
+  .surface:global(.leaflet-container) :global(.paykar-network-pin) {
+    transition: none;
+  }
+
+  .surface:global(.leaflet-container)
+    :global(
+      .paykar-network-marker:is(:hover, :focus, .is-active, .is-previewed)
+    )
+    :global(.paykar-network-pin),
+  .surface:global(.leaflet-container) :global(.delivery-marker:hover) .pin,
+  .surface:global(.leaflet-container) :global(.delivery-marker:focus) .pin {
+    transform: rotate(-45deg);
+  }
+
+  .surface:global(.leaflet-container)
+    :global(
+      .paykar-network-marker:is(:hover, :focus, .is-active, .is-previewed)
+    )
+    :global(.paykar-network-label) {
+    transform: none;
+  }
+}

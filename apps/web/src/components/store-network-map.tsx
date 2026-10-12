@@ -5,6 +5,7 @@ import L from "leaflet";
 import { usePresentation } from "@/context/presentation";
 import type { StoreLocation } from "@/lib/store-locations";
 import styles from "./home-store-network.module.css";
+import mapStyles from "./map-surface.module.css";
 
 function escapeMarkup(value: string) {
   return value.replace(/[&<>"']/g, (character) => {
@@ -292,7 +293,7 @@ export default function StoreNetworkMap({
   return (
     <div
       ref={element}
-      className={`${styles.map} ${className}`}
+      className={`${styles.map} ${mapStyles.surface} ${className}`}
       role="region"
       aria-label={`${t("Магазины")}: ${stores.length}`}
     />

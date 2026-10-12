@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import L from "leaflet";
 import { DeliveryConfig, Point, Quote } from "@/lib/api";
 import { usePresentation } from "@/context/presentation";
+import mapStyles from "./map-surface.module.css";
 
 export default function DeliveryMap({
   config,
@@ -71,7 +72,7 @@ export default function DeliveryMap({
         keyboard: true,
         icon: L.divIcon({
           className: `delivery-marker ${store ? "store-marker" : "customer-marker"}`,
-          html: store ? "М" : "●",
+          html: `<span class="${mapStyles.pin}" aria-hidden="true"><span class="${mapStyles.symbol}">${store ? "М" : "●"}</span></span>`,
           iconSize: [30, 30],
           iconAnchor: [15, 15],
         }),
@@ -121,7 +122,9 @@ export default function DeliveryMap({
       if (node) {
         node.title = t(store ? "Магазин" : "Ваш адрес");
         node.setAttribute("aria-label", node.title);
-        node.textContent = store ? (language === "en" ? "S" : "М") : "●";
+        const symbol = node.querySelector(`.${mapStyles.symbol}`);
+        if (symbol)
+          symbol.textContent = store ? (language === "en" ? "S" : "М") : "●";
       }
     }
     const zoomIn = element.current?.querySelector(".leaflet-control-zoom-in");
@@ -137,7 +140,7 @@ export default function DeliveryMap({
   return (
     <div
       ref={element}
-      className="delivery-map"
+      className={`delivery-map ${mapStyles.surface}`}
       role="region"
       aria-label={t(
         "Карта доставки. Выберите точку нажатием или введите координаты ниже.",

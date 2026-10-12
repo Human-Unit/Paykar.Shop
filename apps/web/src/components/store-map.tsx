@@ -2,6 +2,7 @@
 import { useEffect, useRef } from "react";
 import L from "leaflet";
 import { usePresentation } from "@/context/presentation";
+import mapStyles from "./map-surface.module.css";
 export default function StoreMap({
   latitude,
   longitude,
@@ -27,7 +28,7 @@ export default function StoreMap({
     }).addTo(map);
     const icon = L.divIcon({
       className: "delivery-marker store-marker",
-      html: "●",
+      html: `<span class="${mapStyles.pin}" aria-hidden="true"><span class="${mapStyles.symbol}">П</span></span>`,
       iconSize: [32, 32],
       iconAnchor: [16, 16],
     });
@@ -46,7 +47,7 @@ export default function StoreMap({
   return (
     <div
       ref={element}
-      className="store-map"
+      className={`store-map ${mapStyles.surface}`}
       role="region"
       aria-label={t("Расположение магазина")}
     />

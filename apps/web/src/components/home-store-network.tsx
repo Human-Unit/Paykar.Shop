@@ -26,8 +26,10 @@ const StoreNetworkMap = dynamic(() => import("./store-network-map"), {
 
 export function HomeStoreNetwork({
   variant = "home",
+  showHeading = false,
 }: {
   variant?: "home" | "directory";
+  showHeading?: boolean;
 }) {
   const { t } = usePresentation();
   const directory = variant === "directory";
@@ -81,7 +83,7 @@ export function HomeStoreNetwork({
       className={`${styles.section} ${directory ? directoryStyles.workspace : ""}`}
       aria-label={t("Магазины")}
     >
-      {!directory && (
+      {(!directory || showHeading) && (
         <SectionHeader
           eyebrow="Адрес и карта"
           title="Магазины"

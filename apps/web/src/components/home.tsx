@@ -142,7 +142,7 @@ export function Home() {
       </section>
       <ShoppingDiscovery />
       <OrderShowcase />
-      <HomeStoreNetwork />
+      <HomeStoreNetwork variant="directory" showHeading />
       <section>
         <SectionHeader
           eyebrow="Полезно знать"
