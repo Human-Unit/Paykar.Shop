@@ -36,6 +36,13 @@ export function hasCategoryImage(product: Pick<Product, "slug" | "image_url">) {
     illustration && demoPhotos[illustration] && !producePhotos[product.slug],
   );
 }
+export function imageIllustrationLabel(
+  product: Pick<Product, "slug" | "image_url">,
+) {
+  if (product.image_url.startsWith("/images/products/generated/"))
+    return "Иллюстрация товара";
+  return hasCategoryImage(product) ? "Иллюстрация категории" : null;
+}
 export function ProductImage({
   product,
   large = false,
@@ -45,6 +52,7 @@ export function ProductImage({
 }) {
   const { t } = usePresentation();
   const [failed, setFailed] = useState(false);
+  const imageLabel = imageIllustrationLabel(product);
   const illustration = product.image_url.match(
     /^\/images\/products\/(\w+)\.svg$/,
   )?.[1];
@@ -61,6 +69,7 @@ export function ProductImage({
             : product.image_url
       }
       alt={t(product.name)}
+      title={imageLabel ? t(imageLabel) : undefined}
       width={large ? 520 : 260}
       height={large ? 520 : 260}
       unoptimized
@@ -142,6 +151,7 @@ export function ProductCard({
   const isSaved = saved.has(product.id);
   const discount = discountPercent(product);
   const soldOut = Number(product.stock_quantity) < 1;
+  const imageLabel = imageIllustrationLabel(product);
   return (
     <article
       className={`product-card ${styles.card}`}
@@ -171,10 +181,8 @@ export function ProductCard({
         aria-hidden="true"
       >
         <ProductImage product={product} />
-        {hasCategoryImage(product) && !soldOut && (
-          <span className="product-image-note">
-            {t("Иллюстрация категории")}
-          </span>
+        {imageLabel && !soldOut && (
+          <span className="product-image-note">{t(imageLabel)}</span>
         )}
         {discount > 0 && <span className="badge">−{discount}%</span>}
         {soldOut && <span className="stock-flag">{t("Нет в наличии")}</span>}

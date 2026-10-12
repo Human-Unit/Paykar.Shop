@@ -42,7 +42,7 @@
       "stock_quantity": 13,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/apple.svg"
+      "image_url": "/images/paykar/apples.webp"
     },
     {
       "category": "fruit",
@@ -55,7 +55,7 @@
       "stock_quantity": 14,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/apple.svg"
+      "image_url": "/images/paykar/bananas.webp"
     },
     {
       "category": "fruit",
@@ -68,7 +68,7 @@
       "stock_quantity": 15,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/apple.svg"
+      "image_url": "/images/paykar/oranges.webp"
     },
     {
       "category": "fruit",
@@ -81,7 +81,7 @@
       "stock_quantity": 16,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/apple.svg"
+      "image_url": "/images/paykar/lemons.webp"
     },
     {
       "category": "produce",
@@ -94,7 +94,7 @@
       "stock_quantity": 17,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/apple.svg"
+      "image_url": "/images/paykar/carrots.webp"
     },
     {
       "category": "produce",
@@ -107,7 +107,7 @@
       "stock_quantity": 18,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/apple.svg"
+      "image_url": "/images/paykar/potatoes.webp"
     },
     {
       "category": "produce",
@@ -120,7 +120,7 @@
       "stock_quantity": 19,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/apple.svg"
+      "image_url": "/images/paykar/cucumbers.webp"
     },
     {
       "category": "dairy",
@@ -133,7 +133,7 @@
       "stock_quantity": 20,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/milk.svg"
+      "image_url": "/images/products/generated/milk.webp"
     },
     {
       "category": "dairy",
@@ -146,7 +146,7 @@
       "stock_quantity": 0,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/milk.svg"
+      "image_url": "/images/products/generated/kefir.webp"
     },
     {
       "category": "dairy",
@@ -159,7 +159,7 @@
       "stock_quantity": 13,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/milk.svg"
+      "image_url": "/images/products/generated/yogurt.webp"
     },
     {
       "category": "dairy",
@@ -172,7 +172,7 @@
       "stock_quantity": 14,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/milk.svg"
+      "image_url": "/images/products/generated/sour-cream.webp"
     },
     {
       "category": "dairy",
@@ -185,7 +185,7 @@
       "stock_quantity": 15,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/milk.svg"
+      "image_url": "/images/products/generated/cottage-cheese.webp"
     },
     {
       "category": "dairy",
@@ -198,7 +198,7 @@
       "stock_quantity": 16,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/milk.svg"
+      "image_url": "/images/products/generated/butter.webp"
     },
     {
       "category": "dairy",
@@ -211,7 +211,7 @@
       "stock_quantity": 17,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/milk.svg"
+      "image_url": "/images/products/generated/cheese.webp"
     },
     {
       "category": "bakery",
@@ -224,7 +224,7 @@
       "stock_quantity": 18,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/bread.svg"
+      "image_url": "/images/products/generated/wheat-bread.webp"
     },
     {
       "category": "bakery",
@@ -237,7 +237,7 @@
       "stock_quantity": 19,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/bread.svg"
+      "image_url": "/images/products/generated/rye-bread.webp"
     },
     {
       "category": "bakery",
@@ -250,7 +250,7 @@
       "stock_quantity": 20,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/bread.svg"
+      "image_url": "/images/products/generated/flatbread.webp"
     },
     {
       "category": "bakery",
@@ -263,7 +263,7 @@
       "stock_quantity": 12,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/bread.svg"
+      "image_url": "/images/products/generated/baguette.webp"
     },
     {
       "category": "bakery",
@@ -276,7 +276,7 @@
       "stock_quantity": 13,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/bread.svg"
+      "image_url": "/images/products/generated/croissant.webp"
     },
     {
       "category": "bakery",
@@ -289,7 +289,7 @@
       "stock_quantity": 14,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/bread.svg"
+      "image_url": "/images/products/generated/raisin-bun.webp"
     },
     {
       "category": "bakery",
@@ -302,7 +302,7 @@
       "stock_quantity": 15,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/bread.svg"
+      "image_url": "/images/products/generated/lavash.webp"
     },
     {
       "category": "drinks",
@@ -315,7 +315,7 @@
       "stock_quantity": 16,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/bottle.svg"
+      "image_url": "/images/products/generated/water.webp"
     },
     {
       "category": "drinks",
@@ -328,7 +328,7 @@
       "stock_quantity": 17,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/bottle.svg"
+      "image_url": "/images/products/generated/sparkling-water.webp"
     },
     {
       "category": "drinks",
@@ -341,7 +341,7 @@
       "stock_quantity": 18,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/bottle.svg"
+      "image_url": "/images/products/generated/apple-juice.webp"
     },
     {
       "category": "drinks",
@@ -354,7 +354,7 @@
       "stock_quantity": 19,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/bottle.svg"
+      "image_url": "/images/products/generated/orange-juice.webp"
     },
     {
       "category": "drinks",
@@ -367,7 +367,7 @@
       "stock_quantity": 20,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/bottle.svg"
+      "image_url": "/images/products/generated/black-tea.webp"
     },
     {
       "category": "drinks",
@@ -380,7 +380,7 @@
       "stock_quantity": 0,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/bottle.svg"
+      "image_url": "/images/products/generated/green-tea.webp"
     },
     {
       "category": "drinks",
@@ -393,7 +393,7 @@
       "stock_quantity": 13,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/bottle.svg"
+      "image_url": "/images/products/generated/coffee.webp"
     },
     {
       "category": "sweets",
@@ -406,7 +406,7 @@
       "stock_quantity": 14,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/chocolate.svg"
+      "image_url": "/images/products/generated/milk-chocolate.webp"
     },
     {
       "category": "sweets",
@@ -419,7 +419,7 @@
       "stock_quantity": 15,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/chocolate.svg"
+      "image_url": "/images/products/generated/dark-chocolate.webp"
     },
     {
       "category": "sweets",
@@ -432,7 +432,7 @@
       "stock_quantity": 16,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/chocolate.svg"
+      "image_url": "/images/products/generated/oat-cookies.webp"
     },
     {
       "category": "sweets",
@@ -445,7 +445,7 @@
       "stock_quantity": 17,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/chocolate.svg"
+      "image_url": "/images/products/generated/wafers.webp"
     },
     {
       "category": "sweets",
@@ -458,7 +458,7 @@
       "stock_quantity": 18,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/chocolate.svg"
+      "image_url": "/images/products/generated/marmalade.webp"
     },
     {
       "category": "sweets",
@@ -471,7 +471,7 @@
       "stock_quantity": 19,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/chocolate.svg"
+      "image_url": "/images/products/generated/honey.webp"
     },
     {
       "category": "household",
@@ -484,7 +484,7 @@
       "stock_quantity": 20,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/cleaner.svg"
+      "image_url": "/images/products/generated/dish-soap.webp"
     },
     {
       "category": "household",
@@ -497,7 +497,7 @@
       "stock_quantity": 12,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/cleaner.svg"
+      "image_url": "/images/products/generated/liquid-soap.webp"
     },
     {
       "category": "household",
@@ -510,7 +510,7 @@
       "stock_quantity": 13,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/cleaner.svg"
+      "image_url": "/images/products/generated/napkins.webp"
     },
     {
       "category": "household",
@@ -523,7 +523,7 @@
       "stock_quantity": 14,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/cleaner.svg"
+      "image_url": "/images/products/generated/paper-towels.webp"
     },
     {
       "category": "household",
@@ -536,7 +536,7 @@
       "stock_quantity": 15,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/cleaner.svg"
+      "image_url": "/images/products/generated/sponges.webp"
     },
     {
       "category": "household",
@@ -549,7 +549,7 @@
       "stock_quantity": 16,
       "is_active": true,
       "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/products/cleaner.svg"
+      "image_url": "/images/products/generated/trash-bags.webp"
     }
   ],
   "product_connections": [

@@ -20,7 +20,7 @@ import {
   ProductCard,
   ProductImage,
   discountPercent,
-  hasCategoryImage,
+  imageIllustrationLabel,
 } from "./product-card";
 import { Breadcrumbs } from "./breadcrumbs";
 import { Failure, Loading } from "./states";
@@ -72,6 +72,7 @@ export function ProductDetail({ slug }: { slug: string }) {
   const available = Number(p.stock_quantity) >= 1;
   const isSaved = saved.has(p.id);
   const enriched = getProductContent(p.slug);
+  const imageLabel = imageIllustrationLabel(p);
   return (
     <div className={`polish-page product-page shopping-page ${styles.page}`}>
       <Breadcrumbs
@@ -94,10 +95,8 @@ export function ProductDetail({ slug }: { slug: string }) {
         <figure className={styles.visual}>
           <ProductImage product={p} large />
           {discount > 0 && <span className={styles.ribbon}>−{discount}%</span>}
-          {hasCategoryImage(p) && (
-            <figcaption className={styles.caption}>
-              {t("Иллюстрация категории")}
-            </figcaption>
+          {imageLabel && (
+            <figcaption className={styles.caption}>{t(imageLabel)}</figcaption>
           )}
         </figure>
         <div className={styles.info}>
