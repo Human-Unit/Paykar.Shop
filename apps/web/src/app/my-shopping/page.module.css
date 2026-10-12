@@ -1,0 +1,107 @@
+.scope {
+  display: contents;
+}
+
+.scope :global(.shopping-page) :global(.commerce-heading) {
+  position: relative;
+  isolation: isolate;
+  width: min(100%, 1120px);
+  max-width: 1120px;
+  margin: 18px auto 0;
+  padding: clamp(26px, 3vw, 38px) clamp(24px, 3.5vw, 44px);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--green-line) 72%, var(--line));
+  border-radius: 28px;
+  background:
+    radial-gradient(
+      circle at 86% 38%,
+      color-mix(in srgb, var(--paykar-green) 14%, transparent) 0,
+      transparent 34%
+    ),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--surface) 98%, #000 2%),
+      color-mix(in srgb, var(--green-softer) 52%, var(--surface))
+    );
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 4%),
+    0 24px 60px -48px rgb(0 0 0 / 55%);
+}
+
+.scope :global(.shopping-page) :global(.commerce-heading)::before {
+  content: "";
+  position: absolute;
+  inset-block: 24px;
+  inset-inline-start: 0;
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--paykar-green), transparent 88%);
+  opacity: 0.8;
+}
+
+.scope :global(.shopping-page) :global(.commerce-heading)::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: clamp(220px, 28vw, 360px);
+  aspect-ratio: 1;
+  inset-inline-end: clamp(-140px, -8vw, -90px);
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--paykar-green) 13%, transparent),
+    transparent 68%
+  );
+  pointer-events: none;
+}
+
+.scope :global(.shopping-page) :global(.commerce-heading) h1 {
+  position: relative;
+  z-index: 1;
+  max-width: 14ch;
+  margin: 0 0 14px;
+  font-size: clamp(36px, 4.1vw, 54px);
+  font-weight: 850;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.scope :global(.shopping-page) :global(.commerce-heading) p {
+  position: relative;
+  z-index: 1;
+  max-width: 58ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: clamp(15px, 1.5vw, 18px);
+  line-height: 1.6;
+}
+
+@media (max-width: 640px) {
+  .scope :global(.shopping-page) :global(.commerce-heading) {
+    margin-top: 12px;
+    padding: 22px 20px;
+    border-radius: 22px;
+  }
+
+  .scope :global(.shopping-page) :global(.commerce-heading)::before {
+    inset-block: 20px;
+  }
+
+  .scope :global(.shopping-page) :global(.commerce-heading)::after {
+    width: 220px;
+    inset-inline-end: -120px;
+  }
+
+  .scope :global(.shopping-page) :global(.commerce-heading) h1 {
+    margin-bottom: 10px;
+    font-size: clamp(32px, 10vw, 42px);
+  }
+
+  .scope :global(.shopping-page) :global(.commerce-heading) p {
+    max-width: none;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+}
