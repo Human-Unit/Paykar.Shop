@@ -260,10 +260,19 @@ function SparseShoppingGuide({ kind }: { kind: "history" | "templates" }) {
 }
 
 export function MyShopping() {
-  const { t } = usePresentation();
+  const { t, locale } = usePresentation();
   const { templates, orderIds } = useShoppingStorage();
   const hasHistory = orderIds.length > 0;
   const hasTemplates = templates.length > 0;
+  const countLabel = (
+    count: number,
+    one: string,
+    few: string,
+    many: string,
+  ) => {
+    const plural = new Intl.PluralRules(locale).select(count);
+    return `${count} ${t(plural === "one" ? one : plural === "few" ? few : many)}`;
+  };
   // Put the latest real order in the center with older orders on either side.
   const carouselOrderIds =
     orderIds.length > 2
@@ -283,14 +292,42 @@ export function MyShopping() {
       <Breadcrumbs
         items={[{ label: "Главная", href: "/" }, { label: "Мои покупки" }]}
       />
-      <div className={styles.intro + " commerce-heading"}>
-        <h1>{t("Мои покупки")}</h1>
-        <p>
-          {t(
-            "Повторяйте привычные покупки, сохраняйте любимые наборы и собирайте корзину за пару кликов.",
+      <header className={styles.intro + " commerce-heading shopping-masthead"}>
+        <div className="shopping-masthead-copy">
+          <span className="eyebrow">{t("ВАШИ ПОКУПКИ")}</span>
+          <h1>{t("Мои покупки")}</h1>
+          <p>
+            {t(
+              "Повторяйте привычные покупки, сохраняйте любимые наборы и собирайте корзину за пару кликов.",
+            )}
+          </p>
+        </div>
+        <div className="shopping-masthead-summary">
+          {(hasHistory || hasTemplates) && (
+            <ul className="shopping-masthead-counts">
+              {hasHistory && (
+                <li>
+                  {countLabel(orderIds.length, "заказ", "заказа", "заказов")}
+                </li>
+              )}
+              {hasTemplates && (
+                <li>
+                  {countLabel(
+                    templates.length,
+                    "шаблон",
+                    "шаблона",
+                    "шаблонов",
+                  )}
+                </li>
+              )}
+            </ul>
           )}
-        </p>
-      </div>
+          <Link className="text-link" href="/my-shopping/templates/new">
+            {t("Создать шаблон")}
+            <ArrowRight size={17} aria-hidden="true" />
+          </Link>
+        </div>
+      </header>
       {!hasHistory && !hasTemplates ? (
         <div className={styles.starterRow}>
           <ShoppingStarter kind="templates" compact />
@@ -301,12 +338,15 @@ export function MyShopping() {
           id="history"
           className={styles.section + " " + styles.personalSection}
         >
-          <h2>{t("Последний заказ")}</h2>
-          <p className={styles.help}>
-            {t(
-              "Актуальные цены и наличие проверим перед добавлением в корзину.",
-            )}
-          </p>
+          <header className="shopping-history-heading">
+            <span className="eyebrow">{t("ПОСЛЕДНИЕ ПОКУПКИ")}</span>
+            <h2>{t("Последний заказ")}</h2>
+            <p className={styles.help}>
+              {t(
+                "Актуальные цены и наличие проверим перед добавлением в корзину.",
+              )}
+            </p>
+          </header>
           <div
             className={
               orderIds.length === 1 ? styles.sparseCollection : undefined

@@ -2,13 +2,17 @@
   display: contents;
 }
 
-.scope :global(.shopping-page) :global(.commerce-heading) {
+.scope :global(.shopping-page) :global(.shopping-masthead) {
   position: relative;
   isolation: isolate;
   width: min(100%, 1120px);
   max-width: 1120px;
   margin: 18px auto 0;
-  padding: clamp(26px, 3vw, 38px) clamp(24px, 3.5vw, 44px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 24px;
+  padding: 28px 32px;
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--green-line) 72%, var(--line));
   border-radius: 28px;
@@ -28,78 +32,112 @@
     0 24px 60px -48px rgb(0 0 0 / 55%);
 }
 
-.scope :global(.shopping-page) :global(.commerce-heading)::before {
-  content: "";
-  position: absolute;
-  inset-block: 24px;
-  inset-inline-start: 0;
-  width: 3px;
-  border-radius: 999px;
-  background: linear-gradient(180deg, var(--paykar-green), transparent 88%);
-  opacity: 0.8;
+.scope :global(.shopping-masthead-copy) {
+  min-width: 0;
 }
 
-.scope :global(.shopping-page) :global(.commerce-heading)::after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  width: clamp(220px, 28vw, 360px);
-  aspect-ratio: 1;
-  inset-inline-end: clamp(-140px, -8vw, -90px);
-  top: 50%;
-  transform: translateY(-50%);
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    color-mix(in srgb, var(--paykar-green) 13%, transparent),
-    transparent 68%
-  );
-  pointer-events: none;
-}
-
-.scope :global(.shopping-page) :global(.commerce-heading) h1 {
+.scope :global(.shopping-page) :global(.shopping-masthead) h1 {
   position: relative;
   z-index: 1;
-  max-width: 14ch;
-  margin: 0 0 14px;
-  font-size: clamp(36px, 4.1vw, 54px);
+  margin: 10px 0 12px;
+  font-size: clamp(32px, 3.1vw, 44px);
   font-weight: 850;
   line-height: 1.05;
   letter-spacing: -0.04em;
 }
 
-.scope :global(.shopping-page) :global(.commerce-heading) p {
+.scope :global(.shopping-page) :global(.shopping-masthead) p {
   position: relative;
   z-index: 1;
   max-width: 58ch;
   margin: 0;
   color: var(--muted);
-  font-size: clamp(15px, 1.5vw, 18px);
+  font-size: 16px;
   line-height: 1.6;
 }
 
+.scope :global(.shopping-masthead-summary) {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  min-width: 0;
+  padding-left: 24px;
+  border-left: 1px solid var(--line);
+}
+
+.scope :global(.shopping-masthead-counts) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.scope :global(.shopping-masthead-summary .text-link) {
+  min-height: 44px;
+  font-size: 14px;
+}
+
+.scope :global(.shopping-page) :global(.shopping-masthead + section),
+.scope :global(.shopping-page) :global(.shopping-masthead + div) {
+  margin-top: 48px;
+}
+
+.scope :global(.shopping-history-heading .eyebrow) {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+
+.scope :global(.shopping-page) :global(.shopping-history-heading h2) {
+  margin: 8px 0;
+  font-size: clamp(24px, 2.5vw, 28px);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+.scope :global(.shopping-history-heading p) {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
 @media (max-width: 640px) {
-  .scope :global(.shopping-page) :global(.commerce-heading) {
+  .scope :global(.shopping-page) :global(.shopping-masthead) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
     margin-top: 12px;
-    padding: 22px 20px;
+    padding: 20px;
     border-radius: 22px;
   }
 
-  .scope :global(.shopping-page) :global(.commerce-heading)::before {
-    inset-block: 20px;
+  .scope :global(.shopping-masthead-summary) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2px 16px;
+    padding-left: 0;
+    border-left: 0;
   }
 
-  .scope :global(.shopping-page) :global(.commerce-heading)::after {
-    width: 220px;
-    inset-inline-end: -120px;
+  .scope :global(.shopping-page) :global(.shopping-masthead + section),
+  .scope :global(.shopping-page) :global(.shopping-masthead + div) {
+    margin-top: 32px;
   }
 
-  .scope :global(.shopping-page) :global(.commerce-heading) h1 {
+  .scope :global(.shopping-page) :global(.shopping-masthead) h1 {
     margin-bottom: 10px;
-    font-size: clamp(32px, 10vw, 42px);
+    font-size: 32px;
   }
 
-  .scope :global(.shopping-page) :global(.commerce-heading) p {
+  .scope :global(.shopping-page) :global(.shopping-masthead) p {
     max-width: none;
     font-size: 15px;
     line-height: 1.55;
