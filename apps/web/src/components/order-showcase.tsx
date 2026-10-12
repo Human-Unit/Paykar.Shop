@@ -108,6 +108,7 @@ function OrderPhone() {
   const rotateX = useSpring(0, spring);
   const rotateY = useSpring(0, spring);
   const depth = useSpring(0, spring);
+  const lift = useSpring(0, spring);
   const scale = useSpring(1, spring);
   const entrance = useReveal({ rise: 30, scale: 0.96, duration: 0.62 });
   const stageNode = useRef<HTMLDivElement>(null);
@@ -173,13 +174,15 @@ function OrderPhone() {
     rotateX.jump(0);
     rotateY.jump(0);
     depth.jump(0);
+    lift.jump(0);
     scale.jump(1);
-  }, [shouldReduceMotion, rotateX, rotateY, depth, scale]);
+  }, [shouldReduceMotion, rotateX, rotateY, depth, lift, scale]);
 
   const reset = () => {
     rotateX.set(0);
     rotateY.set(0);
     depth.set(0);
+    lift.set(0);
     scale.set(1);
   };
   const move = (event: PointerEvent<HTMLDivElement>) => {
@@ -199,9 +202,10 @@ function OrderPhone() {
       -1,
       Math.min(1, ((event.clientY - rect.top) / rect.height - 0.5) * 2),
     );
-    rotateX.set(-y * 5);
-    rotateY.set(x * 7);
+    rotateX.set(-y * 2);
+    rotateY.set(x * 3);
     depth.set(12);
+    lift.set(-4);
     scale.set(1.01);
   };
 
@@ -209,6 +213,7 @@ function OrderPhone() {
     <div
       ref={stageNode}
       className="phone-stage pointer-surface"
+      onPointerEnter={move}
       onPointerMove={move}
       onPointerLeave={(event) => {
         light.onPointerLeave(event);
@@ -229,7 +234,7 @@ function OrderPhone() {
       >
         <m.div
           className="order-phone"
-          style={{ rotateX, rotateY, z: depth, scale }}
+          style={{ rotateX, rotateY, z: depth, y: lift, scale }}
         >
           <div className="phone-hardware">
             <i />

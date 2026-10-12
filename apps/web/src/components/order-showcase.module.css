@@ -51,6 +51,7 @@
 }
 
 .scene :global(.showcase-benefits) {
+  perspective: 800px;
   gap: 16px;
   margin-block: 28px;
 }
@@ -60,9 +61,16 @@
   font-size: 16px;
   line-height: 1.4;
   font-weight: 700;
+  transform-style: preserve-3d;
+  transition: transform 220ms var(--ease-out);
+}
+
+.scene :global(.showcase-benefits li svg) {
+  transition: transform 220ms var(--ease-out);
 }
 
 .scene :global(.order-showcase-copy .button) {
+  translate: 0 0;
   justify-content: center;
   gap: 16px;
   min-width: 224px;
@@ -89,6 +97,7 @@
 }
 
 .scene :global(.order-showcase-copy .button svg) {
+  translate: 0 0;
   transition: transform 180ms var(--ease-out);
 }
 
@@ -142,9 +151,31 @@
 }
 
 .scene :global(.phone-stage)::before {
-  inset: 4% -6%;
+  inset: -18% -28%;
   border-radius: 50%;
-  background: radial-gradient(ellipse, var(--green-soft), transparent 65%);
+  background: radial-gradient(
+    ellipse,
+    var(--green-soft),
+    color-mix(in srgb, var(--green-soft) 55%, transparent) 32%,
+    transparent 68%
+  );
+  filter: blur(24px);
+  opacity: 0.65;
+  transition: opacity 240ms ease;
+}
+
+/* Let pointer light fade before its own box edge, then clip only at the scene. */
+.scene :global(.phone-stage .surface-light) {
+  inset: -320px;
+  border-radius: 0;
+  background: radial-gradient(
+    500px circle at calc(var(--mouse-x, calc(50% - 320px)) + 320px)
+      calc(var(--mouse-y, calc(50% - 320px)) + 320px),
+    color-mix(in srgb, var(--motion-light) 70%, transparent),
+    transparent 68%
+  );
+  mask-image: radial-gradient(ellipse, #000 30%, transparent 70%);
+  filter: blur(24px);
 }
 
 .scene :global(.phone-stage)::after {
@@ -153,6 +184,10 @@
   border-radius: 50%;
   background: radial-gradient(ellipse, rgb(0 0 0 / 24%), transparent 70%);
   transform: scaleY(0.6);
+  opacity: 0.8;
+  transition:
+    opacity 240ms ease,
+    transform 240ms var(--ease-out);
 }
 
 .scene :global(.phone-entrance) {
@@ -167,6 +202,9 @@
     inset -1px 0 0 rgb(255 255 255 / 8%),
     0 32px 48px -24px rgb(0 0 0 / 58%),
     0 0 28px -22px var(--paykar-green);
+  transition:
+    border-color 220ms ease,
+    box-shadow 220ms ease;
 }
 
 .scene :global(.phone-screen) {
@@ -215,9 +253,37 @@
 }
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .scene :global(.phone-stage:hover)::before {
+    opacity: 0.8;
+  }
+
+  .scene :global(.phone-stage:hover)::after {
+    opacity: 1;
+  }
+
+  .scene :global(.phone-stage:hover)::after {
+    transform: scaleY(0.66);
+  }
+
+  .scene :global(.phone-stage:hover .order-phone) {
+    border-color: color-mix(in srgb, var(--paykar-green) 22%, #687068);
+    box-shadow:
+      inset 0 0 0 2px #111511,
+      inset -1px 0 0 rgb(255 255 255 / 12%),
+      0 36px 52px -24px rgb(0 0 0 / 64%),
+      0 0 34px -22px var(--paykar-green);
+  }
+
+  .scene :global(.showcase-benefits li:hover) {
+    transform: translate3d(0, -2px, 4px);
+  }
+
+  .scene :global(.showcase-benefits li:hover svg) {
+    transform: scale(1.03);
+  }
+
   .scene :global(.order-showcase-copy .button:hover) {
-    translate: none;
-    transform: translateY(-2px);
+    transform: perspective(800px) translate3d(0, -2px, 6px);
     box-shadow:
       inset 0 1px 0 rgb(255 255 255 / 28%),
       0 12px 24px -18px rgb(0 0 0 / 38%);
@@ -310,7 +376,19 @@
   }
 
   .scene :global(.order-showcase-copy .button),
-  .scene :global(.order-showcase-copy .button svg) {
+  .scene :global(.order-showcase-copy .button svg),
+  .scene :global(.showcase-benefits li),
+  .scene :global(.showcase-benefits li svg),
+  .scene :global(.phone-stage)::before,
+  .scene :global(.phone-stage)::after {
     transition: none;
+  }
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .scene :global(.order-showcase-copy .button:hover),
+  .scene :global(.order-showcase-copy .button:hover svg) {
+    translate: 0 0;
+    transform: none;
   }
 }
