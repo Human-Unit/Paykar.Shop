@@ -26,6 +26,8 @@ services:
       API_HOST: 0.0.0.0
       API_PORT: 8080
       WEB_ORIGIN: ${WEB_ORIGIN:-http://localhost:3000}
+      ADMIN_COOKIE_SECURE: ${ADMIN_COOKIE_SECURE:-false}
+      ADMIN_SESSION_HOURS: ${ADMIN_SESSION_HOURS:-8}
       OPENROUTESERVICE_API_KEY: ${OPENROUTESERVICE_API_KEY:-}
       STORE_ADDRESS: ${STORE_ADDRESS:-Айни 16б, Душанбе, Таджикистан}
       STORE_LAT: ${STORE_LAT:-}

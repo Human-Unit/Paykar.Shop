@@ -17,6 +17,8 @@ class Settings(BaseSettings):
     api_host: str = "0.0.0.0"
     api_port: int = Field(default=8080, ge=1, le=65535)
     web_origin: str = "http://localhost:3000"
+    admin_cookie_secure: bool = True
+    admin_session_hours: int = Field(default=8, ge=1, le=24)
     openrouteservice_api_key: SecretStr = SecretStr("")
     store_address: str = "Айни 16б, Душанбе, Таджикистан"
     store_lat: float | None = Field(default=None, ge=-90, le=90, allow_inf_nan=False)

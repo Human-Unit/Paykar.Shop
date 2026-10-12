@@ -34,6 +34,14 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app = FastAPI(title="Paykar demo API", version="0.1.0", lifespan=lifespan)
     app.state.settings = settings
 
+    @app.middleware("http")
+    async def private_admin_responses(request: Request, call_next):
+        response = await call_next(request)
+        if request.url.path.startswith("/api/v1/admin"):
+            response.headers["Cache-Control"] = "no-store"
+            response.headers["X-Content-Type-Options"] = "nosniff"
+        return response
+
     @app.exception_handler(RequestValidationError)
     async def invalid_request(request: Request, exc: RequestValidationError):
         # Never reflect submitted card-like fields or other request bodies in validation responses.

@@ -13,7 +13,7 @@ def main():
     parser.add_argument("--env-file", help="Use an alternate environment file.")
     parser.add_argument(
         "command",
-        choices=["up", "down", "rebuild", "logs", "migrate", "seed", "test", "verify", "reset"],
+        choices=["up", "down", "rebuild", "logs", "migrate", "seed", "test", "verify", "reset", "admin:create"],
     )
     parser.add_argument("--service", choices=["web", "api", "postgres", "seed"])
     parser.add_argument("--follow", action="store_true", help="Follow logs until interrupted.")
@@ -57,6 +57,8 @@ def main():
         run("exec", "-T", "api", "alembic", "upgrade", "head")
     elif args.command == "seed":
         run("run", "--rm", "seed", "python", "/seed/seed.py")
+    elif args.command == "admin:create":
+        run("exec", "api", "python", "tools/create_admin.py")
     elif args.command in {"test", "verify"}:
         # Backend verification creates and removes its own uniquely named test DB.
         run("exec", "-T", "api", "python", "tools/verify.py")
