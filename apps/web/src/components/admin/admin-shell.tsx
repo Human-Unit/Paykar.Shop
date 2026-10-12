@@ -20,6 +20,8 @@ const links = [
   ["orders", "Orders"],
   ["stores", "Stores"],
   ["inventory", "Inventory"],
+  ["master/design", "Design"],
+  ["master/administrators", "Administrators"],
   ["settings", "Settings"],
 ] as const;
 
