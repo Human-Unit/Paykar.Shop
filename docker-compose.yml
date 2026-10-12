@@ -40,12 +40,33 @@ services:
       postgres:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/api/v1/health/db', timeout=3)"]
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/api/v1/health/db', timeout=3)",
+        ]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 20s
     restart: unless-stopped
+  seed:
+    build: ./apps/api
+    command: ["python", "/seed/seed.py", "--if-empty"]
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ${POSTGRES_DB:-paykar}
+      POSTGRES_USER: ${POSTGRES_USER:-paykar}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-paykar_dev}
+    volumes:
+      - ./db/seed:/seed:ro
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: "no"
   web:
     build:
       context: ./apps/web
@@ -61,12 +82,31 @@ services:
     depends_on:
       api:
         condition: service_healthy
+      seed:
+        condition: service_completed_successfully
     healthcheck:
-      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3000').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
       interval: 15s
       timeout: 5s
       retries: 5
       start_period: 15s
     restart: unless-stopped
+  web-checks:
+    profiles: ["tools"]
+    build:
+      context: ./apps/web
+      target: build
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8080/api/v1}
+    command:
+      - sh
+      - -c
+      - npm run format:check && npm run lint && npm run typecheck && npm run build && node --test tests/*.test.mjs
 volumes:
   postgres_data:

@@ -1,5 +1,6 @@
 """Run locally from apps/api or inside Compose: python /seed/seed.py."""
 
+import argparse
 import asyncio
 import json
 import sys
@@ -22,11 +23,17 @@ from app.models import Category, Product, ProductConnection  # noqa: E402
 from app.services.shopping_service import load_curated, validate_curated  # noqa: E402
 
 
-async def seed():
+async def seed(*, if_empty: bool = False):
     data = json.loads(Path(__file__).with_name("products.json").read_text(encoding="utf-8"))
     engine = make_engine(Settings())
     try:
         async with async_sessionmaker(engine).begin() as session:
+            if if_empty:
+                products = await session.scalar(select(func.count()).select_from(Product))
+                categories = await session.scalar(select(func.count()).select_from(Category))
+                if products or categories:
+                    print("Catalog already exists; automatic demo seed skipped.")
+                    return
             ids = {}
             for category in data["categories"]:
                 stmt = (
@@ -91,4 +98,6 @@ async def seed():
 
 
 if __name__ == "__main__":
-    asyncio.run(seed())
+    parser = argparse.ArgumentParser(description="Insert missing demo catalog data.")
+    parser.add_argument("--if-empty", action="store_true", help="Skip an existing catalog.")
+    asyncio.run(seed(if_empty=parser.parse_args().if_empty))

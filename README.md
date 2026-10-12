@@ -1,499 +1,284 @@
-<div align="center">
-
-<img src="apps/web/public/images/paykar/logo.png" alt="Paykar" width="320" />
-
 # Paykar.Shop
 
-### Full-stack grocery storefront built with Next.js, FastAPI and PostgreSQL
+A grocery storefront with catalog discovery, a persistent guest cart, map-based delivery,
+order confirmation and a personal shopping workspace. This is an independent technical
+assignment, not the official Paykar website or a production payment/delivery service.
 
-A polished ecommerce recreation focused on a complete shopping journey: catalog discovery, persistent guest cart, map-based delivery, real road routing, safe sandbox payments and persisted order confirmation.
+## Quick start
 
-[![Next.js](https://img.shields.io/badge/Next.js-App_Router-000000?logo=nextdotjs)](https://nextjs.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-Python_3.12-009688?logo=fastapi)](https://fastapi.tiangolo.com/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
-[![Tests](https://img.shields.io/badge/tests-77_passing-00a82d)](#verification)
+Install Docker with Linux containers and Docker Compose v2 with `--wait` support.
+No host Node.js, Python packages or PostgreSQL installation is needed for this flow.
 
-</div>
-
-> **Note**
-> This repository is an independent technical assignment inspired by the public Paykar shopping experience. It is not the official Paykar website, production dataset, payment system or delivery service.
-
----
-
-## Highlights
-
-- **Responsive grocery storefront** with a dark-first Paykar design system, light theme, RU/TJ/EN localization and a responsive catalog mega-menu.
-- **Catalog discovery** with URL-backed search, recursive categories/subcategories, exact prices and catalog-derived presets, stock/sale/discount/unit filters, sorting, pagination, active chips and curated product connections.
-- **Persistent guest cart** stored locally with stock-aware quantity controls and server-resolved prices.
-- **Map-based checkout** using Leaflet + OpenStreetMap with manual delivery-point correction.
-- **Real road routing** through server-side openrouteservice integration: route geometry, distance, ETA and configured delivery fee are returned before order confirmation.
-- **Atomic order creation** with stock locks, server-authoritative totals, item snapshots and UUID confirmation pages.
-- **Safe sandbox card flow** with deterministic success/failure scenarios, idempotency and persisted payment state. No real card data is sent to the API or stored.
-- **Cash checkout** with idempotent guest-order creation.
-- **Polished content pages** for delivery, payment, how to buy, returns, promotions, blog, about, contacts and stores.
-- **Branded recovery states** including a custom 404, loading states, empty states and retryable API failures.
-- **Docker-first setup** with PostgreSQL, FastAPI and Next.js in one Compose stack.
-
-## Shopping flow
-
-```text
-Browse / Search
-      ↓
-Product / Quantity
-      ↓
-Persistent Guest Cart
-      ↓
-Checkout + Delivery Point
-      ↓
-Real Route / Distance / ETA
-      ↓
-Cash or Sandbox Card
-      ↓
-Atomic Order + Stock Update
-      ↓
-Persisted Confirmation
+```sh
+git clone https://github.com/Human-Unit/Paykar.Shop.git
+cd Paykar.Shop
+cp .env.example .env
+docker compose up -d --build --wait
 ```
 
-## Architecture
-
-```mermaid
-flowchart LR
-    B[Browser] --> W[Next.js App Router]
-    W --> A[FastAPI API]
-    A --> P[(PostgreSQL 17)]
-    A --> O[openrouteservice]
-    W --> M[Leaflet + OpenStreetMap]
-
-    subgraph Backend
-      A
-      P
-    end
-
-    subgraph External
-      O
-      M
-    end
-```
-
-### Backend
-
-`apps/api` uses **Python 3.12**, FastAPI, Pydantic Settings, SQLAlchemy 2 async sessions, asyncpg and Alembic.
-
-Important backend properties:
-
-- Decimal / `NUMERIC` money calculations
-- server-authoritative product prices and totals
-- deterministic stock locking
-- atomic order + order-item snapshot persistence
-- guest-order idempotency keys
-- sandbox payment sessions with 15-minute expiry
-- server-only ORS credentials
-- sanitized provider/database errors
-
-### Frontend
-
-`apps/web` uses **Next.js App Router**, strict TypeScript and the project's shared Paykar design system.
-
-The frontend includes:
-
-- dark / light themes
-- RU / TJ / EN presentation
-- responsive header and burger drawer
-- catalog mega-menu
-- debounced search suggestions
-- accessible keyboard interactions
-- product cards with direct quantity controls
-- polished checkout, confirmation and informational pages
-
-### Data
-
-The seeded catalog contains:
-
-- **7 categories** — 6 roots + 1 nested fruit category
-- **40 active products**
-- **2 intentionally out-of-stock products**
-- discounted products used by the promotions experience
-
-The seed is idempotent and does not reset existing stock/catalog edits when run again.
-
----
-
-## Quick start with Docker
-
-### Requirements
-
-- Docker Desktop with Linux containers
-- Docker Compose
-- an openrouteservice API key if you want live delivery routing
-
-### 1. Configure environment
-
-From the repository root in PowerShell:
+In Windows PowerShell, replace the copy command with:
 
 ```powershell
-if (-not (Test-Path .env)) { Copy-Item .env.example .env }
+Copy-Item .env.example .env
 ```
 
-For live checkout routing, set these values in the ignored `.env` file:
+Keep an existing `.env`; do not overwrite configuration when updating the checkout.
+Startup waits for PostgreSQL, applies Alembic migrations, seeds an **empty catalog only**,
+and starts the production frontend. Existing catalog data and orders are left intact.
+The initial demo has seven categories, 40 products (two out of stock), promotions,
+product connections and curated sets. Personal orders/templates start empty.
 
-```env
-OPENROUTESERVICE_API_KEY=your_key_here
-STORE_ADDRESS=Айни 16б, Душанбе, Таджикистан
-STORE_LAT=38.562512
-STORE_LON=68.791511
-DELIVERY_FLAT_PRICE=20.00
-DELIVERY_MAX_DISTANCE_METERS=20000
+**Live checkout requires configuration:** set a server-side `OPENROUTESERVICE_API_KEY`
+and both `STORE_LAT`/`STORE_LON` in `.env`. Without them, browsing, cart, templates and
+the store locator work, but delivery quoting/final checkout cannot complete. There is
+no fabricated routing fallback. Restart the API after changing routing configuration.
+
+### Local URLs and readiness
+
+| Service                     | Default URL                            |
+| --------------------------- | -------------------------------------- |
+| Storefront                  | http://localhost:3000                  |
+| Backend                     | http://localhost:8080                  |
+| Swagger                     | http://localhost:8080/docs             |
+| OpenAPI JSON                | http://localhost:8080/openapi.json     |
+| API health                  | http://localhost:8080/api/v1/health    |
+| Database readiness          | http://localhost:8080/api/v1/health/db |
+| PostgreSQL, for local tools | `localhost:5433`                       |
+
+```sh
+docker compose ps -a
+docker compose logs --tail=100 api seed web
 ```
 
-Never expose `OPENROUTESERVICE_API_KEY` through a `NEXT_PUBLIC_*` variable.
+PostgreSQL, API and web should be **healthy**. `seed` normally shows **Exited (0)**:
+it is a one-shot bootstrap job, not a failed server.
 
-### 2. Start the stack
+## Features
 
-```powershell
-docker compose config --quiet
-docker compose up --build -d --wait
-docker compose exec api python /seed/seed.py
-docker compose ps
+- URL-backed search, category/subcategory, stock/sale filters, sorting and pagination.
+- Product detail, complementary suggestions, favorites and product-specific demo illustrations.
+- Persistent guest cart with quantity limits and current server prices/stock.
+- Leaflet delivery-point correction, server-side road route, distance/ETA and flat-fee quote.
+- Atomic, idempotent guest orders and UUID confirmation pages.
+- Cash payment or deterministic sandbox card scenarios; no real payments/card storage.
+- My Shopping: remembered orders, repeat, browser-local templates, live stock/price previews,
+  add-all, edit and curated sets. These are guest conveniences, not user accounts.
+- Promotions, store locator and informational/editorial pages.
+- Responsive RU/TJ/EN interface with dark/light themes and reduced-motion support.
+
+## Tech stack
+
+| Layer            | Technology                                                                      |
+| ---------------- | ------------------------------------------------------------------------------- |
+| Frontend         | Next.js App Router, React, TypeScript, Tailwind CSS, CSS Modules, Framer Motion |
+| Frontend runtime | Node.js 24 in Docker                                                            |
+| Backend          | FastAPI, Python 3.12, Pydantic                                                  |
+| Database         | PostgreSQL 17                                                                   |
+| ORM / driver     | SQLAlchemy async, asyncpg                                                       |
+| Migrations       | Alembic                                                                         |
+| Maps             | Leaflet + OpenStreetMap                                                         |
+| Routing          | openrouteservice, called only by the backend                                    |
+| Local runtime    | Docker Compose                                                                  |
+
+## Environment configuration
+
+`.env.example` contains development defaults, never a real external key. Keep `.env`
+ignored. There is no application-environment/demo flag beyond the actual settings below.
+
+| Variable                       | Required                 | Purpose                                                                     | Default                             |
+| ------------------------------ | ------------------------ | --------------------------------------------------------------------------- | ----------------------------------- |
+| `POSTGRES_DB`                  | Default supplied         | Database name                                                               | `paykar`                            |
+| `POSTGRES_USER`                | Default supplied         | Local database role                                                         | `paykar`                            |
+| `POSTGRES_PASSWORD`            | Default supplied         | Local-only development password                                             | `paykar_dev`                        |
+| `POSTGRES_HOST`                | Native API only          | Database hostname; Compose enforces `postgres`                              | `localhost`                         |
+| `POSTGRES_PORT`                | Default supplied         | Host database port; containers use `5432`                                   | `5433`                              |
+| `DATABASE_URL`                 | Optional, native API     | `postgresql+asyncpg` override; component settings escape credentials safely | Unset                               |
+| `API_HOST`                     | Native API only          | Bind address; Compose uses `0.0.0.0`                                        | `0.0.0.0`                           |
+| `API_PORT`                     | Default supplied         | Published API port; container listens on `8080`                             | `8080`                              |
+| `WEB_PORT`                     | Default supplied         | Published storefront port                                                   | `3000`                              |
+| `WEB_ORIGIN`                   | Default supplied         | Exact browser origin allowed by CORS                                        | `http://localhost:3000`             |
+| `NEXT_PUBLIC_API_URL`          | Default supplied         | Browser API base, embedded at frontend build time                           | `http://localhost:8080/api/v1`      |
+| `API_INTERNAL_URL`             | Optional, native Next.js | Server existence checks; Compose supplies its internal URL                  | `http://api:8080/api/v1` in Compose |
+| `OPENROUTESERVICE_API_KEY`     | For live delivery        | Directions API credential, backend only                                     | Empty                               |
+| `STORE_ADDRESS`                | Default supplied         | Checkout origin address                                                     | `Айни 16б, Душанбе, Таджикистан`    |
+| `STORE_LAT` / `STORE_LON`      | Both, for delivery       | Verified origin coordinates; configure together                             | Empty                               |
+| `DELIVERY_FLAT_PRICE`          | Default supplied         | Fee independent of route distance/ETA                                       | `20.00` TJS                         |
+| `DELIVERY_MAX_DISTANCE_METERS` | Default supplied         | Maximum driving-route distance                                              | `20000`                             |
+| `TEST_DATABASE_URL`            | Integration tests only   | Dedicated migrated database with an `_test` suffix                          | Generated by verification helper    |
+
+Compose constructs its database connection from PostgreSQL settings; it does not forward
+a host `DATABASE_URL`. Changing published API/web ports also requires updating
+`NEXT_PUBLIC_API_URL`/`WEB_ORIGIN` and rebuilding web. Never expose the ORS key in a
+`NEXT_PUBLIC_*` variable. ETA is a route estimate, not a delivery promise.
+
+## Developer commands
+
+These Docker commands work in PowerShell and Unix-like shells:
+
+```sh
+docker compose up -d --build --wait
+docker compose down
+docker compose logs --tail=100 api
+docker compose exec api alembic upgrade head
+docker compose run --rm seed python /seed/seed.py
+docker compose up -d --build --force-recreate --no-deps web
 ```
 
-### 3. Open the application
+Optional cross-platform wrappers need **Python 3 only**, without host packages:
 
-| Service | URL |
-| --- | --- |
-| Web | http://localhost:3000 |
-| API | http://localhost:8080 |
-| Swagger / OpenAPI | http://localhost:8080/docs |
-| PostgreSQL | localhost:5433 |
+| Command                                             | Operation                                                               |
+| --------------------------------------------------- | ----------------------------------------------------------------------- |
+| `python scripts/dev.py up`                          | Build/start and wait for readiness                                      |
+| `python scripts/dev.py down`                        | Stop/remove containers; retain database volume                          |
+| `python scripts/dev.py rebuild`                     | Rebuild/recreate services; retain data                                  |
+| `python scripts/dev.py logs --service api --follow` | Follow API logs; omit `--follow` for a bounded view                     |
+| `python scripts/dev.py migrate`                     | Apply Alembic migrations                                                |
+| `python scripts/dev.py seed`                        | Insert missing demo rows without overwriting existing rows              |
+| `python scripts/dev.py test`                        | Backend tests/sanity checks in a disposable DB, then all frontend tests |
+| `python scripts/dev.py verify`                      | Full backend and frontend static/build/test checks                      |
 
-Health checks:
+`test`/`verify` require running API/PostgreSQL. The frontend tool image uses the build
+stage with development dependencies; the production runtime does not. Backend verification
+creates a unique `paykar_verify_*_test` database, migrates it and removes **that database
+only** in cleanup. It never runs integration tests against application data. The local
+PostgreSQL role needs database-creation permission.
 
-```powershell
-Invoke-RestMethod http://localhost:8080/api/v1/health
-Invoke-RestMethod http://localhost:8080/api/v1/health/db
+Global helper options precede the action:
+
+```sh
+python scripts/dev.py --project paykar_demo --env-file .env up
 ```
 
-The PostgreSQL host port is intentionally `5433` to avoid conflicts with a common local PostgreSQL installation on `5432`.
+### Destructive local reset
 
----
+**This deletes this Compose project's PostgreSQL volume, including orders and catalog edits.**
+Use only for an expendable local database after normal migration/recovery has failed:
 
-## Delivery routing
-
-Checkout uses a server-mediated routing flow:
-
-```text
-Browser
-  → FastAPI
-    → openrouteservice driving-car GeoJSON
-  ← reviewed route / distance / duration
-Browser
-  → Leaflet renders the route
+```sh
+python scripts/dev.py reset --confirm-delete-local-data
 ```
 
-Coordinate order is handled explicitly:
+Without the confirmation flag, the helper refuses to run. Normal `down`, `up`,
+`rebuild`, `migrate`, `seed` and `verify` do not delete the application volume.
 
-- ORS: `[longitude, latitude]`
-- Leaflet: `[latitude, longitude]`
+## Database workflow
 
-A verified smoke route from the configured store to the acceptance point returned:
+Alembic is the sole schema authority. API startup runs `alembic upgrade head` before
+Uvicorn. Seed starts after API/database readiness; web waits for successful seeding.
+A failed migration/seed prevents ready frontend startup.
 
-| Metric | Result |
-| --- | ---: |
-| Geometry | 51 LineString coordinates |
-| Distance | 2,887 m |
-| Driving time | 273 s |
-| Display ETA | ~5 min |
-| Delivery fee | 20.00 TJS |
-
-Provider values may change over time. The delivery fee is configured independently of route distance.
-
-Changing the cart, address or destination invalidates the previous quote and requires an explicit recalculation.
-
----
-
-## Sandbox payment
-
-The card flow is deliberately local and synthetic. It **does not contact a bank and does not move money**.
-
-Supported deterministic scenarios:
-
-| Scenario | Result |
-| --- | --- |
-| `SUCCESS` | Payment succeeds and one order is finalized |
-| `DECLINED` | Payment fails; cart/order are preserved |
-| `INSUFFICIENT` | Insufficient-funds result; no order is created |
-| `ERROR` | Processing-error result; retry remains available |
-
-Synthetic form helpers use values such as `12/99`, `000` and `SANDBOX`. **Do not enter a real card.** Card number/CVV/cardholder form values are not persisted and are not sent in API requests; only the selected sandbox scenario reaches the backend provider abstraction.
-
-The payment flow also protects against duplicate confirmation and reuses the verified server route snapshot while it is valid.
-
----
-
-## Main routes
-
-### Storefront
-
-- `/` — home
-- `/catalog` — full catalog
-- `/catalog/[slug]` — category
-- `/product/[slug]` — product detail
-- `/cart` — guest cart
-- `/checkout` — delivery + payment + order creation
-- `/order/[id]` — persisted guest confirmation
-
-### Information and editorial
-
-- `/how-to-buy`
-- `/payment`
-- `/delivery`
-- `/returns`
-- `/promotions`
-- `/blog`
-- `/blog/[slug]`
-- `/brands`
-- `/about`
-- `/contacts`
-- `/stores`
-
-Unknown resources use the branded custom 404 experience.
-
----
-
-## API overview
-
-```text
-GET  /api/v1/health
-GET  /api/v1/health/db
-
-GET  /api/v1/categories
-GET  /api/v1/categories/{slug}
-GET  /api/v1/products
-GET  /api/v1/products/{slug}
-
-GET  /api/v1/delivery/config
-POST /api/v1/delivery/quote
-
-POST /api/v1/orders
-GET  /api/v1/orders/{uuid}
-
-POST /api/v1/payments/sandbox/session
-POST /api/v1/payments/sandbox/confirm
-GET  /api/v1/payments/{uuid}
+```sh
+docker compose exec api alembic current
+docker compose exec api alembic heads
+docker compose exec api alembic upgrade head
+docker compose exec api alembic check
+docker compose run --rm seed python /seed/seed.py
 ```
 
-Product listing supports:
+Automatic seed skips any database already containing products **or categories**.
+Use explicit seed to fill a partial catalog. Manual seed uses conflict-do-nothing
+inserts and never resets existing prices, stock or image references. Older image URLs
+need an explicit image-only update; see [the image report](docs/progress/catalog-image-upgrade.md).
 
-```text
-q
-category
-sort=name|price_asc|price_desc
-in_stock
-on_sale
-page
-page_size
-ids
+For schema development, use an API virtual environment with `apps/api/requirements.txt`,
+a separate development database and the existing `apps/api/alembic.ini`:
+
+```sh
+cd apps/api
+alembic revision --autogenerate -m "describe_change"
 ```
 
-Search is parameterized and only active products are returned.
+Review generated files under `apps/api/alembic/versions/` before applying them. Generating
+migrations in an ephemeral container does not save them in the checkout. Review destructive
+schema changes separately; this Compose workflow is for local development.
 
----
+## Testing
+
+After startup, the complete check is:
+
+```sh
+python scripts/dev.py verify
+```
+
+Equivalent Docker commands without host Python:
+
+```sh
+docker compose exec api python tools/verify.py
+docker compose run --rm --no-deps --build web-checks
+```
+
+Backend verification covers `compileall`, Ruff check/format, test-database
+`alembic current`/`check` and all pytest tests. Provider tests are mocked, not live ORS verification.
+
+Frontend development commands, with Node.js 24 installed:
+
+```sh
+cd apps/web
+npm ci
+npm run format:check
+npm run lint
+npm run typecheck
+npm run build
+node --test tests/*.test.mjs
+```
+
+Focused npm suites: `test:catalog`, `test:shopping`, `test:navigation`,
+`test:recommendations`, `test:hero`. The complete suite also includes locator tests.
+Repository whitespace check: `git diff --check`.
+
+## Recommended demo flow
+
+1. Open the storefront; browse categories, search and filter the catalog.
+2. Open a product, save/add it, change cart quantity and reload.
+3. Start checkout, provide contact/address details and correct the map point.
+4. With ORS configured, review route, distance, ETA, fee and total.
+5. Choose cash or a sandbox scenario and confirm once.
+6. Reload the UUID confirmation; use My Shopping to repeat or save a template.
+7. Explore Promotions, Stores, Saved items and curated/personal templates.
+
+Changing cart, address or point invalidates the quote. Stock is revalidated transactionally.
+Sandbox scenarios: `SUCCESS`, `DECLINED`, `INSUFFICIENT`, `ERROR`. No money moves or bank
+is contacted; real card data must not be entered. Failed checkout preserves the cart.
+Order URLs are guest capability links; keep them private. Local favorites, templates and
+remembered order IDs do not sync between devices. Clearing browser storage removes these
+local conveniences, not database orders.
 
 ## Project structure
 
 ```text
-.
-├── apps/
-│   ├── api/                  # FastAPI application
-│   │   ├── app/
-│   │   │   ├── api/          # HTTP routes
-│   │   │   ├── models/       # SQLAlchemy models
-│   │   │   ├── payments/     # sandbox provider/service
-│   │   │   ├── schemas/      # Pydantic schemas
-│   │   │   └── services/     # delivery/order business logic
-│   │   ├── migrations/       # Alembic migrations
-│   │   └── tests/
-│   └── web/                  # Next.js frontend
-│       └── src/
-│           ├── app/
-│           ├── components/
-│           └── lib/
-├── db/seed/                  # idempotent demo seed
-├── docs/                     # implementation and verification reports
+Paykar.Shop/
+├── apps/api/
+│   ├── app/                 # API, models, services and sandbox payments
+│   ├── alembic/versions/    # Schema migrations
+│   ├── tests/              # Backend unit/integration tests
+│   └── tools/verify.py     # Disposable test-database verification
+├── apps/web/src/           # App Router, components, contexts and libraries
+├── apps/web/tests/         # Node frontend tests
+├── db/seed/                # Demo data, curated sets and seed CLI
+├── scripts/dev.py          # Optional standard-library Docker helpers
+├── docs/                   # Design contracts and historical QA reports
 ├── docker-compose.yml
 └── .env.example
 ```
 
----
+## Troubleshooting
 
-## Local development
+| Problem                         | Check / recovery                                                                                                                                                                                                                  |
+| ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Port in use                     | Inspect `docker ps`; Windows: `Get-NetTCPConnection -LocalPort 3000,8080,5433`; Unix: `ss -ltn`. Change published ports and matching API URL/origin, then rebuild. Do not stop an unrelated stack.                                |
+| Old database schema             | Inspect API logs and `alembic current`; run `alembic upgrade head` first. Do not reset valuable data because a container is old.                                                                                                  |
+| Old frontend still visible      | Confirm checkout/project, then `docker compose up -d --build --force-recreate --no-deps web`. An `npm run dev` preview does not update Docker on port 3000.                                                                       |
+| API cannot reach PostgreSQL     | `docker compose ps -a` and `docker compose logs --tail=100 postgres api`. Container address is `postgres:5432`, not host `localhost:5433`. An `.env` password change does not update credentials already initialized in a volume. |
+| Empty/partial catalog           | Inspect `docker compose logs seed`; repair configuration, migrate and run explicit seed.                                                                                                                                          |
+| Routing unavailable             | Verify key/both coordinates server-side, restart API, inspect `/api/v1/delivery/config` and sanitized API logs. Provider failures remain explicit errors.                                                                         |
+| Unhealthy service               | `docker compose ps -a`, `docker compose logs --tail=100 api seed web`; database health is independent of external routing.                                                                                                        |
+| Verification cannot create a DB | Use the local Docker PostgreSQL role with database-creation permission. Never substitute application data as the test database.                                                                                                   |
 
-### Frontend against Docker API
+Public map tiles/live routing and first Docker image/dependency downloads need internet
+access. Admin/authentication, real payments and a design-management console are not
+implemented features.
 
-```powershell
-docker compose up -d postgres api
-Set-Location apps/web
-npm ci
-$env:NEXT_PUBLIC_API_URL = 'http://localhost:8080/api/v1'
-npm run dev
-```
-
-Node 24 is the tested frontend runtime.
-
-### Local API
-
-From `apps/api` with Python 3.12:
-
-```powershell
-py -3.12 -m venv .venv
-.venv/Scripts/Activate.ps1
-python -m pip install -r requirements.txt
-alembic upgrade head
-python ../../db/seed/seed.py
-uvicorn app.main:app --reload --host 127.0.0.1 --port 8080
-```
-
-If ports differ from the defaults, update the matching `.env` values. `NEXT_PUBLIC_API_URL` is build-time configuration for the production Next.js image.
-
----
-
-## Verification
-
-### Backend
-
-```powershell
-docker compose exec api python -m compileall app
-docker compose exec api ruff check .
-docker compose exec api ruff format --check .
-docker compose exec api alembic current
-docker compose exec api alembic check
-```
-
-The final submission check passed **137 backend tests with zero skips** against a fresh, migrated PostgreSQL test database. See [the final verification report](docs/progress/final-submission-verification.md) for frontend checks and actual Docker/browser evidence.
-
-Example test-database setup:
-
-```powershell
-docker compose exec postgres psql -U paykar -d paykar -c 'CREATE DATABASE paykar_test;'
-docker compose exec -e POSTGRES_DB=paykar_test api alembic upgrade head
-docker compose exec -e TEST_DATABASE_URL=postgresql+asyncpg://paykar:paykar_dev@postgres:5432/paykar_test api pytest -q
-```
-
-Do not point integration tests at the application database.
-
-### Frontend
-
-```powershell
-Set-Location apps/web
-npm ci
-npm run lint
-npm run typecheck
-npm run build
-npm run format:check
-```
-
-All of the above passed on the latest full-site polish source.
-
-### Current verification snapshot
-
-- **77 pytest tests passed, 0 skipped**
-- Ruff clean
-- Alembic at `0002_sandbox_payments (head)` with no pending migration
-- frontend lint / typecheck / production build / formatting passed
-- Docker Compose production stack healthy
-- real ORS smoke passed
-- sandbox payment success/failure/idempotency smoke passed
-- credential scan found no ORS key or database password in deployed browser assets
-- latest full-site visual/interactive browser acceptance is still documented as **pending** because the automated browser connection was unavailable
-
-Detailed evidence lives in [`docs/progress/full-site-polish.md`](docs/progress/full-site-polish.md), with earlier implementation history under [`docs/progress/`](docs/progress/).
-
----
-
-## Security boundaries
-
-- ORS key stays server-side.
-- `.env` is ignored by Git.
-- Browser assets contain no database password or provider credential.
-- Payment schema contains no PAN/CVV/cardholder columns.
-- Sandbox provider has no external payment client.
-- Order totals are recalculated server-side.
-- Guest receipt UUIDs are bearer links; keep them private.
-- No public order-listing endpoint exists.
-
----
-
-## Known limitations
-
-This is intentionally a focused technical assignment, not a production supermarket platform.
-
-Not implemented:
-
-- customer accounts / OTP authentication
-- admin dashboard
-- real card acquiring or refunds
-- loyalty / bonus program
-- real dispatch and courier tracking
-- CMS
-- manufacturer directory data
-- fraud/reconciliation systems
-- automatic address geocoding
-
-The project favors a complete, verifiable core commerce flow over breadth.
-
----
-
-## Reviewer walkthrough
-
-A short end-to-end demo:
-
-1. Open the home page and browse the catalog mega-menu, categories and promotions.
-2. Search for `Яблоки`, use keyboard suggestions and open a product.
-3. Add the item, change quantity and reload the cart to show persistence.
-4. Continue to checkout and choose a road-adjacent destination.
-5. Calculate delivery to display the real route, distance, ETA and fee.
-6. Choose cash or one of the synthetic sandbox card scenarios.
-7. Submit once; duplicate actions remain idempotent.
-8. Reload the order confirmation to show persisted PostgreSQL snapshots.
-
-For the verified route smoke, the destination used was `38.5750, 68.7800` with the configured store at `38.562512, 68.791511`.
-
----
-
-## Documentation
-
-Key reports:
-
-- [`docs/THREE_DAY_PLAN.md`](docs/THREE_DAY_PLAN.md) — original delivery plan
-- [`docs/progress/day-1-commerce-core.md`](docs/progress/day-1-commerce-core.md) — catalog/cart foundation
-- [`docs/progress/day-2-checkout-routing.md`](docs/progress/day-2-checkout-routing.md) — checkout + real routing
-- [`docs/progress/day-3-submission.md`](docs/progress/day-3-submission.md) — original submission hardening
-- [`docs/progress/store-completion-pass.md`](docs/progress/store-completion-pass.md) — informational pages + sandbox payments
-- [`docs/progress/delivery-page-redesign.md`](docs/progress/delivery-page-redesign.md) — delivery-page visual benchmark
-- [`docs/progress/catalog-mega-menu.md`](docs/progress/catalog-mega-menu.md) — catalog mega-menu
-- [`docs/progress/full-site-polish.md`](docs/progress/full-site-polish.md) — earlier full-site visual polish and verification boundary
-- [`docs/progress/diyor-ui-integration.md`](docs/progress/diyor-ui-integration.md) — Diyor UI integration, preservation audit and current verification boundary
-
----
-
-<div align="center">
-
-**Built as a three-day technical assignment, then iteratively hardened for UX, routing, payments, accessibility and verification.**
-
-</div>
-
-## Repeat shopping and reusable baskets
-
-Open `/my-shopping` directly from the compact **My Shopping** homepage block or the burger menu. Personal history and templates appear when data exists; new shoppers see curated Paykar baskets and a create-template action. Save the current cart or a confirmed order as a template; edit its name/products/quantities and add available items together. Repeat operations check current catalog prices and stock and preserve the original order.
-
-Follow the reusable [design principles](docs/design-principles.md): never show emptiness without purpose. Keep errors and important system states visible.
-
-The menu links directly to history, personal templates and curated baskets. The compact homepage My Shopping block opens the overview. Section links support keyboard navigation and reloadable anchors below the sticky header. Combined feature integration and browser evidence: [integration report](docs/progress/main-feature-integration.md).
-
-Guest history contains only order UUID references created or opened in this browser. Personal templates use versioned localStorage (up to 20 templates, 48 lines each); clearing storage removes local templates/references, not PostgreSQL orders. There is no account or cross-device synchronization.
-
-Curated definitions live in `db/seed/shopping_templates.json`. Run the existing seed command after startup (`docker compose exec api python /seed/seed.py`); it rejects unknown product slugs and is idempotent. The API resolves slugs to current database products. No new migration is required.
-
-New endpoints: `POST /api/v1/shopping/preview`, `GET /api/v1/shopping/templates`, and `GET /api/v1/shopping/templates/{template_id}`. Existing order endpoints are unchanged; there is no public order-history enumeration API.
-
-Frontend logic tests: `cd apps/web` then `npm run test:shopping`. Use the existing dedicated `*_test` database for backend tests. Full implementation, actual commands, real checkout evidence and browser checks: [repeat-shopping report](docs/progress/repeat-orders-and-templates.md).
+Historical evidence: [submission verification](docs/progress/final-submission-verification.md),
+[UI audit](docs/progress/final-ui-consistency-audit.md),
+[catalog imagery](docs/progress/catalog-image-upgrade.md). These describe the recorded
+checkout/runtime, not a guarantee for a new machine.
