@@ -1,0 +1,518 @@
+/* Promotions presentation only. Shared ProductCard/cart behavior is unchanged. */
+.page {
+  max-width: 1200px;
+  margin-inline: auto;
+  background:
+    radial-gradient(
+      ellipse 70% 24% at 65% 14%,
+      var(--green-softer),
+      transparent
+    ),
+    radial-gradient(
+      ellipse 90% 32% at 50% 55%,
+      var(--green-softer),
+      transparent
+    );
+}
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 24px;
+  margin-block: 8px 40px;
+  padding: 32px 40px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background:
+    radial-gradient(ellipse at 78% 50%, var(--green-wash), transparent 65%),
+    linear-gradient(125deg, var(--surface), var(--green-softer));
+}
+
+.hero[data-has-products="false"] {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.copy {
+  min-width: 0;
+}
+
+.copy h1 {
+  margin-block: 20px 14px;
+  font-size: clamp(44px, 4.6vw, 66px);
+  font-weight: 900;
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+}
+
+.copy p {
+  max-width: 38ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.visual {
+  position: relative;
+  min-width: 0;
+}
+
+.visual::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -12%;
+  background: radial-gradient(ellipse, var(--green-soft), transparent 66%);
+  pointer-events: none;
+}
+
+.stack {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 246px;
+  padding: 20px 12px;
+}
+
+.tile {
+  position: relative;
+  flex: 0 1 44%;
+  min-width: 0;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #f5f5f1;
+  box-shadow:
+    0 18px 28px -16px rgb(0 0 0 / 38%),
+    0 3px 8px rgb(0 0 0 / 12%);
+}
+
+.tile + .tile {
+  margin-left: -14%;
+}
+
+.tile:first-child {
+  rotate: -5deg;
+  translate: 0 8px;
+}
+
+.tile:nth-child(2) {
+  z-index: 2;
+  translate: 0 -10px;
+  box-shadow:
+    0 22px 30px -16px rgb(0 0 0 / 42%),
+    0 4px 10px rgb(0 0 0 / 16%);
+}
+
+.tile:nth-child(3) {
+  z-index: 1;
+  rotate: 4deg;
+  translate: 0 14px;
+}
+
+.tile :global(.product-image) {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  border-radius: 0;
+}
+
+.imageNote {
+  display: block;
+  min-height: 16px;
+  color: color-mix(in srgb, var(--muted) 80%, var(--surface));
+  font-size: 9px;
+  text-align: center;
+}
+
+.pending {
+  background: var(--stage);
+  opacity: 0.5;
+  box-shadow: none;
+}
+
+.metadataSkeleton,
+.linkSkeleton {
+  border-radius: 8px;
+  background: var(--green-wash);
+}
+
+.metadataSkeleton {
+  width: min(100%, 320px);
+  height: 62px;
+}
+
+.linkSkeleton {
+  width: 120px;
+  height: 44px;
+}
+
+.collectionHeader {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 48px;
+  margin-bottom: 24px;
+}
+
+.collectionHeader h2 {
+  margin: 0;
+  font-size: clamp(22px, 2vw, 28px);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+}
+
+.collectionHeader p {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.collectionHeader :global(.text-link) {
+  flex-shrink: 0;
+  min-height: 44px;
+}
+
+.collectionHeader :global(.text-link svg) {
+  transition: transform 180ms ease;
+}
+
+.page .grid:global(.product-grid),
+.page :global(.skeleton-grid .product-grid) {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px 20px;
+}
+
+.page .grid :global(.product-card) {
+  border-radius: 20px;
+  border-color: var(--line);
+  background: linear-gradient(145deg, var(--surface) 60%, var(--green-softer));
+  box-shadow: none;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.page .grid :global(.image-wrap) {
+  margin: 10px;
+  padding: 12px;
+  aspect-ratio: 1;
+  border-radius: 14px;
+  background: #f5f5f1;
+}
+
+.page .grid :global(.image-wrap .product-image) {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  object-fit: contain;
+  transition: transform 180ms ease;
+}
+
+.page .grid :global(.product-image-note) {
+  inset: auto 6px 6px;
+  max-width: calc(100% - 12px);
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  color: #686c63;
+  font-size: 9px;
+  line-height: 1.35;
+  text-align: center;
+  box-shadow: none;
+}
+
+.page .grid :global(.image-wrap .badge) {
+  top: 14px;
+  right: -28px;
+  left: auto;
+  width: 112px;
+  height: 24px;
+  padding: 0;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  box-shadow: 0 2px 5px rgb(0 0 0 / 12%);
+}
+
+.page .grid :global(.product-card > button[aria-pressed]) {
+  top: 18px;
+  left: 18px;
+  width: 44px;
+  height: 44px;
+  color: #586158;
+  border-color: transparent;
+  background: rgb(245 245 241 / 60%);
+  box-shadow: none;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.page .grid :global(.product-card > button[aria-pressed] svg) {
+  width: 18px;
+  height: 18px;
+}
+
+.page .grid :global(.product-card > button[aria-pressed="false"]:hover),
+.page
+  .grid
+  :global(.product-card > button[aria-pressed="false"]:focus-visible) {
+  color: #174f2a;
+  background: rgb(245 245 241 / 95%);
+}
+
+.page .grid :global(.product-card > button[aria-pressed="true"]) {
+  background: var(--paykar-green);
+  border-color: var(--paykar-green);
+  color: var(--on-accent);
+}
+
+.page .grid :global(.product-card-body) {
+  padding: 8px 18px 18px;
+}
+
+.page .grid :global(.unit) {
+  margin-block: 0 6px;
+  min-height: 1.4em;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.page .grid :global(.product-name) {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 2.7em;
+  font-size: 17px;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+.page .grid :global(.prices) {
+  align-items: baseline;
+  gap: 6px 10px;
+  min-height: 36px;
+  margin-block: 16px;
+}
+
+.page .grid :global(.prices strong) {
+  color: var(--brand-ink);
+  font-size: 28px;
+  font-weight: 850;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+}
+
+.page .grid :global(.prices del) {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.page .grid :global(.add-button),
+.page .grid :global(.card-quantity) {
+  min-height: 48px;
+  border-radius: 12px;
+}
+
+.page .grid :global(.add-button) {
+  color: var(--brand-ink);
+  background: var(--green-softer);
+  border-color: var(--green-line);
+}
+
+.page .grid :global(.card-quantity) {
+  color: var(--on-accent);
+  background: var(--paykar-green);
+  border-color: var(--paykar-green);
+}
+
+.page .grid :global(.card-quantity button) {
+  width: 44px;
+  height: 48px;
+  color: var(--on-accent);
+}
+
+.page .grid :global(.card-quantity small) {
+  color: inherit;
+}
+
+.page :global(a:focus-visible),
+.page :global(button:focus-visible) {
+  outline: 2px solid var(--brand-ink);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .collectionHeader :global(.text-link:hover svg) {
+    transform: translateX(3px);
+  }
+
+  .page .grid :global(.product-card:hover) {
+    transform: translateY(-3px);
+    border-color: var(--green-line);
+    box-shadow: 0 14px 24px -18px rgb(0 0 0 / 32%);
+  }
+
+  .page .grid :global(.product-card:hover .product-image) {
+    transform: scale(1.015);
+  }
+}
+
+@media (max-width: 1100px) {
+  .hero {
+    padding: 28px;
+    gap: 24px;
+  }
+
+  .stack {
+    min-height: 220px;
+  }
+
+  .page .grid:global(.product-grid),
+  .page :global(.skeleton-grid .product-grid) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    padding: 28px;
+    margin-bottom: 32px;
+  }
+
+  .visual {
+    width: min(100%, 460px);
+    justify-self: center;
+  }
+
+  .copy p {
+    max-width: 42ch;
+  }
+
+  .page .grid:global(.product-grid),
+  .page :global(.skeleton-grid .product-grid) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 24px 20px;
+    border-radius: 24px;
+  }
+
+  .copy h1 {
+    margin-block: 16px 12px;
+    font-size: 44px;
+  }
+
+  .copy p {
+    font-size: 16px;
+  }
+
+  .stack {
+    min-height: 172px;
+    padding-inline: 4px;
+  }
+
+  .tile {
+    border-radius: 14px;
+  }
+
+  .collectionHeader {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .metadataSkeleton {
+    height: 54px;
+  }
+
+  .page .grid:global(.product-grid),
+  .page :global(.skeleton-grid .product-grid) {
+    gap: 16px 12px;
+  }
+
+  .page .grid :global(.image-wrap) {
+    margin: 7px;
+    padding: 8px;
+    border-radius: 12px;
+  }
+
+  .page .grid :global(.product-card > button[aria-pressed]) {
+    top: 10px;
+    left: 10px;
+  }
+
+  .page .grid :global(.product-card-body) {
+    padding: 8px 10px 12px;
+  }
+
+  .page .grid :global(.product-name) {
+    font-size: 14px;
+  }
+
+  .page .grid :global(.prices) {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 2px;
+    min-height: 55px;
+    align-content: start;
+    margin-block: 12px;
+  }
+
+  .page .grid :global(.prices strong) {
+    font-size: 22px;
+  }
+
+  .page .grid :global(.prices del) {
+    font-size: 12px;
+    line-height: 1.2;
+  }
+
+  .page .grid :global(.add-button) {
+    gap: 6px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 360px) {
+  .page .grid:global(.product-grid),
+  .page :global(.skeleton-grid .product-grid) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page .grid :global(.product-card),
+  .page .grid :global(.product-image),
+  .page .grid :global(button),
+  .collectionHeader :global(.text-link svg) {
+    transition: none;
+  }
+
+  .tile {
+    rotate: none;
+    translate: none;
+  }
+}

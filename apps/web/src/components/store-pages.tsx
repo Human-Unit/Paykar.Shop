@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
 import {
   ArrowRight,
   CheckCircle2,
@@ -23,11 +22,11 @@ import {
   UserRound,
 } from "lucide-react";
 import { usePresentation } from "@/context/presentation";
-import { useResource, type DeliveryConfig, type ProductPage } from "@/lib/api";
+import { useResource, type DeliveryConfig } from "@/lib/api";
 import { articles, type Article, type StorePage } from "@/lib/store-content";
 import { Breadcrumbs } from "./breadcrumbs";
-import { Empty, Failure, Loading } from "./states";
-import { ProductCard } from "./product-card";
+import { Failure, Loading } from "./states";
+import { PromotionsPage } from "./promotions-page";
 import {
   PageIntro,
   SectionHeader,
@@ -40,7 +39,6 @@ import { HomeStoreNetwork } from "./home-store-network";
 import storeStyles from "./stores-workspace.module.css";
 import {
   ReturnsIllustration,
-  OffersIllustration,
   PaymentIllustration,
 } from "./public-page-visuals";
 const stepIcons = [
@@ -51,63 +49,6 @@ const stepIcons = [
   CreditCard,
   CheckCircle2,
 ];
-function Promotions() {
-  const { t } = usePresentation();
-  const [page, setPage] = useState(1);
-  const products = useResource<ProductPage>(
-    `/products?on_sale=true&page=${page}&page_size=24`,
-  );
-  if (products.loading) return <Loading kind="grid" />;
-  if (products.error)
-    return <Failure error={products.error} retry={products.retry} />;
-  if (!products.data?.items.length)
-    return (
-      <Empty
-        title={t("Сейчас нет акционных товаров")}
-        text={t("Загляните в каталог, чтобы выбрать продукты на каждый день.")}
-      />
-    );
-  return (
-    <>
-      <div className="promotion-context">
-        <Tags size={24} aria-hidden="true" />
-        <div>
-          <strong>
-            {products.data.total} {t("Товары")}
-          </strong>
-          <p>{t("Скидки относительно прежних цен.")}</p>
-        </div>
-        <Link className="text-link" href="/catalog">
-          {t("Весь каталог")} <ArrowRight size={18} aria-hidden="true" />
-        </Link>
-      </div>
-      <div className="product-grid">
-        {products.data.items.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
-      <nav className="store-pagination" aria-label={t("Страницы")}>
-        <button
-          className="button secondary"
-          disabled={page === 1}
-          onClick={() => setPage(page - 1)}
-        >
-          {t("Назад")}
-        </button>
-        <span>
-          {page} / {Math.ceil(products.data.total / 24)}
-        </span>
-        <button
-          className="button secondary"
-          disabled={page * 24 >= products.data.total}
-          onClick={() => setPage(page + 1)}
-        >
-          {t("Далее")}
-        </button>
-      </nav>
-    </>
-  );
-}
 function BlogCards() {
   return (
     <>
@@ -139,6 +80,7 @@ function ContactAddress() {
 }
 export function PublicPage({ page }: { page: StorePage }) {
   const { t } = usePresentation();
+  if (page.slug === "promotions") return <PromotionsPage page={page} />;
   const pageIcons = {
     "how-to-buy": ShoppingBasket,
     payment: Wallet,
@@ -170,8 +112,6 @@ export function PublicPage({ page }: { page: StorePage }) {
       </div>
     ) : page.slug === "returns" ? (
       <ReturnsIllustration />
-    ) : page.slug === "promotions" ? (
-      <OffersIllustration />
     ) : page.slug === "brands" ? (
       <div className="assortment-visual" aria-hidden="true">
         {["produce", "dairy", "bakery"].map((image) => (
@@ -333,11 +273,6 @@ export function PublicPage({ page }: { page: StorePage }) {
         <section className="brands-information">
           <SectionHeader title="Информация о производителях" />
           <p>{t(page.sections[0].text)}</p>
-        </section>
-      )}
-      {page.slug === "promotions" && (
-        <section id="promotions-products" aria-label={t("Акции")}>
-          <Promotions />
         </section>
       )}
       {page.slug === "blog" && <BlogCards />}
