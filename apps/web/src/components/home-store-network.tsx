@@ -2,17 +2,15 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowRight, ArrowUpRight, MapPin, Store } from "lucide-react";
 import { usePresentation } from "@/context/presentation";
-import { storeLocations } from "@/lib/store-locations";
+import { useStoreDirectory } from "@/lib/store-directory";
 import { storeLocatorLocations } from "@/lib/store-locator";
 import { SectionHeader } from "./page-patterns";
 import styles from "./home-store-network.module.css";
 import directoryStyles from "./stores-workspace.module.css";
 import { m, useReveal } from "./motion-primitives";
-
-const locatorLocations = storeLocatorLocations(storeLocations);
 
 function MapLoading() {
   const { t } = usePresentation();
@@ -32,8 +30,12 @@ export function HomeStoreNetwork({
   showHeading?: boolean;
 }) {
   const { t } = usePresentation();
+  const storeLocations = useStoreDirectory();
   const directory = variant === "directory";
-  const locations = directory ? locatorLocations : storeLocations;
+  const locations = useMemo(
+    () => (directory ? storeLocatorLocations(storeLocations) : storeLocations),
+    [directory, storeLocations],
+  );
   const mapReveal = useReveal({ rise: 0 });
   const directoryReveal = useReveal({ rise: 10, delay: 0.06 });
   const [selectedStoreId, setSelectedStoreId] = useState<number | null>(null);
@@ -98,16 +100,18 @@ export function HomeStoreNetwork({
           {...mapReveal}
           className={`${styles.mapShell} ${directory ? directoryStyles.mapShell : ""}`}
         >
-          <StoreNetworkMap
-            stores={locations}
-            selectedStoreId={selectedStoreId}
-            selectionRevision={selectionRevision}
-            onSelectStore={selectStore}
-            className={directory ? directoryStyles.map : undefined}
-            previewedStoreId={directory ? previewedStoreId : null}
-            onHoverStore={directory ? setHoveredStoreId : undefined}
-            onFocusStore={directory ? setFocusedStoreId : undefined}
-          />
+          {locations.length > 0 && (
+            <StoreNetworkMap
+              stores={locations}
+              selectedStoreId={selectedStoreId}
+              selectionRevision={selectionRevision}
+              onSelectStore={selectStore}
+              className={directory ? directoryStyles.map : undefined}
+              previewedStoreId={directory ? previewedStoreId : null}
+              onHoverStore={directory ? setHoveredStoreId : undefined}
+              onFocusStore={directory ? setFocusedStoreId : undefined}
+            />
+          )}
           <div
             className={`${styles.mapBadge} ${directory ? directoryStyles.mapBadge : ""}`}
             aria-hidden="true"

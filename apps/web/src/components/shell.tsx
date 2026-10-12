@@ -71,6 +71,10 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const path = usePathname();
   const header = useHeaderScroll();
   useEffect(() => {
+    if (path === "/admin" || path.startsWith("/admin/")) {
+      document.title = "Paykar Administration";
+      return;
+    }
     const page = storePages.find((entry) => path === `/${entry.slug}`);
     const article = articles.find((entry) => path === `/blog/${entry.slug}`);
     const title =
@@ -101,6 +105,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
       .querySelector('meta[name="description"]')
       ?.setAttribute("content", t(description));
   }, [path, t]);
+  if (path === "/admin" || path.startsWith("/admin/")) return <>{children}</>;
   return (
     <MotionProvider>
       <a className="skip-link" href="#main">

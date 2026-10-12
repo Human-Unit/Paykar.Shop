@@ -9,7 +9,7 @@ import { useResource, type DeliveryConfig, type Product } from "@/lib/api";
 import { cents } from "@/lib/format";
 import type { CuratedTemplate } from "@/lib/shopping";
 import { useShoppingStorage } from "@/lib/shopping-storage";
-import { storeLocations } from "@/lib/store-locations";
+import { useStoreDirectory } from "@/lib/store-directory";
 import { AddButton, ProductImage, discountPercent } from "./product-card";
 import { m, usePointerLight, useReveal } from "./motion-primitives";
 import { ShoppingCarousel } from "./shopping-carousel";
@@ -33,6 +33,7 @@ export function HomeHero({
   products: Product[];
 }) {
   const { t, money } = usePresentation();
+  const storeLocations = useStoreDirectory();
   const offerPointer = usePointerLight();
   const shoppingPointer = usePointerLight();
   const config = useResource<DeliveryConfig>("/delivery/config");
