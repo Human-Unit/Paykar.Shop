@@ -2,6 +2,7 @@
 import { useState, type ReactNode } from "react";
 import Link from "next/link";
 import { api } from "@/lib/api";
+import { cartRequest } from "@/lib/measurement";
 import type { Order } from "@/lib/api";
 import { useCart } from "@/context/cart";
 import { usePresentation } from "@/context/presentation";
@@ -11,7 +12,13 @@ import styles from "./my-shopping.module.css";
 export const orderItems = (order: Order): ShoppingItem[] =>
   order.items.map((i) => ({
     product_id: i.product_id,
-    quantity: Number(i.quantity),
+    quantity:
+      i.purchase_mode === "WEIGHT"
+        ? (i.requested_weight_g ?? Math.round(Number(i.quantity) * 1000))
+        : (i.requested_piece_count ?? Number(i.quantity)),
+    ...(i.price_unit_snapshot === "KG" && i.purchase_mode
+      ? { purchase_mode: i.purchase_mode }
+      : {}),
     name: i.product_name,
   }));
 export const storageWarning =
@@ -39,10 +46,7 @@ export function AddShoppingItems({
       const valid = items.filter((i) => i.product_id > 0);
       const preview = valid.length
         ? await api<ShoppingPreview>("/shopping/preview", undefined, {
-            items: valid.map(({ product_id, quantity }) => ({
-              product_id,
-              quantity,
-            })),
+            items: valid.map(cartRequest),
           })
         : { items: [] };
       const result = cart.addMany(preview.items);

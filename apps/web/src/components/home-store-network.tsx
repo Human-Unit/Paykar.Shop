@@ -1,4 +1,5 @@
 "use client";
+import { designRegionProps } from "./design-region";
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -82,6 +83,7 @@ export function HomeStoreNetwork({
 
   return (
     <section
+      {...designRegionProps("home.stores")}
       className={`${styles.section} ${directory ? directoryStyles.workspace : ""}`}
       aria-label={t("Магазины")}
     >

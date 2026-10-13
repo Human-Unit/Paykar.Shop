@@ -1,8 +1,16 @@
 "use client";
+import { designRegionProps } from "./design-region";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useResource, type Order, type ProductPage } from "@/lib/api";
 import { usePresentation } from "@/context/presentation";
+import {
+  lineCents,
+  normalizeLine,
+  minimum,
+  step,
+  quantityLabel,
+} from "@/lib/measurement";
 import { cents } from "@/lib/format";
 import {
   deleteShoppingTemplate,
@@ -292,7 +300,10 @@ export function MyShopping() {
       <Breadcrumbs
         items={[{ label: "Главная", href: "/" }, { label: "Мои покупки" }]}
       />
-      <header className={styles.intro + " commerce-heading shopping-masthead"}>
+      <header
+        {...designRegionProps("myShopping.masthead")}
+        className={styles.intro + " commerce-heading shopping-masthead"}
+      >
         <div className="shopping-masthead-copy">
           <span className="eyebrow">{t("ВАШИ ПОКУПКИ")}</span>
           <h1>{t("Мои покупки")}</h1>
@@ -335,6 +346,7 @@ export function MyShopping() {
       ) : null}
       {hasHistory && (
         <section
+          {...designRegionProps("myShopping.orders")}
           id="history"
           className={styles.section + " " + styles.personalSection}
         >
@@ -373,6 +385,7 @@ export function MyShopping() {
       )}
       {hasTemplates && (
         <section
+          {...designRegionProps("myShopping.templates")}
           id="templates"
           className={styles.section + " " + styles.personalSection}
         >
@@ -435,7 +448,11 @@ function ItemPreview({
     (sum, row) =>
       sum +
       (row.product && row.availability === "available"
-        ? cents(row.product.price) * row.available_quantity
+        ? lineCents(row.product, {
+            product_id: row.product_id,
+            quantity: row.available_quantity,
+            purchase_mode: row.purchase_mode,
+          })
         : 0),
     0,
   );
@@ -462,11 +479,27 @@ function ItemPreview({
                 </small>
               </ShoppingProductIdentity>
               <span className={styles.rowQuantity}>
-                {t("Количество:")} {row.requested_quantity}
+                {t("Количество:")}{" "}
+                {quantityLabel(
+                  {
+                    product_id: row.product_id,
+                    quantity: row.requested_quantity,
+                    purchase_mode: row.purchase_mode,
+                  },
+                  t,
+                )}
                 {row.available_quantity < row.requested_quantity && (
                   <>
                     {" "}
-                    · {t("Доступно:")} {row.available_quantity}
+                    · {t("Доступно:")}{" "}
+                    {quantityLabel(
+                      {
+                        product_id: row.product_id,
+                        quantity: row.available_quantity,
+                        purchase_mode: row.purchase_mode,
+                      },
+                      t,
+                    )}
                   </>
                 )}
               </span>
@@ -550,6 +583,8 @@ function PersonalEditor({
                 products.data?.items.find(
                   (entry) => entry.id === item.product_id,
                 );
+              const effective = normalizeLine(item, product);
+              const mode = effective.purchase_mode || "PIECE";
               return (
                 <li key={item.product_id}>
                   <ShoppingProductIdentity product={product} name={item.name}>
@@ -571,31 +606,53 @@ function PersonalEditor({
                         {row.available_quantity < item.quantity && (
                           <>
                             {" "}
-                            · {t("Доступно:")} {row.available_quantity}
+                            · {t("Доступно:")}{" "}
+                            {quantityLabel(
+                              {
+                                product_id: row.product_id,
+                                quantity: row.available_quantity,
+                                purchase_mode: row.purchase_mode,
+                              },
+                              t,
+                            )}
                           </>
                         )}
                       </small>
                     )}
                   </ShoppingProductIdentity>
                   <label>
-                    {t("Количество")}
+                    {t("Количество")} · {t(mode === "WEIGHT" ? "кг" : "шт")}
                     <input
                       type="number"
-                      min={1}
+                      min={
+                        mode === "WEIGHT"
+                          ? minimum(product || {}, mode) / 1000
+                          : minimum(product || {}, mode)
+                      }
                       max={99}
+                      step={
+                        mode === "WEIGHT" ? step(product || {}, mode) / 1000 : 1
+                      }
                       required
-                      value={item.quantity}
+                      value={
+                        mode === "WEIGHT"
+                          ? effective.quantity / 1000
+                          : effective.quantity
+                      }
                       onChange={(e) => {
-                        const quantity = Number(e.target.value);
+                        const quantity = Math.round(
+                          Number(e.target.value) *
+                            (mode === "WEIGHT" ? 1000 : 1),
+                        );
                         if (
                           Number.isInteger(quantity) &&
                           quantity >= 1 &&
-                          quantity <= 99
+                          quantity <= (mode === "WEIGHT" ? 99000 : 99)
                         )
                           setItems((current) =>
                             current.map((row) =>
                               row.product_id === item.product_id
-                                ? { ...row, quantity }
+                                ? { ...row, quantity, purchase_mode: mode }
                                 : row,
                             ),
                           );
@@ -788,6 +845,7 @@ export function ShoppingTemplateDetail({ id }: { id: string }) {
                     items={resource.data.items.map((row) => ({
                       product_id: row.product_id,
                       quantity: row.requested_quantity,
+                      purchase_mode: row.purchase_mode,
                     }))}
                   />
                 </aside>

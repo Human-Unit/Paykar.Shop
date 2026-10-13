@@ -10,10 +10,12 @@ import {
   designEntries,
   designVariables,
   setDesignToken,
-  tokenRanges,
+  resetDesignScope,
   validDesign,
   type DesignConfig,
 } from "@/lib/design-config";
+import { DesignControls } from "./design-controls";
+import { AdminHeader, StatusBadge, SaveBar } from "./admin-primitives";
 import { useAdmin } from "./admin-shell";
 import styles from "./admin.module.css";
 
@@ -55,9 +57,12 @@ export function DesignConsole() {
     )
       .then((values) => {
         setVersions(values);
+        const publication = values.find((v) => v.status === "PUBLISHED");
         const current =
-          values.find((v) => v.status === "DRAFT") ||
-          values.find((v) => v.status === "PUBLISHED");
+          values.find(
+            (v) =>
+              v.status === "DRAFT" && v.version > (publication?.version || 0),
+          ) || publication;
         const initial = current?.config || defaultDesign;
         if (validDesign(initial)) {
           setConfig(initial);
@@ -178,18 +183,9 @@ export function DesignConsole() {
           : "100%",
     fontSize: `${16 * previewConfig.typography.body_scale}px`,
   } as CSSProperties;
-  const groups = [
-    "colors",
-    "typography",
-    "layout",
-    "radius",
-    "effects",
-    "motion",
-  ];
   return (
     <>
-      <span className={styles.eyebrow}>Master workspace</span>
-      <h1>Design Console</h1>
+      <AdminHeader title="Design Console" eyebrow="Advanced design system" />
       <p>
         Controlled tokens, local preview, explicit publication. Paykar Default
         preserves the approved storefront; not every bespoke component is
@@ -211,7 +207,7 @@ export function DesignConsole() {
       {!loaded && !error && <p role="status">Loading design configuration…</p>}
       {loaded && (
         <>
-          <div className={styles.actions}>
+          <SaveBar>
             <button
               className={styles.primary}
               disabled={pending || !validDesign(config)}
@@ -239,98 +235,30 @@ export function DesignConsole() {
             <button
               disabled={pending}
               onClick={() => {
-                setConfig(structuredClone(defaultDesign));
+                setConfig((current) =>
+                  resetDesignScope(current, { kind: "global" }),
+                );
                 setSavedId(null);
               }}
             >
-              Paykar Default → draft
+              Global Paykar Default → draft
             </button>
             <span role="status">
               {dirty
                 ? "Unsaved changes"
                 : savedId
                   ? "Saved draft"
-                  : "No unpublished draft selected"}
+                  : "Published baseline"}
             </span>
-          </div>
+          </SaveBar>
           <div className={styles.console}>
-            <div className={styles.controls}>
-              {groups.map((group) => (
-                <fieldset key={group} disabled={pending}>
-                  <legend>
-                    {group.charAt(0).toUpperCase() + group.slice(1)}
-                  </legend>
-                  {designEntries(config)
-                    .filter(([key]) => key.startsWith(`${group}.`))
-                    .map(([path, value]) => {
-                      const range = tokenRanges[path];
-                      return (
-                        <label key={path}>
-                          {path
-                            .split(".")
-                            .slice(1)
-                            .join(" / ")
-                            .replaceAll("_", " ")}
-                          {typeof value === "string" ? (
-                            <>
-                              <input
-                                aria-label={`${path} color`}
-                                type="color"
-                                value={
-                                  /^#[0-9a-fA-F]{6}$/.test(value)
-                                    ? value
-                                    : "#000000"
-                                }
-                                onChange={(e) =>
-                                  setConfig(
-                                    setDesignToken(
-                                      config,
-                                      path,
-                                      e.target.value,
-                                    ),
-                                  )
-                                }
-                              />
-                              <input
-                                aria-label={`${path} hex value`}
-                                value={value}
-                                maxLength={7}
-                                pattern="#[0-9a-fA-F]{6}"
-                                onChange={(e) =>
-                                  setConfig(
-                                    setDesignToken(
-                                      config,
-                                      path,
-                                      e.target.value,
-                                    ),
-                                  )
-                                }
-                              />
-                            </>
-                          ) : (
-                            <input
-                              type="number"
-                              value={value}
-                              min={range[0]}
-                              max={range[1]}
-                              step={range[2]}
-                              onChange={(e) =>
-                                setConfig(
-                                  setDesignToken(
-                                    config,
-                                    path,
-                                    Number(e.target.value),
-                                  ),
-                                )
-                              }
-                            />
-                          )}
-                        </label>
-                      );
-                    })}
-                </fieldset>
-              ))}
-            </div>
+            <DesignControls
+              entries={designEntries(config)}
+              disabled={pending}
+              change={(path, value) =>
+                setConfig((current) => setDesignToken(current, path, value))
+              }
+            />
             <section aria-label="Live design preview">
               <div className={styles.toolbar}>
                 <label>
@@ -459,7 +387,7 @@ export function DesignConsole() {
               </div>
             </section>
           </div>
-          <section className={styles.panel}>
+          <section id="design-history" className={styles.panel}>
             <h2>Version history</h2>
             <p>
               Restore creates a new draft; archived publications remain intact.
@@ -479,7 +407,9 @@ export function DesignConsole() {
                     {versions.map((version) => (
                       <tr key={version.id}>
                         <td>v{version.version}</td>
-                        <td>{version.status}</td>
+                        <td>
+                          <StatusBadge status={version.status} />
+                        </td>
                         <td>
                           {version.author}
                           <br />

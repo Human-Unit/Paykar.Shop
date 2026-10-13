@@ -1,4 +1,5 @@
 "use client";
+import { designRegionProps } from "./design-region";
 import { usePresentation } from "@/context/presentation";
 import { m, useReveal } from "./motion-primitives";
 import Image from "next/image";
@@ -43,7 +44,11 @@ export function Home() {
         products={products.data?.items ?? []}
       />
       {(sales.loading || sales.error || discounts.length > 0) && (
-        <section id="promotions" className="discount-section">
+        <section
+          {...designRegionProps("home.offers")}
+          id="promotions"
+          className="discount-section"
+        >
           <SectionHeader
             eyebrow="МЕНЬШЕ ЦЕНА — ТОТ ЖЕ ВЫБОР"
             title="Акции"

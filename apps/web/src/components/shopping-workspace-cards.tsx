@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { usePresentation } from "@/context/presentation";
 import { useResource, type Order } from "@/lib/api";
+import { lineCents } from "@/lib/measurement";
 import { cents } from "@/lib/format";
 import type {
   CuratedTemplate,
@@ -92,7 +93,11 @@ function PreviewEstimate({ items }: { items: PreviewItem[] }) {
     (sum, row) =>
       sum +
       (row.product && row.availability === "available"
-        ? cents(row.product.price) * row.available_quantity
+        ? lineCents(row.product, {
+            product_id: row.product_id,
+            quantity: row.available_quantity,
+            purchase_mode: row.purchase_mode,
+          })
         : 0),
     0,
   );
@@ -202,6 +207,7 @@ export function HistoryOrder({
           </div>
         </div>
         <strong className={styles.orderTotal}>
+          {order.is_estimated ? "≈ " : ""}
           {money(cents(order.total))}
         </strong>
       </div>
@@ -301,6 +307,7 @@ export function CuratedTemplateCard({
   const items = template.items.map((row) => ({
     product_id: row.product_id,
     quantity: row.requested_quantity,
+    purchase_mode: row.purchase_mode,
   }));
   const href = `/my-shopping/templates/curated-${template.id}`;
   return (

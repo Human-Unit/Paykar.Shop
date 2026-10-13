@@ -1,11 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
+import { cartRequest } from "./measurement";
 import { api } from "./api";
 import type { ShoppingItem, ShoppingPreview } from "./shopping";
 export function useShoppingPreview(items: ShoppingItem[]) {
-  const key = JSON.stringify(
-    items.map(({ product_id, quantity }) => ({ product_id, quantity })),
-  );
+  const key = JSON.stringify(items.map(cartRequest));
   const [attempt, setAttempt] = useState(0);
   const requestKey = key + attempt;
   const [result, setResult] = useState<{

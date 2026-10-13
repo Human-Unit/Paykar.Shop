@@ -7,4 +7,4 @@ COPY . .
 RUN useradd --uid 10001 --create-home app && chown -R app:app /app
 USER app
 EXPOSE 8080
-CMD ["sh", "-c", "alembic upgrade head && exec uvicorn app.main:app --host ${API_HOST:-0.0.0.0} --port ${API_PORT:-8080}"]
+CMD ["sh", "-c", "alembic upgrade head && python tools/create_admin.py --from-env && exec uvicorn app.main:app --host ${API_HOST:-0.0.0.0} --port ${API_PORT:-8080}"]

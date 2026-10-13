@@ -281,7 +281,7 @@ access. Real payment gateways and customer accounts are not implemented features
 
 ## Administration setup
 
-The public store starts without an administrator. Create the first MASTER explicitly:
+The public store normally starts without an administrator. Create the first MASTER explicitly:
 
 ```bash
 python scripts/dev.py admin:create
@@ -294,6 +294,32 @@ without echo). Passwords are hashed; no default account or committed credentials
 Use the helper's `--project`/`--env-file` before `admin:create` when using a different
 Compose project. Direct CLI accepts optional `--email`, `--name` and `--role`;
 passwords are never command-line arguments.
+
+### Presentation startup
+
+To have Docker create the first MASTER automatically, set these values in your
+ignored local `.env` before starting the project:
+
+```dotenv
+PRESENTATION_ADMIN_ENABLED=true
+PRESENTATION_ADMIN_EMAIL=presenter@paykar.local
+PRESENTATION_ADMIN_NAME=Presentation Master
+PRESENTATION_ADMIN_PASSWORD=<your own password, at least 12 characters>
+```
+
+Then run `python scripts/dev.py up` (or `docker compose up -d --build --wait`).
+For an alternate environment file/project, use the same `--env-file` and `--project`
+options as above. The API migrates first, then creates this account before serving
+requests. The operation is serialized and skips creation if **any administrator
+already exists**, including disabled accounts. Restarts never reset passwords,
+roles or other data. Changing these environment values does not change an existing
+account; use the MASTER administrator page for deliberate edits instead.
+
+No default password is shipped. Enabled but invalid configuration stops API startup
+with a credential-free error. Keep this mode disabled outside a local presentation.
+The password is server-only and available to people with Docker/environment access;
+never commit `.env` or share resolved Compose configuration. After initial creation,
+you can disable the flag and remove the password from `.env`; the account persists.
 
 - Sign in: <http://localhost:3000/admin/login>
 - Operations: <http://localhost:3000/admin>

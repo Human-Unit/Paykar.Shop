@@ -4,10 +4,11 @@ import { usePresentation } from "@/context/presentation";
 import { useSavedItems } from "@/context/saved-items";
 import Link from "next/link";
 import { useState } from "react";
-import { Heart, Plus, Minus } from "lucide-react";
+import { Heart } from "lucide-react";
 import { Product } from "@/lib/api";
 import { cents } from "@/lib/format";
-import { useCart } from "@/context/cart";
+import { PurchaseControl } from "./purchase-control";
+import { stockLimit, defaultMode, weighted } from "@/lib/measurement";
 import styles from "./shopping-assistance.module.css";
 // Only replace the known demo illustrations; supplied product photographs remain intact.
 const demoPhotos: Record<string, string> = {
@@ -86,58 +87,14 @@ export function discountPercent(product: Product) {
     ? Math.round((1 - cents(product.price) / cents(product.old_price)) * 100)
     : 0;
 }
-export function AddButton({ product }: { product: Product }) {
-  const { t } = usePresentation();
-  const cart = useCart();
-  const count =
-    cart.items.find((item) => item.product_id === product.id)?.quantity || 0;
-  const stock = Math.floor(Number(product.stock_quantity));
-  if (count > 0)
-    return (
-      <div
-        className="quantity-control card-quantity"
-        aria-label={t("Количество в корзине: ") + t(product.name)}
-      >
-        <button
-          type="button"
-          aria-label={t("Уменьшить: ") + t(product.name)}
-          onClick={() =>
-            count === 1
-              ? cart.remove(product.id)
-              : cart.quantity(product.id, count - 1, stock)
-          }
-        >
-          <Minus size={18} />
-        </button>
-        <span aria-live="polite">
-          {/* Keyed by value so each change replays the count animation. */}
-          <b className="quantity-value" key={count}>
-            {count}
-          </b>
-          <small>{t("в корзине")}</small>
-        </span>
-        <button
-          type="button"
-          aria-label={t("Увеличить: ") + t(product.name)}
-          disabled={count >= stock || count >= 99}
-          onClick={() => cart.add(product)}
-        >
-          <Plus size={18} />
-        </button>
-      </div>
-    );
-  return (
-    <button
-      type="button"
-      className="add-button"
-      disabled={stock < 1 || count >= stock || count >= 99}
-      onClick={() => cart.add(product)}
-      aria-label={t("Добавить в корзину: ") + t(product.name)}
-    >
-      <Plus size={17} />
-      {stock < 1 ? t("Нет в наличии") : t("В корзину")}
-    </button>
-  );
+export function AddButton({
+  product,
+  detailed = false,
+}: {
+  product: Product;
+  detailed?: boolean;
+}) {
+  return <PurchaseControl product={product} detailed={detailed} />;
 }
 export function ProductCard({
   product,
@@ -150,7 +107,8 @@ export function ProductCard({
   const saved = useSavedItems();
   const isSaved = saved.has(product.id);
   const discount = discountPercent(product);
-  const soldOut = Number(product.stock_quantity) < 1;
+  const soldOut =
+    stockLimit(product, defaultMode(product)) < (product.minimum_quantity || 1);
   const imageLabel = imageIllustrationLabel(product);
   return (
     <article
@@ -197,7 +155,12 @@ export function ProductCard({
           {t(product.name)}
         </Link>
         <div className="prices" data-sale={discount > 0 || undefined}>
-          <strong>{money(cents(product.price))}</strong>
+          <strong>
+            {money(cents(product.price))}{" "}
+            <small>
+              / {t(weighted(product) ? "\u043a\u0433" : "\u0448\u0442")}
+            </small>
+          </strong>
           {product.old_price && <del>{money(cents(product.old_price))}</del>}
         </div>
         <AddButton product={product} />

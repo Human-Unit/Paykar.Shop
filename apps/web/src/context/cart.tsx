@@ -5,6 +5,7 @@ import {
   useContext,
   useSyncExternalStore,
   useState,
+  useMemo,
 } from "react";
 import { Product, ProductPage, useResource } from "@/lib/api";
 import {
@@ -13,7 +14,16 @@ import {
   type PreviewItem,
 } from "@/lib/shopping";
 
-type Item = { product_id: number; quantity: number };
+import {
+  defaultMode,
+  normalizeLine,
+  stockLimit,
+  minimum,
+  step,
+  type QuantityLine,
+} from "@/lib/measurement";
+import { validItems } from "@/lib/shopping";
+type Item = QuantityLine;
 const EMPTY: Item[] = [];
 const STORAGE_KEY = "paykar-demo-cart-v1";
 let cachedRaw: string | null | undefined;
@@ -22,27 +32,7 @@ let memoryOnly = false;
 
 function parse(raw: string | null): Item[] {
   try {
-    const values: unknown = JSON.parse(raw || "[]");
-    if (!Array.isArray(values)) return EMPTY;
-    const merged = new Map<number, number>();
-    for (const value of values.slice(0, 48)) {
-      if (typeof value !== "object" || value === null) continue;
-      const { product_id: id, quantity } = value as Record<string, unknown>;
-      if (
-        typeof id === "number" &&
-        Number.isSafeInteger(id) &&
-        id > 0 &&
-        typeof quantity === "number" &&
-        Number.isSafeInteger(quantity) &&
-        quantity > 0
-      ) {
-        merged.set(id, Math.min(99, (merged.get(id) || 0) + quantity));
-      }
-    }
-    return Array.from(merged, ([product_id, quantity]) => ({
-      product_id,
-      quantity,
-    }));
+    return validItems(JSON.parse(raw || "[]"));
   } catch {
     return EMPTY;
   }
@@ -87,7 +77,10 @@ type CartContext = {
   notice: string;
   noticeId: number;
   retry: () => void;
-  add: (product: Product) => void;
+  add: (
+    product: Product,
+    selection?: { quantity: number; purchase_mode: "PIECE" | "WEIGHT" },
+  ) => void;
   addMany: (items: PreviewItem[]) => AddSummary;
   quantity: (id: number, quantity: number, stock: number) => void;
   remove: (id: number) => void;
@@ -96,7 +89,7 @@ type CartContext = {
 const Context = createContext<CartContext | null>(null);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const items = useSyncExternalStore(subscribe, snapshot, () => EMPTY);
+  const rawItems = useSyncExternalStore(subscribe, snapshot, () => EMPTY);
   // The id changes on every announcement so a repeated message shows again.
   const [notice, setNotice] = useState({ text: "", id: 0 });
   function announce(text: string) {
@@ -104,12 +97,22 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       text || current.text ? { text, id: current.id + 1 } : current,
     );
   }
-  const ids = items
+  const ids = rawItems
     .map((item) => item.product_id)
     .sort((a, b) => a - b)
     .join(",");
   const resource = useResource<ProductPage>(
     ids ? `/products?ids=${ids}&page_size=48` : null,
+  );
+  const items = useMemo(
+    () =>
+      rawItems.map((item) =>
+        normalizeLine(
+          item,
+          resource.data?.items.find((p) => p.id === item.product_id),
+        ),
+      ),
+    [rawItems, resource.data],
   );
   function update(next: Item[]) {
     save(next);
@@ -124,21 +127,39 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     products: resource.data?.items || [],
     loading: resource.loading,
     error: resource.error,
-    count: items.reduce((sum, item) => sum + item.quantity, 0),
+    count: items.reduce(
+      (sum, item) =>
+        sum + (item.purchase_mode === "WEIGHT" ? 1 : item.quantity),
+      0,
+    ),
     notice: notice.text,
     noticeId: notice.id,
     retry: resource.retry,
     addMany: (rows) => {
-      const result = mergeShoppingCart(snapshot(), rows);
+      const result = mergeShoppingCart(items, rows);
       update(result.items);
       resource.retry();
       return result.summary;
     },
-    add: (product) => {
-      const current = snapshot();
+    add: (product, selection) => {
+      const current = items;
       const existing = current.find((item) => item.product_id === product.id);
-      const limit = Math.min(99, Math.floor(Number(product.stock_quantity)));
-      if (limit < 1 || (existing?.quantity || 0) >= limit) {
+      const mode =
+        existing?.purchase_mode ||
+        selection?.purchase_mode ||
+        defaultMode(product);
+      const min = minimum(product, mode),
+        increment = step(product, mode);
+      const amount = selection?.quantity ?? (existing ? increment : min);
+      const limit = stockLimit(product, mode);
+      if (selection && existing && mode !== selection.purchase_mode) return;
+      if (
+        !Number.isSafeInteger(amount) ||
+        amount < min ||
+        (mode === "WEIGHT" && (amount - min) % increment)
+      )
+        return;
+      if (limit < min || (existing?.quantity || 0) + amount > limit) {
         announce("Достигнуто доступное количество товара.");
         return;
       }
@@ -150,23 +171,35 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         existing
           ? current.map((item) =>
               item.product_id === product.id
-                ? { ...item, quantity: item.quantity + 1 }
+                ? { ...item, quantity: item.quantity + amount }
                 : item,
             )
-          : [...current, { product_id: product.id, quantity: 1 }],
+          : [
+              ...current,
+              { product_id: product.id, quantity: amount, purchase_mode: mode },
+            ],
       );
     },
-    quantity: (id, value, stock) =>
+    quantity: (id, amount) => {
+      const product = resource.data?.items.find((p) => p.id === id);
+      const existing = items.find((item) => item.product_id === id);
+      if (!product || !existing) return;
+      const mode = existing.purchase_mode || defaultMode(product);
+      const min = minimum(product, mode),
+        increment = step(product, mode);
+      const limit = stockLimit(product, mode);
+      if (limit < min || !Number.isSafeInteger(amount)) return;
+      const next = Math.max(min, Math.min(limit, amount));
+      const quantity =
+        mode === "WEIGHT"
+          ? min + Math.floor((next - min) / increment) * increment
+          : next;
       update(
-        snapshot().map((item) =>
-          item.product_id === id
-            ? {
-                ...item,
-                quantity: Math.max(1, Math.min(99, Math.floor(stock), value)),
-              }
-            : item,
+        items.map((item) =>
+          item.product_id === id ? { ...item, quantity } : item,
         ),
-      ),
+      );
+    },
     remove: (id) => update(snapshot().filter((item) => item.product_id !== id)),
     clear: () => update([]),
   };

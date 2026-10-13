@@ -1,4 +1,5 @@
 "use client";
+import { designRegionProps } from "./design-region";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -345,6 +346,7 @@ export function OrderShowcase() {
   const copy = useReveal({ rise: 20 });
   return (
     <section
+      {...designRegionProps("home.delivery")}
       className={`order-showcase ${styles.scene}`}
       aria-labelledby="order-showcase-title"
     >

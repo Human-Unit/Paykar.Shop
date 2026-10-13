@@ -24,6 +24,10 @@ class ShoppingPreviewItem(BaseModel):
     available_quantity: int
     availability: Literal["available", "unavailable", "missing"]
     product: ProductOut | None
+    purchase_mode: Literal["PIECE", "WEIGHT"] | None = None
+    estimated_weight_g: int | None = None
+    is_estimated: bool = False
+    estimated_total: str = "0.00"
 
 
 class ShoppingPreview(BaseModel):

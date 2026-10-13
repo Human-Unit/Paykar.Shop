@@ -1,4 +1,5 @@
 "use client";
+import { designRegionProps } from "./design-region";
 
 import Link from "next/link";
 import { useState } from "react";
@@ -39,6 +40,7 @@ export function PromotionsPage({ page: content }: { page: StorePage }) {
         items={[{ label: "Главная", href: "/" }, { label: content.title }]}
       />
       <header
+        {...designRegionProps("promotions.masthead")}
         className={styles.hero}
         data-has-products={products.loading || images.length > 0}
       >
@@ -74,7 +76,11 @@ export function PromotionsPage({ page: content }: { page: StorePage }) {
           </div>
         )}
       </header>
-      <section id="promotions-products" aria-label={t("Акции")}>
+      <section
+        {...designRegionProps("promotions.products")}
+        id="promotions-products"
+        aria-label={t("Акции")}
+      >
         {products.loading ? (
           <>
             <div className={styles.collectionHeader} aria-hidden="true">

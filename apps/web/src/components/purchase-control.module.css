@@ -1,0 +1,58 @@
+.purchase {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+.modes {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.modes button {
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: var(--muted);
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+  min-height: 40px;
+}
+.modes button[aria-pressed="true"] {
+  border-color: var(--paykar-green);
+  color: var(--brand-ink);
+}
+.amount {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  color: var(--ink);
+}
+.purchase .controls,
+.purchase .controls button:not(:disabled) {
+  color: var(--ink);
+}
+.purchase .controls button:disabled {
+  color: var(--muted);
+}
+.amount input {
+  width: 78px;
+  min-width: 0;
+  padding: 4px;
+  text-align: center;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+.estimate {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.estimate small {
+  flex-basis: 100%;
+}

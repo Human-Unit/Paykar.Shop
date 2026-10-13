@@ -12,17 +12,32 @@ export function useAdmin() {
   if (!value) throw new Error("Admin identity missing");
   return value;
 }
-const links = [
-  ["", "Overview"],
-  ["products", "Products"],
-  ["categories", "Categories"],
-  ["promotions", "Promotions"],
-  ["orders", "Orders"],
-  ["stores", "Stores"],
-  ["inventory", "Inventory"],
-  ["master/design", "Design"],
-  ["master/administrators", "Administrators"],
-  ["settings", "Settings"],
+const navigationGroups = [
+  {
+    label: "Operations",
+    links: [
+      ["", "Overview"],
+      ["orders", "Orders"],
+    ],
+  },
+  {
+    label: "Catalog",
+    links: [
+      ["products", "Products"],
+      ["categories", "Categories"],
+      ["promotions", "Promotions"],
+      ["inventory", "Inventory"],
+    ],
+  },
+  { label: "Locations", links: [["stores", "Stores"]] },
+  {
+    label: "Master",
+    links: [
+      ["master/design", "Design"],
+      ["master/administrators", "Administrators"],
+    ],
+  },
+  { label: "System", links: [["settings", "Settings"]] },
 ] as const;
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
@@ -114,24 +129,31 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             aria-label="Administration"
             className={`${styles.nav} ${open ? styles.open : ""}`}
           >
-            {links
+            {navigationGroups
               .filter(
-                ([href]) =>
-                  !href.startsWith("master") || identity.user.role === "MASTER",
+                (group) =>
+                  group.label !== "Master" || identity.user.role === "MASTER",
               )
-              .map(([href, label]) => (
-                <Link
-                  key={href}
-                  href={`/admin${href ? `/${href}` : ""}`}
-                  aria-current={
-                    path === `/admin${href ? `/${href}` : ""}`
-                      ? "page"
-                      : undefined
-                  }
-                  onClick={() => setOpen(false)}
-                >
-                  {label}
-                </Link>
+              .map((group) => (
+                <div key={group.label} className={styles.navGroup}>
+                  <span>{group.label}</span>
+                  {group.links.map(([href, label]) => {
+                    const target = `/admin${href ? `/${href}` : ""}`;
+                    const active =
+                      path === target ||
+                      (href && path.startsWith(`${target}/`));
+                    return (
+                      <Link
+                        key={href}
+                        href={target}
+                        aria-current={active ? "page" : undefined}
+                        onClick={() => setOpen(false)}
+                      >
+                        {label}
+                      </Link>
+                    );
+                  })}
+                </div>
               ))}
             <Link href="/">Back to storefront ↗</Link>
           </nav>

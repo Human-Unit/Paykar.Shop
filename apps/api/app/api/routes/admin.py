@@ -2,7 +2,7 @@ from datetime import UTC, datetime
 from uuid import UUID
 
 from fastapi import APIRouter, HTTPException, Query, Request, Response
-from sqlalchemy import delete, func, select, text, update
+from sqlalchemy import String, cast, delete, func, select, text, update
 from sqlalchemy.exc import IntegrityError
 from starlette.concurrency import run_in_threadpool
 
@@ -34,6 +34,7 @@ from app.services.admin_auth import (
     Admin,
     Master,
     audit,
+    current_admin,
     digest,
     hasher,
     login_user,
@@ -73,6 +74,21 @@ def row(value, excluded=()):
     }
 
 
+async def resource_list(session, model, conditions, ordering, page, serialize=row):
+    query = select(model).where(*conditions).order_by(ordering, model.id)
+    if page is None:
+        # Existing consumers (e.g. category options) retain their array contract.
+        return [serialize(item) for item in await session.scalars(query)]
+    total = await session.scalar(select(func.count()).select_from(model).where(*conditions))
+    values = await session.scalars(query.offset((page - 1) * 25).limit(25))
+    return {
+        "items": [serialize(item) for item in values],
+        "total": total,
+        "page": page,
+        "page_size": 25,
+    }
+
+
 @router.post("/auth/login")
 async def login(body: Login, request: Request, response: Response, session: Session):
     user, token, csrf = await login_user(request, session, body.email, body.password)
@@ -91,6 +107,24 @@ async def login(body: Login, request: Request, response: Response, session: Sess
 @router.get("/auth/me")
 async def me(request: Request, user: Admin):
     return {"user": user_public(user), "csrf": request.state.admin_csrf}
+
+
+@router.get("/auth/design-access")
+async def design_access(request: Request, response: Response, session: Session):
+    """Small, no-store storefront gate; draft data still requires Master."""
+    response.headers["Cache-Control"] = "no-store"
+    try:
+        user = await current_admin(request, session)
+    except HTTPException as exc:
+        if exc.status_code == 401:
+            return {"enabled": False}
+        raise
+    if user.role != "MASTER":
+        return {"enabled": False}
+    return {
+        "enabled": True,
+        "identity": {"user": user_public(user), "csrf": request.state.admin_csrf},
+    }
 
 
 @router.post("/auth/logout")
@@ -135,6 +169,7 @@ async def products(
     category_id: int | None = None,
     stock: str = Query(default="all", pattern="^(all|available|empty)$"),
     sale: bool = False,
+    sort: str = Query(default="id", pattern="^(id|name|price|-price|stock|-updated)$"),
     page: int = Query(default=1, ge=1),
     page_size: int = Query(default=25, ge=1, le=100),
 ):
@@ -156,11 +191,26 @@ async def products(
     items = await session.scalars(
         select(Product)
         .where(*conditions)
-        .order_by(Product.id)
+        .order_by(
+            {
+                "id": Product.id,
+                "name": Product.name,
+                "price": Product.price,
+                "-price": Product.price.desc(),
+                "stock": Product.stock_quantity,
+                "-updated": Product.updated_at.desc(),
+            }[sort],
+            Product.id,
+        )
         .offset((page - 1) * page_size)
         .limit(page_size)
     )
     return {"items": [row(p) for p in items], "total": total, "page": page, "page_size": page_size}
+
+
+@router.get("/products/{identifier}")
+async def product_detail(identifier: int, session: Session, user: Admin):
+    return row(await record(session, Product, identifier))
 
 
 @router.post("/products", status_code=201)
@@ -180,6 +230,18 @@ async def edit_product(identifier: int, body: ProductEdit, session: Session, use
     if body.expected_stock is None or product.stock_quantity != body.expected_stock:
         raise HTTPException(409, "Stock changed. Reload before saving.")
     for key, value in body.model_dump(exclude={"expected_stock"}).items():
+        if (
+            key
+            in {
+                "measurement_mode",
+                "price_unit",
+                "average_piece_weight_g",
+                "quantity_step",
+                "minimum_quantity",
+            }
+            and key not in body.model_fields_set
+        ):
+            continue
         setattr(product, key, value)
     product.updated_at = datetime.now(UTC)
     audit(session, user, "product.updated", identifier)
@@ -200,8 +262,17 @@ async def stock_edit(identifier: int, body: StockEdit, session: Session, user: A
 
 
 @router.get("/categories")
-async def categories(session: Session, user: Admin):
-    return [row(c) for c in await session.scalars(select(Category).order_by(Category.id))]
+async def categories(
+    session: Session,
+    user: Admin,
+    q: str = Query(default="", max_length=100),
+    sort: str = Query(default="id", pattern="^(id|name)$"),
+    page: int | None = Query(default=None, ge=1),
+):
+    conditions = [Category.name.ilike(f"%{q.replace('%', '').replace('_', '')}%")] if q else []
+    return await resource_list(
+        session, Category, conditions, Category.name if sort == "name" else Category.id, page
+    )
 
 
 @router.post("/categories", status_code=201)
@@ -235,16 +306,46 @@ async def category_edit(identifier: int, body: CategoryEdit, session: Session, u
 
 
 @router.get("/orders")
-async def orders(session: Session, user: Admin, page: int = Query(default=1, ge=1)):
-    total = await session.scalar(select(func.count()).select_from(Order))
-    items = await session.scalars(
-        select(Order).order_by(Order.created_at.desc(), Order.id).offset((page - 1) * 25).limit(25)
+async def orders(
+    session: Session,
+    user: Admin,
+    page: int = Query(default=1, ge=1),
+    q: str = Query(default="", max_length=100),
+    status: str = Query(
+        default="", pattern="^(|pending|confirmed|delivering|completed|cancelled)$"
+    ),
+    sort: str = Query(default="-created", pattern="^(-created|created|total|-total)$"),
+):
+    conditions = []
+    if status:
+        conditions.append(Order.status == status)
+    if q:
+        conditions.append(cast(Order.id, String).ilike(f"%{q.replace('%', '').replace('_', '')}%"))
+    total = await session.scalar(select(func.count()).select_from(Order).where(*conditions))
+    count = (
+        select(func.count())
+        .select_from(OrderItem)
+        .where(OrderItem.order_id == Order.id)
+        .correlate(Order)
+        .scalar_subquery()
+    )
+    items = await session.execute(
+        select(Order, count.label("item_count"))
+        .where(*conditions)
+        .order_by(
+            {
+                "-created": Order.created_at.desc(),
+                "created": Order.created_at,
+                "total": Order.total,
+                "-total": Order.total.desc(),
+            }[sort],
+            Order.id,
+        )
+        .offset((page - 1) * 25)
+        .limit(25)
     )
     result = []
-    for order in items:
-        count = await session.scalar(
-            select(func.count()).select_from(OrderItem).where(OrderItem.order_id == order.id)
-        )
+    for order, count in items:
         result.append(
             {
                 "id": order.id,
@@ -272,8 +373,23 @@ async def order_detail(identifier: UUID, session: Session, user: Admin):
 
 
 @router.get("/stores")
-async def stores(session: Session, user: Admin):
-    return [row(s) for s in await session.scalars(select(Store).order_by(Store.id))]
+async def stores(
+    session: Session,
+    user: Admin,
+    q: str = Query(default="", max_length=100),
+    sort: str = Query(default="id", pattern="^(id|name)$"),
+    page: int | None = Query(default=None, ge=1),
+):
+    pattern = f"%{q.replace('%', '').replace('_', '')}%"
+    conditions = [Store.name.ilike(pattern) | Store.address.ilike(pattern)] if q else []
+    return await resource_list(
+        session, Store, conditions, Store.name if sort == "name" else Store.id, page
+    )
+
+
+@router.get("/stores/{identifier}")
+async def store_detail(identifier: int, session: Session, user: Admin):
+    return row(await record(session, Store, identifier))
 
 
 @router.post("/stores/{identifier}")
@@ -300,8 +416,25 @@ async def settings(request: Request, user: Admin):
 
 
 @router.get("/master/administrators")
-async def administrators(session: Session, user: Master):
-    return [user_public(u) for u in await session.scalars(select(AdminUser).order_by(AdminUser.id))]
+async def administrators(
+    session: Session,
+    user: Master,
+    q: str = Query(default="", max_length=100),
+    sort: str = Query(default="id", pattern="^(id|name)$"),
+    page: int | None = Query(default=None, ge=1),
+):
+    pattern = f"%{q.replace('%', '').replace('_', '')}%"
+    conditions = (
+        [AdminUser.display_name.ilike(pattern) | AdminUser.email.ilike(pattern)] if q else []
+    )
+    return await resource_list(
+        session,
+        AdminUser,
+        conditions,
+        AdminUser.display_name if sort == "name" else AdminUser.id,
+        page,
+        user_public,
+    )
 
 
 @router.post("/master/administrators", status_code=201)

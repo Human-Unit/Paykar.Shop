@@ -11,6 +11,7 @@ import {
   ProductConnectionList,
   useResource,
 } from "@/lib/api";
+import { stockLimit, defaultMode, weighted } from "@/lib/measurement";
 import { cents } from "@/lib/format";
 import { categoryRecommendations } from "@/lib/product-recommendations";
 import { getProductContent } from "@/lib/product-content";
@@ -69,7 +70,7 @@ export function ProductDetail({ slug }: { slug: string }) {
     return <Failure error={resource.error} retry={resource.retry} />;
   if (!p) return null;
   const discount = discountPercent(p);
-  const available = Number(p.stock_quantity) >= 1;
+  const available = stockLimit(p, defaultMode(p)) >= (p.minimum_quantity || 1);
   const isSaved = saved.has(p.id);
   const enriched = getProductContent(p.slug);
   const imageLabel = imageIllustrationLabel(p);
@@ -144,7 +145,12 @@ export function ProductDetail({ slug }: { slug: string }) {
               className="prices detail-price"
               data-sale={discount > 0 || undefined}
             >
-              <strong>{money(cents(p.price))}</strong>
+              <strong>
+                {money(cents(p.price))}{" "}
+                <small>
+                  / {t(weighted(p) ? "\u043a\u0433" : "\u0448\u0442")}
+                </small>
+              </strong>
               {p.old_price && <del>{money(cents(p.old_price))}</del>}
             </div>
             <p className="stock-state" data-available={available}>
@@ -154,18 +160,13 @@ export function ProductDetail({ slug }: { slug: string }) {
                 <Package size={16} aria-hidden="true" />
               )}
               {available
-                ? t("В наличии: ") +
-                  Math.floor(Number(p.stock_quantity)) +
-                  " " +
-                  t(p.unit)
+                ? t("В наличии: ") + Number(p.stock_quantity) + " " + t(p.unit)
                 : t("Нет в наличии")}
             </p>
-            <AddButton product={p} />
+            <AddButton product={p} detailed />
           </div>
           <div className="detail-note">
-            {t(
-              "Одна упаковка — одна единица в корзине. Стоимость доставки покажем до оформления заказа.",
-            )}
+            {t(weighted(p) ? "Продаётся на вес" : "Продаётся поштучно")}
           </div>
           <div className="detail-service-notes">
             <Link href="/delivery">

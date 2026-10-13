@@ -27,7 +27,8 @@ Existing uncommitted setup and My Shopping masthead work was preserved.
 - `stores`: exact eight pre-existing locations, addresses and coordinates.
 
 No existing commerce table or guest order contract changes. Alembic owns all DDL.
-No automatic administrator/password is seeded. Directory values persist in PostgreSQL;
+No automatic administrator/password is seeded by default. An opt-in local presentation
+bootstrap is described below. Directory values persist in PostgreSQL;
 the public map consumes `/stores`, with the previous snapshot as an API-failure
 fallback. Map component code, label placement, popup/selection and gesture logic
 are unchanged. Zero enabled stores does not mount an empty Leaflet bounds set.
@@ -121,6 +122,15 @@ Password is entered twice without echo, never passed in argv; first user must be
 MASTER. Existing emails are not overwritten. For direct CLI use, optional
 `--email`, `--name`, `--role ADMIN|MASTER` select non-secret fields. Additional
 accounts and deliberate password reset are available to MASTER in the UI.
+
+For a local presentation, `PRESENTATION_ADMIN_ENABLED=true` enables the Docker
+startup bootstrap after Alembic migrations. Supply `PRESENTATION_ADMIN_EMAIL`,
+`PRESENTATION_ADMIN_NAME` and `PRESENTATION_ADMIN_PASSWORD` in the ignored `.env`;
+there is no default password. The account is always MASTER and is created only
+when the administrator table is empty, under the same advisory lock as interactive
+bootstrap. Existing accounts, including disabled ones, are never changed. Invalid
+enabled configuration stops startup without logging credentials. See the
+[presentation setup](../../README.md#presentation-startup) for full instructions.
 
 ## Extension boundaries
 

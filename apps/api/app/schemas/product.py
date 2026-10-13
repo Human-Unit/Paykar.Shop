@@ -3,8 +3,10 @@ from typing import Annotated
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints, field_serializer
 
+from app.schemas.measurement import Measurement
 
-class ProductOut(BaseModel):
+
+class ProductOut(Measurement):
     model_config = ConfigDict(from_attributes=True)
     id: int
     category_id: int

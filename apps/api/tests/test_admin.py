@@ -409,3 +409,78 @@ async def test_category_product_creation_and_asset_validation(administration):
         async with sessions.begin() as session:
             await session.execute(delete(Product).where(Product.category_id == category_id))
             await session.execute(delete(Category).where(Category.id == category_id))
+
+
+@pytest.mark.asyncio
+async def test_inline_gate_and_master_scope_lifecycle(administration):
+    client = administration[0]
+    assert (await client.get("/api/v1/admin/auth/design-access")).json() == {"enabled": False}
+    headers = await sign_in(administration, "ADMIN")
+    assert (await client.get("/api/v1/admin/auth/design-access")).json() == {"enabled": False}
+    assert (await client.get("/api/v1/admin/master/design")).status_code == 403
+    assert (
+        await client.post("/api/v1/admin/master/design", headers=headers, json={})
+    ).status_code == 403
+    headers = await sign_in(administration)
+    gate = await client.get("/api/v1/admin/auth/design-access")
+    assert gate.headers["cache-control"] == "no-store"
+    assert gate.json()["identity"]["user"]["role"] == "MASTER"
+    before = (await client.get("/api/v1/design/public")).json()
+    config = PaykarDesign().model_dump()
+    config["pages"] = {"home": {"radius.panel": 30}}
+    config["sections"] = {"home.hero": {"colors.brand": "#224433"}}
+    saved = await client.post("/api/v1/admin/master/design", headers=headers, json=config)
+    assert saved.status_code == 201
+    draft = saved.json()
+    assert (await client.get("/api/v1/design/public")).json() == before
+    assert (
+        await client.post(
+            f"/api/v1/admin/master/design/{draft['id']}/publish", headers=headers, json={}
+        )
+    ).status_code == 200
+    public = (await client.get("/api/v1/design/public")).json()
+    assert set(public) == {"config", "version"}
+    assert public["config"]["sections"] == config["sections"]
+    assert public["config"]["pages"] == config["pages"]
+    assert public["config"]["colors"] == config["colors"]
+    restored = (
+        await client.post(
+            f"/api/v1/admin/master/design/{draft['id']}/restore", headers=headers, json={}
+        )
+    ).json()
+    assert restored["id"] != draft["id"]
+    assert restored["version"] > draft["version"]
+    assert restored["status"] == "DRAFT"
+    assert (await client.get("/api/v1/design/public")).json() == public
+
+
+@pytest.mark.asyncio
+async def test_bounded_admin_sort_and_detail(administration):
+    client, _, _, product_id, _ = administration
+    await sign_in(administration, "ADMIN")
+    assert (await client.get(f"/api/v1/admin/products/{product_id}")).status_code == 200
+    assert (await client.get("/api/v1/admin/products?sort=-price&q=Admin")).status_code == 200
+    assert (await client.get("/api/v1/admin/products?sort=arbitrary")).status_code == 422
+    assert (
+        await client.get("/api/v1/admin/orders?status=completed&sort=-total")
+    ).status_code == 200
+    assert (await client.get("/api/v1/admin/orders?status=made-up")).status_code == 422
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("resource", ["categories", "stores", "master/administrators"])
+async def test_admin_small_lists_preserve_array_and_support_paging(administration, resource):
+    client = administration[0]
+    await sign_in(administration)
+    legacy = await client.get(f"/api/v1/admin/{resource}")
+    assert legacy.status_code == 200 and isinstance(legacy.json(), list)
+    paged = await client.get(f"/api/v1/admin/{resource}?page=1&sort=name")
+    assert paged.status_code == 200
+    value = paged.json()
+    assert value["total"] == len(legacy.json())
+    assert value["page_size"] == 25 and value["page"] == 1
+    assert len(value["items"]) == min(25, value["total"])
+    assert all("password_hash" not in item for item in value["items"])
+    empty = await client.get(f"/api/v1/admin/{resource}?page=1&q=owned-nonexistent-qa-record")
+    assert empty.json()["total"] == 0 and empty.json()["items"] == []
+    assert (await client.get(f"/api/v1/admin/{resource}?sort=arbitrary")).status_code == 422

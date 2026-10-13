@@ -1,5 +1,6 @@
 import hashlib
 import json
+from dataclasses import asdict
 from decimal import Decimal
 from uuid import UUID
 
@@ -11,8 +12,9 @@ from app.models.order import Order
 from app.models.order_item import OrderItem
 from app.models.product import Product
 from app.schemas.delivery import DeliveryPoint, DeliveryQuote
-from app.schemas.order import OrderCreate, OrderItemOut, OrderOut
+from app.schemas.order import CartItem, OrderCreate, OrderItemOut, OrderOut
 from app.services.delivery_service import DeliveryService
+from app.services.measurement import measure
 
 
 def conflict(code: str, message: str, **details: object) -> HTTPException:
@@ -21,6 +23,7 @@ def conflict(code: str, message: str, **details: object) -> HTTPException:
 
 def fingerprint(body: OrderCreate) -> str:
     data = body.model_dump(mode="json", exclude={"idempotency_key"})
+    data["items"] = [item.model_dump(exclude_none=True) for item in body.items]
     return hashlib.sha256(json.dumps(data, sort_keys=True).encode()).hexdigest()
 
 
@@ -63,12 +66,26 @@ async def create_order(
         return await finalize_order(body, session, quote)
 
 
-def quantities_for(body: OrderCreate) -> dict[int, int]:
-    quantities: dict[int, int] = {}
+def quantities_for(body: OrderCreate) -> dict[int, CartItem]:
+    quantities: dict[int, CartItem] = {}
     for item in body.items:
-        quantities[item.product_id] = quantities.get(item.product_id, 0) + item.quantity
-    if any(quantity > 99 for quantity in quantities.values()):
-        raise HTTPException(422, detail="Не более 99 единиц одного товара")
+        existing = quantities.get(item.product_id)
+        if existing is None:
+            quantities[item.product_id] = item.model_copy()
+            continue
+        if existing.purchase_mode != item.purchase_mode:
+            raise HTTPException(422, "One purchase mode per product is required")
+        field = (
+            "quantity"
+            if item.purchase_mode is None
+            else "piece_count"
+            if item.purchase_mode == "PIECE"
+            else "requested_weight_g"
+        )
+        combined = getattr(existing, field) + getattr(item, field)
+        if combined > (99000 if field == "requested_weight_g" else 99):
+            raise HTTPException(422, "Quantity exceeds the per-product limit")
+        quantities[item.product_id] = existing.model_copy(update={field: combined})
     return quantities
 
 
@@ -84,10 +101,11 @@ async def checkout_values(body: OrderCreate, session: AsyncSession, quote: Deliv
     ).all()
     if len(products) != len(quantities):
         raise conflict("missing_product", "Товар больше недоступен. Проверьте корзину.")
+    measured = {p.id: measure(p, quantities[p.id]) for p in products}
     for product in products:
         if not product.is_active:
             raise conflict("inactive_product", "Товар больше недоступен. Проверьте корзину.")
-        if product.stock_quantity < quantities[product.id]:
+        if product.stock_quantity < measured[product.id].quantity:
             raise conflict(
                 "insufficient_stock",
                 f"Недостаточно товара «{product.name}». Измените количество в корзине.",
@@ -95,13 +113,7 @@ async def checkout_values(body: OrderCreate, session: AsyncSession, quote: Deliv
                 available_quantity=str(product.stock_quantity),
             )
     snapshots = [
-        OrderItemOut(
-            product_id=p.id,
-            product_name=p.name,
-            quantity=Decimal(quantities[p.id]),
-            unit_price=p.price,
-            total_price=(p.price * quantities[p.id]).quantize(Decimal("0.01")),
-        )
+        OrderItemOut(product_id=p.id, product_name=p.name, **asdict(measured[p.id]))
         for p in products
     ]
     subtotal = sum((item.total_price for item in snapshots), Decimal("0.00"))
@@ -146,7 +158,12 @@ async def finalize_order(
     session.add(order)
     await session.flush()
     for product, item in zip(products, snapshots, strict=True):
-        session.add(OrderItem(order_id=order.id, **item.model_dump()))
+        session.add(
+            OrderItem(
+                order_id=order.id,
+                **item.model_dump(exclude={"estimated_line_total", "final_line_total"}),
+            )
+        )
         product.stock_quantity -= item.quantity
     await session.flush()
     result = OrderOut(

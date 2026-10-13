@@ -1,4 +1,5 @@
 "use client";
+import { designRegionProps } from "./design-region";
 
 import Image from "next/image";
 import dynamic from "next/dynamic";
@@ -79,7 +80,10 @@ export function HomeHero({
   });
   return (
     <section className={`home-bento ${styles.scene}`}>
-      <div className="hero-card premium-hero">
+      <div
+        {...designRegionProps("home.hero")}
+        className="hero-card premium-hero"
+      >
         <Image
           src="/images/paykar/hero.webp"
           width={1536}
@@ -171,6 +175,7 @@ export function HomeHero({
       <m.div
         {...routeCard}
         {...offerPointer}
+        {...designRegionProps("home.featured")}
         className={`bento-card featured-deal ${styles.feature} ${styles.offer}`}
         aria-labelledby="home-featured-deal-title"
         aria-busy={promotionsLoading}
@@ -232,6 +237,7 @@ export function HomeHero({
       <m.div
         {...shopCard}
         {...shoppingPointer}
+        {...designRegionProps("home.shopping")}
         className={`bento-card bento-shop ${styles.feature} ${styles.shopping}`}
         aria-labelledby="home-shopping-title"
       >

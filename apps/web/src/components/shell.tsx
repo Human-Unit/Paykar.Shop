@@ -1,4 +1,5 @@
 "use client";
+import { designPageForPath } from "@/lib/design-registry";
 import { usePresentation } from "@/context/presentation";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -175,7 +176,11 @@ export function Shell({ children }: { children: React.ReactNode }) {
           </p>
         )}
       </div>
-      <main id="main" className="container main-content">
+      <main
+        data-design-page={designPageForPath(path) || undefined}
+        id="main"
+        className="container main-content"
+      >
         {children}
       </main>
       <Footer />

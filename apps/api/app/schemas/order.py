@@ -4,7 +4,15 @@ from decimal import Decimal
 from typing import Literal
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, Field, field_serializer, field_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    computed_field,
+    field_serializer,
+    field_validator,
+    model_validator,
+)
 
 from app.schemas.delivery import DeliveryPoint
 
@@ -12,7 +20,34 @@ from app.schemas.delivery import DeliveryPoint
 class CartItem(BaseModel):
     model_config = ConfigDict(extra="forbid")
     product_id: int = Field(gt=0, le=9223372036854775807, strict=True)
-    quantity: int = Field(gt=0, le=99, strict=True)
+    quantity: int | None = Field(default=None, gt=0, le=99, strict=True)
+    purchase_mode: Literal["PIECE", "WEIGHT"] | None = None
+    piece_count: int | None = Field(default=None, gt=0, le=99, strict=True)
+    requested_weight_g: int | None = Field(default=None, gt=0, le=99000, strict=True)
+
+    @model_validator(mode="after")
+    def one_quantity(self):
+        if self.purchase_mode is None:
+            valid = (
+                self.quantity is not None
+                and self.piece_count is None
+                and self.requested_weight_g is None
+            )
+        elif self.purchase_mode == "PIECE":
+            valid = (
+                self.quantity is None
+                and self.piece_count is not None
+                and self.requested_weight_g is None
+            )
+        else:
+            valid = (
+                self.quantity is None
+                and self.piece_count is None
+                and self.requested_weight_g is not None
+            )
+        if not valid:
+            raise ValueError("Provide exactly one quantity for the selected purchase mode")
+        return self
 
 
 class OrderCreate(DeliveryPoint):
@@ -42,6 +77,29 @@ class OrderItemOut(BaseModel):
     quantity: Decimal
     unit_price: Decimal
     total_price: Decimal
+    purchase_mode: str = "PIECE"
+    requested_piece_count: int | None = None
+    requested_weight_g: int | None = None
+    estimated_weight_g: int | None = None
+    average_piece_weight_g_snapshot: int | None = None
+    price_unit_snapshot: str = "PIECE"
+    actual_weight_g: int | None = None
+    is_estimated: bool = False
+
+    @computed_field
+    @property
+    def estimated_line_total(self) -> str:
+        return f"{self.total_price:.2f}"
+
+    @computed_field
+    @property
+    def final_line_total(self) -> str:
+        if self.actual_weight_g is not None and self.price_unit_snapshot == "KG":
+            from decimal import ROUND_HALF_UP
+
+            amount = self.unit_price * Decimal(self.actual_weight_g) / 1000
+            return f"{amount.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP):.2f}"
+        return self.estimated_line_total
 
     @field_serializer("quantity")
     def quantity_string(self, value: Decimal) -> str:
@@ -69,6 +127,22 @@ class OrderOut(BaseModel):
     items: list[OrderItemOut]
     payment_method: str
     payment_status: str
+
+    @computed_field
+    @property
+    def estimated_order_total(self) -> str:
+        return f"{self.total:.2f}"
+
+    @computed_field
+    @property
+    def final_order_total(self) -> str:
+        total = sum((Decimal(item.final_line_total) for item in self.items), self.delivery_price)
+        return f"{total:.2f}"
+
+    @computed_field
+    @property
+    def is_estimated(self) -> bool:
+        return any(item.is_estimated for item in self.items)
 
     @field_serializer("subtotal", "delivery_price", "total")
     def money(self, value: Decimal) -> str:

@@ -35,12 +35,13 @@ export default function RootLayout({
       </head>
       <body>
         <PresentationProvider>
-          <StorefrontDesign />
-          <SavedItemsProvider>
-            <CartProvider>
-              <Shell>{children}</Shell>
-            </CartProvider>
-          </SavedItemsProvider>
+          <StorefrontDesign>
+            <SavedItemsProvider>
+              <CartProvider>
+                <Shell>{children}</Shell>
+              </CartProvider>
+            </SavedItemsProvider>
+          </StorefrontDesign>
         </PresentationProvider>
       </body>
     </html>

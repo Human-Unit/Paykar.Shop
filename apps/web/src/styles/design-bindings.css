@@ -5,6 +5,9 @@ body {
 .product-card {
   border-radius: var(--design-card-radius, var(--shopping-card-radius));
 }
+[data-design-page="myShopping"] [data-design-region="myShopping.masthead"] h1 {
+  font-size: calc(clamp(28px, 4vw, 40px) * var(--design-heading-scale, 1));
+}
 .home-page .home-bento .featured-deal::before,
 .home-page .home-bento .bento-shop::before,
 .home-page .discount-section::before {

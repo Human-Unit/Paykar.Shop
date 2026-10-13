@@ -36,7 +36,7 @@
   background:
     radial-gradient(ellipse at 85% 12%, rgb(38 139 74 / 70%), transparent 62%),
     url("/icon.png") right -80px bottom -80px / 300px no-repeat;
-  opacity: 0.1;
+  opacity: var(--design-watermark-opacity, 0.1);
   -webkit-mask-image: linear-gradient(110deg, transparent, black 88%);
   mask-image: linear-gradient(110deg, transparent, black 88%);
   clip-path: inset(0 round var(--radius-lg));

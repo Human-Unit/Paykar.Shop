@@ -1,16 +1,39 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+import { Component, useEffect, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import {
   defaultDesign,
   publishedDesignCss,
   validDesign,
+  type DesignConfig,
 } from "@/lib/design-config";
 
-export function StorefrontDesign() {
+import { adminApi, type AdminIdentity } from "@/lib/admin-api";
+import editorStyles from "./inline-master.module.css";
+const InlineMaster = dynamic(() => import("./inline-master"), { ssr: false });
+class EditorBoundary extends Component<
+  { children: ReactNode; failed: () => void },
+  { failed: boolean }
+> {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  componentDidCatch() {
+    this.props.failed();
+  }
+  render() {
+    return this.state.failed ? null : this.props.children;
+  }
+}
+export function StorefrontDesign({ children }: { children: ReactNode }) {
   const path = usePathname();
-  const [config, setConfig] = useState(defaultDesign);
+  const [config, setConfig] = useState<DesignConfig>(defaultDesign);
+  const [identity, setIdentity] = useState<AdminIdentity | null>(null);
+  const [preview, setPreview] = useState<DesignConfig | null>(null);
+  const [open, setOpen] = useState(false);
   const admin = path === "/admin" || path.startsWith("/admin/");
   useEffect(() => {
     if (admin) return;
@@ -50,8 +73,68 @@ export function StorefrontDesign() {
       window.removeEventListener("paykar-design-published", published);
     };
   }, [admin]);
-  if (admin) return null;
+  useEffect(() => {
+    if (admin) return;
+    const controller = new AbortController();
+    let last = 0;
+    const check = async () => {
+      if (Date.now() - last < 30000) return;
+      last = Date.now();
+      try {
+        const access = await adminApi<{
+          enabled: boolean;
+          identity?: AdminIdentity;
+        }>("auth/design-access", undefined, undefined, controller.signal);
+        if (controller.signal.aborted) return;
+        if (access.enabled && access.identity?.user.role === "MASTER")
+          setIdentity(access.identity);
+        else {
+          setIdentity(null);
+          setPreview(null);
+          setOpen(false);
+        }
+      } catch {
+        if (!controller.signal.aborted) {
+          setIdentity(null);
+          setPreview(null);
+          setOpen(false);
+        }
+      }
+    };
+    void check();
+    window.addEventListener("focus", check);
+    return () => {
+      controller.abort();
+      window.removeEventListener("focus", check);
+    };
+  }, [admin]);
+  if (admin) return <>{children}</>;
   return (
-    <style id="paykar-published-design">{publishedDesignCss(config)}</style>
+    <>
+      <style id="paykar-published-design">
+        {publishedDesignCss(preview && identity ? preview : config)}
+      </style>
+      <div
+        className={open && identity ? editorStyles.reflow : undefined}
+        data-storefront-design-view
+      >
+        {children}
+      </div>
+      {identity && (
+        <EditorBoundary
+          failed={() => {
+            setPreview(null);
+            setOpen(false);
+          }}
+        >
+          <InlineMaster
+            identity={identity}
+            published={config}
+            onPreview={setPreview}
+            onOpen={setOpen}
+          />
+        </EditorBoundary>
+      )}
+    </>
   );
 }

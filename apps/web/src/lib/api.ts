@@ -21,6 +21,11 @@ export type Product = {
   image_url: string;
   stock_quantity: string;
   is_active: boolean;
+  measurement_mode?: "PIECE" | "WEIGHT" | "DUAL";
+  price_unit?: "PIECE" | "KG";
+  average_piece_weight_g?: number | null;
+  quantity_step?: number;
+  minimum_quantity?: number;
 };
 export type ProductPage = {
   items: Product[];
@@ -133,8 +138,17 @@ export type OrderItem = {
   quantity: string;
   unit_price: string;
   total_price: string;
+  purchase_mode?: "PIECE" | "WEIGHT";
+  requested_piece_count?: number | null;
+  requested_weight_g?: number | null;
+  estimated_weight_g?: number | null;
+  average_piece_weight_g_snapshot?: number | null;
+  price_unit_snapshot?: "PIECE" | "KG";
+  actual_weight_g?: number | null;
+  is_estimated?: boolean;
 };
 export type Order = Point & {
+  is_estimated?: boolean;
   id: string;
   customer_name: string;
   address: string;

@@ -1,9 +1,18 @@
-from typing import Annotated
+from typing import Annotated, Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    StrictFloat,
+    StrictInt,
+    StrictStr,
+    model_validator,
+)
 
 Color = Annotated[str, Field(pattern=r"^#[0-9a-fA-F]{6}$")]
 Scale = Annotated[float, Field(ge=0.85, le=1.2, allow_inf_nan=False)]
+TokenValue = StrictStr | StrictInt | StrictFloat
 
 
 class StrictModel(BaseModel):
@@ -81,3 +90,92 @@ class PaykarDesign(StrictModel):
     radius: Shape = Field(default_factory=Shape)
     effects: Effects = Field(default_factory=Effects)
     motion: Motion = Field(default_factory=Motion)
+    pages: dict[
+        Literal[
+            "home",
+            "promotions",
+            "myShopping",
+            "catalog",
+            "product",
+            "cart",
+            "checkout",
+            "stores",
+            "saved",
+            "information",
+        ],
+        dict[str, TokenValue],
+    ] = Field(default_factory=dict)
+    sections: dict[str, dict[str, TokenValue]] = Field(default_factory=dict)
+
+    @model_validator(mode="after")
+    def safe_overrides(self):
+        # Keep storage compatible: current global fields plus sparse scoped tokens.
+        section_tokens = {
+            "home.hero": {"colors.brand", "radius.panel"},
+            "home.featured": {"colors.brand", "radius.panel", "effects.watermark_opacity"},
+            "home.offers": {
+                "colors.brand",
+                "colors.sale",
+                "radius.panel",
+                "effects.watermark_opacity",
+            },
+            "home.shopping": {"colors.brand", "radius.panel", "effects.watermark_opacity"},
+            "home.stores": {"colors.brand", "radius.panel"},
+            "home.delivery": {"colors.brand", "radius.panel"},
+            "promotions.masthead": {"colors.brand", "colors.sale", "radius.panel"},
+            "promotions.products": {
+                "colors.brand",
+                "colors.sale",
+                "radius.card",
+                "radius.button",
+                "motion.hover_lift",
+            },
+            "myShopping.masthead": {"typography.heading_scale"},
+            "myShopping.orders": {
+                "colors.brand",
+                "radius.card",
+                "radius.button",
+                "motion.hover_lift",
+            },
+            "myShopping.templates": {
+                "colors.brand",
+                "radius.card",
+                "radius.button",
+                "motion.hover_lift",
+            },
+        }
+        groups = {
+            "colors": Colors,
+            "typography": Typography,
+            "layout": Layout,
+            "radius": Shape,
+            "effects": Effects,
+            "motion": Motion,
+        }
+        for section, tokens in self.sections.items():
+            if section not in section_tokens or not tokens.keys() <= section_tokens[section]:
+                raise ValueError("Unregistered section or unsupported section control")
+        for tokens in [*self.pages.values(), *self.sections.values()]:
+            for path, value in tokens.items():
+                parts = path.split(".")
+                if len(parts) not in (2, 3) or parts[0] not in groups:
+                    raise ValueError("Unknown scoped design token")
+                model = groups[parts[0]]
+                data = model().model_dump()
+                if len(parts) == 3:
+                    if parts[0] != "colors" or parts[1] not in ("dark", "light"):
+                        raise ValueError("Unknown palette")
+                    target = data[parts[1]]
+                else:
+                    target = data
+                if parts[-1] not in target or isinstance(target[parts[-1]], dict):
+                    raise ValueError("Unknown scoped design token")
+                if (
+                    isinstance(value, bool)
+                    or type(value) is not type(target[parts[-1]])
+                    and isinstance(value, str)
+                ):
+                    raise ValueError("Invalid scoped token type")
+                target[parts[-1]] = value
+                model.model_validate(data)
+        return self

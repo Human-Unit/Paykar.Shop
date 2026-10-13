@@ -7,6 +7,7 @@ from typing import Annotated, Literal
 from pydantic import Field, field_validator, model_validator
 
 from app.schemas.design import StrictModel
+from app.schemas.measurement import Measurement
 
 Money = Annotated[Decimal, Field(ge=0, max_digits=12, decimal_places=2, allow_inf_nan=False)]
 Stock = Annotated[Decimal, Field(ge=0, max_digits=12, decimal_places=3, allow_inf_nan=False)]
@@ -41,7 +42,7 @@ class AdminUpdate(StrictModel):
     password: str | None = Field(default=None, min_length=12, max_length=256)
 
 
-class ProductEdit(StrictModel):
+class ProductEdit(Measurement, StrictModel):
     category_id: int = Field(gt=0)
     name: Label
     slug: Slug

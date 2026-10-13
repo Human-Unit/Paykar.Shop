@@ -6,7 +6,7 @@ import { Package } from "lucide-react";
 import { usePresentation } from "@/context/presentation";
 import type { Product } from "@/lib/api";
 import type { CuratedTemplate, ShoppingTemplate } from "@/lib/shopping";
-import { cents } from "@/lib/format";
+import { lineCents } from "@/lib/measurement";
 import { useShoppingPreview } from "@/lib/use-shopping-preview";
 import { ProductImage } from "./product-card";
 
@@ -55,7 +55,11 @@ export function HomeTemplatePreview({
     (sum, row) =>
       sum +
       (row.product && row.availability === "available"
-        ? cents(row.product.price) * row.available_quantity
+        ? lineCents(row.product, {
+            product_id: row.product_id,
+            quantity: row.available_quantity,
+            purchase_mode: row.purchase_mode,
+          })
         : 0),
     0,
   );

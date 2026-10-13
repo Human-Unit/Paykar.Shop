@@ -10,6 +10,17 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { useCart } from "@/context/cart";
+import {
+  lineCents,
+  stockLimit,
+  defaultMode,
+  minimum,
+  step,
+  quantityLabel,
+  isEstimated,
+  weightGrams,
+  weighted,
+} from "@/lib/measurement";
 import { cents } from "@/lib/format";
 import { ProductCard, ProductImage } from "./product-card";
 import { Empty, Failure, Loading } from "./states";
@@ -56,14 +67,19 @@ export function CartPage() {
   if (cart.error) return <Failure error={cart.error} retry={cart.retry} />;
   const subtotal = cart.items.reduce((sum, item) => {
     const p = cart.products.find((p) => p.id === item.product_id);
-    return sum + (p ? cents(p.price) * item.quantity : 0);
+    return sum + (p ? lineCents(p, item) : 0);
   }, 0);
+  const estimated = cart.items.some((item) => {
+    const p = cart.products.find((p) => p.id === item.product_id);
+    return p ? isEstimated(p, item) : false;
+  });
   const invalidStock = cart.items.some((item) => {
     const product = cart.products.find((p) => p.id === item.product_id);
     return (
       !product ||
       !product.is_active ||
-      Number(product.stock_quantity) < item.quantity
+      stockLimit(product, item.purchase_mode || defaultMode(product)) <
+        item.quantity
     );
   });
   return (
@@ -103,7 +119,10 @@ export function CartPage() {
                     </button>
                   </div>
                 );
-              const stock = Math.floor(Number(p.stock_quantity));
+              const mode = item.purchase_mode || defaultMode(p);
+              const stock = stockLimit(p, mode);
+              const min = minimum(p, mode),
+                increment = step(p, mode);
               return (
                 <article className="cart-item" key={p.id}>
                   <Link href={`/product/${p.slug}`} className="cart-image">
@@ -112,12 +131,18 @@ export function CartPage() {
                   <div className="cart-item-name">
                     <Link href={`/product/${p.slug}`}>{t(p.name)}</Link>
                     <p>
-                      {money(cents(p.price))} / {t(p.unit)}
+                      {money(cents(p.price))} /{" "}
+                      {t(weighted(p) ? "\u043a\u0433" : "\u0448\u0442")}
                     </p>
+                    {isEstimated(p, item) && (
+                      <p>
+                        ≈ {(weightGrams(p, item) || 0) / 1000} {t("кг")}
+                      </p>
+                    )}
                     {item.quantity > stock && (
                       <p className="stock-warning">
                         {t("Доступно только ")}
-                        {stock}
+                        {quantityLabel({ ...item, quantity: stock }, t)}
                         {t(". Измените количество.")}
                       </p>
                     )}
@@ -125,25 +150,28 @@ export function CartPage() {
                   <div className="quantity-control">
                     <button
                       aria-label={t("Уменьшить: ") + t(p.name)}
-                      disabled={item.quantity <= 1}
+                      disabled={item.quantity <= min}
                       onClick={() =>
-                        cart.quantity(p.id, item.quantity - 1, stock)
+                        cart.quantity(p.id, item.quantity - increment, stock)
                       }
                     >
                       <Minus size={16} />
                     </button>
-                    <span data-testid="quantity">{item.quantity}</span>
+                    <span data-testid="quantity">{quantityLabel(item, t)}</span>
                     <button
                       aria-label={t("Увеличить: ") + t(p.name)}
-                      disabled={item.quantity >= stock || item.quantity >= 99}
+                      disabled={item.quantity + increment > stock}
                       onClick={() =>
-                        cart.quantity(p.id, item.quantity + 1, stock)
+                        cart.quantity(p.id, item.quantity + increment, stock)
                       }
                     >
                       <Plus size={16} />
                     </button>
                   </div>
-                  <strong>{money(cents(p.price) * item.quantity)}</strong>
+                  <strong>
+                    {isEstimated(p, item) ? "\u2248 " : ""}
+                    {money(lineCents(p, item))}
+                  </strong>
                   <button
                     className="remove-button"
                     aria-label={t("Удалить: ") + t(p.name)}
@@ -178,11 +206,17 @@ export function CartPage() {
               {t("Товары (")}
               {cart.count})
             </span>
-            <strong>{money(subtotal)}</strong>
+            <strong>
+              {estimated ? "\u2248 " : ""}
+              {money(subtotal)}
+            </strong>
           </div>
           <div className="summary-total">
             <span>{t("Подытог")}</span>
-            <strong data-testid="subtotal">{money(subtotal)}</strong>
+            <strong data-testid="subtotal">
+              {estimated ? "\u2248 " : ""}
+              {money(subtotal)}
+            </strong>
           </div>
           <p className="summary-note">
             <Route size={20} aria-hidden="true" />

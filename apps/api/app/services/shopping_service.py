@@ -13,6 +13,7 @@ from app.schemas.shopping import (
     ShoppingPreview,
     ShoppingPreviewItem,
 )
+from app.services.measurement import measure, stock_limit
 
 
 def load_curated(path: Path | None = None) -> list[CuratedDefinition]:
@@ -42,18 +43,58 @@ def validate_curated(definitions: list[CuratedDefinition], product_slugs: set[st
         )
 
 
-def preview_item(product: Product | None, product_id: int, quantity: int) -> ShoppingPreviewItem:
-    available = min(99, int(product.stock_quantity)) if product and product.is_active else 0
+def preview_item(
+    product: Product | None, product_id: int, quantity: int, item: CartItem | None = None
+) -> ShoppingPreviewItem:
+    measured = (
+        measure(product, item or CartItem(product_id=max(1, product_id), quantity=quantity))
+        if product
+        else None
+    )
+    mode = measured.purchase_mode if measured else None
+    requested = (
+        (measured.requested_piece_count if mode == "PIECE" else measured.requested_weight_g)
+        if measured
+        else quantity
+    )
+    available = stock_limit(product, mode) if product else 0
+    allowed = max(0, min(requested, available))
+    if product and mode == "WEIGHT" and allowed >= product.minimum_quantity:
+        allowed = (
+            product.minimum_quantity
+            + ((allowed - product.minimum_quantity) // product.quantity_step)
+            * product.quantity_step
+        )
+    elif product and mode == "WEIGHT":
+        allowed = 0
+    pricing = (
+        measure(
+            product,
+            CartItem(
+                product_id=product_id,
+                purchase_mode=mode,
+                **(
+                    {"piece_count": allowed} if mode == "PIECE" else {"requested_weight_g": allowed}
+                ),
+            ),
+        )
+        if allowed
+        else None
+    )
     return ShoppingPreviewItem(
         product_id=product_id,
-        requested_quantity=quantity,
-        available_quantity=max(0, min(quantity, available)),
+        requested_quantity=requested,
+        available_quantity=allowed,
         availability="missing"
         if product is None
         else "available"
         if available > 0
         else "unavailable",
         product=ProductOut.model_validate(product) if product and product.is_active else None,
+        purchase_mode=mode,
+        estimated_weight_g=measured.estimated_weight_g if measured else None,
+        is_estimated=measured.is_estimated if measured else False,
+        estimated_total=f"{pricing.total_price:.2f}" if pricing else "0.00",
     )
 
 
@@ -64,7 +105,12 @@ async def preview_items(items: list[CartItem], session: AsyncSession) -> Shoppin
     products = {product.id: product for product in rows}
     return ShoppingPreview(
         items=[
-            preview_item(products.get(item.product_id), item.product_id, item.quantity)
+            preview_item(
+                products.get(item.product_id),
+                item.product_id,
+                item.quantity or item.piece_count or item.requested_weight_g,
+                item,
+            )
             for item in items
         ]
     )

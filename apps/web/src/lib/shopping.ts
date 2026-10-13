@@ -1,8 +1,16 @@
 import type { Product } from "./api";
+import {
+  normalizeLine,
+  stockLimit,
+  minimum,
+  step,
+  type PurchaseMode,
+} from "./measurement.ts";
 
 export type ShoppingItem = {
   product_id: number;
   quantity: number;
+  purchase_mode?: PurchaseMode;
   name?: string;
 };
 export type ShoppingTemplate = {
@@ -18,6 +26,9 @@ export type PreviewItem = {
   available_quantity: number;
   availability: "available" | "unavailable" | "missing";
   product: Product | null;
+  purchase_mode?: PurchaseMode;
+  is_estimated?: boolean;
+  estimated_total?: string;
 };
 export type ShoppingPreview = { items: PreviewItem[] };
 export type CuratedTemplate = ShoppingPreview & {
@@ -50,7 +61,10 @@ export function validItems(value: unknown): ShoppingItem[] {
       typeof row.quantity !== "number" ||
       !Number.isInteger(row.quantity) ||
       row.quantity < 1 ||
-      row.quantity > 99
+      row.quantity > (row.purchase_mode === "WEIGHT" ? 99000 : 99) ||
+      (row.purchase_mode !== undefined &&
+        row.purchase_mode !== "PIECE" &&
+        row.purchase_mode !== "WEIGHT")
     )
       return [];
     seen.add(row.product_id);
@@ -58,6 +72,9 @@ export function validItems(value: unknown): ShoppingItem[] {
       {
         product_id: row.product_id,
         quantity: row.quantity,
+        ...(row.purchase_mode
+          ? { purchase_mode: row.purchase_mode as PurchaseMode }
+          : {}),
         ...(typeof row.name === "string"
           ? { name: row.name.slice(0, 200) }
           : {}),
@@ -134,10 +151,7 @@ export function mergeShoppingCart(
   current: ShoppingItem[],
   rows: PreviewItem[],
 ) {
-  const items = current.map(({ product_id, quantity }) => ({
-    product_id,
-    quantity,
-  }));
+  const items = current.map((item) => ({ ...item }));
   const summary: AddSummary = {
     added: 0,
     unavailable: 0,
@@ -158,32 +172,54 @@ export function mergeShoppingCart(
       summary.unavailable++;
       continue;
     }
-    const stock = Math.max(
-      0,
-      Math.min(99, Math.floor(Number(product.stock_quantity))),
-    );
+    const mode =
+      row.purchase_mode ||
+      normalizeLine(
+        { product_id: product.id, quantity: row.requested_quantity },
+        product,
+      ).purchase_mode ||
+      "PIECE";
+    const stock = stockLimit(product, mode);
     if (!Number.isFinite(stock) || stock < 1) {
       summary.unavailable++;
       continue;
     }
     const existing = items.find((i) => i.product_id === product.id);
+    if (existing && (row.purchase_mode || product.price_unit === "KG"))
+      Object.assign(existing, normalizeLine(existing, product));
+    if (existing && (existing.purchase_mode || "PIECE") !== mode) {
+      summary.adjusted++;
+      continue;
+    }
     if (!existing && items.length >= 48) {
       summary.full++;
       continue;
     }
     const requested = Math.min(
-      99,
+      mode === "WEIGHT" ? 99000 : 99,
       Math.max(0, Math.floor(row.requested_quantity)),
     );
-    const quantity = Math.max(
+    let quantity = Math.max(
       0,
       Math.min(requested, stock - (existing?.quantity || 0)),
     );
+    const min = minimum(product, mode),
+      increment = step(product, mode);
+    const minAdd = existing ? increment : min;
+    if (mode === "WEIGHT")
+      quantity =
+        quantity < minAdd ? 0 : Math.floor(quantity / increment) * increment;
+    else if (quantity < minAdd) quantity = 0;
     if (quantity < requested) summary.adjusted++;
     if (!quantity) continue;
     if (existing) existing.quantity += quantity;
-    else items.push({ product_id: product.id, quantity });
-    summary.added += quantity;
+    else
+      items.push({
+        product_id: product.id,
+        quantity,
+        ...(row.purchase_mode ? { purchase_mode: mode } : {}),
+      });
+    summary.added += mode === "WEIGHT" ? 1 : quantity;
   }
   return { items, summary };
 }

@@ -46,16 +46,21 @@
     },
     {
       "category": "fruit",
-      "name": "Бананы, 1 кг",
+      "name": "Бананы",
       "slug": "bananas",
       "sku": "DEMO-002",
       "price": "22.00",
       "old_price": null,
-      "unit": "упак.",
+      "unit": "кг",
       "stock_quantity": 14,
       "is_active": true,
-      "description": "Демонстрационный товар для учебного магазина. Указанная упаковка — одна единица в корзине. Изображение условное, цены не являются предложением Paykar.",
-      "image_url": "/images/paykar/bananas.webp"
+      "description": "Демонстрационный весовой товар. Средний вес одного банана для расчёта — 180 г. Цена и вес при выборе штук приблизительные; изображение иллюстративное.",
+      "image_url": "/images/paykar/bananas.webp",
+      "measurement_mode": "DUAL",
+      "price_unit": "KG",
+      "average_piece_weight_g": 180,
+      "quantity_step": 100,
+      "minimum_quantity": 100
     },
     {
       "category": "fruit",

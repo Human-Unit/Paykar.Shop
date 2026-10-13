@@ -2,10 +2,21 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { adminApi, AdminError } from "@/lib/admin-api";
 import { useAdmin } from "./admin-shell";
+import { adminListParameters } from "@/lib/admin-list-state";
+import {
+  AdminHeader,
+  DataTable,
+  FilterBar,
+  StatusBadge,
+  SaveBar,
+} from "./admin-primitives";
+import { AdminDrawer } from "./admin-drawer";
 import styles from "./admin.module.css";
+import type { OrderItem } from "@/lib/api";
+import { orderQuantity } from "@/lib/measurement";
 
 type Value = string | number | boolean | null;
 type RecordData = Record<string, Value>;
@@ -37,6 +48,46 @@ const productFields: Field[] = [
   { key: "category_id", label: "Category", type: "select", required: true },
   { key: "description", label: "Description", type: "textarea" },
   { key: "unit", label: "Unit", required: true },
+  {
+    key: "measurement_mode",
+    label: "Sale mode",
+    type: "select",
+    options: ["PIECE", "WEIGHT", "DUAL"],
+    required: true,
+  },
+  {
+    key: "price_unit",
+    label: "Price unit (from sale mode)",
+    type: "select",
+    options: ["PIECE", "KG"],
+    required: true,
+  },
+  {
+    key: "average_piece_weight_g",
+    label: "Average piece weight (g) — used only to estimate piece orders",
+    type: "number",
+    min: 1,
+    max: 100000,
+    step: "1",
+  },
+  {
+    key: "quantity_step",
+    label: "Quantity step (pieces or grams)",
+    type: "number",
+    min: 1,
+    max: 99000,
+    step: "1",
+    required: true,
+  },
+  {
+    key: "minimum_quantity",
+    label: "Minimum quantity (pieces or grams)",
+    type: "number",
+    min: 1,
+    max: 99000,
+    step: "1",
+    required: true,
+  },
   {
     key: "price",
     label: "Current price (TJS)",
@@ -182,15 +233,60 @@ function display(value: Value | undefined) {
       : String(value);
 }
 
+function newProduct(): RecordData {
+  return {
+    is_active: true,
+    role: "ADMIN",
+    stock_quantity: "0",
+    measurement_mode: "PIECE",
+    price_unit: "PIECE",
+    average_piece_weight_g: null,
+    quantity_step: 1,
+    minimum_quantity: 1,
+    unit: "шт.",
+    price: "0",
+  };
+}
+
 export function AdminWorkspace({
   kind,
   orderId,
+  recordId,
 }: {
   kind: WorkspaceKind;
   orderId?: string;
+  recordId?: string;
 }) {
   const { csrf } = useAdmin();
   const router = useRouter();
+  const pathname = usePathname(),
+    search = useSearchParams();
+  const parameters = adminListParameters(kind, search.toString());
+  const page = Number(parameters.get("page"));
+  const query = parameters.toString();
+  const [editDirty, setEditDirty] = useState(false);
+  const fullEditor = ["products", "promotions", "stores"].includes(kind);
+  const listState = search.toString();
+  function updateList(params: URLSearchParams) {
+    setData(null);
+    router.replace(
+      `${pathname}?${adminListParameters(kind, params.toString())}`,
+      { scroll: false },
+    );
+  }
+  function setPage(value: number) {
+    const params = new URLSearchParams(listState);
+    params.set("page", String(value));
+    updateList(params);
+  }
+  function cancelEdit() {
+    if (pending) return;
+    if (!editDirty || window.confirm("Discard unsaved record edits?")) {
+      setEdit(null);
+      setEditDirty(false);
+    }
+  }
+
   const [data, setData] = useState<RecordData[] | RecordData | PageData | null>(
     null,
   );
@@ -199,30 +295,30 @@ export function AdminWorkspace({
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [revision, setRevision] = useState(0);
-  const [page, setPage] = useState(1);
-  const [query, setQuery] = useState("");
-  const [edit, setEdit] = useState<RecordData | null>(null);
+  const [edit, setEdit] = useState<RecordData | null>(
+    recordId === "new" ? newProduct() : null,
+  );
   const [pending, setPending] = useState(false);
-  const paginated =
-    ["products", "promotions", "inventory", "orders"].includes(kind) &&
-    !orderId;
+  const paginated = Boolean(columns[kind]) && !orderId && !recordId;
   const endpoint = ["inventory", "promotions"].includes(kind)
     ? "products"
     : kind === "administrators"
       ? "master/administrators"
       : kind;
-  const path = `${endpoint}${orderId ? `/${orderId}` : `?page=${page}${kind === "promotions" ? "&sale=true" : ""}${query}`}`;
+  const path = `${endpoint}${orderId ? `/${orderId}` : recordId ? (recordId === "new" ? "" : `/${recordId}`) : `?${query}`}`;
   useEffect(() => {
     const controller = new AbortController();
     const load = async () => {
       try {
         const [result, options, images] = await Promise.all([
-          adminApi<RecordData[] | RecordData | PageData>(
-            path,
-            undefined,
-            undefined,
-            controller.signal,
-          ),
+          recordId === "new"
+            ? Promise.resolve({})
+            : adminApi<RecordData[] | RecordData | PageData>(
+                path,
+                undefined,
+                undefined,
+                controller.signal,
+              ),
           ["products", "promotions", "inventory", "categories"].includes(kind)
             ? adminApi<RecordData[]>(
                 "categories",
@@ -254,12 +350,37 @@ export function AdminWorkspace({
     };
     void load();
     return () => controller.abort();
-  }, [path, kind, revision, router]);
-  const heading = orderId
-    ? "Order details"
-    : kind === "administrators"
-      ? "Administrators"
-      : kind.charAt(0).toUpperCase() + kind.slice(1);
+  }, [path, kind, revision, router, recordId]);
+  useEffect(() => {
+    if (!editDirty) return;
+    const unload = (event: BeforeUnloadEvent) => event.preventDefault();
+    const navigate = (event: MouseEvent) => {
+      const link =
+        event.target instanceof Element
+          ? event.target.closest("a[href]")
+          : null;
+      if (link && !window.confirm("Discard unsaved record edits?")) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    };
+    window.addEventListener("beforeunload", unload);
+    document.addEventListener("click", navigate, true);
+    return () => {
+      window.removeEventListener("beforeunload", unload);
+      document.removeEventListener("click", navigate, true);
+    };
+  }, [editDirty]);
+  const heading =
+    recordId === "new"
+      ? "Create product"
+      : recordId
+        ? `${kind === "stores" ? "Store" : "Product"} details`
+        : orderId
+          ? "Order details"
+          : kind === "administrators"
+            ? "Administrators"
+            : kind.charAt(0).toUpperCase() + kind.slice(1);
   const list: RecordData[] = Array.isArray(data)
     ? data
     : paginated && data && "items" in data
@@ -284,9 +405,15 @@ export function AdminWorkspace({
       body[field.key] =
         field.type === "checkbox"
           ? value === "on"
-          : ["category_id", "parent_id", "latitude", "longitude"].includes(
-                field.key,
-              )
+          : [
+                "category_id",
+                "parent_id",
+                "latitude",
+                "longitude",
+                "average_piece_weight_g",
+                "quantity_step",
+                "minimum_quantity",
+              ].includes(field.key)
             ? value
               ? Number(value)
               : null
@@ -295,6 +422,10 @@ export function AdminWorkspace({
                 ? String(value)
                 : null
               : String(value || "");
+    }
+    if (["products", "promotions"].includes(kind)) {
+      body.price_unit = body.measurement_mode === "PIECE" ? "PIECE" : "KG";
+      if (body.measurement_mode !== "DUAL") body.average_piece_weight_g = null;
     }
     if (["products", "promotions", "inventory"].includes(kind) && edit.id)
       body.expected_stock = edit.stock_quantity;
@@ -306,13 +437,16 @@ export function AdminWorkspace({
     setError("");
     setNotice("");
     try {
-      await adminApi(
+      const result = await adminApi<RecordData>(
         `${kind === "inventory" ? "inventory" : endpoint}${edit.id ? `/${edit.id}` : ""}`,
         csrf,
         body,
       );
       setEdit(null);
+      setEditDirty(false);
       setNotice("Saved successfully.");
+      if (recordId === "new" && result.id)
+        router.replace(`/admin/${kind}/${result.id}`);
       refresh();
     } catch (cause) {
       if (cause instanceof AdminError && cause.status === 401)
@@ -324,8 +458,29 @@ export function AdminWorkspace({
   }
   return (
     <>
-      <span className={styles.eyebrow}>Store operations</span>
-      <h1>{heading}</h1>
+      <AdminHeader title={heading}>
+        {!recordId &&
+          ["products", "categories", "administrators"].includes(kind) && (
+            <div className={styles.actions}>
+              {kind === "products" ? (
+                <Link className={styles.createLink} href="/admin/products/new">
+                  Add product
+                </Link>
+              ) : (
+                <button
+                  className={styles.primary}
+                  onClick={() => {
+                    setEdit({ is_active: true, role: "ADMIN" });
+                    setEditDirty(false);
+                  }}
+                >
+                  Create {kind === "categories" ? "category" : "administrator"}
+                </button>
+              )}
+            </div>
+          )}
+      </AdminHeader>
+      {recordId && <Link href={`/admin/${kind}`}>← Back to {kind}</Link>}
       {kind === "stores" && (
         <p>
           Directory locations only. Checkout origin is independently
@@ -371,124 +526,216 @@ export function AdminWorkspace({
           </div>
         </>
       )}
-      {(kind === "settings" || orderId) && data && (
-        <div className={styles.panel}>
-          <dl className={styles.detail}>
-            {Object.entries(data)
-              .filter(([key]) => key !== "items")
-              .map(([key, value]) => (
-                <div key={key} style={{ display: "contents" }}>
-                  <dt>{key.replaceAll("_", " ")}</dt>
-                  <dd>{display(value as Value)}</dd>
-                </div>
-              ))}
-          </dl>
-          {orderId && "items" in data && (
-            <ul>
-              {(
-                data as unknown as {
-                  items: {
-                    product_name: string;
-                    quantity: string;
-                    total_price: string;
-                  }[];
-                }
-              ).items.map((item, i) => (
-                <li key={i}>
-                  {item.product_name} · {item.quantity} × · {item.total_price}{" "}
-                  TJS
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      )}
-      {["products", "promotions", "inventory"].includes(kind) && (
-        <form
-          className={styles.toolbar}
+      {(kind === "settings" ||
+        orderId ||
+        (recordId && recordId !== "new" && !edit)) &&
+        data && (
+          <div className={styles.panel}>
+            {recordId && (
+              <button
+                className={styles.primary}
+                onClick={() => {
+                  setEdit(data as RecordData);
+                  setEditDirty(false);
+                }}
+              >
+                Edit record
+              </button>
+            )}
+            <dl className={styles.detail}>
+              {Object.entries(data)
+                .filter(([key]) => key !== "items")
+                .map(([key, value]) => (
+                  <div key={key} style={{ display: "contents" }}>
+                    <dt>{key.replaceAll("_", " ")}</dt>
+                    <dd>{display(value as Value)}</dd>
+                  </div>
+                ))}
+            </dl>
+            {orderId && "items" in data && (
+              <ul>
+                {(
+                  data as unknown as {
+                    items: OrderItem[];
+                  }
+                ).items.map((item, i) => (
+                  <li key={i}>
+                    {item.product_name} ·{" "}
+                    {orderQuantity(item, (label) =>
+                      label === "кг" ? "kg" : "pcs",
+                    )}{" "}
+                    · {item.is_estimated ? "≈ " : ""}
+                    {item.total_price} TJS
+                    <small>
+                      Price: {item.unit_price} TJS /{" "}
+                      {item.price_unit_snapshot === "KG" ? "kg" : "pcs"}.{" "}
+                      {item.price_unit_snapshot === "KG" && (
+                        <>
+                          Packed:{" "}
+                          {item.actual_weight_g == null
+                            ? "Not recorded"
+                            : `${item.actual_weight_g} g`}
+                          . Estimated: {item.estimated_weight_g} g.
+                        </>
+                      )}
+                    </small>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
+      {paginated && (
+        <FilterBar
           onSubmit={(event) => {
             event.preventDefault();
-            const form = new FormData(event.currentTarget);
-            const params = new URLSearchParams();
-            for (const key of ["q", "category_id", "stock"]) {
-              const value = form.get(key);
+            const form = new FormData(event.currentTarget),
+              params = new URLSearchParams();
+            for (const [key, value] of form.entries())
               if (value) params.set(key, String(value));
-            }
-            setPage(1);
-            setData(null);
-            setQuery(`&${params.toString()}`);
+            params.set("page", "1");
+            updateList(params);
           }}
         >
-          <label>
-            Search name / SKU
-            <input name="q" type="search" maxLength={100} />
-          </label>
-          <label>
-            Category
-            <select name="category_id">
-              <option value="">All categories</option>
-              {categories.map((c) => (
-                <option key={Number(c.id)} value={String(c.id)}>
-                  {c.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
-            Stock
-            <select name="stock">
-              <option value="all">All stock</option>
-              <option value="available">Available</option>
-              <option value="empty">Out of stock</option>
-            </select>
-          </label>
-          <button type="submit">Search</button>
+          <div key={`${kind}:${query}`} className={styles.filterFields}>
+            <label>
+              {kind === "orders"
+                ? "Search order reference"
+                : ["products", "promotions", "inventory"].includes(kind)
+                  ? "Search name / SKU"
+                  : "Search records"}
+              <input
+                name="q"
+                type="search"
+                maxLength={100}
+                defaultValue={parameters.get("q") || ""}
+              />
+            </label>
+            {kind === "orders" ? (
+              <label>
+                Status
+                <select
+                  name="status"
+                  defaultValue={parameters.get("status") || ""}
+                >
+                  <option value="">All statuses</option>
+                  {[
+                    "pending",
+                    "confirmed",
+                    "delivering",
+                    "completed",
+                    "cancelled",
+                  ].map((status) => (
+                    <option key={status} value={status}>
+                      {status}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            ) : ["products", "promotions", "inventory"].includes(kind) ? (
+              <>
+                <label>
+                  Category
+                  <select
+                    name="category_id"
+                    defaultValue={parameters.get("category_id") || ""}
+                  >
+                    <option value="">All categories</option>
+                    {categories.map((c) => (
+                      <option key={Number(c.id)} value={String(c.id)}>
+                        {c.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  Stock
+                  <select
+                    name="stock"
+                    defaultValue={parameters.get("stock") || "all"}
+                  >
+                    <option value="all">All stock</option>
+                    <option value="available">Available</option>
+                    <option value="empty">Out of stock</option>
+                  </select>
+                </label>
+              </>
+            ) : null}
+            <label>
+              Sort
+              <select
+                name="sort"
+                aria-label="Sort"
+                defaultValue={parameters.get("sort") || "id"}
+              >
+                {(kind === "orders"
+                  ? [
+                      ["-created", "Newest first"],
+                      ["created", "Oldest first"],
+                      ["total", "Total ↑"],
+                      ["-total", "Total ↓"],
+                    ]
+                  : ["categories", "stores", "administrators"].includes(kind)
+                    ? [
+                        ["id", "ID"],
+                        ["name", "Name"],
+                      ]
+                    : [
+                        ["id", "ID"],
+                        ["name", "Name"],
+                        ["price", "Price ↑"],
+                        ["-price", "Price ↓"],
+                        ["stock", "Lowest stock"],
+                        ["-updated", "Recently updated"],
+                      ]
+                ).map(([value, label]) => (
+                  <option key={value} value={value}>
+                    {label}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+          <button type="submit">Apply</button>
           <button
-            type="reset"
-            onClick={() => {
-              setPage(1);
-              setQuery("");
-              refresh();
-            }}
+            type="button"
+            onClick={() => updateList(new URLSearchParams())}
           >
             Clear
           </button>
-        </form>
-      )}
-      {["products", "categories", "administrators"].includes(kind) && (
-        <div className={styles.actions}>
-          <button
-            className={styles.primary}
-            onClick={() =>
-              setEdit({
-                is_active: true,
-                role: "ADMIN",
-                stock_quantity: "0",
-                unit: "шт.",
-                price: "0",
-              })
-            }
-          >
-            Create{" "}
-            {kind === "products"
-              ? "product"
-              : kind === "categories"
-                ? "category"
-                : "administrator"}
-          </button>
-        </div>
+        </FilterBar>
       )}
       {edit && (
-        <section className={styles.panel} aria-label="Record editor">
+        <EditorSurface
+          kind={fullEditor ? "page" : "drawer"}
+          pending={pending}
+          close={cancelEdit}
+        >
+          {["products", "promotions", "inventory"].includes(kind) && (
+            <p>
+              Price and stock unit:{" "}
+              {edit.price_unit === "KG"
+                ? "kilograms (stock accepts 0.001 kg)"
+                : "pieces"}
+              . Weight minimum and step use grams. Review stock and price when
+              changing sale mode; values are not automatically converted.
+            </p>
+          )}
           <h2>
             {edit.id
               ? `Edit ${display(edit.name || edit.display_name || edit.short_address)}`
               : "Create record"}
           </h2>
-          <form className={styles.form} onSubmit={save}>
+          <form
+            className={styles.form}
+            onSubmit={save}
+            onChange={() => setEditDirty(true)}
+          >
             {(fields[kind] || [])
               .filter(
                 (field) =>
+                  (field.key !== "average_piece_weight_g" ||
+                    edit.measurement_mode === "DUAL") &&
                   !(
                     kind === "administrators" &&
                     ((!edit.id && field.key === "is_active") ||
@@ -496,13 +743,34 @@ export function AdminWorkspace({
                   ),
               )
               .map((field) => (
-                <label key={`${edit.id || "new"}-${field.key}`}>
+                <label
+                  key={`${edit.id || "new"}-${field.key}-${["price_unit", "quantity_step", "minimum_quantity"].includes(field.key) ? edit.measurement_mode : ""}`}
+                >
                   {field.label}
                   {field.type === "select" ? (
                     <select
                       name={field.key}
                       defaultValue={String(edit[field.key] || "")}
                       required={field.required}
+                      disabled={field.key === "price_unit"}
+                      onChange={
+                        field.key === "measurement_mode"
+                          ? (event) =>
+                              setEdit({
+                                ...edit,
+                                measurement_mode: event.target.value,
+                                price_unit:
+                                  event.target.value === "PIECE"
+                                    ? "PIECE"
+                                    : "KG",
+                                quantity_step:
+                                  event.target.value === "PIECE" ? 1 : 100,
+                                minimum_quantity:
+                                  event.target.value === "PIECE" ? 1 : 100,
+                                average_piece_weight_g: null,
+                              })
+                          : undefined
+                      }
                     >
                       {field.key === "image_url" ? (
                         <>
@@ -574,73 +842,92 @@ export function AdminWorkspace({
                   )}
                 </label>
               ))}
-            <div className={styles.actions}>
+            <SaveBar>
               <button className={styles.primary} disabled={pending}>
                 {pending ? "Saving…" : "Save changes"}
               </button>
-              <button
-                type="button"
-                disabled={pending}
-                onClick={() => setEdit(null)}
-              >
+              <button type="button" disabled={pending} onClick={cancelEdit}>
                 Cancel
               </button>
-            </div>
+            </SaveBar>
           </form>
-        </section>
+        </EditorSurface>
       )}
-      {columns[kind] && !orderId && data && (
+      {columns[kind] && !orderId && !recordId && data && (
         <>
           <p>{total} records</p>
-          <div className={styles.tableWrap}>
-            <table className={styles.table}>
-              <thead>
-                <tr>
-                  {columns[kind]?.map(([key, label]) => (
-                    <th scope="col" key={key}>
-                      {label}
-                    </th>
-                  ))}
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {list.map((item) => (
-                  <tr key={String(item.id)}>
-                    {columns[kind]?.map(([key]) => (
-                      <td key={key}>{display(item[key])}</td>
-                    ))}
-                    <td>
-                      {kind === "orders" ? (
-                        <Link href={`/admin/orders/${item.id}`}>
-                          View order →
+          <DataTable label={`${heading} table`}>
+            <thead>
+              <tr>
+                {columns[kind]?.map(([key, label]) => (
+                  <th scope="col" key={key}>
+                    {label}
+                  </th>
+                ))}
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {list.map((item) => (
+                <tr key={String(item.id)}>
+                  {columns[kind]?.map(([key]) => (
+                    <td key={key}>
+                      {key === "status" ||
+                      key === "is_active" ||
+                      key === "role" ? (
+                        <StatusBadge
+                          status={
+                            key === "is_active"
+                              ? item[key]
+                                ? "Active"
+                                : "Disabled"
+                              : display(item[key])
+                          }
+                        />
+                      ) : key === columns[kind]?.[0]?.[0] && fullEditor ? (
+                        <Link href={`/admin/${kind}/${item.id}`}>
+                          {display(item[key])}
                         </Link>
                       ) : (
-                        <button
-                          onClick={() => {
-                            setEdit(item);
-                            setError("");
-                          }}
-                        >
-                          Edit
-                        </button>
-                      )}
-                      {["products", "promotions"].includes(kind) && (
-                        <Link
-                          style={{ display: "block", marginTop: 8 }}
-                          href={`/product/${item.slug}`}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Preview ↗
-                        </Link>
+                        display(item[key])
                       )}
                     </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                  ))}
+                  <td>
+                    {kind === "orders" ? (
+                      <Link href={`/admin/orders/${item.id}`}>
+                        View order →
+                      </Link>
+                    ) : fullEditor ? (
+                      <Link href={`/admin/${kind}/${item.id}`}>
+                        View details →
+                      </Link>
+                    ) : (
+                      <button
+                        onClick={() => {
+                          setEdit(item);
+                          setEditDirty(false);
+                          setError("");
+                        }}
+                      >
+                        Edit
+                      </button>
+                    )}
+                    {["products", "promotions"].includes(kind) && (
+                      <Link
+                        style={{ display: "block", marginTop: 8 }}
+                        href={`/product/${item.slug}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Preview ↗
+                      </Link>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </DataTable>
           {list.length === 0 && (
             <p>
               No matching records.{" "}
@@ -666,5 +953,27 @@ export function AdminWorkspace({
         </>
       )}
     </>
+  );
+}
+
+function EditorSurface({
+  children,
+  kind,
+  close,
+  pending,
+}: {
+  children: React.ReactNode;
+  kind: "page" | "drawer";
+  close: () => void;
+  pending: boolean;
+}) {
+  return kind === "drawer" ? (
+    <AdminDrawer close={close} pending={pending} label="Quick record edit">
+      {children}
+    </AdminDrawer>
+  ) : (
+    <section className={styles.panel} aria-label="Record editor">
+      {children}
+    </section>
   );
 }

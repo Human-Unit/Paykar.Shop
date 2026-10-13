@@ -4,6 +4,15 @@ import { usePresentation } from "@/context/presentation";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  lineCents,
+  stockLimit,
+  defaultMode,
+  quantityLabel,
+  isEstimated,
+  weightGrams,
+  cartRequest,
+} from "@/lib/measurement";
 import { useCart } from "@/context/cart";
 import {
   api,
@@ -114,16 +123,21 @@ export function Checkout() {
     refreshed?.subtotal ??
     cart.items.reduce((sum, item) => {
       const product = cart.products.find((p) => p.id === item.product_id);
-      return sum + (product ? cents(product.price) * item.quantity : 0);
+      return sum + (product ? lineCents(product, item) : 0);
     }, 0);
   const fee = refreshed?.fee ?? (quote ? cents(quote.delivery_price) : 0);
   const total = refreshed?.total ?? subtotal + fee;
+  const estimated = cart.items.some((item) => {
+    const product = cart.products.find((p) => p.id === item.product_id);
+    return product ? isEstimated(product, item) : false;
+  });
   const invalidStock = cart.items.some((item) => {
     const product = cart.products.find((p) => p.id === item.product_id);
     return (
       !product ||
       !product.is_active ||
-      Number(product.stock_quantity) < item.quantity
+      stockLimit(product, item.purchase_mode || defaultMode(product)) <
+        item.quantity
     );
   });
   const validCustomer =
@@ -190,7 +204,7 @@ export function Checkout() {
         address: address.trim(),
         comment: comment.trim() || null,
         ...point,
-        items: cart.items,
+        items: cart.items.map(cartRequest),
         expected_total: (total / 100).toFixed(2),
         payment_method: method,
       };
@@ -604,12 +618,19 @@ export function Checkout() {
                 <span>
                   {t(product?.name) || t("Товар недоступен")}
                   <small>
-                    {item.quantity} ×{" "}
+                    {quantityLabel(item, t)} ·{" "}
                     {product ? money(cents(product.price)) : "—"}
                   </small>
+                  {product && isEstimated(product, item) && (
+                    <small>
+                      ≈ {(weightGrams(product, item) || 0) / 1000} {t("кг")}
+                    </small>
+                  )}
                 </span>
                 <strong>
-                  {product ? money(cents(product.price) * item.quantity) : "—"}
+                  {product
+                    ? `${isEstimated(product, item) ? "≈ " : ""}${money(lineCents(product, item))}`
+                    : "—"}
                 </strong>
               </div>
             );
@@ -665,9 +686,17 @@ export function Checkout() {
               {!quote ? t(" без доставки") : ""}
             </span>
             <strong data-testid="checkout-total">
+              {estimated ? "\u2248 " : ""}
               {money(quote ? total : subtotal)}
             </strong>
           </div>
+          {estimated && (
+            <p className="muted">
+              {t(
+                "Точная сумма весовых товаров может немного измениться после сборки.",
+              )}
+            </p>
+          )}
           <p className="sr-only" role="status" aria-live="polite">
             {submitting
               ? t(

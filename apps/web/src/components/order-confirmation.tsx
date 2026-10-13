@@ -3,6 +3,7 @@ import { usePresentation } from "@/context/presentation";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Order, useResource } from "@/lib/api";
+import { orderQuantity } from "@/lib/measurement";
 import { cents } from "@/lib/format";
 import { Failure, Loading } from "./states";
 import { Bookmark, Route, Clock3, ArrowRight } from "lucide-react";
@@ -128,10 +129,14 @@ export function OrderConfirmation({ id }: { id: string }) {
                 <span>
                   {t(item.product_name)}
                   <small>
-                    {Number(item.quantity)} × {money(cents(item.unit_price))}
+                    {orderQuantity(item, t)} · {money(cents(item.unit_price))} /{" "}
+                    {t(item.price_unit_snapshot === "KG" ? "кг" : "шт")}
                   </small>
                 </span>
-                <strong>{money(cents(item.total_price))}</strong>
+                <strong>
+                  {item.is_estimated ? "\u2248 " : ""}
+                  {money(cents(item.total_price))}
+                </strong>
               </div>
             ))}
           </div>
@@ -146,7 +151,10 @@ export function OrderConfirmation({ id }: { id: string }) {
             </p>
             <p className="summary-total">
               {t("Итого ")}
-              <strong>{money(cents(order.total))}</strong>
+              <strong>
+                {order.is_estimated ? "≈ " : ""}
+                {money(cents(order.total))}
+              </strong>
             </p>
           </div>
         </section>
