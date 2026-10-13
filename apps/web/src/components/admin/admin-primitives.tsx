@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { statusPresentation } from "@/lib/admin-presentation";
 import styles from "./admin.module.css";
 
 export function AdminHeader({
@@ -13,33 +14,25 @@ export function AdminHeader({
   return (
     <header className={styles.pageHeader}>
       <div>
-        <span className={styles.eyebrow}>{eyebrow}</span>
-        <h1>{title}</h1>
+        {eyebrow && <span className={styles.eyebrow}>{eyebrow}</span>}
+        <h1 tabIndex={-1}>{title}</h1>
       </div>
       {children}
     </header>
   );
 }
 export function StatusBadge({ status }: { status: string }) {
-  const positive = [
-    "Published",
-    "PUBLISHED",
-    "Active",
-    "MASTER",
-    "Delivered",
-  ].includes(status);
-  const warning = [
-    "DRAFT",
-    "Draft saved",
-    "Unsaved changes",
-    "Out of stock",
-    "Disabled",
-  ].includes(status);
+  const { label, tone } = statusPresentation(status);
   return (
     <span
-      className={`${styles.status} ${positive ? styles.positive : warning ? styles.warning : ""}`}
+      className={`${styles.status} ${tone === "neutral" ? "" : styles[tone]}`}
+      title={
+        label === "Low stock"
+          ? "Stock sufficient for five minimum purchase quantities or fewer."
+          : undefined
+      }
     >
-      {status.replaceAll("_", " ")}
+      {label}
     </span>
   );
 }
@@ -78,20 +71,24 @@ export function DataTable({
           ?.click();
       }}
     >
-      <table className={styles.table}>{children}</table>
+      <table className={styles.table} role="table">
+        {children}
+      </table>
     </div>
   );
 }
 export function FilterBar({
   children,
   onSubmit,
+  compact = false,
 }: {
   children: ReactNode;
   onSubmit: React.FormEventHandler<HTMLFormElement>;
+  compact?: boolean;
 }) {
   return (
     <form
-      className={styles.toolbar}
+      className={`${styles.toolbar} ${compact ? styles.compactToolbar : ""}`}
       onSubmit={onSubmit}
       aria-label="Resource filters"
     >
@@ -102,5 +99,74 @@ export function FilterBar({
 export function SaveBar({ children }: { children: ReactNode }) {
   return (
     <div className={`${styles.actions} ${styles.saveBar}`}>{children}</div>
+  );
+}
+
+export function AdminSection({
+  title,
+  description,
+  children,
+}: {
+  title: string;
+  description?: string;
+  children: ReactNode;
+}) {
+  return (
+    <section className={styles.adminSection}>
+      <header>
+        <h2>{title}</h2>
+        {description && <p>{description}</p>}
+      </header>
+      {children}
+    </section>
+  );
+}
+export function FormSection({
+  title,
+  description,
+  children,
+}: {
+  title: string;
+  description?: string;
+  children: ReactNode;
+}) {
+  return (
+    <fieldset className={styles.formSection}>
+      <legend>{title}</legend>
+      {description && <p>{description}</p>}
+      <div className={styles.fieldGrid}>{children}</div>
+    </fieldset>
+  );
+}
+export function EmptyState({
+  title,
+  children,
+}: {
+  title: string;
+  children: ReactNode;
+}) {
+  return (
+    <div className={styles.emptyState}>
+      <strong>{title}</strong>
+      <div>{children}</div>
+    </div>
+  );
+}
+export function TableLoading() {
+  return (
+    <div
+      className={styles.tableLoading}
+      role="status"
+      aria-label="Loading records"
+    >
+      <span className="sr-only">Loading records…</span>
+      {Array.from({ length: 6 }, (_, i) => (
+        <div key={i} aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </div>
+      ))}
+    </div>
   );
 }

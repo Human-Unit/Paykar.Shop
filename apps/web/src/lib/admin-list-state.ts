@@ -37,8 +37,14 @@ export function adminListParameters(
     if (Number.isSafeInteger(category) && category > 0)
       result.set("category_id", String(category));
     const stock = source.get("stock");
-    if (stock && ["all", "available", "empty"].includes(stock))
+    if (stock && ["all", "available", "empty", "low"].includes(stock))
       result.set("stock", stock);
+    const view = source.get("view");
+    if (view && ["all", "active", "problems", "empty"].includes(view))
+      result.set("view", view);
+    const measurement = source.get("measurement");
+    if (measurement && ["PIECE", "WEIGHT", "DUAL"].includes(measurement))
+      result.set("measurement", measurement);
     if (kind === "promotions") result.set("sale", "true");
   }
   return result;

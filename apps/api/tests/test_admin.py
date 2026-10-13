@@ -20,6 +20,7 @@ from app.models import (
     Category,
     DesignConfig,
     LoginLimit,
+    Order,
     Product,
 )
 from app.schemas.design import PaykarDesign
@@ -484,3 +485,78 @@ async def test_admin_small_lists_preserve_array_and_support_paging(administratio
     empty = await client.get(f"/api/v1/admin/{resource}?page=1&q=owned-nonexistent-qa-record")
     assert empty.json()["total"] == 0 and empty.json()["items"] == []
     assert (await client.get(f"/api/v1/admin/{resource}?sort=arbitrary")).status_code == 422
+
+
+@pytest.mark.asyncio
+async def test_marketplace_problem_filters_preserve_grocery_units(administration):
+    client, sessions, _, product_id, _ = administration
+    await sign_in(administration, "ADMIN")
+    async with sessions.begin() as session:
+        product = await session.get(Product, product_id)
+        product.measurement_mode = "DUAL"
+        product.price_unit = "KG"
+        product.average_piece_weight_g = 180
+        product.quantity_step = 100
+        product.minimum_quantity = 100
+        product.stock_quantity = "0.500"
+        sku = product.sku
+    query = f"/api/v1/admin/products?q={sku}"
+    value = (await client.get(f"{query}&stock=low&measurement=DUAL&view=problems")).json()
+    assert value["total"] == 1
+    assert value["items"][0]["low_stock"] is True
+    assert value["items"][0]["invalid_measurement"] is False
+    assert value["items"][0]["missing_image"] is True
+    assert (await client.get(f"{query}&measurement=PIECE")).json()["total"] == 0
+    assert (await client.get(f"{query}&stock=empty")).json()["total"] == 0
+    async with sessions.begin() as session:
+        product = await session.get(Product, product_id)
+        product.minimum_quantity = 150  # DB permits this; the API schema rejects it.
+    invalid = (await client.get(f"{query}&view=problems")).json()["items"][0]
+    assert invalid["invalid_measurement"] is True
+    for suffix in ["measurement=UNKNOWN", "view=unknown", "stock=reserved"]:
+        assert (await client.get(f"{query}&{suffix}")).status_code == 422
+
+
+@pytest.mark.asyncio
+async def test_marketplace_overview_today_and_status_counts_are_real(administration):
+    client, sessions, *_ = administration
+    await sign_in(administration)
+    before = (await client.get("/api/v1/admin/overview")).json()
+    identifiers = [uuid4(), uuid4()]
+    try:
+        async with sessions.begin() as session:
+            for identifier, status in zip(identifiers, ["pending", "cancelled"], strict=True):
+                session.add(
+                    Order(
+                        id=identifier,
+                        customer_name="Owned admin test",
+                        phone="+992900000000",
+                        address="Owned test address",
+                        subtotal=10,
+                        delivery_price=20,
+                        total=30,
+                        status=status,
+                        payment_method="cash",
+                        payment_status="due_on_delivery",
+                        created_at=datetime.now(UTC),
+                    )
+                )
+        value = (await client.get("/api/v1/admin/overview")).json()
+        assert value["today"]["orders"] == before["today"]["orders"] + 1
+        assert float(value["today"]["order_value"]) == float(before["today"]["order_value"]) + 30
+        assert (
+            value["order_status_counts"]["pending"]
+            == before["order_status_counts"].get("pending", 0) + 1
+        )
+        assert value["attention"]["low_stock"] >= 1
+        assert len(value["latest_orders"]) <= 5
+        listed = (
+            await client.get(f"/api/v1/admin/orders?q={identifiers[0]}&status=pending")
+        ).json()
+        assert listed["total"] == 1 and listed["status_counts"]["pending"] == 1
+        assert listed["items"][0]["customer_name"] == "Owned admin test"
+        assert listed["items"][0]["phone"] == "+992900000000"
+        assert (await client.get("/api/v1/admin/orders?status=picking")).status_code == 422
+    finally:
+        async with sessions.begin() as session:
+            await session.execute(delete(Order).where(Order.id.in_(identifiers)))

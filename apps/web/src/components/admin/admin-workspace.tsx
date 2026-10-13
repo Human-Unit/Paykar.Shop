@@ -12,15 +12,40 @@ import {
   FilterBar,
   StatusBadge,
   SaveBar,
+  FormSection,
+  TableLoading,
+  EmptyState,
 } from "./admin-primitives";
 import { AdminDrawer } from "./admin-drawer";
+import { ArrowUpRight } from "lucide-react";
 import styles from "./admin.module.css";
-import type { OrderItem } from "@/lib/api";
-import { orderQuantity } from "@/lib/measurement";
+import {
+  money,
+  quantity,
+  stockUnit,
+  measurementLabel,
+  dateTime,
+  orderStatuses,
+} from "@/lib/admin-presentation";
+import {
+  OverviewView,
+  RecordView,
+  SettingsView,
+  OrderView,
+  ProductIdentity,
+  ProductState,
+  type OverviewData,
+  type AdminOrder,
+} from "./admin-resource-views";
 
 type Value = string | number | boolean | null;
 type RecordData = Record<string, Value>;
-type PageData = { items: RecordData[]; total: number; page_size: number };
+type PageData = {
+  items: RecordData[];
+  total: number;
+  page_size: number;
+  status_counts?: Record<string, number>;
+};
 export type WorkspaceKind =
   | "overview"
   | "products"
@@ -181,48 +206,120 @@ const fields: Partial<Record<WorkspaceKind, Field[]>> = {
 const columns: Partial<Record<WorkspaceKind, [string, string][]>> = {
   products: [
     ["name", "Product"],
-    ["sku", "SKU"],
-    ["price", "Price (TJS)"],
+    ["price", "Price"],
     ["stock_quantity", "Stock"],
-    ["is_active", "Active"],
+    ["is_active", "Status"],
   ],
   promotions: [
     ["name", "Product"],
     ["price", "Sale price"],
     ["old_price", "Previous price"],
-    ["is_active", "Active"],
+    ["is_active", "Status"],
   ],
   inventory: [
     ["name", "Product"],
-    ["stock_quantity", "Stock"],
-    ["is_active", "Active"],
+    ["stock_quantity", "Available"],
+    ["is_active", "Status"],
   ],
   categories: [
     ["name", "Category"],
     ["slug", "URL slug"],
-    ["parent_id", "Parent ID"],
+    ["parent_id", "Parent"],
   ],
   orders: [
-    ["id", "Order UUID"],
+    ["id", "Order"],
+    ["customer_name", "Customer"],
     ["status", "Status"],
     ["item_count", "Items"],
-    ["total", "Total (TJS)"],
+    ["total", "Total"],
     ["created_at", "Created"],
   ],
   stores: [
-    ["short_address", "Location"],
+    ["short_address", "Store"],
     ["address", "Address"],
-    ["latitude", "Latitude"],
-    ["longitude", "Longitude"],
-    ["is_active", "Enabled"],
+    ["city", "City"],
+    ["is_active", "Status"],
   ],
   administrators: [
     ["display_name", "Administrator"],
-    ["email", "Email"],
     ["role", "Role"],
-    ["is_active", "Active"],
+    ["is_active", "Status"],
+    ["last_login_at", "Last sign-in"],
+    ["created_at", "Created"],
   ],
 };
+type FieldGroup = { title: string; keys: string[]; description?: string };
+function fieldGroups(kind: WorkspaceKind): FieldGroup[] {
+  if (["products", "promotions"].includes(kind))
+    return [
+      {
+        title: "Main information",
+        keys: ["name", "sku", "slug", "category_id", "description", "unit"],
+      },
+      {
+        title: "Pricing",
+        keys: ["price", "old_price"],
+        description:
+          "Prices follow the pricing unit. Leave previous price blank to remove the discount.",
+      },
+      {
+        title: "Measurement",
+        keys: [
+          "measurement_mode",
+          "price_unit",
+          "average_piece_weight_g",
+          "quantity_step",
+          "minimum_quantity",
+        ],
+        description:
+          "Weight steps/minimums use grams. Piece estimates require an average weight. Changing mode does not convert price or stock.",
+      },
+      { title: "Inventory", keys: ["stock_quantity"] },
+      { title: "Media", keys: ["image_url"] },
+      {
+        title: "Status",
+        keys: ["is_active"],
+        description:
+          "Disabling removes the product from the public catalog. Records are retained.",
+      },
+    ];
+  if (kind === "stores")
+    return [
+      { title: "Location", keys: ["name", "address", "short_address", "city"] },
+      { title: "Map position", keys: ["latitude", "longitude"] },
+      { title: "Directory status", keys: ["is_active"] },
+    ];
+  if (kind === "administrators")
+    return [
+      { title: "Account", keys: ["email", "display_name"] },
+      { title: "Access", keys: ["role", "is_active"] },
+      {
+        title: "Security",
+        keys: ["password"],
+        description:
+          "Leave the password blank to retain the existing password when editing.",
+      },
+    ];
+  if (kind === "inventory")
+    return [
+      {
+        title: "Stock adjustment",
+        keys: ["stock_quantity"],
+        description:
+          "Enter the new absolute stock balance. Concurrent stock changes require reload; no reservations are tracked.",
+      },
+    ];
+  return [{ title: "Category", keys: ["name", "slug", "parent_id"] }];
+}
+function numeric(key: string) {
+  return [
+    "price",
+    "old_price",
+    "stock_quantity",
+    "item_count",
+    "total",
+  ].includes(key);
+}
 function display(value: Value | undefined) {
   return value === null || value === undefined
     ? "—"
@@ -284,16 +381,19 @@ export function AdminWorkspace({
     if (!editDirty || window.confirm("Discard unsaved record edits?")) {
       setEdit(null);
       setEditDirty(false);
+      if (recordId === "new") router.push(`/admin/${kind}`);
     }
   }
 
-  const [data, setData] = useState<RecordData[] | RecordData | PageData | null>(
-    null,
-  );
+  const [response, setData] = useState<
+    RecordData[] | RecordData | PageData | null
+  >(null);
+  const [responsePath, setResponsePath] = useState("");
   const [categories, setCategories] = useState<RecordData[]>([]);
   const [assets, setAssets] = useState<string[]>([]);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
+  const [stockConflict, setStockConflict] = useState(false);
   const [revision, setRevision] = useState(0);
   const [edit, setEdit] = useState<RecordData | null>(
     recordId === "new" ? newProduct() : null,
@@ -306,6 +406,7 @@ export function AdminWorkspace({
       ? "master/administrators"
       : kind;
   const path = `${endpoint}${orderId ? `/${orderId}` : recordId ? (recordId === "new" ? "" : `/${recordId}`) : `?${query}`}`;
+  const data = responsePath === path ? response : null;
   useEffect(() => {
     const controller = new AbortController();
     const load = async () => {
@@ -337,6 +438,7 @@ export function AdminWorkspace({
             : Promise.resolve([]),
         ]);
         setData(result);
+        setResponsePath(path);
         setCategories(options);
         setAssets(images);
         setError("");
@@ -372,15 +474,19 @@ export function AdminWorkspace({
     };
   }, [editDirty]);
   const heading =
-    recordId === "new"
-      ? "Create product"
-      : recordId
-        ? `${kind === "stores" ? "Store" : "Product"} details`
-        : orderId
-          ? "Order details"
-          : kind === "administrators"
-            ? "Administrators"
-            : kind.charAt(0).toUpperCase() + kind.slice(1);
+    recordId && recordId !== "new" && data
+      ? String(
+          (data as RecordData)[kind === "stores" ? "short_address" : "name"],
+        )
+      : recordId === "new"
+        ? "Create product"
+        : recordId
+          ? `${kind === "stores" ? "Store" : "Product"} details`
+          : orderId
+            ? "Order details"
+            : kind === "administrators"
+              ? "Administrators"
+              : kind.charAt(0).toUpperCase() + kind.slice(1);
   const list: RecordData[] = Array.isArray(data)
     ? data
     : paginated && data && "items" in data
@@ -390,6 +496,26 @@ export function AdminWorkspace({
     paginated && data ? Number((data as PageData).total) : list.length;
   function refresh() {
     setRevision(revision + 1);
+  }
+  function reloadFailedResource() {
+    if (stockConflict) {
+      if (
+        editDirty &&
+        !window.confirm(
+          "Reload current stock and discard unsaved record edits?",
+        )
+      )
+        return;
+      setEdit(null);
+      setEditDirty(false);
+      setStockConflict(false);
+      requestAnimationFrame(() =>
+        document.querySelector<HTMLElement>("#admin-main h1")?.focus(),
+      );
+    }
+    setError("");
+    setData(null);
+    refresh();
   }
   async function save(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -433,7 +559,16 @@ export function AdminWorkspace({
       setError("A password of at least 12 characters is required");
       return;
     }
+    if (
+      edit.is_active === true &&
+      body.is_active === false &&
+      !window.confirm(
+        "Disable this record? It will no longer be active. Existing records are retained.",
+      )
+    )
+      return;
     setPending(true);
+    setStockConflict(false);
     setError("");
     setNotice("");
     try {
@@ -449,6 +584,13 @@ export function AdminWorkspace({
         router.replace(`/admin/${kind}/${result.id}`);
       refresh();
     } catch (cause) {
+      if (
+        cause instanceof AdminError &&
+        cause.status === 409 &&
+        cause.message.startsWith("Stock changed") &&
+        ["products", "promotions", "inventory"].includes(kind)
+      )
+        setStockConflict(true);
       if (cause instanceof AdminError && cause.status === 401)
         router.replace("/admin/login");
       else setError(cause instanceof Error ? cause.message : "Save failed");
@@ -456,9 +598,268 @@ export function AdminWorkspace({
       setPending(false);
     }
   }
+  function renderField(field: Field) {
+    const current = edit;
+    if (!current) return null;
+    return (
+      <label
+        key={`${current.id || "new"}-${field.key}-${["price_unit", "quantity_step", "minimum_quantity"].includes(field.key) ? current.measurement_mode : ""}`}
+      >
+        {field.label}
+        {field.type === "select" ? (
+          <select
+            name={field.key}
+            aria-label={field.label}
+            defaultValue={String(edit[field.key] || "")}
+            required={field.required}
+            disabled={field.key === "price_unit"}
+            onChange={
+              field.key === "measurement_mode"
+                ? (event) =>
+                    setEdit({
+                      ...current,
+                      measurement_mode: event.target.value,
+                      price_unit:
+                        event.target.value === "PIECE" ? "PIECE" : "KG",
+                      quantity_step: event.target.value === "PIECE" ? 1 : 100,
+                      minimum_quantity:
+                        event.target.value === "PIECE" ? 1 : 100,
+                      average_piece_weight_g: null,
+                    })
+                : undefined
+            }
+          >
+            {field.key === "image_url" ? (
+              <>
+                <option value="">Fallback image</option>
+                {assets.map((asset) => (
+                  <option key={asset} value={asset}>
+                    {asset.split("/").at(-1)}
+                  </option>
+                ))}
+              </>
+            ) : (
+              <>
+                {!field.options && <option value="">Select category</option>}
+                {field.options
+                  ? field.options.map((value) => (
+                      <option key={value} value={value}>
+                        {field.key === "measurement_mode"
+                          ? measurementLabel(value)
+                          : field.key === "price_unit"
+                            ? value === "KG"
+                              ? "Kilogram"
+                              : "Piece"
+                            : value}
+                      </option>
+                    ))
+                  : categories
+                      .filter(
+                        (c) => c.id !== current.id || field.key !== "parent_id",
+                      )
+                      .map((c) => (
+                        <option key={Number(c.id)} value={String(c.id)}>
+                          {c.name}
+                        </option>
+                      ))}
+              </>
+            )}
+          </select>
+        ) : field.type === "textarea" ? (
+          <textarea
+            name={field.key}
+            aria-label={field.label}
+            defaultValue={String(edit[field.key] || "")}
+            maxLength={10000}
+          />
+        ) : (
+          <input
+            name={field.key}
+            aria-label={field.label}
+            type={field.type || (field.key === "email" ? "email" : "text")}
+            defaultValue={
+              field.type === "checkbox"
+                ? undefined
+                : String(edit[field.key] ?? "")
+            }
+            defaultChecked={
+              field.type === "checkbox" ? !!edit[field.key] : undefined
+            }
+            required={field.required}
+            min={field.min}
+            max={field.max}
+            step={field.step}
+            minLength={field.type === "password" ? 12 : undefined}
+            maxLength={field.key === "image_url" ? 300 : 256}
+            autoComplete={field.type === "password" ? "new-password" : "off"}
+          />
+        )}
+      </label>
+    );
+  }
+  function changeView(key: string, value: string) {
+    const next = new URLSearchParams(listState);
+    if (value) next.set(key, value);
+    else next.delete(key);
+    if (key === "view") next.delete("stock");
+    next.set("page", "1");
+    updateList(next);
+  }
+  function resourceTabs() {
+    if (kind === "orders") {
+      const counts = (data as PageData | null)?.status_counts;
+      return (
+        <nav className={styles.tabs} aria-label="Order status views">
+          {[["", "All"], ...Object.entries(orderStatuses)].map(
+            ([value, label]) => (
+              <button
+                type="button"
+                key={value}
+                aria-current={
+                  (parameters.get("status") || "") === value
+                    ? "page"
+                    : undefined
+                }
+                onClick={() => changeView("status", value)}
+              >
+                {label}
+                {counts && (
+                  <small>
+                    {value
+                      ? counts[value] || 0
+                      : Object.values(counts).reduce((a, b) => a + b, 0)}
+                  </small>
+                )}
+              </button>
+            ),
+          )}
+        </nav>
+      );
+    }
+    if (kind === "inventory")
+      return (
+        <nav className={styles.tabs} aria-label="Inventory views">
+          {[
+            ["all", "All"],
+            ["low", "Low stock"],
+            ["empty", "Out of stock"],
+          ].map(([value, label]) => (
+            <button
+              type="button"
+              key={value}
+              aria-current={
+                (parameters.get("stock") || "all") === value
+                  ? "page"
+                  : undefined
+              }
+              onClick={() => changeView("stock", value)}
+            >
+              {label}
+            </button>
+          ))}
+        </nav>
+      );
+    if (["products", "promotions"].includes(kind))
+      return (
+        <nav className={styles.tabs} aria-label="Product views">
+          {[
+            ["all", "All"],
+            ["active", "Active"],
+            ["problems", "Problems"],
+            ["empty", "Out of stock"],
+          ].map(([value, label]) => (
+            <button
+              type="button"
+              key={value}
+              aria-current={
+                (parameters.get("view") || "all") === value ? "page" : undefined
+              }
+              onClick={() => changeView("view", value)}
+            >
+              {label}
+            </button>
+          ))}
+        </nav>
+      );
+    return null;
+  }
+  function cell(item: RecordData, key: string) {
+    if (
+      key === "name" &&
+      ["products", "promotions", "inventory"].includes(kind)
+    )
+      return (
+        <ProductIdentity
+          record={item}
+          href={`/admin/${kind === "inventory" ? "products" : kind}/${item.id}`}
+        />
+      );
+    if (key === "is_active")
+      return ["products", "promotions", "inventory"].includes(kind) ? (
+        <ProductState record={item} />
+      ) : (
+        <StatusBadge status={item[key] ? "Active" : "Disabled"} />
+      );
+    if (key === "status" || key === "role")
+      return <StatusBadge status={display(item[key])} />;
+    if (key === "price" || key === "old_price")
+      return (
+        <div>
+          {money(item[key])}
+          {item[key] != null && (
+            <span className={styles.metadata}>/ {stockUnit(item)}</span>
+          )}
+        </div>
+      );
+    if (key === "stock_quantity") return quantity(item[key], item);
+    if (key === "total") return money(item[key]);
+    if (key === "created_at" || key === "last_login_at")
+      return item[key] ? dateTime(item[key]) : "Never signed in";
+    if (kind === "orders" && key === "id")
+      return (
+        <Link
+          className={styles.primaryColumn}
+          title={String(item.id)}
+          href={`/admin/orders/${item.id}`}
+        >
+          #{String(item.id).slice(0, 8)}
+          <span className={styles.metadata}>{dateTime(item.created_at)}</span>
+        </Link>
+      );
+    if (key === "customer_name")
+      return (
+        <div>
+          <strong>{item.customer_name}</strong>
+          <span className={styles.metadata}>{item.phone}</span>
+        </div>
+      );
+    if (key === "display_name")
+      return (
+        <div>
+          <strong>{item.display_name}</strong>
+          <span className={styles.metadata}>{item.email}</span>
+        </div>
+      );
+    if (key === "short_address")
+      return (
+        <Link
+          className={styles.primaryColumn}
+          href={`/admin/stores/${item.id}`}
+        >
+          {item.short_address}
+          <span className={styles.metadata}>{item.name}</span>
+        </Link>
+      );
+    if (key === "parent_id")
+      return item[key]
+        ? categories.find((category) => category.id === item[key])?.name ||
+            display(item[key])
+        : "Top-level";
+    return display(item[key]);
+  }
   return (
     <>
-      <AdminHeader title={heading}>
+      <AdminHeader title={heading} eyebrow="">
         {!recordId &&
           ["products", "categories", "administrators"].includes(kind) && (
             <div className={styles.actions}>
@@ -498,9 +899,9 @@ export function AdminWorkspace({
           previous price to remove a promotion.
         </p>
       )}
-      {error && (
+      {error && !edit && (
         <div className={styles.message} role="alert">
-          {error} <button onClick={refresh}>Reload</button>
+          {error} <button onClick={reloadFailedResource}>Reload</button>
         </div>
       )}
       {notice && (
@@ -508,85 +909,32 @@ export function AdminWorkspace({
           {notice}
         </p>
       )}
-      {!data && !error && <p role="status">Loading workspace…</p>}
+      {!data && !error && !paginated && <TableLoading />}
       {kind === "overview" && data && (
-        <>
-          <div className={styles.metrics}>
-            {Object.entries(data).map(([key, value]) => (
-              <div className={styles.panel} key={key}>
-                <span>{key.replaceAll("_", " ")}</span>
-                <strong>{display(value as Value)}</strong>
-              </div>
-            ))}
-          </div>
-          <div className={styles.actions}>
-            <Link href="/admin/products">Manage products →</Link>
-            <Link href="/admin/orders">View orders →</Link>
-            <Link href="/admin/promotions">Edit promotions →</Link>
-          </div>
-        </>
+        <OverviewView data={data as unknown as OverviewData} />
       )}
-      {(kind === "settings" ||
-        orderId ||
-        (recordId && recordId !== "new" && !edit)) &&
-        data && (
-          <div className={styles.panel}>
-            {recordId && (
-              <button
-                className={styles.primary}
-                onClick={() => {
-                  setEdit(data as RecordData);
-                  setEditDirty(false);
-                }}
-              >
-                Edit record
-              </button>
-            )}
-            <dl className={styles.detail}>
-              {Object.entries(data)
-                .filter(([key]) => key !== "items")
-                .map(([key, value]) => (
-                  <div key={key} style={{ display: "contents" }}>
-                    <dt>{key.replaceAll("_", " ")}</dt>
-                    <dd>{display(value as Value)}</dd>
-                  </div>
-                ))}
-            </dl>
-            {orderId && "items" in data && (
-              <ul>
-                {(
-                  data as unknown as {
-                    items: OrderItem[];
-                  }
-                ).items.map((item, i) => (
-                  <li key={i}>
-                    {item.product_name} ·{" "}
-                    {orderQuantity(item, (label) =>
-                      label === "кг" ? "kg" : "pcs",
-                    )}{" "}
-                    · {item.is_estimated ? "≈ " : ""}
-                    {item.total_price} TJS
-                    <small>
-                      Price: {item.unit_price} TJS /{" "}
-                      {item.price_unit_snapshot === "KG" ? "kg" : "pcs"}.{" "}
-                      {item.price_unit_snapshot === "KG" && (
-                        <>
-                          Packed:{" "}
-                          {item.actual_weight_g == null
-                            ? "Not recorded"
-                            : `${item.actual_weight_g} g`}
-                          . Estimated: {item.estimated_weight_g} g.
-                        </>
-                      )}
-                    </small>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        )}
+      {kind === "settings" && data && (
+        <SettingsView record={data as RecordData} />
+      )}
+      {orderId && data && <OrderView record={data as unknown as AdminOrder} />}
+      {recordId && recordId !== "new" && !edit && data && (
+        <RecordView
+          record={data as RecordData}
+          categoryName={String(
+            categories.find(
+              (category) => category.id === (data as RecordData).category_id,
+            )?.name || "",
+          )}
+          kind={kind}
+          edit={() => {
+            setEdit(data as RecordData);
+            setEditDirty(false);
+          }}
+        />
+      )}
       {paginated && (
         <FilterBar
+          compact={!["products", "promotions", "inventory"].includes(kind)}
           onSubmit={(event) => {
             event.preventDefault();
             const form = new FormData(event.currentTarget),
@@ -598,46 +946,47 @@ export function AdminWorkspace({
           }}
         >
           <div key={`${kind}:${query}`} className={styles.filterFields}>
-            <label>
-              {kind === "orders"
-                ? "Search order reference"
-                : ["products", "promotions", "inventory"].includes(kind)
-                  ? "Search name / SKU"
-                  : "Search records"}
+            <label className={styles.searchField}>
+              <span className="sr-only">
+                {kind === "orders"
+                  ? "Search order reference"
+                  : ["products", "promotions", "inventory"].includes(kind)
+                    ? "Search by name or SKU"
+                    : "Search records"}
+              </span>
               <input
                 name="q"
                 type="search"
+                placeholder={
+                  kind === "orders"
+                    ? "Search order reference"
+                    : ["products", "promotions", "inventory"].includes(kind)
+                      ? "Search by name or SKU"
+                      : "Search records"
+                }
                 maxLength={100}
                 defaultValue={parameters.get("q") || ""}
               />
             </label>
+            {resourceTabs()}
+            <input
+              type="hidden"
+              name="view"
+              value={parameters.get("view") || "all"}
+            />
             {kind === "orders" ? (
-              <label>
-                Status
-                <select
-                  name="status"
-                  defaultValue={parameters.get("status") || ""}
-                >
-                  <option value="">All statuses</option>
-                  {[
-                    "pending",
-                    "confirmed",
-                    "delivering",
-                    "completed",
-                    "cancelled",
-                  ].map((status) => (
-                    <option key={status} value={status}>
-                      {status}
-                    </option>
-                  ))}
-                </select>
-              </label>
+              <input
+                type="hidden"
+                name="status"
+                value={parameters.get("status") || ""}
+              />
             ) : ["products", "promotions", "inventory"].includes(kind) ? (
               <>
                 <label>
                   Category
                   <select
                     name="category_id"
+                    aria-label="Category"
                     defaultValue={parameters.get("category_id") || ""}
                   >
                     <option value="">All categories</option>
@@ -649,14 +998,31 @@ export function AdminWorkspace({
                   </select>
                 </label>
                 <label>
+                  Measurement
+                  <select
+                    name="measurement"
+                    aria-label="Measurement"
+                    defaultValue={parameters.get("measurement") || "all"}
+                  >
+                    <option value="all">All sale modes</option>
+                    {["PIECE", "WEIGHT", "DUAL"].map((value) => (
+                      <option value={value} key={value}>
+                        {measurementLabel(value)}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label>
                   Stock
                   <select
                     name="stock"
+                    aria-label="Stock"
                     defaultValue={parameters.get("stock") || "all"}
                   >
                     <option value="all">All stock</option>
                     <option value="available">Available</option>
                     <option value="empty">Out of stock</option>
+                    <option value="low">Low stock</option>
                   </select>
                 </label>
               </>
@@ -705,21 +1071,34 @@ export function AdminWorkspace({
           </button>
         </FilterBar>
       )}
+      {paginated && !data && !error && (
+        <>
+          <p className={styles.metadata}>Loading records…</p>
+          <TableLoading />
+        </>
+      )}
       {edit && (
         <EditorSurface
           kind={fullEditor ? "page" : "drawer"}
           pending={pending}
           close={cancelEdit}
         >
-          {["products", "promotions", "inventory"].includes(kind) && (
-            <p>
-              Price and stock unit:{" "}
-              {edit.price_unit === "KG"
-                ? "kilograms (stock accepts 0.001 kg)"
-                : "pieces"}
-              . Weight minimum and step use grams. Review stock and price when
-              changing sale mode; values are not automatically converted.
-            </p>
+          {error && (
+            <div className={styles.message} role="alert">
+              {error}{" "}
+              <button onClick={reloadFailedResource} disabled={pending}>
+                Reload
+              </button>
+            </div>
+          )}
+          {kind === "inventory" && (
+            <div className={styles.stockCurrent}>
+              <span className={styles.metadata}>Current stock</span>
+              <strong>{quantity(edit.stock_quantity, edit)}</strong>
+              <span className={styles.metadata}>
+                {measurementLabel(edit.measurement_mode)}
+              </span>
+            </div>
           )}
           <h2>
             {edit.id
@@ -731,117 +1110,27 @@ export function AdminWorkspace({
             onSubmit={save}
             onChange={() => setEditDirty(true)}
           >
-            {(fields[kind] || [])
-              .filter(
-                (field) =>
-                  (field.key !== "average_piece_weight_g" ||
-                    edit.measurement_mode === "DUAL") &&
-                  !(
-                    kind === "administrators" &&
-                    ((!edit.id && field.key === "is_active") ||
-                      (edit.id && field.key === "email"))
-                  ),
-              )
-              .map((field) => (
-                <label
-                  key={`${edit.id || "new"}-${field.key}-${["price_unit", "quantity_step", "minimum_quantity"].includes(field.key) ? edit.measurement_mode : ""}`}
-                >
-                  {field.label}
-                  {field.type === "select" ? (
-                    <select
-                      name={field.key}
-                      defaultValue={String(edit[field.key] || "")}
-                      required={field.required}
-                      disabled={field.key === "price_unit"}
-                      onChange={
-                        field.key === "measurement_mode"
-                          ? (event) =>
-                              setEdit({
-                                ...edit,
-                                measurement_mode: event.target.value,
-                                price_unit:
-                                  event.target.value === "PIECE"
-                                    ? "PIECE"
-                                    : "KG",
-                                quantity_step:
-                                  event.target.value === "PIECE" ? 1 : 100,
-                                minimum_quantity:
-                                  event.target.value === "PIECE" ? 1 : 100,
-                                average_piece_weight_g: null,
-                              })
-                          : undefined
-                      }
-                    >
-                      {field.key === "image_url" ? (
-                        <>
-                          <option value="">Fallback image</option>
-                          {assets.map((asset) => (
-                            <option key={asset} value={asset}>
-                              {asset.split("/").at(-1)}
-                            </option>
-                          ))}
-                        </>
-                      ) : (
-                        <>
-                          {!field.options && (
-                            <option value="">Select category</option>
-                          )}
-                          {field.options
-                            ? field.options.map((value) => (
-                                <option key={value}>{value}</option>
-                              ))
-                            : categories
-                                .filter(
-                                  (c) =>
-                                    c.id !== edit.id ||
-                                    field.key !== "parent_id",
-                                )
-                                .map((c) => (
-                                  <option
-                                    key={Number(c.id)}
-                                    value={String(c.id)}
-                                  >
-                                    {c.name}
-                                  </option>
-                                ))}
-                        </>
-                      )}
-                    </select>
-                  ) : field.type === "textarea" ? (
-                    <textarea
-                      name={field.key}
-                      defaultValue={String(edit[field.key] || "")}
-                      maxLength={10000}
-                    />
-                  ) : (
-                    <input
-                      name={field.key}
-                      type={
-                        field.type || (field.key === "email" ? "email" : "text")
-                      }
-                      defaultValue={
-                        field.type === "checkbox"
-                          ? undefined
-                          : String(edit[field.key] ?? "")
-                      }
-                      defaultChecked={
-                        field.type === "checkbox"
-                          ? !!edit[field.key]
-                          : undefined
-                      }
-                      required={field.required}
-                      min={field.min}
-                      max={field.max}
-                      step={field.step}
-                      minLength={field.type === "password" ? 12 : undefined}
-                      maxLength={field.key === "image_url" ? 300 : 256}
-                      autoComplete={
-                        field.type === "password" ? "new-password" : "off"
-                      }
-                    />
-                  )}
-                </label>
-              ))}
+            {fieldGroups(kind).map((group) => (
+              <FormSection
+                key={group.title}
+                title={group.title}
+                description={group.description}
+              >
+                {(fields[kind] || [])
+                  .filter(
+                    (field) =>
+                      group.keys.includes(field.key) &&
+                      (field.key !== "average_piece_weight_g" ||
+                        edit.measurement_mode === "DUAL") &&
+                      !(
+                        kind === "administrators" &&
+                        ((!edit.id && field.key === "is_active") ||
+                          (edit.id && field.key === "email"))
+                      ),
+                  )
+                  .map(renderField)}
+              </FormSection>
+            ))}
             <SaveBar>
               <button className={styles.primary} disabled={pending}>
                 {pending ? "Saving…" : "Save changes"}
@@ -855,12 +1144,36 @@ export function AdminWorkspace({
       )}
       {columns[kind] && !orderId && !recordId && data && (
         <>
-          <p>{total} records</p>
+          <p className={styles.metadata}>
+            {total}{" "}
+            {kind === "promotions"
+              ? "discounted products"
+              : kind === "administrators"
+                ? "administrators"
+                : kind}
+            {kind === "inventory" && parameters.get("view") === "active"
+              ? " · active products only"
+              : ""}
+          </p>
+          {kind === "inventory" && (
+            <p className={styles.metadata}>
+              Low stock: positive stock sufficient for five minimum purchase
+              quantities or fewer. Stock unit is kg or pcs; reservations are not
+              tracked.
+            </p>
+          )}
           <DataTable label={`${heading} table`}>
             <thead>
               <tr>
                 {columns[kind]?.map(([key, label]) => (
-                  <th scope="col" key={key}>
+                  <th
+                    scope="col"
+                    key={key}
+                    data-numeric={numeric(key) || undefined}
+                    data-priority={
+                      ["created_at", "city"].includes(key) ? "low" : undefined
+                    }
+                  >
                     {label}
                   </th>
                 ))}
@@ -870,84 +1183,88 @@ export function AdminWorkspace({
             <tbody>
               {list.map((item) => (
                 <tr key={String(item.id)}>
-                  {columns[kind]?.map(([key]) => (
-                    <td key={key}>
-                      {key === "status" ||
-                      key === "is_active" ||
-                      key === "role" ? (
-                        <StatusBadge
-                          status={
-                            key === "is_active"
-                              ? item[key]
-                                ? "Active"
-                                : "Disabled"
-                              : display(item[key])
-                          }
-                        />
-                      ) : key === columns[kind]?.[0]?.[0] && fullEditor ? (
-                        <Link href={`/admin/${kind}/${item.id}`}>
-                          {display(item[key])}
-                        </Link>
-                      ) : (
-                        display(item[key])
-                      )}
+                  {columns[kind]?.map(([key, label]) => (
+                    <td
+                      key={key}
+                      data-label={label}
+                      data-numeric={numeric(key) || undefined}
+                      data-priority={
+                        ["created_at", "city"].includes(key) ? "low" : undefined
+                      }
+                    >
+                      {cell(item, key)}
                     </td>
                   ))}
-                  <td>
-                    {kind === "orders" ? (
-                      <Link href={`/admin/orders/${item.id}`}>
-                        View order →
-                      </Link>
-                    ) : fullEditor ? (
-                      <Link href={`/admin/${kind}/${item.id}`}>
-                        View details →
-                      </Link>
-                    ) : (
-                      <button
-                        onClick={() => {
-                          setEdit(item);
-                          setEditDirty(false);
-                          setError("");
-                        }}
-                      >
-                        Edit
-                      </button>
-                    )}
-                    {["products", "promotions"].includes(kind) && (
-                      <Link
-                        style={{ display: "block", marginTop: 8 }}
-                        href={`/product/${item.slug}`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        Preview ↗
-                      </Link>
-                    )}
+                  <td data-label="Action">
+                    <div className={styles.rowActions}>
+                      {kind === "orders" ? (
+                        <Link href={`/admin/orders/${item.id}`}>
+                          View order →
+                        </Link>
+                      ) : fullEditor ? (
+                        <Link href={`/admin/${kind}/${item.id}`}>Open →</Link>
+                      ) : (
+                        <button
+                          onClick={() => {
+                            setEdit(item);
+                            setEditDirty(false);
+                            setError("");
+                          }}
+                        >
+                          {kind === "inventory" ? "Adjust stock" : "Edit"}
+                        </button>
+                      )}
+                      {["products", "promotions"].includes(kind) && (
+                        <Link
+                          href={`/product/${item.slug}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`Preview product: ${item.name}`}
+                          title="Preview product"
+                        >
+                          <ArrowUpRight size={16} aria-hidden="true" />
+                          <span className="sr-only">Preview</span>
+                        </Link>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </DataTable>
           {list.length === 0 && (
-            <p>
-              No matching records.{" "}
-              {query
-                ? "Clear filters or adjust your search."
-                : "Create a record where available."}
-            </p>
+            <EmptyState
+              title={
+                kind === "promotions"
+                  ? "No discounted products match"
+                  : "No matching records"
+              }
+            >
+              <p>Adjust your search or clear the filters.</p>
+              <button onClick={() => updateList(new URLSearchParams())}>
+                Clear filters
+              </button>
+              {kind === "promotions" && (
+                <Link href="/admin/products">Manage product prices →</Link>
+              )}
+            </EmptyState>
           )}
           {paginated && total > 25 && (
-            <div className={styles.actions}>
-              <button disabled={page <= 1} onClick={() => setPage(page - 1)}>
-                Previous
-              </button>
-              <span>Page {page}</span>
-              <button
-                disabled={page * 25 >= total}
-                onClick={() => setPage(page + 1)}
-              >
-                Next
-              </button>
+            <div className={styles.tableFooter}>
+              <span>
+                Page {page} of {Math.ceil(total / 25)}
+              </span>
+              <div className={styles.actions}>
+                <button disabled={page <= 1} onClick={() => setPage(page - 1)}>
+                  Previous
+                </button>
+                <button
+                  disabled={page * 25 >= total}
+                  onClick={() => setPage(page + 1)}
+                >
+                  Next
+                </button>
+              </div>
             </div>
           )}
         </>

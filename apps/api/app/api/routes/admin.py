@@ -1,8 +1,9 @@
-from datetime import UTC, datetime
+from datetime import UTC, datetime, time, timedelta, timezone
+from decimal import Decimal
 from uuid import UUID
 
 from fastapi import APIRouter, HTTPException, Query, Request, Response
-from sqlalchemy import String, cast, delete, func, select, text, update
+from sqlalchemy import String, case, cast, delete, func, or_, select, text, update
 from sqlalchemy.exc import IntegrityError
 from starlette.concurrency import run_in_threadpool
 
@@ -29,6 +30,7 @@ from app.schemas.admin import (
     StoreEdit,
 )
 from app.schemas.design import PaykarDesign
+from app.schemas.measurement import Measurement
 from app.services.admin_auth import (
     COOKIE,
     Admin,
@@ -72,6 +74,42 @@ def row(value, excluded=()):
         for column in value.__table__.columns
         if column.name not in excluded
     }
+
+
+def product_problems():
+    # A read-only attention heuristic, not a reservation/reorder business policy.
+    minimum_stock = case(
+        (Product.price_unit == "KG", Product.minimum_quantity / 1000),
+        else_=Product.minimum_quantity,
+    )
+    invalid = or_(
+        (Product.price_unit == "KG") & (Product.minimum_quantity % Product.quantity_step != 0),
+        Product.quantity_step > 99000,
+        Product.minimum_quantity > 99000,
+        Product.average_piece_weight_g > 100000,
+    )
+    return {
+        "low_stock": (Product.stock_quantity > 0) & (Product.stock_quantity <= minimum_stock * 5),
+        "missing_image": Product.image_url == "",
+        "invalid_measurement": invalid,
+    }
+
+
+def product_row(product):
+    value = row(product)
+    minimum_stock = (
+        Decimal(product.minimum_quantity) / 1000
+        if product.price_unit == "KG"
+        else product.minimum_quantity
+    )
+    value["low_stock"] = 0 < product.stock_quantity <= minimum_stock * 5
+    value["missing_image"] = not product.image_url
+    try:
+        Measurement.model_validate(value)
+        value["invalid_measurement"] = False
+    except ValueError:
+        value["invalid_measurement"] = True
+    return value
 
 
 async def resource_list(session, model, conditions, ordering, page, serialize=row):
@@ -158,6 +196,43 @@ async def overview(session: Session, user: Admin):
         metrics[name] = await session.scalar(
             select(func.count()).select_from(model).where(*conditions)
         )
+    problems = product_problems()
+    metrics["attention"] = {
+        name: await session.scalar(
+            select(func.count()).select_from(Product).where(Product.is_active.is_(True), condition)
+        )
+        for name, condition in problems.items()
+    }
+    metrics["order_status_counts"] = dict(
+        (await session.execute(select(Order.status, func.count()).group_by(Order.status))).all()
+    )
+    # Store business day is UTC+05:00. These are order values, not paid revenue.
+    zone = timezone(timedelta(hours=5))
+    day = datetime.now(zone).date()
+    start = datetime.combine(day, time.min, zone)
+    count, total = (
+        await session.execute(
+            select(func.count(), func.coalesce(func.sum(Order.total), 0)).where(
+                Order.created_at >= start,
+                Order.created_at < start + timedelta(days=1),
+                Order.status != "cancelled",
+            )
+        )
+    ).one()
+    metrics["today"] = {
+        "date": str(day),
+        "timezone": "UTC+05:00",
+        "orders": count,
+        "order_value": f"{total:.2f}",
+        "average_order_value": f"{total / count:.2f}" if count else None,
+    }
+    recent = await session.scalars(
+        select(Order).order_by(Order.created_at.desc(), Order.id).limit(5)
+    )
+    metrics["latest_orders"] = [
+        {"id": item.id, "status": item.status, "total": item.total, "created_at": item.created_at}
+        for item in recent
+    ]
     return metrics
 
 
@@ -167,7 +242,9 @@ async def products(
     user: Admin,
     q: str = Query(default="", max_length=100),
     category_id: int | None = None,
-    stock: str = Query(default="all", pattern="^(all|available|empty)$"),
+    stock: str = Query(default="all", pattern="^(all|available|empty|low)$"),
+    view: str = Query(default="all", pattern="^(all|active|problems|empty)$"),
+    measurement: str = Query(default="all", pattern="^(all|PIECE|WEIGHT|DUAL)$"),
     sale: bool = False,
     sort: str = Query(default="id", pattern="^(id|name|price|-price|stock|-updated)$"),
     page: int = Query(default=1, ge=1),
@@ -181,7 +258,20 @@ async def products(
         )
     if category_id:
         conditions.append(Product.category_id == category_id)
-    if stock != "all":
+    problems = product_problems()
+    if measurement != "all":
+        conditions.append(Product.measurement_mode == measurement)
+    if view == "active":
+        conditions.append(Product.is_active.is_(True))
+    elif view == "problems":
+        conditions.append(
+            or_(Product.is_active.is_(False), Product.stock_quantity <= 0, *problems.values())
+        )
+    elif view == "empty":
+        conditions.append(Product.stock_quantity <= 0)
+    if stock == "low":
+        conditions.append(problems["low_stock"])
+    elif stock != "all":
         conditions.append(
             Product.stock_quantity > 0 if stock == "available" else Product.stock_quantity <= 0
         )
@@ -205,12 +295,17 @@ async def products(
         .offset((page - 1) * page_size)
         .limit(page_size)
     )
-    return {"items": [row(p) for p in items], "total": total, "page": page, "page_size": page_size}
+    return {
+        "items": [product_row(p) for p in items],
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+    }
 
 
 @router.get("/products/{identifier}")
 async def product_detail(identifier: int, session: Session, user: Admin):
-    return row(await record(session, Product, identifier))
+    return product_row(await record(session, Product, identifier))
 
 
 @router.post("/products", status_code=201)
@@ -317,10 +412,17 @@ async def orders(
     sort: str = Query(default="-created", pattern="^(-created|created|total|-total)$"),
 ):
     conditions = []
-    if status:
-        conditions.append(Order.status == status)
     if q:
         conditions.append(cast(Order.id, String).ilike(f"%{q.replace('%', '').replace('_', '')}%"))
+    status_counts = dict(
+        (
+            await session.execute(
+                select(Order.status, func.count()).where(*conditions).group_by(Order.status)
+            )
+        ).all()
+    )
+    if status:
+        conditions.append(Order.status == status)
     total = await session.scalar(select(func.count()).select_from(Order).where(*conditions))
     count = (
         select(func.count())
@@ -349,13 +451,21 @@ async def orders(
         result.append(
             {
                 "id": order.id,
+                "customer_name": order.customer_name,
+                "phone": order.phone,
                 "status": order.status,
                 "total": order.total,
                 "item_count": count,
                 "created_at": order.created_at,
             }
         )
-    return {"items": result, "total": total, "page": page, "page_size": 25}
+    return {
+        "items": result,
+        "total": total,
+        "page": page,
+        "page_size": 25,
+        "status_counts": status_counts,
+    }
 
 
 @router.get("/orders/{identifier}")

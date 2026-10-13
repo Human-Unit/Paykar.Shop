@@ -6,11 +6,13 @@ export function AdminDrawer({
   close,
   pending,
   label,
+  className = "",
 }: {
   children: ReactNode;
   close: () => void;
   pending: boolean;
   label: string;
+  className?: string;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   useEffect(() => {
@@ -31,7 +33,7 @@ export function AdminDrawer({
   return (
     <dialog
       ref={dialog}
-      className={`${styles.panel} ${styles.quickDrawer}`}
+      className={`${styles.panel} ${styles.quickDrawer} ${className}`}
       aria-label={label}
       onCancel={(e) => {
         e.preventDefault();

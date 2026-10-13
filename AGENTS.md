@@ -56,3 +56,27 @@ features remain frozen. Preserve accepted storefront and commerce behavior.
 - Read `docs/admin/admin-ux-rules.md` and
   `docs/admin/inline-master-design-mode.md` before extending these surfaces.
 - Do not commit or push unless separately requested.
+
+### Marketplace-style operational Admin
+
+- Operational `/admin` is light-first, neutral, compact and table-first. Keep it
+  distinct from the expressive storefront and dark Inline Master/Design Console.
+- Scope light tokens to the operational shell; never propagate them to public
+  pages or design tools. Use the existing font, 26px titles, 16–18px section
+  headings, 13–14px data text, 38px desktop and 44px touch controls.
+- Use white quiet surfaces, neutral 1px borders, 8–12px radius, 16–20px padding
+  and minimal shadow. No operational glass, glow, decorative gradients or heroes.
+- Keep desktop tables with product identity, pricing/stock units, readable statuses,
+  numeric alignment and URL-backed server filtering. Recompose mobile rows;
+  tablet/mobile sidebar is a keyboard-accessible modal with restored focus.
+- Overview is an action center. Derive attention, supported status counts and
+  monetary summaries from real records. Order value is not paid revenue.
+- Low-stock attention is a read-only heuristic: positive stock sufficient for
+  five minimum purchase quantities or fewer, respecting kg/piece units. It is
+  not a configured reorder threshold or a reservation/warehouse policy.
+- Display only supported metadata/lifecycle. No invented picking/packing stages,
+  reserved stock, promotion schedules, delivery/pickup store flags or analytics.
+- Preserve existing mutation contracts, expected-stock conflicts, grocery/order
+  snapshots, role/CSRF checks and design draft/publication isolation. New admin
+  read parameters/derived fields must remain backward compatible and tested.
+- Read `docs/admin/admin-ux-rules.md` before extending operational screens.

@@ -4,6 +4,22 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 import { adminApi, AdminError, type AdminIdentity } from "@/lib/admin-api";
+import {
+  LayoutDashboard,
+  ClipboardList,
+  Package,
+  Layers,
+  Boxes,
+  Tags,
+  Store,
+  Paintbrush,
+  Users,
+  Settings,
+  ArrowUpRight,
+  Menu,
+} from "lucide-react";
+import { AdminDrawer } from "./admin-drawer";
+import { StatusBadge } from "./admin-primitives";
 import styles from "./admin.module.css";
 
 const Identity = createContext<AdminIdentity | null>(null);
@@ -25,8 +41,8 @@ const navigationGroups = [
     links: [
       ["products", "Products"],
       ["categories", "Categories"],
-      ["promotions", "Promotions"],
       ["inventory", "Inventory"],
+      ["promotions", "Promotions"],
     ],
   },
   { label: "Locations", links: [["stores", "Stores"]] },
@@ -39,6 +55,71 @@ const navigationGroups = [
   },
   { label: "System", links: [["settings", "Settings"]] },
 ] as const;
+const navigationIcons = {
+  "": LayoutDashboard,
+  orders: ClipboardList,
+  products: Package,
+  categories: Layers,
+  inventory: Boxes,
+  promotions: Tags,
+  stores: Store,
+  "master/design": Paintbrush,
+  "master/administrators": Users,
+  settings: Settings,
+};
+
+function AdminNavigation({
+  path,
+  master,
+  operational,
+  close,
+  id,
+}: {
+  path: string;
+  master: boolean;
+  operational: boolean;
+  close: () => void;
+  id: string;
+}) {
+  return (
+    <nav id={id} aria-label="Administration" className={styles.nav}>
+      {operational && (
+        <Link href="/admin" className={styles.brand} onClick={close}>
+          PAYKAR <small>Administration</small>
+        </Link>
+      )}
+      {navigationGroups
+        .filter((group) => group.label !== "Master" || master)
+        .map((group) => (
+          <div className={styles.navGroup} key={group.label}>
+            <span>{group.label}</span>
+            {group.links.map(([href, label]) => {
+              const target = `/admin${href ? `/${href}` : ""}`,
+                active =
+                  path === target ||
+                  Boolean(href && path.startsWith(`${target}/`)),
+                Icon = navigationIcons[href];
+              return (
+                <Link
+                  href={target}
+                  key={href}
+                  aria-current={active ? "page" : undefined}
+                  onClick={close}
+                >
+                  {operational && <Icon size={17} aria-hidden="true" />}
+                  {label}
+                </Link>
+              );
+            })}
+          </div>
+        ))}
+      <Link href="/" onClick={close}>
+        {operational && <ArrowUpRight size={17} aria-hidden="true" />}Back to
+        storefront ↗
+      </Link>
+    </nav>
+  );
+}
 
 export function AdminShell({ children }: { children: React.ReactNode }) {
   const path = usePathname();
@@ -49,6 +130,9 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState(false);
   const login = path === "/admin/login";
+  const designTool =
+    path === "/admin/master/design" || path.startsWith("/admin/master/design/");
+  const rootClass = `${styles.root} ${designTool ? "" : styles.operational}`;
   useEffect(() => {
     if (login) return;
     const controller = new AbortController();
@@ -83,13 +167,13 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   }
   if (login)
     return (
-      <div className={styles.root} data-admin lang="en">
+      <div className={rootClass} data-admin lang="en">
         {children}
       </div>
     );
   if (!identity)
     return (
-      <main className={`${styles.root} ${styles.login}`} data-admin lang="en">
+      <main className={`${rootClass} ${styles.login}`} data-admin lang="en">
         <p role={error ? "alert" : "status"}>
           {error || "Checking administrative session…"}
         </p>
@@ -99,64 +183,57 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
     );
   const restricted =
     path.startsWith("/admin/master") && identity.user.role !== "MASTER";
+  const header = (
+    <header className={styles.header}>
+      {designTool ? (
+        <Link href="/admin" className={styles.brand}>
+          Paykar <small>Administration</small>
+        </Link>
+      ) : (
+        <span className={styles.headerTitle}>Administration</span>
+      )}
+      <button
+        aria-label="Open navigation"
+        aria-expanded={open}
+        aria-controls="admin-navigation-mobile"
+        onClick={() => setOpen(true)}
+      >
+        <Menu size={18} aria-hidden="true" />
+        <span className="sr-only">Menu</span>
+      </button>
+      {designTool ? (
+        <span>
+          {identity.user.display_name} · {identity.user.role}
+        </span>
+      ) : (
+        <div className={styles.account}>
+          <span title={identity.user.display_name}>
+            {identity.user.display_name}
+          </span>
+          <StatusBadge status={identity.user.role} />
+        </div>
+      )}
+      <button disabled={pending} onClick={logout}>
+        {pending ? "Signing out…" : "Sign out"}
+      </button>
+    </header>
+  );
   return (
     <Identity.Provider value={identity}>
-      <div className={styles.root} data-admin lang="en">
+      <div className={rootClass} data-admin lang="en">
         <a className="skip-link" href="#admin-main">
           Skip to workspace
         </a>
-        <header className={styles.header}>
-          <Link href="/admin" className={styles.brand}>
-            Paykar <small>Administration</small>
-          </Link>
-          <button
-            aria-expanded={open}
-            aria-controls="admin-navigation"
-            onClick={() => setOpen(!open)}
-          >
-            Menu
-          </button>
-          <span>
-            {identity.user.display_name} · {identity.user.role}
-          </span>
-          <button disabled={pending} onClick={logout}>
-            {pending ? "Signing out…" : "Sign out"}
-          </button>
-        </header>
+        {designTool && header}
         <div className={styles.layout}>
-          <nav
+          {!designTool && header}
+          <AdminNavigation
+            path={path}
+            master={identity.user.role === "MASTER"}
+            operational={!designTool}
+            close={() => setOpen(false)}
             id="admin-navigation"
-            aria-label="Administration"
-            className={`${styles.nav} ${open ? styles.open : ""}`}
-          >
-            {navigationGroups
-              .filter(
-                (group) =>
-                  group.label !== "Master" || identity.user.role === "MASTER",
-              )
-              .map((group) => (
-                <div key={group.label} className={styles.navGroup}>
-                  <span>{group.label}</span>
-                  {group.links.map(([href, label]) => {
-                    const target = `/admin${href ? `/${href}` : ""}`;
-                    const active =
-                      path === target ||
-                      (href && path.startsWith(`${target}/`));
-                    return (
-                      <Link
-                        key={href}
-                        href={target}
-                        aria-current={active ? "page" : undefined}
-                        onClick={() => setOpen(false)}
-                      >
-                        {label}
-                      </Link>
-                    );
-                  })}
-                </div>
-              ))}
-            <Link href="/">Back to storefront ↗</Link>
-          </nav>
+          />
           <main id="admin-main" className={styles.workspace}>
             {error && <p role="alert">{error}</p>}
             {restricted ? (
@@ -169,6 +246,28 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             )}
           </main>
         </div>
+        {open && (
+          <AdminDrawer
+            label="Administration navigation"
+            pending={false}
+            close={() => setOpen(false)}
+            className={styles.sidebarDialog}
+          >
+            <button
+              className={styles.sidebarClose}
+              onClick={() => setOpen(false)}
+            >
+              Close navigation
+            </button>
+            <AdminNavigation
+              path={path}
+              master={identity.user.role === "MASTER"}
+              operational={!designTool}
+              close={() => setOpen(false)}
+              id="admin-navigation-mobile"
+            />
+          </AdminDrawer>
+        )}
       </div>
     </Identity.Provider>
   );

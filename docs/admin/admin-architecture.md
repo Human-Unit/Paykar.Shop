@@ -109,9 +109,10 @@ Routes: `/admin`, `/admin/login`, `/admin/products`, `/admin/categories`,
 `/admin/master/design`, `/admin/master/design/history`.
 
 The public shell yields to the independent admin shell only on exact `/admin`
-path boundaries. Admin is English for MVP, has its own dark palette and locale
-attribute, semantic table headers, labelled forms, pending/error/retry/empty
-feedback, keyboard focus and collapsible mobile navigation. No auth storage is
+path boundaries. Operational Admin is English for MVP, has its own light neutral
+palette and locale attribute, semantic tables, grouped forms, pending/error/retry/empty
+feedback, keyboard focus and a modal mobile navigation drawer. Design Console
+and Inline Master keep the distinct dark tool palette. No auth storage is
 placed in localStorage. Public RU/TJ/EN preferences and cart/templates are untouched.
 
 ## Bootstrap
@@ -133,6 +134,12 @@ enabled configuration stops startup without logging credentials. See the
 [presentation setup](../../README.md#presentation-startup) for full instructions.
 
 ## Extension boundaries
+
+Read-only admin summaries include actual status counts, low-stock/image/measurement
+attention, five latest orders and current-day order values (UTC+05:00, excluding
+cancelled orders). These values are not paid revenue. Product reads support
+problem/active/empty views, low-stock and measurement-mode filters. Write contracts
+and lifecycle remain unchanged. See [Admin UX rules](admin-ux-rules.md).
 
 No customer authentication, payments, warehouse, CMS, arbitrary CSS/HTML/JS,
 drag-and-drop editing or new WebGL. Keep administrator sessions independent of
